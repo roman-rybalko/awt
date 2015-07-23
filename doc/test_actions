@@ -1,0 +1,44 @@
+xpath может задавать как элемент так и атрибут.
+data может содержать переменные, имя переменной задается структурой {NAME}
+в дальнейшем структуры {XXX ...} можно будет дополнить математическими и строковыми операциями
+
+type: open
+data: url
+Открыть страницу
+
+type: exists
+selector: xpath
+Проверить наличие на странице
+
+type: wait
+selector: xpath
+Ожидать плявления на странице
+
+type: check
+selctor: xpath
+data: value
+Сравнить содержимое xpath со значением value
+
+type: click
+selector: xpath
+Кликнуть по элементу
+
+type: modify
+selector: xpath
+data: значение
+Изменить значение
+
+type: input
+selector: xpath
+data: значение
+Ввести данные в поле ввода (input)
+
+type: set
+selector: имя
+data: значение
+Установить переменную
+
+type: read
+selector: xpath
+data: имя
+Установить переменную в значение, полученное из xpath
