@@ -23,6 +23,13 @@
 			<td>
 				<a href="../?test={@id}">Test Actions</a>
 			</td>
+			<td>
+				<form method="post" action="../?tasks=1">
+					<input type="hidden" name="test_id" value="{@id}"/>
+					<input type="text" name="type" value="ie6"/>
+					<input type="submit" name="add" value="Task"/>
+				</form>
+			</td>
 		</tr>
 	</xsl:for-each>
 	</table>
@@ -30,5 +37,7 @@
 		<input type="text" name="name"/>
 		<input type="submit" name="add" value="Add"/>
 	</form>
+	<a href="../?tasks=1">Tasks</a><br/>
+	<a href="../">Dashboard</a><br/>
 </xsl:template>
 </xsl:stylesheet>

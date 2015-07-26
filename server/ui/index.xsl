@@ -6,6 +6,9 @@
 	<xsl:include href="redirect.xsl" />
 	<xsl:include href="login.xsl" />
 	<xsl:include href="register.xsl" />
+	<xsl:include href="dashboard.xsl" />
 	<xsl:include href="tests.xsl" />
 	<xsl:include href="test.xsl" />
+	<xsl:include href="tasks.xsl" />
+	<xsl:include href="task.xsl" />
 </xsl:stylesheet>

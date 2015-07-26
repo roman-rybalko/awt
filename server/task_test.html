@@ -1,0 +1,38 @@
+<html>
+<head>
+<script src="ui/jquery-1.11.3.min.js"></script>
+<script src="task_test.js"></script>
+</head>
+<body>
+<div style="color: red;" id="error"></div>
+<div style="color: green;" id="msg"></div>
+<hr/>
+<h1>Get Task</h1>
+<form method="post" action="task.php" id="get">
+token: <input type="text" name="token" value="EtZGlOGWMGtEOptUcaQN98KTnPrXpvXgpY1orOue04"/><br/>
+task_type: <input type="text" name="task_type" value="ie6"/><br/>
+node_id: <input type="text" name="node_id" value="test-node-id-1"/><br/>
+<input type="submit" value="get"/>
+</form>
+<hr/>
+<h1>Start task</h1>
+<form method="post" action="task.php" id="start">
+token: <input type="text" name="token" value="EtZGlOGWMGtEOptUcaQN98KTnPrXpvXgpY1orOue04"/><br/>
+task_id: <input type="text" name="task_id"/><br/>
+<input type="hidden" name="status" value="started"/>
+vnc: <input type="text" name="vnc" value="ws://127.0.0.1:12345"/><br/>
+<input type="submit" value="start"/><br/>
+</form>
+<hr/>
+<h1>Update task</h1>
+<form method="post" action="task.php" enctype="multipart/form-data">
+token: <input type="text" name="token" value="EtZGlOGWMGtEOptUcaQN98KTnPrXpvXgpY1orOue04"/><br/>
+task_id: <input type="text" name="task_id"/><br/>
+status: <select name="status" id="status"><option value="succeeded">succeeded</option><option value="failed">failed</option></select><br/>
+<div id="data"></div>
+<input type="submit" value="update"/><br/>
+</form>
+<hr/>
+<textarea id="descr" cols="100" rows="100"></textarea>
+</body>
+</html>

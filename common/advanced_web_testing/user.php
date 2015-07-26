@@ -1,6 +1,6 @@
 <?php
 
-namespace AdvancedWebTesting\Ui;
+namespace AdvancedWebTesting;
 
 class User {
 	private $db, $user;
@@ -23,6 +23,15 @@ class User {
 	Tests
 	action: ?tests=1
 
+	Test
+	action: ?test=xxx
+
+	Tasks
+	action: ?tasks=1
+
+	Task
+	action: ?task=xxx
+
 	Scheduler
 	action: ?scheduler=1
 
@@ -39,6 +48,10 @@ class User {
 				$this->tests();
 			} else if (isset($_GET['test'])) {
 				$this->test();
+			} else if (isset($_GET['tasks'])) {
+				$this->tasks();
+			} else if (isset($_GET['task'])) {
+				$this->task();
 			} else if (isset($_GET['scheduler'])) {
 				$this->scheduler();
 			} else if (isset($_GET['billing'])) {
@@ -209,7 +222,7 @@ class User {
 		$db = $this->db;
 		$testId = $_GET['test'];
 		$userId = $this->user->getId();
-		if ($db->select('tests', ['user_id'], ['user_id' => $userId, 'test_id' => $testId])) {
+		if ($db->select('tests', ['test_id'], ['user_id' => $userId, 'test_id' => $testId])) {
 			if (isset($_POST['add'])) {
 				$lastTestActionId = 0;
 				foreach ($db->select('test_actions', ['test_action_id'], ['test_id' => $testId]) as $testAction)
@@ -268,8 +281,98 @@ class User {
 				echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '" data="', htmlspecialchars($action['data']), '" id="', $action['test_action_id'], '"/>';
 			echo '</test>';
 		} else {
-			echo '<message type="error" value="bad_test"/>';
+			echo '<message type="error" value="bad_test_id"/>';
 		}
+	}
+
+	private function tasks() {
+?>
+<!--
+	Tasks
+
+	Add
+	method: post
+	params: test_id [type]
+	submit: add
+
+	Delete
+	method: post
+	params: task_id
+	submit: delete
+-->
+<?php
+		$db = $this->db;
+		$userId = $this->user->getId();
+		if (isset($_POST['add'])) {
+			$testId = $_POST['test_id'];
+			$type = '';
+			if (isset($_POST['type']) && $_POST['type'])
+				$type = $_POST['type'];
+			if ($db->select('tests', ['test_id'], ['user_id' => $userId, 'test_id' => $testId]))
+				if ($db->insert('tasks', ['user_id' => $userId, 'test_id' => $testId, 'type' => $type, 'status' => \AdvancedWebTesting\Task\Status::INITIAL, 'time' => time()]))
+					echo '<message type="notice" value="task_add_ok"/>';
+				else
+					echo '<message type="error" value="task_add_fail"/>';
+			else
+				echo '<message type="error" value="bad_test_id"/>';
+		} else if (isset($_POST['delete'])) {
+			$taskId = $_POST['task_id'];
+			if ($db->delete('tasks', ['user_id' => $userId, 'task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::INITIAL]))
+				echo '<message type="notice" value="task_delete_ok"/>';
+			else
+				echo '<message type="error" value="bad_task_id"/>';
+		}
+		echo '<tasks>';
+		foreach ($db->select('tasks', ['task_id', 'test_id', 'type', 'status', 'data'], ['user_id' => $userId]) as $task) {
+			echo '<task id="', $task['task_id'], '" test_id="', $task['test_id'], '" type="', htmlspecialchars($task['type']), '" status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"';
+			if ($task['status'] == \AdvancedWebTesting\Task\Status::RUNNING)
+				echo ' vnc="', $task['data'], '"';
+			echo '/>';
+		}
+		echo '</tasks>';
+	}
+
+	private function task() {
+?>
+<!--
+	Task
+	method: get
+	params: task
+-->
+<?php
+		$db = $this->db;
+		$taskId = $_GET['task'];
+		$userId = $this->user->getId();
+		if ($tasks = $db->select('tasks', ['status', 'data', 'test_id'], ['user_id' => $userId, 'task_id' => $taskId])) {
+			$task = $tasks[0];
+			$status = $task['status'];
+			if ($status == \AdvancedWebTesting\Task\Status::INITIAL) {
+				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" status="', \AdvancedWebTesting\Task\Status::toString($status), '"/>';
+			}
+			if ($status == \AdvancedWebTesting\Task\Status::STARTING) {
+				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" status="', \AdvancedWebTesting\Task\Status::toString($status), '" node_id="', $task['data'], '"/>';
+			}
+			if ($status == \AdvancedWebTesting\Task\Status::RUNNING) {
+				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" status="', \AdvancedWebTesting\Task\Status::toString($status), '" vnc="', $task['data'], '"/>';
+			}
+			if ($status == \AdvancedWebTesting\Task\Status::SUCCEEDED || $status == \AdvancedWebTesting\Task\Status::FAILED) {
+				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" status="', \AdvancedWebTesting\Task\Status::toString($status), '">';
+				$data = json_decode(file_get_contents(\Config::$rootPath . \Config::RESULT_DATA_PATH . $task['data'] . '/descr.json'), true /* assoc */);
+				if ($data) {
+					foreach ($data['test_actions'] as $action) {
+						echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '" data="', htmlspecialchars($action['data']), '" id="', $action['test_action_id'], '"';
+						if (isset($action['scrn_filename']))
+							echo ' scrn="', $task['data'] . '/' . $action['scrn_filename'], '"';
+						if (isset($action['failed']))
+							echo ' failed="', $action['failed'], '"';
+						echo '/>';
+					}
+				} else
+					echo '<message type="error" value="task_data_not_found"/>';
+				echo '</task>';
+			}
+		} else
+			echo '<message type="error" value="bad_task_id"/>';
 	}
 
 	private function scheduler() {
@@ -297,6 +400,5 @@ class User {
 -->
 <?php
 		echo '<dashboard/>';
-		$this->redirect('?tests=1', 1);
 	}
 }
