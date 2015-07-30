@@ -357,14 +357,14 @@ class User {
 			}
 			if ($status == \AdvancedWebTesting\Task\Status::SUCCEEDED || $status == \AdvancedWebTesting\Task\Status::FAILED) {
 				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" status="', \AdvancedWebTesting\Task\Status::toString($status), '">';
-				$data = json_decode(file_get_contents(\Config::$rootPath . \Config::RESULT_DATA_PATH . $task['data'] . '/descr.json'), true /* assoc */);
-				if ($data) {
-					foreach ($data['test_actions'] as $action) {
-						echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '" data="', htmlspecialchars($action['data']), '" id="', $action['test_action_id'], '"';
-						if (isset($action['scrn_filename']))
-							echo ' scrn="', $task['data'] . '/' . $action['scrn_filename'], '"';
-						if (isset($action['failed']))
-							echo ' failed="', $action['failed'], '"';
+				$testActions = json_decode(file_get_contents(\Config::$rootPath . \Config::RESULT_DATA_PATH . $task['data'] . '/test_actions.json'), true /* assoc */);
+				if ($testActions) {
+					foreach ($testActions as $testAction) {
+						echo '<action type="', htmlspecialchars($testAction['type']), '" selector="', htmlspecialchars($testAction['selector']), '" data="', htmlspecialchars($testAction['data']), '" id="', $testAction['test_action_id'], '"';
+						if (isset($testAction['scrn_filename']))
+							echo ' scrn="', $task['data'] . '/' . $testAction['scrn_filename'], '"';
+						if (isset($testAction['failed']))
+							echo ' failed="', $testAction['failed'], '"';
 						echo '/>';
 					}
 				} else

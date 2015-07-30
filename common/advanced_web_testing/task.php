@@ -17,22 +17,22 @@ class Task {
 	 * Update the task
 	 * method: post
 	 * params: task_id status=started vnc token
-	 * params: task_id status=succeeded|failed descr scrn1 .. scrn{test_action_id} .. scrnXX token (enctype="multipart/form-data")
-	 * descr = {
-	 *   "task_id" : "xxx",
-	 *   "test_id" : "xx",
-	 *   "test_actions" : [
-	 *     {
-	 *       "type" : "xxxxx",
-	 *       "selector" : "xxxxxx",
-	 *       "data" : "xxx",
-	 *       "test_action_id" : "xxxx",
-	 *       "scrn_filename" : "xxxxxxxx",  // optional
-	 *       "failed" : "fail descr"  // optional
-	 *     },
-	 *     ...
-	 *   ]
-	 * }
+	 *
+	 * method: post
+	 * enctype: multipart/form-data
+	 * params: task_id status=succeeded|failed test_actions token
+	 * files: scrn1 .. scrn{test_action_id} .. scrnXX
+	 * test_actions = json: [
+	 *   {
+	 *     "type" : "xxxxx",
+	 *     "selector" : "xxxxxx",
+	 *     "data" : "xxx",
+	 *     "test_action_id" : "xxxx",
+	 *     "scrn_filename" : "xxxxxxxx",  // optional
+	 *     "failed" : "fail descr"  // optional
+	 *   },
+	 *   ...
+	 * ]
 	 */
 
 	public function run() {
@@ -93,27 +93,32 @@ class Task {
 					break;
 				case 'succeeded':
 				case 'failed':
-					if (is_uploaded_file($_FILES['descr']['tmp_name']))
-						$descr = json_decode(file_get_contents($_FILES['descr']['tmp_name']), true /* assoc */);
-					if (isset($descr) && $descr) {
-						foreach ($descr['test_actions'] as $testAction)
-							if (isset($testAction['scrn_filename']))
-								if (!is_uploaded_file($_FILES['scrn' . $testAction['test_action_id']]['tmp_name'])) {
-									$result['fail'] = 'scrn' . $testAction['test_action_id'] . ' upload failed';
+					$testActions = json_decode($_POST['test_actions'], true /* assoc */);
+					if ($testActions) {
+						foreach ($testActions as $testAction) {
+							$scrnX = 'scrn' . $testAction['test_action_id'];
+							if (isset($_FILES[$scrnX]))
+								if (!is_uploaded_file($_FILES[$scrnX]['tmp_name'])) {
+									$result['fail'] = $scrnX . ' upload failed';
 									break;
 								}
+						}
 					} else
-						$result['fail'] = 'descr parse failed';
+						$result['fail'] = 'test_actions parse failed';
 					if (empty($result['fail'])) {
 						$taskDataDir = $taskId . '-' . rand();
 						if ($db->update('tasks', ['data' => $taskDataDir, 'status' => $status == 'succeeded' ? \AdvancedWebTesting\Task\Status::SUCCEEDED : \AdvancedWebTesting\Task\Status::FAILED, 'time' => time()], ['task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::RUNNING])) {
 							$taskDataPath = \Config::$rootPath . \Config::RESULT_DATA_PATH . $taskDataDir . '/';
 							$this->prepareTaskDataPath($taskDataPath);
 							$result['ok'] = 0;
-							$result['ok'] += move_uploaded_file($_FILES['descr']['tmp_name'], $taskDataPath . 'descr.json');
-							foreach ($descr['test_actions'] as $testAction)
-								if (isset($testAction['scrn_filename']))
-									$result['ok'] += move_uploaded_file($_FILES['scrn' . $testAction['test_action_id']]['tmp_name'], $taskDataPath . $testAction['scrn_filename']);
+							foreach ($testActions as &$testAction) {
+								$scrnX = 'scrn' . $testAction['test_action_id'];
+								if (isset($_FILES[$scrnX])) {
+									$testAction['scrn_filename'] = basename($_FILES[$scrnX]['name']);
+									$result['ok'] += move_uploaded_file($_FILES[$scrnX]['tmp_name'], $taskDataPath . $testAction['scrn_filename']);
+								}
+							}
+							$result['ok'] += 0 < file_put_contents($taskDataPath . 'test_actions.json', json_encode($testActions));
 						} else
 							$result['fail'] = 'task update failed';
 					}

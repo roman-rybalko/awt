@@ -29,5 +29,6 @@
 		</xsl:for-each>
 		</table>
 	</xsl:if>
+	<xsl:apply-templates select="message" />
 </xsl:template>
 </xsl:stylesheet>
