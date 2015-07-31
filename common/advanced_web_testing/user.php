@@ -343,20 +343,21 @@ class User {
 		$db = $this->db;
 		$taskId = $_GET['task'];
 		$userId = $this->user->getId();
-		if ($tasks = $db->select('tasks', ['status', 'data', 'test_id'], ['user_id' => $userId, 'task_id' => $taskId])) {
+		if ($tasks = $db->select('tasks', ['status', 'data', 'test_id', 'type'], ['user_id' => $userId, 'task_id' => $taskId])) {
 			$task = $tasks[0];
 			$status = $task['status'];
+			$type = $task['type'];
 			if ($status == \AdvancedWebTesting\Task\Status::INITIAL) {
-				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" status="', \AdvancedWebTesting\Task\Status::toString($status), '"/>';
+				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" type="', $type, '" status="', \AdvancedWebTesting\Task\Status::toString($status), '"/>';
 			}
 			if ($status == \AdvancedWebTesting\Task\Status::STARTING) {
-				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" status="', \AdvancedWebTesting\Task\Status::toString($status), '" node_id="', $task['data'], '"/>';
+				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" type="', $type, '" status="', \AdvancedWebTesting\Task\Status::toString($status), '" node_id="', $task['data'], '"/>';
 			}
 			if ($status == \AdvancedWebTesting\Task\Status::RUNNING) {
-				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" status="', \AdvancedWebTesting\Task\Status::toString($status), '" vnc="', $task['data'], '"/>';
+				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" type="', $type, '" status="', \AdvancedWebTesting\Task\Status::toString($status), '" vnc="', $task['data'], '"/>';
 			}
 			if ($status == \AdvancedWebTesting\Task\Status::SUCCEEDED || $status == \AdvancedWebTesting\Task\Status::FAILED) {
-				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" status="', \AdvancedWebTesting\Task\Status::toString($status), '">';
+				echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" type="', $type, '" status="', \AdvancedWebTesting\Task\Status::toString($status), '">';
 				$testActions = json_decode(file_get_contents(\Config::$rootPath . \Config::RESULT_DATA_PATH . $task['data'] . '/test_actions.json'), true /* assoc */);
 				if ($testActions) {
 					foreach ($testActions as $testAction) {

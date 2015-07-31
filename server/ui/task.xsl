@@ -3,6 +3,7 @@
 <xsl:template match="task">
 	<h1>Task <xsl:value-of select="@id"/></h1>
 	<a href="../?test={@test_id}">Test</a><br/>
+	Type: <xsl:value-of select="@type"/><br/>
 	Status: <xsl:value-of select="@status"/><br/>
 	<xsl:if test="@vnc">
 		vnc: <xsl:value-of select="@vnc"/><br/>
