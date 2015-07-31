@@ -20,19 +20,8 @@ class Task {
 	 *
 	 * method: post
 	 * enctype: multipart/form-data
-	 * params: task_id status=succeeded|failed test_actions token
-	 * files: scrn1 .. scrn{test_action_id} .. scrnXX
-	 * test_actions = json: [
-	 *   {
-	 *     "type" : "xxxxx",
-	 *     "selector" : "xxxxxx",
-	 *     "data" : "xxx",
-	 *     "test_action_id" : "xxxx",
-	 *     "scrn_filename" : "xxxxxxxx",  // optional
-	 *     "failed" : "fail descr"  // optional
-	 *   },
-	 *   ...
-	 * ]
+	 * params: task_id status=succeeded|failed [failed_action_id] token
+	 * files: scrn1 .. scrn{action_id} .. scrnXX
 	 */
 
 	public function run() {
@@ -47,25 +36,23 @@ class Task {
 		$db = $this->db;
 		if ($this->checkAuth()) {
 			while(true) {
-				$tasks = $db->select('tasks', ['task_id', 'test_id'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => $type]);
+				$tasks = $db->select('tasks', ['task_id'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => $type]);
 				if (!$tasks)
-					$tasks = $db->select('tasks', ['task_id', 'test_id'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => '']);
+					$tasks = $db->select('tasks', ['task_id'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => '']);
 				if (!$tasks)
 					break;
 				foreach ($tasks as $task)
 					if ($db->update('tasks', ['status' => \AdvancedWebTesting\Task\Status::STARTING, 'type' => $type], ['task_id' => $task['task_id'], 'status' => \AdvancedWebTesting\Task\Status::INITIAL])) {
 						$taskId = $task['task_id'];
-						$testId = $task['test_id'];
 						break 2;
 					}
 			}
 			if (isset($taskId)) {
 				$db->update('tasks', ['data' => $_POST['node_id'], 'time' => time()], ['task_id' => $taskId]);
-				$testActions = $db->select('test_actions', ['type', 'selector', 'data', 'test_action_id'], ['test_id' => $testId], 'order by test_action_id asc');
+				$taskActions = $db->select('task_actions', ['type', 'selector', 'data', 'action_id'], ['task_id' => $taskId], 'order by action_id asc');
 				$result = [
 					'task_id' => $taskId,
-					'test_id' => $testId,
-					'test_actions' => $testActions
+					'task_actions' => $taskActions
 				];
 			} else {
 				$result = [
@@ -95,35 +82,24 @@ class Task {
 					break;
 				case 'succeeded':
 				case 'failed':
-					$testActions = json_decode($_POST['test_actions'], true /* assoc */);
-					if ($testActions) {
-						foreach ($testActions as $testAction) {
-							$scrnX = 'scrn' . $testAction['test_action_id'];
-							if (isset($_FILES[$scrnX]))
-								if (!is_uploaded_file($_FILES[$scrnX]['tmp_name'])) {
-									$result['fail'] = $scrnX . ' upload failed';
-									break;
-								}
-						}
-					} else
-						$result['fail'] = 'test_actions parse failed';
-					if (empty($result['fail'])) {
-						$taskDataDir = $taskId . '-' . rand();
-						if ($db->update('tasks', ['data' => $taskDataDir, 'status' => $status == 'succeeded' ? \AdvancedWebTesting\Task\Status::SUCCEEDED : \AdvancedWebTesting\Task\Status::FAILED, 'time' => time()], ['task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::RUNNING])) {
-							$taskDataPath = \Config::$rootPath . \Config::RESULT_DATA_PATH . $taskDataDir . '/';
-							$this->prepareTaskDataPath($taskDataPath);
-							$result['ok'] = 0;
-							foreach ($testActions as &$testAction) {
-								$scrnX = 'scrn' . $testAction['test_action_id'];
-								if (isset($_FILES[$scrnX])) {
-									$testAction['scrn_filename'] = basename($_FILES[$scrnX]['name']);
-									$result['ok'] += move_uploaded_file($_FILES[$scrnX]['tmp_name'], $taskDataPath . $testAction['scrn_filename']);
-								}
+					$taskDataDir = $taskId . '-' . rand();
+					$statusId = $status == 'succeeded' ? \AdvancedWebTesting\Task\Status::SUCCEEDED : \AdvancedWebTesting\Task\Status::FAILED;
+					if ($db->update('tasks', ['data' => $taskDataDir, 'status' => $statusId, 'time' => time()], ['task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::RUNNING])) {
+						$taskDataPath = \Config::$rootPath . \Config::RESULT_DATA_PATH . $taskDataDir . '/';
+						$this->prepareTaskDataPath($taskDataPath);
+						$result['ok'] = 0;
+						foreach ($db->select('task_actions', ['type', 'selector', 'data', 'action_id'], ['task_id' => $taskId]) as $action) {
+							$scrnX = 'scrn' . $action['action_id'];
+							if (isset($_FILES[$scrnX])) {
+								$scrnFilename = basename($_FILES[$scrnX]['name']);
+								$result['ok'] += move_uploaded_file($_FILES[$scrnX]['tmp_name'], $taskDataPath . $scrnFilename);
+								$result['ok'] += $db->update('task_actions', ['scrn_filename' => $scrnFilename], ['task_id' => $taskId, 'action_id' => $action['action_id']]);
 							}
-							$result['ok'] += 0 < file_put_contents($taskDataPath . 'test_actions.json', json_encode($testActions));
-						} else
-							$result['fail'] = 'task update failed';
-					}
+						}
+						if (isset($_POST['failed_action_id']))
+							$result['ok'] += $db->update('task_actions', ['failed' => 1], ['task_id' => $taskId, 'action_id' => $_POST['failed_action_id']]);
+					} else
+						$result['fail'] = 'task update failed';
 					break;
 				default:
 					$result['fail'] = 'bad status';

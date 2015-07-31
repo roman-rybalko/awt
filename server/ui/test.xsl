@@ -9,28 +9,28 @@
 			<td><xsl:value-of select="@id"/></td>
 			<td>
 				<form method="post">
-					<input type="hidden" name="test_action_id" value="{@id}"/>
+					<input type="hidden" name="action_id" value="{@id}"/>
 					<input type="text" name="type" value="{@type}"/>
 					<input type="submit" name="modify" value="Modify"/>
 				</form>
 			</td>
 			<td>
 				<form method="post">
-					<input type="hidden" name="test_action_id" value="{@id}"/>
+					<input type="hidden" name="action_id" value="{@id}"/>
 					<input type="text" name="selector" value="{@selector}"/>
 					<input type="submit" name="modify" value="Modify"/>
 				</form>
 			</td>
 			<td>
 				<form method="post">
-					<input type="hidden" name="test_action_id" value="{@id}"/>
+					<input type="hidden" name="action_id" value="{@id}"/>
 					<input type="text" name="data" value="{@data}"/>
 					<input type="submit" name="modify" value="Modify"/>
 				</form>
 			</td>
 			<td>
 				<form method="post">
-					<input type="hidden" name="test_action_id" value="{@id}"/>
+					<input type="hidden" name="action_id" value="{@id}"/>
 					<input type="submit" name="delete" value="Delete"/>
 				</form>
 			</td>
@@ -41,7 +41,7 @@
 		<table>
 			<tr><th>id</th><th>type</th><th>selector</th><th>data</th></tr>
 			<tr>
-				<td><input type="text" name="test_action_id"/></td>
+				<td><input type="text" name="action_id"/></td>
 				<td><input type="text" name="type"/></td>
 				<td><input type="text" name="selector"/></td>
 				<td><input type="text" name="data"/></td>
