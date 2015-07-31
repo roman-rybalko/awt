@@ -49,9 +49,11 @@ class Task {
 			while(true) {
 				$tasks = $db->select('tasks', ['task_id', 'test_id'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => $type]);
 				if (!$tasks)
+					$tasks = $db->select('tasks', ['task_id', 'test_id'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => '']);
+				if (!$tasks)
 					break;
 				foreach ($tasks as $task)
-					if ($db->update('tasks', ['status' => \AdvancedWebTesting\Task\Status::STARTING], ['task_id' => $task['task_id'], 'status' => \AdvancedWebTesting\Task\Status::INITIAL])) {
+					if ($db->update('tasks', ['status' => \AdvancedWebTesting\Task\Status::STARTING, 'type' => $type], ['task_id' => $task['task_id'], 'status' => \AdvancedWebTesting\Task\Status::INITIAL])) {
 						$taskId = $task['task_id'];
 						$testId = $task['test_id'];
 						break 2;
