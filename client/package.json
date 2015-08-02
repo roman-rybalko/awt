@@ -1,0 +1,17 @@
+{
+  "name": "awt-task",
+  "version": "0.0.1",
+  "description": "AWT task execution node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "task": "nodejs task.js"
+  },
+  "author": "Roman Rybalko <devel@romanr.info>",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "request": "~2.60.0",
+    "selenium-webdriver": "~2.46.1",
+    "wait.for": "~0.6.6"
+  }
+}

@@ -365,7 +365,7 @@ class User {
 				if ($action['scrn_filename'])
 					echo ' scrn="', $task['data'] . '/' . $action['scrn_filename'], '"';
 				if ($action['failed'])
-					echo ' failed="1"';
+					echo ' failed="', $action['failed'], '"';
 				echo '/>';
 			}
 			echo '</task>';

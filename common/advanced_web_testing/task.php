@@ -20,7 +20,7 @@ class Task {
 	 *
 	 * method: post
 	 * enctype: multipart/form-data
-	 * params: task_id status=succeeded|failed [failed_action_id] token
+	 * params: task_id status=succeeded|failed [failed_action_id failed_action_descr] token
 	 * files: scrn1 .. scrn{action_id} .. scrnXX
 	 */
 
@@ -97,7 +97,7 @@ class Task {
 							}
 						}
 						if (isset($_POST['failed_action_id']))
-							$result['ok'] += $db->update('task_actions', ['failed' => 1], ['task_id' => $taskId, 'action_id' => $_POST['failed_action_id']]);
+							$result['ok'] += $db->update('task_actions', ['failed' => $_POST['failed_action_descr']], ['task_id' => $taskId, 'action_id' => $_POST['failed_action_id']]);
 					} else
 						$result['fail'] = 'task update failed';
 					break;
