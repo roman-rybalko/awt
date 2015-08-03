@@ -28,7 +28,7 @@ selector: xpath
 data: значение
 Изменить значение
 
-type: input
+type: enter
 selector: xpath
 data: значение
 Ввести данные в поле ввода (input)
