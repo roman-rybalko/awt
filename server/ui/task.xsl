@@ -30,5 +30,8 @@
 		</xsl:for-each>
 		</table>
 	</xsl:if>
+	<a href="../?tests=1">Tests</a><br/>
+	<a href="../?tasks=1">Tasks</a><br/>
+	<a href="../">Dashboard</a><br/>
 </xsl:template>
 </xsl:stylesheet>

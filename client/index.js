@@ -47,6 +47,25 @@ function selenium_wait(promise) {
 	return wait.for(promise2ncb, promise, config.selenium_timeout);
 }
 
+function sleep(ms) {
+	wait.for(function(cb) {
+		setTimeout(function() {
+			cb(undefined, 1);
+		}, ms);
+	});
+}
+
+function selenium_wait_timeout(promise) {
+	var start_time = new Date().getTime();
+	while (new Date().getTime() < start_time + config.selenium_timeout) {
+		var result = selenium_wait(promise);
+		if (result)
+			return result;
+		else
+			sleep(100);
+	}
+}
+
 function get_scrn(selenium) {
 	var scrn = selenium_wait(selenium.takeScreenshot());
 	return {
@@ -76,14 +95,27 @@ function process() {
 	if (!status.ok)
 		throw new Error('status parsing failed');
 	var selenium = new webdriver.Builder().forBrowser(config.selenium_browser).usingServer(config.selenium_server).build();
-	var failed_action_id = 0, failed_action_descr, scrns = {};
+	var fails = {}, scrns = {};
 	for (var i = 0; i < task.task_actions.length; ++i) {
 		var action = task.task_actions[i];
 		try {
 			switch (action.type) {
 			case 'open':
+				if (!action.selector.match(/^http(s)*:\/\//i))
+					action.selector = 'http://' + action.selector;
 				selenium_wait(selenium.get(action.selector));
 				scrns[action.action_id] = get_scrn(selenium);
+				break;
+			case 'exists':
+				scrns[action.action_id] = get_scrn(selenium);
+				if (!selenium_wait(selenium.isElementPresent({xpath: action.selector})))
+					throw new Error('xpath is not found');
+				break;
+			case 'wait':
+				var result = selenium_wait_timeout(selenium.isElementPresent({xpath: action.selector}));
+				scrns[action.action_id] = get_scrn(selenium);
+				if (!result)
+					throw new Error('xpath is not found');
 				break;
 			default:
 				scrns[action.action_id] = get_scrn(selenium);
@@ -91,20 +123,18 @@ function process() {
 				break;
 			}
 		} catch (e) {
-			failed_action_id = action.action_id;
-			failed_action_descr = e.message;
-			break;
+			fails[action.action_id] = e.message;
+			if (!task.task_debug)
+				break;
 		}
 	}
 	selenium.quit();
 	var params = {
 		task_id: task.task_id,
-		status: failed_action_id ? 'failed' : 'succeeded',
+		status: Object.keys(fails).length ? 'failed' : 'succeeded',
 	};
-	if (failed_action_id) {
-		params['failed_action_id'] = failed_action_id;
-		params['failed_action_descr'] = failed_action_descr;
-	}
+	for (var id in fails)
+		params['fail' + id] = fails[id];
 	for (var id in scrns) {
 		params['scrn' + id] = {
 			value: scrns[id].data,
@@ -118,7 +148,6 @@ function process() {
 		return status.fail;
 	if (!status.ok)
 		throw new Error('status parsing failed');
-	return failed_action_id;
 }
 
 module.exports = function(cb) {

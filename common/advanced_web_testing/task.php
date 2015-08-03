@@ -20,8 +20,8 @@ class Task {
 	 *
 	 * method: post
 	 * enctype: multipart/form-data
-	 * params: task_id status=succeeded|failed [failed_action_id failed_action_descr] token
-	 * files: scrn1 .. scrn{action_id} .. scrnXX
+	 * params: task_id status=succeeded|failed [fail1 .. fail[action_id] .. failXX] token
+	 * files: [scrn1 .. scrn{action_id} .. scrnXX]
 	 */
 
 	public function run() {
@@ -36,14 +36,15 @@ class Task {
 		$db = $this->db;
 		if ($this->checkAuth()) {
 			while(true) {
-				$tasks = $db->select('tasks', ['task_id'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => $type]);
+				$tasks = $db->select('tasks', ['task_id', 'debug'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => $type]);
 				if (!$tasks)
-					$tasks = $db->select('tasks', ['task_id'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => '']);
+					$tasks = $db->select('tasks', ['task_id', 'debug'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => '']);
 				if (!$tasks)
 					break;
 				foreach ($tasks as $task)
 					if ($db->update('tasks', ['status' => \AdvancedWebTesting\Task\Status::STARTING, 'type' => $type], ['task_id' => $task['task_id'], 'status' => \AdvancedWebTesting\Task\Status::INITIAL])) {
 						$taskId = $task['task_id'];
+						$taskDebug = $task['debug'];
 						break 2;
 					}
 			}
@@ -54,6 +55,8 @@ class Task {
 					'task_id' => $taskId,
 					'task_actions' => $taskActions
 				];
+				if ($taskDebug)
+					$result['task_debug'] = 1;
 			} else {
 				$result = [
 					'empty' => 1
@@ -95,9 +98,10 @@ class Task {
 								$result['ok'] += move_uploaded_file($_FILES[$scrnX]['tmp_name'], $taskDataPath . $scrnFilename);
 								$result['ok'] += $db->update('task_actions', ['scrn_filename' => $scrnFilename], ['task_id' => $taskId, 'action_id' => $action['action_id']]);
 							}
+							$failX = 'fail' . $action['action_id'];
+							if (isset($_POST[$failX]))
+								$result['ok'] += $db->update('task_actions', ['failed' => $_POST[$failX]], ['task_id' => $taskId, 'action_id' => $action['action_id']]);
 						}
-						if (isset($_POST['failed_action_id']))
-							$result['ok'] += $db->update('task_actions', ['failed' => $_POST['failed_action_descr']], ['task_id' => $taskId, 'action_id' => $_POST['failed_action_id']]);
 					} else
 						$result['fail'] = 'task update failed';
 					break;

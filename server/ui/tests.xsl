@@ -27,6 +27,7 @@
 				<form method="post" action="../?tasks=1">
 					<input type="hidden" name="test_id" value="{@id}"/>
 					<input type="text" name="type" value="ie6"/>
+					debug: <input type="text" name="debug"/>
 					<input type="submit" name="add" value="Task"/>
 				</form>
 			</td>

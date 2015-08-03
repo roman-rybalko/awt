@@ -228,7 +228,7 @@ class User {
 				foreach ($db->select('test_actions', ['action_id'], ['test_id' => $testId]) as $testAction)
 					if ($testAction['action_id'] > $lastTestActionId)
 						$lastTestActionId = $testAction['action_id'];
-				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $lastTestActionId + 1, 'type' => $_POST['type'], 'selector' => $_POST['selector'], 'data' => $_POST['data']]))
+				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $lastTestActionId + 1, 'type' => $_POST['type'], 'selector' => $_POST['selector'], 'data' => $_POST['data'] ? $_POST['data'] : null]))
 					echo '<message type="notice" value="test_action_add_ok"/>';
 				else
 					echo '<message type="error" value="test_action_add_fail"/>';
@@ -241,7 +241,7 @@ class User {
 				$fields = [];
 				foreach(['type', 'selector', 'data'] as $field)
 					if (isset($_POST[$field]))
-						$fields[$field] = $_POST[$field];
+						$fields[$field] = $_POST[$field] ? $_POST[$field] : null;
 				if ($db->update('test_actions', $fields, ['test_id' => $testId, 'action_id' => $_POST['action_id']]))
 					echo '<message type="notice" value="test_action_modify_ok"/>';
 				else
@@ -271,7 +271,7 @@ class User {
 				foreach ($ids as $id)
 					if (!$db->update('test_actions', ['action_id' => $id + 1], ['test_id' => $testId, 'action_id' => $id]))
 						throw new \ErrorException('Something wrong in test_actions indexes: test_id=' . $testId . ', action_id=' . $id . ' move ids=[' . implode(', ', $ids) . ']', null, null, __FILE__, __LINE__);
-				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $testActionId, 'type' => $_POST['type'], 'selector' => $_POST['selector'], 'data' => $_POST['data']]))
+				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $testActionId, 'type' => $_POST['type'], 'selector' => $_POST['selector'], 'data' => $_POST['data'] ? $_POST['data'] : null]))
 					echo '<message type="notice" value="test_action_insert_ok"/>';
 				else
 					echo '<message type="error" value="test_action_insert_fail"/>';
@@ -292,7 +292,7 @@ class User {
 
 	Add
 	method: post
-	params: test_id [type]
+	params: test_id [type] [debug]
 	submit: add
 
 	Delete
@@ -308,8 +308,11 @@ class User {
 			$type = '';
 			if (isset($_POST['type']) && $_POST['type'])
 				$type = $_POST['type'];
+			$debug = null;
+			if (isset($_POST['debug']) && $_POST['debug'])
+				$debug = 1;
 			if ($db->select('tests', ['test_id'], ['user_id' => $userId, 'test_id' => $testId]))
-				if ($taskId = $db->insert('tasks', ['user_id' => $userId, 'test_id' => $testId, 'type' => $type, 'status' => -1, 'time' => time()])) {
+				if ($taskId = $db->insert('tasks', ['user_id' => $userId, 'test_id' => $testId, 'type' => $type, 'debug' => $debug, 'status' => -1, 'time' => time()])) {
 					foreach ($db->select('test_actions', ['type', 'selector', 'data', 'action_id'], ['test_id' => $testId]) as $action) {
 						$action['task_id'] = $taskId;
 						$db->insert('task_actions', $action);
@@ -329,8 +332,9 @@ class User {
 				echo '<message type="error" value="bad_task_id"/>';
 		}
 		echo '<tasks>';
-		foreach ($db->select('tasks', ['task_id', 'test_id', 'type', 'status', 'data'], ['user_id' => $userId]) as $task) {
-			echo '<task id="', $task['task_id'], '" test_id="', $task['test_id'], '" type="', htmlspecialchars($task['type']), '" status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"';
+		foreach ($db->select('tasks', ['task_id', 'test_id', 'type', 'debug', 'status', 'data'], ['user_id' => $userId]) as $task) {
+			echo '<task id="', $task['task_id'], '" test_id="', $task['test_id'], '" type="', htmlspecialchars($task['type']), '"',
+				' ', $task['debug'] ? ' debug="1"' : '', ' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"';
 			if ($task['status'] == \AdvancedWebTesting\Task\Status::RUNNING)
 				echo ' vnc="', $task['data'], '"';
 			echo '/>';
@@ -361,11 +365,12 @@ class User {
 			}
 			echo '>';
 			foreach ($db->select('task_actions', ['type', 'selector', 'data', 'action_id', 'scrn_filename', 'failed'], ['task_id' => $taskId], 'order by action_id asc') as $action) {
-				echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '" data="', htmlspecialchars($action['data']), '" id="', $action['action_id'], '"';
+				echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '"',
+					$action['data'] ? ' data="' . htmlspecialchars($action['data']) . '"' : '', ' id="', $action['action_id'], '"';
 				if ($action['scrn_filename'])
 					echo ' scrn="', $task['data'] . '/' . $action['scrn_filename'], '"';
 				if ($action['failed'])
-					echo ' failed="', $action['failed'], '"';
+					echo ' failed="', htmlspecialchars($action['failed']), '"';
 				echo '/>';
 			}
 			echo '</task>';

@@ -8,7 +8,12 @@
 		<tr>
 			<td><xsl:value-of select="@id"/></td>
 			<td><a href="../?test={@test_id}"><xsl:value-of select="@test_id"/></a></td>
-			<td><xsl:value-of select="@type"/></td>
+			<td>
+				<xsl:value-of select="@type"/>
+				<xsl:if test="@debug">
+					(debug)
+				</xsl:if>
+			</td>
 			<td><xsl:value-of select="@status"/></td>
 			<td>
 				<form method="post">

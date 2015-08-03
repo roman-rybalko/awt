@@ -3,7 +3,7 @@ data может содержать переменные, имя переменн
 в дальнейшем структуры {XXX ...} можно будет дополнить математическими и строковыми операциями
 
 type: open
-data: url
+selector: url
 Открыть страницу
 
 type: exists
@@ -12,7 +12,7 @@ selector: xpath
 
 type: wait
 selector: xpath
-Ожидать плявления на странице
+Ожидать появление на странице
 
 type: check
 selctor: xpath
