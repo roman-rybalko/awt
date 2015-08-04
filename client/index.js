@@ -31,6 +31,7 @@ function process() {
 	for (var i = 0; i < task.task_actions.length; ++i) {
 		var action = task.task_actions[i];
 		try {
+			selutil.clear();
 			scrns[action.action_id] = selutil.get_scrn(selenium);
 			switch (action.type) {
 			case 'open':
@@ -44,16 +45,14 @@ function process() {
 			case 'exists':
 				if (!selutil.wait(selenium.isElementPresent({xpath: action.selector})))
 					throw new Error('xpath is not found');
+				selutil.locate_el(selenium, action.selector);
 				break;
 			case 'wait':
-				if (!selutil.wait_timeout(selenium.isElementPresent({xpath: action.selector})))
-					throw new Error('xpath is not found');
+				selutil.locate_el(selenium, action.selector);
 				break;
 			case 'check':
 				var elxp = xpath.el(action.selector);
-				if (!selutil.wait_timeout(selenium.isElementPresent({xpath: elxp})))
-					throw new Error('element xpath ' + elxp + ' is not found');
-				var el = selutil.wait(selenium.findElement({xpath: elxp}));
+				var el = selutil.locate_el(selenium, elxp);
 				var attr = xpath.attr(action.selector);
 				var data;
 				if (attr)
@@ -64,17 +63,14 @@ function process() {
 					throw new Error('RegExp ' + action.data + ' for element ' + elxp + (attr ? ' attribute ' + attr : ' text') + ' is not matched');
 				break;
 			case 'click':
-				if (!selutil.wait_timeout(selenium.isElementPresent({xpath: action.selector})))
-					throw new Error('xpath is not found');
-				selutil.wait(selutil.wait(selenium.findElement({xpath: action.selector})).click());
+				var el = selutil.locate_el(selenium, action.selector);
+				selutil.wait(el.click());
 				break;
 			case 'modify':
 				throw new Error('Action modify is not supported yet');
 				break;
 			case 'enter':
-				if (!selutil.wait_timeout(selenium.isElementPresent({xpath: action.selector})))
-					throw new Error('xpath is not found');
-				var el = selutil.wait(selenium.findElement({xpath: action.selector}));
+				var el = selutil.locate_el(selenium, action.selector);
 				selutil.wait(el.clear());
 				selutil.wait(el.sendKeys(action.data));
 				break;
