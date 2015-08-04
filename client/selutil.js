@@ -2,6 +2,7 @@
 var wait = require('wait.for');
 var config = require('./config');
 var selection_border_size = 20;
+var selection_html_id = 'selection' + new Date().getTime();
 
 function promise2nodecb(promise, timeout_ms, cb) {
 	var timer = setTimeout(function() {
@@ -61,10 +62,14 @@ function show_selection(selenium, area) {
 		area.x = 0;
 	if (area.y < 0)
 		area.y = 0;
+	selenium_wait(selenium.executeScript(
+		'var el = document.createElement("div");'
+		+ 'el.innerHTML = \'<div id="' + selection_html_id + '" style="position: absolute; left: ' + area.x + 'px; top: ' + area.y + 'px; width: ' + area.w + 'px; height: ' + area.h + 'px; border: 5px dotted red; z-index: 7777777;"></div>\';'
+		+ 'document.getElementsByTagName("body")[0].appendChild(el.firstChild);'));
 }
 
 function hide_selection(selenium) {
-	
+	selenium_wait(selenium.executeScript('var el = document.getElementById("' + selection_html_id + '"); if (el) el.parentElement.removeChild(el);'));
 }
 
 function scroll(selenium, pos) {

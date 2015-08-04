@@ -31,7 +31,7 @@ function process() {
 	for (var i = 0; i < task.task_actions.length; ++i) {
 		var action = task.task_actions[i];
 		try {
-			selutil.clear();
+			selutil.clear(selenium);
 			scrns[action.action_id] = selutil.get_scrn(selenium);
 			switch (action.type) {
 			case 'open':
@@ -46,13 +46,16 @@ function process() {
 				if (!selutil.wait(selenium.isElementPresent({xpath: action.selector})))
 					throw new Error('xpath is not found');
 				selutil.locate_el(selenium, action.selector);
+				scrns[action.action_id] = selutil.get_scrn(selenium);
 				break;
 			case 'wait':
 				selutil.locate_el(selenium, action.selector);
+				scrns[action.action_id] = selutil.get_scrn(selenium);
 				break;
 			case 'check':
 				var elxp = xpath.el(action.selector);
 				var el = selutil.locate_el(selenium, elxp);
+				scrns[action.action_id] = selutil.get_scrn(selenium);
 				var attr = xpath.attr(action.selector);
 				var data;
 				if (attr)
@@ -64,6 +67,8 @@ function process() {
 				break;
 			case 'click':
 				var el = selutil.locate_el(selenium, action.selector);
+				scrns[action.action_id] = selutil.get_scrn(selenium);
+				selutil.clear(selenium);
 				selutil.wait(el.click());
 				break;
 			case 'modify':
@@ -71,6 +76,8 @@ function process() {
 				break;
 			case 'enter':
 				var el = selutil.locate_el(selenium, action.selector);
+				scrns[action.action_id] = selutil.get_scrn(selenium);
+				selutil.clear(selenium);
 				selutil.wait(el.clear());
 				selutil.wait(el.sendKeys(action.data));
 				break;
@@ -79,7 +86,6 @@ function process() {
 				throw new Error('unsupported action type');
 				break;
 			}
-			scrns[action.action_id] = selutil.get_scrn(selenium);
 		} catch (e) {
 			fails[action.action_id] = e.message;
 			if (!task.task_debug)
