@@ -27,6 +27,8 @@ function process() {
 	if (!status.ok)
 		throw new Error('status parsing failed');
 	var selenium = new webdriver.Builder().forBrowser(config.selenium_browser).usingServer(config.selenium_server).build();
+	if (config.selenium_fullscreen)
+		selutil.wait(selenium.manage().window().maximize());
 	var fails = {}, scrns = {};
 	for (var i = 0; i < task.task_actions.length; ++i) {
 		var action = task.task_actions[i];
@@ -39,8 +41,6 @@ function process() {
 					action.selector = 'http://' + action.selector;
 				selutil.wait(selenium.get(action.selector));
 				scrns[action.action_id] = selutil.get_scrn(selenium);
-				if (!selutil.wait_timeout(selenium.isElementPresent({xpath: '//html'})))
-					throw new Error('page open failed');
 				break;
 			case 'exists':
 				if (!selutil.wait(selenium.isElementPresent({xpath: action.selector})))
