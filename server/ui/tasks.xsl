@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template match="tasks">
+	<a href="../?tests=1">Tests</a><br/>
 	<h1>Tasks</h1>
 	<table>
 	<tr><th>id</th><th>test id</th><th>type</th><th>status</th></tr>
