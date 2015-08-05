@@ -47,12 +47,16 @@ function show_selection(selenium, area) {
 	var border_size = 5;
 	area.x -= padding_size;
 	area.y -= padding_size;
-	area.w += padding_size;
-	area.h += padding_size;
+	area.w += padding_size * 2;
+	area.h += padding_size * 2;
+	area.x -= border_size;
+	area.y -= border_size;
+	area.w -= border_size;
+	area.h -= border_size;
 	if (area.x < 0)
-		area.x = border_size;
+		area.x = 0;
 	if (area.y < 0)
-		area.y = border_size;
+		area.y = 0;
 	selenium_wait(selenium.executeScript(
 		'var el = document.createElement("div");'
 		+ 'el.innerHTML = \'<div id="' + selection_html_id + '" style="position: absolute; left: ' + area.x + 'px; top: ' + area.y + 'px; width: ' + area.w + 'px; height: ' + area.h + 'px; border: ' + border_size + 'px dotted red; z-index: 7777777;"></div>\';'
