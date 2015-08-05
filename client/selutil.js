@@ -1,8 +1,7 @@
 "use strict";
 var wait = require('wait.for');
 var config = require('./config');
-var selection_border_size = 20;
-var selection_html_id = 'selection' + new Date().getTime();
+var selection_html_id = 'selection' + Math.random();
 
 function promise2nodecb(promise, cb) {
 	promise.then(function(val) {
@@ -44,13 +43,19 @@ function get_scrn(selenium) {
 }
 
 function show_selection(selenium, area) {
+	var padding_size = 15;
+	var border_size = 5;
+	area.x -= padding_size;
+	area.y -= padding_size;
+	area.w += padding_size;
+	area.h += padding_size;
 	if (area.x < 0)
-		area.x = 0;
+		area.x = border_size;
 	if (area.y < 0)
-		area.y = 0;
+		area.y = border_size;
 	selenium_wait(selenium.executeScript(
 		'var el = document.createElement("div");'
-		+ 'el.innerHTML = \'<div id="' + selection_html_id + '" style="position: absolute; left: ' + area.x + 'px; top: ' + area.y + 'px; width: ' + area.w + 'px; height: ' + area.h + 'px; border: 5px dotted red; z-index: 7777777;"></div>\';'
+		+ 'el.innerHTML = \'<div id="' + selection_html_id + '" style="position: absolute; left: ' + area.x + 'px; top: ' + area.y + 'px; width: ' + area.w + 'px; height: ' + area.h + 'px; border: ' + border_size + 'px dotted red; z-index: 7777777;"></div>\';'
 		+ 'document.getElementsByTagName("body")[0].appendChild(el.firstChild);'));
 }
 
@@ -59,6 +64,9 @@ function hide_selection(selenium) {
 }
 
 function scroll(selenium, pos) {
+	var win_size = selenium_wait(selenium.manage().window().getSize());
+	pos.x -= Math.round(win_size.width / 2);  // the center of the window
+	pos.y -= Math.round(win_size.height / 2);  // the center of the window
 	if (pos.x < 0)
 		pos.x = 0;
 	if (pos.y < 0)
@@ -72,9 +80,8 @@ function show_element(selenium, xpath) {
 	var el = selenium_wait(selenium.findElement({xpath: xpath}));
 	var location = selenium_wait(el.getLocation());
 	var size = selenium_wait(el.getSize());
-	scroll(selenium, {x: location.x - selection_border_size * 2, y: location.y - selection_border_size * 2});
-	show_selection(selenium, {x: location.x - selection_border_size, y: location.y - selection_border_size,
-		w: size.width + selection_border_size, h: size.height + selection_border_size});
+	scroll(selenium, {x: location.x + Math.round(size.width / 2), y: location.y + Math.round(size.height / 2)});
+	show_selection(selenium, {x: location.x, y: location.y, w: size.width, h: size.height});
 	return el;
 }
 
