@@ -65,7 +65,7 @@ function process() {
 				else
 					data = selutil.wait(el.getText());
 				if (!data.match(new RegExp(action.data)))
-					throw new Error('RegExp ' + action.data + ' for element ' + elxp + (attr ? ' attribute ' + attr : ' text') + ' is not matched');
+					throw new Error('RegExp "' + action.data + '" for element "' + elxp + '"' + (attr ? ' attribute "' + attr + '"' : ' text') + ' is not matched');
 				break;
 			case 'click':
 				var el = selutil.locate_el(selenium, action.selector);
