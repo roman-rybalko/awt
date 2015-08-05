@@ -5,7 +5,7 @@ module.exports = {
 	node_id: 'test1',
 	selenium_browser: 'firefox',
 	selenium_server: 'http://localhost:4444/wd/hub',
-	selenium_timeout: 10000,  // msec
+	selenium_timeout: 3000,  // msec
 	selenium_fullscreen: false,
 	batch_count: 1,
 	batch_timeout: 5000,  // msec

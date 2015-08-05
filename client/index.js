@@ -27,8 +27,10 @@ function process() {
 	if (!status.ok)
 		throw new Error('status parsing failed');
 	var selenium = new webdriver.Builder().forBrowser(config.selenium_browser).usingServer(config.selenium_server).build();
+	selutil.wait(selenium.manage().timeouts().pageLoadTimeout(config.selenium_timeout));  // throws
+	selutil.wait(selenium.manage().timeouts().setScriptTimeout(config.selenium_timeout));  // throws
 	if (config.selenium_fullscreen)
-		selutil.wait(selenium.manage().window().maximize());
+		selutil.wait(selenium.manage().window().maximize());  // throws
 	var fails = {}, scrns = {};
 	for (var i = 0; i < task.task_actions.length; ++i) {
 		var action = task.task_actions[i];
@@ -92,7 +94,7 @@ function process() {
 				break;
 		}
 	}
-	selenium.quit();
+	selutil.wait(selenium.quit());  // throws
 	var params = {
 		task_id: task.task_id,
 		status: Object.keys(fails).length ? 'failed' : 'succeeded',

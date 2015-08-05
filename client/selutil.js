@@ -4,30 +4,16 @@ var config = require('./config');
 var selection_border_size = 20;
 var selection_html_id = 'selection' + new Date().getTime();
 
-function promise2nodecb(promise, timeout_ms, cb) {
-	var timer = setTimeout(function() {
-		if (timer) {
-			timer = null;
-			cb(new Error('timeout'));
-		}
-	}, timeout_ms);
+function promise2nodecb(promise, cb) {
 	promise.then(function(val) {
-		if (timer) {
-			clearTimeout(timer);
-			timer = null;
-			cb(undefined, val);
-		}
+		cb(undefined, val);
 	}, function(err) {
-		if (timer) {
-			clearTimeout(timer);
-			timer = null;
-			cb(err);
-		}
+		cb(err);
 	});
 }
 
 function selenium_wait(promise) {
-	return wait.for(promise2nodecb, promise, config.selenium_timeout);
+	return wait.for(promise2nodecb, promise);
 }
 
 function sleep(ms) {
