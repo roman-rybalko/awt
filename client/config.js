@@ -1,9 +1,9 @@
 module.exports = {
 	server_url: 'http://www/awt/server/task.php',
 	server_token: 'EtZGlOGWMGtEOptUcaQN98KTnPrXpvXgpY1orOue04',
-	task_type: 'gc',
+	task_type: 'ff',
 	node_id: 'test1',
-	selenium_browser: 'chrome',
+	selenium_browser: 'firefox',
 	selenium_server: 'http://localhost:4410/wd/hub',
 	selenium_port: 4410,
 	selenium_timeout: 10000,  // msec

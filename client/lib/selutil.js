@@ -27,13 +27,11 @@ function sleep(ms) {
 
 function selenium_wait_xpath(selenium, xpath) {
 	var start_time = new Date().getTime();
-	while (new Date().getTime() < start_time + config.selenium_timeout) {
-		var result = selenium_wait_promise(selenium.isElementPresent({xpath: xpath}));
-		if (result)
-			return result;
+	while (new Date().getTime() < start_time + config.selenium_timeout)
+		if (selenium_wait_promise(selenium.isElementPresent({xpath: xpath})))
+			return true;
 		else
 			sleep(100);
-	}
 }
 
 function get_scrn(selenium) {

@@ -24,17 +24,16 @@ console.log('Server started');
 		pstree(child.pid, function(err, children){
 			if (err)
 				console.log('pstree error:', err);
-			else {
+			else
 				children.forEach(function(ch){
 					var pid = ch.PID;
 					console.log('Terminating pid ' + pid);
 					try {
 						process.kill(pid, 'SIGTERM');
 					} catch (e) {
-						console.log('pid ' + pid + ' does not exist');
+						console.error('pid ' + pid + ' does not exist');
 					}					
 				});
-			}
 			child.kill('SIGTERM');
 		});
 	});
