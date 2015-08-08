@@ -164,6 +164,11 @@ class User {
 	method: post
 	params: test_id name
 	submit: modify
+	
+	Copy
+	method: post
+	params: test_id name
+	submit: copy
 -->
 <?php
 		$db = $this->db;
@@ -184,6 +189,15 @@ class User {
 				echo '<message type="notice" value="test_modify_ok"/>';
 			else
 				echo '<message type="error" value="test_modify_fail"/>';
+		} else if (isset($_POST['copy'])) {
+			if ($testId = $db->insert('tests', ['user_id' => $userId, 'name' => $_POST['name']])) {
+				foreach ($db->select('test_actions', ['type', 'selector', 'data', 'action_id'], ['test_id' => $_POST['test_id']]) as $action) {
+					$action['test_id'] = $testId;
+					$db->insert('test_actions', $action);
+				}
+				echo '<message type="notice" value="test_copy_ok"/>';
+			} else
+				echo '<message type="error" value="test_copy_fail"/>';
 		}
 		echo '<tests>';
 		foreach ($db->select('tests', ['test_id', 'name'], ['user_id' => $userId]) as $test)

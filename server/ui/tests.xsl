@@ -24,6 +24,13 @@
 				<a href="../?test={@id}">Test Actions</a>
 			</td>
 			<td>
+				<form method="post">
+					<input type="hidden" name="test_id" value="{@id}"/>
+					<input type="text" name="name"/>
+					<input type="submit" name="copy" value="Copy"/>
+				</form>
+			</td>
+			<td>
 				<form method="post" action="../?tasks=1">
 					<input type="hidden" name="test_id" value="{@id}"/>
 					<input type="text" name="type"/>
