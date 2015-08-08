@@ -1,7 +1,8 @@
 "use strict";
+
 var request = require('request');
 var wait = require('wait.for');
-var config = require('./config');
+var config = require('../config');
 
 function server_req(params) {
 	params['token'] = config.server_token;

@@ -1,9 +1,13 @@
-var task = require('./index');
+"use strict";
+
+var task = require('./lib/index');
 var wait = require('wait.for');
 var config = require('./config');
 var count = 0;
 var timer;
 var stop = false;
+
+process.title = config.node_id + '-batch';
 
 function cb(err, val) {
 	console.info('task done, err:', err, 'val:', val);

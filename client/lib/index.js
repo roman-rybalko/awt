@@ -1,10 +1,12 @@
 "use strict";
+
 var webdriver = require('selenium-webdriver');
 var wait = require('wait.for');
 var selutil = require('./selutil');
 var srv = require('./srv');
 var xpath = require('./xpath');
-var config = require('./config');
+var scrot = require('./scrot');
+var config = require('../config');
 
 function process() {
 	var task = srv.req({
@@ -35,29 +37,28 @@ function process() {
 	for (var i = 0; i < task.task_actions.length; ++i) {
 		var action = task.task_actions[i];
 		try {
-			selutil.clear(selenium);
-			scrns[action.action_id] = selutil.get_scrn(selenium);
+			selutil.hide_selection(selenium);
 			switch (action.type) {
 			case 'open':
 				if (!action.selector.match(/^http(s)*:\/\//i))
 					action.selector = 'http://' + action.selector;
 				selutil.wait(selenium.get(action.selector));
-				scrns[action.action_id] = selutil.get_scrn(selenium);
+				scrns[action.action_id] = wait.for(scrot.get_scrn);
 				break;
 			case 'exists':
 				if (!selutil.wait(selenium.isElementPresent({xpath: action.selector})))
 					throw new Error('xpath is not found');
 				selutil.locate_el(selenium, action.selector);
-				scrns[action.action_id] = selutil.get_scrn(selenium);
+				scrns[action.action_id] = wait.for(scrot.get_scrn);
 				break;
 			case 'wait':
 				selutil.locate_el(selenium, action.selector);
-				scrns[action.action_id] = selutil.get_scrn(selenium);
+				scrns[action.action_id] = wait.for(scrot.get_scrn);
 				break;
 			case 'check':
 				var elxp = xpath.el(action.selector);
 				var el = selutil.locate_el(selenium, elxp);
-				scrns[action.action_id] = selutil.get_scrn(selenium);
+				scrns[action.action_id] = wait.for(scrot.get_scrn);
 				var attr = xpath.attr(action.selector);
 				var data;
 				if (attr)
@@ -69,8 +70,8 @@ function process() {
 				break;
 			case 'click':
 				var el = selutil.locate_el(selenium, action.selector);
-				scrns[action.action_id] = selutil.get_scrn(selenium);
-				selutil.clear(selenium);
+				scrns[action.action_id] = wait.for(scrot.get_scrn);
+				selutil.hide_selection(selenium);
 				selutil.wait(el.click());
 				break;
 			case 'modify':
@@ -78,17 +79,17 @@ function process() {
 				break;
 			case 'enter':
 				var el = selutil.locate_el(selenium, action.selector);
-				scrns[action.action_id] = selutil.get_scrn(selenium);
-				selutil.clear(selenium);
+				scrns[action.action_id] = wait.for(scrot.get_scrn);
+				selutil.hide_selection(selenium);
 				selutil.wait(el.clear());
 				selutil.wait(el.sendKeys(action.data));
 				break;
 			default:
-				scrns[action.action_id] = selutil.get_scrn(selenium);
 				throw new Error('unsupported action type');
 				break;
 			}
 		} catch (e) {
+			scrns[action.action_id] = wait.for(scrot.get_scrn);
 			fails[action.action_id] = e.message;
 			if (!task.task_debug)
 				break;
