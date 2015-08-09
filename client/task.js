@@ -1,6 +1,7 @@
 "use strict";
 
 var task = require('./lib/index');
+var config = require('./config');
 
 process.title = config.node_id + '-task';
 
