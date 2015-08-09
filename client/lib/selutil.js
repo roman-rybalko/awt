@@ -62,7 +62,8 @@ function show_selection(selenium, area) {
 		+ 'el.innerHTML = \'<div id="' + selection_html_id + '" style="position: absolute; left: ' + area.x + 'px; top: ' + area.y + 'px; width: ' + area.w + 'px; height: ' + area.h + 'px; border: ' + border_size + 'px dotted red; z-index: 7777777;"></div>\';'
 		+ 'document.getElementsByTagName("body")[0].appendChild(el.firstChild);'));
 	if (!selenium_wait_xpath(selenium, '//*[@id="' + selection_html_id + '"]'))
-		throw new Error('unable to show selection');
+		console.error(new Error('unable to show selection'));
+	sleep(100);  // FIXME: race condition: selection is not displayed on some screenshots
 }
 
 function hide_selection(selenium) {

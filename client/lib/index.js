@@ -46,11 +46,6 @@ function process() {
 				scrns[action.action_id] = wait.for(scrot.get_scrn);
 				break;
 			case 'exists':
-				if (!selutil.wait(selenium.isElementPresent({xpath: action.selector})))
-					throw new Error('xpath is not found');
-				selutil.locate_el(selenium, action.selector);
-				scrns[action.action_id] = wait.for(scrot.get_scrn);
-				break;
 			case 'wait':
 				selutil.locate_el(selenium, action.selector);
 				scrns[action.action_id] = wait.for(scrot.get_scrn);
