@@ -242,7 +242,7 @@ class User {
 				foreach ($db->select('test_actions', ['action_id'], ['test_id' => $testId]) as $testAction)
 					if ($testAction['action_id'] > $lastTestActionId)
 						$lastTestActionId = $testAction['action_id'];
-				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $lastTestActionId + 1, 'type' => $_POST['type'], 'selector' => $_POST['selector'], 'data' => $_POST['data'] ? $_POST['data'] : null]))
+				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $lastTestActionId + 1, 'type' => $_POST['type'], 'selector' => $_POST['selector'] ? $_POST['selector'] : null, 'data' => $_POST['data'] ? $_POST['data'] : null]))
 					echo '<message type="notice" value="test_action_add_ok"/>';
 				else
 					echo '<message type="error" value="test_action_add_fail"/>';
@@ -285,7 +285,7 @@ class User {
 				foreach ($ids as $id)
 					if (!$db->update('test_actions', ['action_id' => $id + 1], ['test_id' => $testId, 'action_id' => $id]))
 						throw new \ErrorException('Something wrong in test_actions indexes: test_id=' . $testId . ', action_id=' . $id . ' move ids=[' . implode(', ', $ids) . ']', null, null, __FILE__, __LINE__);
-				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $testActionId, 'type' => $_POST['type'], 'selector' => $_POST['selector'], 'data' => $_POST['data'] ? $_POST['data'] : null]))
+				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $testActionId, 'type' => $_POST['type'], 'selector' => $_POST['selector'] ? $_POST['selector'] : null, 'data' => $_POST['data'] ? $_POST['data'] : null]))
 					echo '<message type="notice" value="test_action_insert_ok"/>';
 				else
 					echo '<message type="error" value="test_action_insert_fail"/>';

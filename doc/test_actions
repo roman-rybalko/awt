@@ -3,42 +3,38 @@ data может содержать переменные, имя переменн
 в дальнейшем структуры {XXX ...} можно будет дополнить математическими и строковыми операциями
 
 type: open
-selector: url
+data: url
 Открыть страницу
 
 type: exists
 selector: xpath
 Проверить наличие на странице
 
-type: wait
-selector: xpath
-Ожидать появление на странице
-
-type: check
-selctor: xpath
-data: value
-Сравнить содержимое xpath со значением value
-
 type: click
 selector: xpath
 Кликнуть по элементу
-
-type: modify
-selector: xpath
-data: значение
-Изменить значение
 
 type: enter
 selector: xpath
 data: значение
 Ввести данные в поле ввода (input)
 
+type: match
+selctor: xpath
+data: regexp
+Сравнить содержимое xpath со значением regexp
+
+type: modify
+selector: xpath
+data: значение
+Изменить значение
+
 type: set
 selector: имя
 data: значение
 Установить переменную
 
-type: read
+type: get
 selector: xpath
 data: имя
 Установить переменную в значение, полученное из xpath

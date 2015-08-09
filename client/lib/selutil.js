@@ -57,17 +57,27 @@ function show_selection(selenium, area) {
 		area.x = 0;
 	if (area.y < 0)
 		area.y = 0;
-	selenium_wait_promise(selenium.executeScript(
-		'var el = document.createElement("div");'
-		+ 'el.innerHTML = \'<div id="' + selection_html_id + '" style="position: absolute; left: ' + area.x + 'px; top: ' + area.y + 'px; width: ' + area.w + 'px; height: ' + area.h + 'px; border: ' + border_size + 'px dotted red; z-index: 7777777;"></div>\';'
-		+ 'document.getElementsByTagName("body")[0].appendChild(el.firstChild);'));
-	if (!selenium_wait_xpath(selenium, '//*[@id="' + selection_html_id + '"]'))
-		console.error(new Error('unable to show selection'));
+	selenium_wait_promise(selenium.executeScript(function() {
+		var id = arguments[0];
+		var area = arguments[1];
+		var border = arguments[2];
+		var el = document.createElement('div');
+		el.innerHTML = '<div id="' + id + '" style="position: absolute;'
+			+ ' left: ' + area.x + 'px; top: ' + area.y + 'px;'
+			+ ' width: ' + area.w + 'px; height: ' + area.h + 'px;'
+			+ ' border: ' + border + 'px dotted red; z-index: 7777777;"></div>';
+		document.getElementsByTagName("body")[0].appendChild(el.firstChild).appendChild(el);
+		el.parentElement.removeChild(el);  // garbage collection
+	}, selection_html_id, area, border_size));
 	sleep(100);  // FIXME: race condition: selection is not displayed on some screenshots
 }
 
 function hide_selection(selenium) {
-	selenium_wait_promise(selenium.executeScript('var el = document.getElementById("' + selection_html_id + '"); if (el) el.parentElement.removeChild(el);'));
+	selenium_wait_promise(selenium.executeScript(function() {
+		var id = arguments[0];
+		var el = document.getElementById(id);
+		if (el) el.parentElement.removeChild(el);
+	}, selection_html_id));
 }
 
 function scroll(selenium, pos) {
