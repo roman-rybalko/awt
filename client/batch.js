@@ -8,6 +8,8 @@ var timer;
 var stop = false;
 
 process.title = config.node_id + '-batch';
+process.env['DISPLAY'] = ':' + config.xdisplay;
+process.env['XAUTHORITY'] = config.xauth;
 
 function cb(err, val) {
 	console.info('task done, err:', err, 'val:', val);

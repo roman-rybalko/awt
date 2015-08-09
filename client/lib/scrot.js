@@ -8,10 +8,7 @@ var config = require('../config');
 function scrot(cb) {
 	var ext = '.jpg';
 	var tf = tempfile(ext);
-	var env = JSON.parse(JSON.stringify(process.env));
-	env['DISPLAY'] = ':' + config.xdisplay;
-	env['XAUTHORITY'] = config.xauth;
-	var ch = spawn('scrot', [tf.path], {env: env, stdio: 'inherit'});
+	var ch = spawn('scrot', [tf.path], {stdio: 'inherit'});
 	ch.on('error', function(err) {
 		tf.cleanupSync();
 		cb(err);
