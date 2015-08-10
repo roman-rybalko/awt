@@ -1,5 +1,5 @@
 <?php
-require_once '../common/web_construction_set/autoload.php';
+require_once '../web_construction_set/autoload.php';
 header('Content-Type: text/xml');
 //\WebConstructionSet\OutputBuffer\XsltHtml::init();
 //\WebConstructionSet\OutputBuffer\XmlFormatter::init();
