@@ -325,8 +325,9 @@ class User {
 			$debug = null;
 			if (isset($_POST['debug']) && $_POST['debug'])
 				$debug = 1;
-			if ($db->select('tests', ['test_id'], ['user_id' => $userId, 'test_id' => $testId]))
-				if ($taskId = $db->insert('tasks', ['user_id' => $userId, 'test_id' => $testId, 'type' => $type, 'debug' => $debug, 'status' => -1, 'time' => time()])) {
+			if ($tests = $db->select('tests', ['test_name'], ['user_id' => $userId, 'test_id' => $testId])) {
+				$test = $tests[0];
+				if ($taskId = $db->insert('tasks', ['user_id' => $userId, 'test_id' => $testId, 'test_name' => $test['test_name'], 'type' => $type, 'debug' => $debug, 'status' => -1, 'time' => time()])) {
 					foreach ($db->select('test_actions', ['type', 'selector', 'data', 'action_id'], ['test_id' => $testId]) as $action) {
 						$action['task_id'] = $taskId;
 						$db->insert('task_actions', $action);
@@ -335,7 +336,7 @@ class User {
 					echo '<message type="notice" value="task_add_ok"/>';
 				} else
 					echo '<message type="error" value="task_add_fail"/>';
-			else
+			} else
 				echo '<message type="error" value="bad_test_id"/>';
 		} else if (isset($_POST['delete'])) {
 			$taskId = $_POST['task_id'];
@@ -346,8 +347,9 @@ class User {
 				echo '<message type="error" value="bad_task_id"/>';
 		}
 		echo '<tasks>';
-		foreach ($db->select('tasks', ['task_id', 'test_id', 'type', 'debug', 'status', 'data'], ['user_id' => $userId]) as $task) {
-			echo '<task id="', $task['task_id'], '" test_id="', $task['test_id'], '" type="', htmlspecialchars($task['type']), '"',
+		foreach ($db->select('tasks', ['task_id', 'test_id', 'test_name', 'type', 'debug', 'status', 'data'], ['user_id' => $userId]) as $task) {
+			echo '<task id="', $task['task_id'], '" test_id="', $task['test_id'], '"',
+				' test_name="', htmlspecialchars($task['test_name']), '" type="', htmlspecialchars($task['type']), '"',
 				' ', $task['debug'] ? ' debug="1"' : '', ' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"';
 			if ($task['status'] == \AdvancedWebTesting\Task\Status::RUNNING)
 				echo ' vnc="', $task['data'], '"';

@@ -4,11 +4,11 @@
 	<a href="../?tests=1">Tests</a><br/>
 	<h1>Tasks</h1>
 	<table>
-	<tr><th>id</th><th>test id</th><th>type</th><th>status</th></tr>
+	<tr><th>id</th><th>test</th><th>type</th><th>status</th></tr>
 	<xsl:for-each select="task[@status='initial']">
 		<tr>
 			<td><xsl:value-of select="@id"/></td>
-			<td><a href="../?test={@test_id}"><xsl:value-of select="@test_id"/></a></td>
+			<td><a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a></td>
 			<td>
 				<xsl:value-of select="@type"/>
 				<xsl:if test="@debug">
@@ -30,7 +30,7 @@
 	<xsl:for-each select="task[@status!='initial']">
 		<tr>
 			<td><xsl:value-of select="@id"/></td>
-			<td><a href="../?test={@test_id}"><xsl:value-of select="@test_id"/></a></td>
+			<td><a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a></td>
 			<td>
 				<xsl:value-of select="@type"/>
 				<xsl:if test="@debug">
