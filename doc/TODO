@@ -1,0 +1,3 @@
+* убрать vnc, сохранять node-id в status=running
+* убрать addSql из select, сортировать программно
+* increment, decrement, cas для db - статические функции в классе Database\Relational\Tools
