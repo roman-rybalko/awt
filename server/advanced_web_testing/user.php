@@ -325,9 +325,9 @@ class User {
 			$debug = null;
 			if (isset($_POST['debug']) && $_POST['debug'])
 				$debug = 1;
-			if ($tests = $db->select('tests', ['test_name'], ['user_id' => $userId, 'test_id' => $testId])) {
+			if ($tests = $db->select('tests', ['name'], ['user_id' => $userId, 'test_id' => $testId])) {
 				$test = $tests[0];
-				if ($taskId = $db->insert('tasks', ['user_id' => $userId, 'test_id' => $testId, 'test_name' => $test['test_name'], 'type' => $type, 'debug' => $debug, 'status' => -1, 'time' => time()])) {
+				if ($taskId = $db->insert('tasks', ['user_id' => $userId, 'test_id' => $testId, 'test_name' => $test['name'], 'type' => $type, 'debug' => $debug, 'status' => -1, 'time' => time()])) {
 					foreach ($db->select('test_actions', ['type', 'selector', 'data', 'action_id'], ['test_id' => $testId]) as $action) {
 						$action['task_id'] = $taskId;
 						$db->insert('task_actions', $action);
@@ -347,10 +347,11 @@ class User {
 				echo '<message type="error" value="bad_task_id"/>';
 		}
 		echo '<tasks>';
-		foreach ($db->select('tasks', ['task_id', 'test_id', 'test_name', 'type', 'debug', 'status', 'data'], ['user_id' => $userId]) as $task) {
+		foreach ($db->select('tasks', ['task_id', 'test_id', 'test_name', 'type', 'debug', 'status', 'data', 'time'], ['user_id' => $userId]) as $task) {
 			echo '<task id="', $task['task_id'], '" test_id="', $task['test_id'], '"',
 				' test_name="', htmlspecialchars($task['test_name']), '" type="', htmlspecialchars($task['type']), '"',
-				' ', $task['debug'] ? ' debug="1"' : '', ' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"';
+				' ', $task['debug'] ? ' debug="1"' : '', ' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"',
+				' time="', date('Y/m/d H:i:s', $task['time']), '"';
 			if ($task['status'] == \AdvancedWebTesting\Task\Status::RUNNING)
 				echo ' vnc="', $task['data'], '"';
 			echo '/>';
