@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui>
+	<action id="" type="open" data=""/>
+	<action id="" type="exists" selector=""/>
+	<action id="" type="click" selector=""/>
+	<action id="" type="enter" selector="" data=""/>
+	<action id="" type="match" selector="" data=""/>
+	<action id="" type="modify" selector="" data=""/>
+	<action id="" type="var" selector="" data=""/>
+	<action id="" type="var_xpath" selector="" data=""/>
+</ui>

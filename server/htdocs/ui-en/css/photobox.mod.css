@@ -1,0 +1,17 @@
+.pbHide .pbWrapper > *,
+.pbHide .pbWrapper > .prepare{ opacity:0; transition:.2s ease-in; }
+
+.pbWrapper > div, .pbWrapper > img{
+    transition:.2s ease-out;
+    opacity: 1;
+}
+
+/*** when going to the next slide ***/
+/* prepare next slide which will be shown */
+.pbWrapper > *, .pbHide.next .pbWrapper > .prepare{ transform:translatex(40%); }
+/* prepare current slide which will "go away" */
+.pbHide.next .pbWrapper > *{ transform:translatex(-40%);  }
+
+/* when going to the previous slide */
+.pbWrapper > *, .pbHide.prev .pbWrapper > .prepare{ transform:translatex(-40%); }
+.pbHide.prev .pbWrapper > *{ transform:translatex(40%); }

@@ -1,0 +1,44 @@
+{
+  "name": "photobox",
+  "version": "1.9.9",
+  "homepage": "https://github.com/yairEO/photobox",
+  "authors": [
+    "Yair Even Or <vsync.design@gmail.com>"
+  ],
+  "description": "A lightweight CSS3 image gallery that is pretty to look and and easy to use",
+  "main": [
+    "photobox/jquery.photobox.js",
+    "photobox/photobox.css",
+    "images/loading.gif"
+  ],
+  "keywords": [
+    "images",
+    "gallery",
+    "css3",
+    "animation",
+    "lightbox",
+    "effects",
+    "flipping"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "_release": "1.9.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.9.9",
+    "commit": "66e2618db95b9fd8e39f0857b01a4b9e0a43aba7"
+  },
+  "_source": "git://github.com/yairEO/photobox.git",
+  "_target": "~1.9.9",
+  "_originalSource": "photobox",
+  "_direct": true
+}

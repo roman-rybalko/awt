@@ -236,7 +236,8 @@ class User {
 		$db = $this->db;
 		$testId = $_GET['test'];
 		$userId = $this->user->getId();
-		if ($db->select('tests', ['test_id'], ['user_id' => $userId, 'test_id' => $testId])) {
+		if ($tests = $db->select('tests', ['name'], ['user_id' => $userId, 'test_id' => $testId])) {
+			$test = $tests[0];
 			if (isset($_POST['add'])) {
 				$lastTestActionId = 0;
 				foreach ($db->select('test_actions', ['action_id'], ['test_id' => $testId]) as $testAction)
@@ -290,13 +291,12 @@ class User {
 				else
 					echo '<message type="error" value="test_action_insert_fail"/>';
 			}
-			echo '<test id="', $testId, '">';
-			foreach ($db->select('test_actions', ['action_id', 'type', 'selector', 'data'], ['test_id' => $testId], 'order by action_id asc') as $action)
+			echo '<test id="', $testId, '" name="', htmlspecialchars($test['name']), '">';
+			foreach ($db->select('test_actions', ['action_id', 'type', 'selector', 'data'], ['test_id' => $testId], 'order by action_id desc') as $action)
 				echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '" data="', htmlspecialchars($action['data']), '" id="', $action['action_id'], '"/>';
 			echo '</test>';
-		} else {
-			echo '<message type="error" value="bad_test_id"/>';
-		}
+		} else
+			echo '<test><message type="error" value="bad_test_id"/></test>';
 	}
 
 	private function tasks() {
@@ -370,29 +370,27 @@ class User {
 		$db = $this->db;
 		$taskId = $_GET['task'];
 		$userId = $this->user->getId();
-		if ($tasks = $db->select('tasks', ['status', 'data', 'test_id', 'type'], ['user_id' => $userId, 'task_id' => $taskId])) {
+		if ($tasks = $db->select('tasks', ['status', 'data', 'test_id', 'test_name', 'type', 'debug', 'time'], ['user_id' => $userId, 'task_id' => $taskId])) {
 			$task = $tasks[0];
 			$status = $task['status'];
-			echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" type="', $task['type'], '" status="', \AdvancedWebTesting\Task\Status::toString($status), '"';
-			if ($status == \AdvancedWebTesting\Task\Status::STARTING) {
-				echo ' node_id="', $task['data'], '"';
-			}
-			if ($status == \AdvancedWebTesting\Task\Status::RUNNING) {
-				echo ' vnc="', $task['data'], '"';
-			}
-			echo '>';
-			foreach ($db->select('task_actions', ['type', 'selector', 'data', 'action_id', 'scrn_filename', 'failed'], ['task_id' => $taskId], 'order by action_id asc') as $action) {
+			echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" test_name="', htmlspecialchars($task['test_name']), '"',
+				' ', $task['debug'] ? ' debug="1"' : '', ' type="', $task['type'], '" time="', date('Y/m/d H:i:s', $task['time']), '"',
+				' status="', \AdvancedWebTesting\Task\Status::toString($status), '">';
+			foreach ($db->select('task_actions', ['type', 'selector', 'data', 'action_id', 'scrn_filename', 'failed'], ['task_id' => $taskId]) as $action) {
 				echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '"',
-					$action['data'] ? ' data="' . htmlspecialchars($action['data']) . '"' : '', ' id="', $action['action_id'], '"';
+					' data="', htmlspecialchars($action['data']), '" id="', $action['action_id'], '"';
 				if ($action['scrn_filename'])
 					echo ' scrn="', $task['data'] . '/' . $action['scrn_filename'], '"';
-				if ($action['failed'])
+				if ($action['failed']) {
 					echo ' failed="', htmlspecialchars($action['failed']), '"';
+					$failed = true;
+				} else if (($status == \AdvancedWebTesting\Task\Status::SUCCEEDED || $status == \AdvancedWebTesting\Task\Status::FAILED) && ($task['debug'] || !$failed))
+					echo ' succeeded="1"';
 				echo '/>';
 			}
 			echo '</task>';
 		} else
-			echo '<message type="error" value="bad_task_id"/>';
+			echo '<task><message type="error" value="bad_task_id"/></task>';
 	}
 
 	private function scheduler() {
