@@ -117,15 +117,15 @@ function process() {
 						el.innerHTML = data;
 				}, el, attr, action.data));
 				break;
-			case 'set':
+			case 'var':
 				vars[action.selector] = action.data;
 				break;
-			case 'get':
-				var elxp = xpath.el(action.selector);
+			case 'var_xpath':
+				var elxp = xpath.el(action.data);
 				var el = selutil.locate_el(selenium, elxp);
 				scrns[action.action_id] = wait.for(scrot.get_scrn);
 				selutil.hide_selection(selenium);
-				var attr = xpath.attr(action.selector);
+				var attr = xpath.attr(action.data);
 				var data = selutil.wait(selenium.executeScript(function() {
 					var el = arguments[0];
 					var attr = arguments[1];
@@ -134,7 +134,7 @@ function process() {
 					else
 						return el.innerHTML;
 				}, el, attr));
-				vars[action.data] = data;
+				vars[action.selector] = data;
 				break;
 			default:
 				throw new Error('unsupported action type');

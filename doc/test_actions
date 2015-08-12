@@ -29,12 +29,12 @@ selector: xpath
 data: значение
 Изменить значение
 
-type: set
+type: var
 selector: имя
 data: значение
 Установить переменную
 
-type: get
-selector: xpath
-data: имя
+type: var_xpath
+selector: имя
+data: xpath
 Установить переменную в значение, полученное из xpath
