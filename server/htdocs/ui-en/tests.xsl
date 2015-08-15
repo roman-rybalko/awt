@@ -87,7 +87,7 @@
 											<form role="form" method="post">
 												<input type="hidden" name="test_id" value="{@id}" />
 												<div class="form-group">
-													<input class="form-control" placeholder="New Name" name="name" type="text" autofocus="1" />
+													<input class="form-control" placeholder="New Name" name="name" type="text" />
 												</div>
 												<button type="submit" name="modify" class="btn btn-block btn-primary">
 													<i class="fa fa-pencil"></i>
@@ -115,7 +115,7 @@
 											<form role="form" method="post">
 												<input type="hidden" name="test_id" value="{@id}" />
 												<div class="form-group">
-													<input class="form-control" placeholder="New Name" name="name" type="text" autofocus="" />
+													<input class="form-control" placeholder="New Name" name="name" type="text" />
 												</div>
 												<button type="submit" name="copy" class="btn btn-block btn-primary">
 													<i class="fa fa-copy"></i>
@@ -167,19 +167,19 @@
 										<div class="panel-body">
 											<form role="form" method="post" action="../?tasks=1">
 												<input type="hidden" name="test_id" value="{@id}" />
-												<div class="form-group">
-													<input class="form-control" placeholder="test type" name="type" type="text" autofocus="1" />
-												</div>
+												<input type="hidden" name="add" value="1" />
 												<div class="checkbox">
 													<label>
 														<input type="checkbox" name="debug"/>
+														<i class="fa fa-wrench"></i>
 														Debug
 													</label>
 												</div>
-												<button type="submit" name="add" class="btn btn-block btn-success">
-													<i class="fa fa-play"></i>
-													Run
-												</button>
+												<xsl:for-each select="//task_types//type">
+													<button type="submit" name="type" value="{@name}" class="btn btn-success space-x space-y">
+														<xsl:value-of select="@name"/>
+													</button>
+												</xsl:for-each>
 											</form>
 										</div>
 										<div class="modal-footer">

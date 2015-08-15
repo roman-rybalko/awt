@@ -18,7 +18,7 @@ function cb(err, val) {
 	--count;
 	if (stop)
 		return;
-	if (val) {
+	if (val || err) {
 		if (!timer)
 			timer = setTimeout(start, config.batch_timeout);
 	} else {

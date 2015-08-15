@@ -1,7 +1,7 @@
 module.exports = {
-	server_url: 'http://www/awt/server/task.php',
+	server_url: 'http://www/awt/server/htdocs/task.php',
 	server_token: 'EtZGlOGWMGtEOptUcaQN98KTnPrXpvXgpY1orOue04',
-	task_type: 'gc',
+	task_type: 'gc_1920x1080_test',
 	node_id: 'test1',
 	selenium_browser: 'chrome',
 	selenium_server: 'http://localhost:4410/wd/hub',

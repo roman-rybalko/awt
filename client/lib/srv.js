@@ -17,6 +17,8 @@ function server_req(params) {
 	var data = {};
 	if (result[0].statusCode == 200)
 		data = JSON.parse(result[1]);
+	else
+		throw new Error('Server returned status code: ' + result[0].statusCode);
 	return data;
 }
 

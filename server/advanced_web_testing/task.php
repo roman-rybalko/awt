@@ -36,9 +36,11 @@ class Task {
 		$db = $this->db;
 		if ($this->checkAuth()) {
 			while(true) {
-				$tasks = $db->select('tasks', ['task_id', 'debug'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => $type]);
-				if (!$tasks)
-					$tasks = $db->select('tasks', ['task_id', 'debug'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => '']);
+				foreach ($this->getCompatibleTypes($type) as $type2) {
+					$tasks = $db->select('tasks', ['task_id', 'debug'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => $type2]);
+					if ($tasks)
+						break;
+				}
 				if (!$tasks)
 					break;
 				foreach ($tasks as $task)
@@ -50,7 +52,7 @@ class Task {
 			}
 			if (isset($taskId)) {
 				$db->update('tasks', ['data' => $_POST['node_id'], 'time' => time()], ['task_id' => $taskId]);
-				$taskActions = $db->select('task_actions', ['type', 'selector', 'data', 'action_id'], ['task_id' => $taskId], 'order by action_id asc');
+				$taskActions = $db->select('task_actions', ['type', 'selector', 'data', 'action_id'], ['task_id' => $taskId], 'order by action_id desc');
 				$result = [
 					'task_id' => $taskId,
 					'task_actions' => $taskActions
@@ -124,5 +126,23 @@ class Task {
 	private function prepareTaskDataPath($path) {
 		exec('rm -Rf ' . $path);
 		mkdir($path);
+	}
+	
+	private function getCompatibleTypes($typeName) {
+		$db = $this->db;
+		if ($types = $db->select('task_types', ['parent_type_id'], ['name' => $typeName])) {
+			$type = $types[0];
+			$typeNames = [$typeName];
+			$typeId = $type['parent_type_id'];
+		}
+		while ($typeId) {
+			if ($types = $db->select('task_types', ['name', 'parent_type_id'], ['type_id' => $typeId])) {
+				$type = $types[0];
+				$typeNames[] = $type['name'];
+				$typeId = $type['parent_type_id'];
+			} else
+				$typeId = null;
+		}
+		return $typeNames;
 	}
 }

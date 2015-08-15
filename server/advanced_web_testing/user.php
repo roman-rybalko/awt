@@ -203,6 +203,10 @@ class User {
 		foreach ($db->select('tests', ['test_id', 'name'], ['user_id' => $userId]) as $test)
 			echo '<test name="', htmlspecialchars($test['name']), '" id="', $test['test_id'], '"/>';
 		echo '</tests>';
+		echo '<task_types>';
+		foreach ($db->select('task_types', ['name', 'type_id', 'parent_type_id']) as $type)
+			echo '<type name="', $type['name'], '" id="', $type['type_id'], '" parent_id="', $type['parent_type_id'], '"/>';
+		echo '</task_types>';
 	}
 
 	private function test() {

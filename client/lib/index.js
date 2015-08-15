@@ -43,6 +43,7 @@ function process() {
 		}
 		return data;
 	}
+	task.task_actions.sort(function(a, b){return a.action_id - b.action_id;});
 	for (var i = 0; i < task.task_actions.length; ++i) {
 		var action = task.task_actions[i];
 		if (action.data)
