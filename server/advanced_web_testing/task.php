@@ -52,7 +52,7 @@ class Task {
 			}
 			if (isset($taskId)) {
 				$db->update('tasks', ['data' => $_POST['node_id'], 'time' => time()], ['task_id' => $taskId]);
-				$taskActions = $db->select('task_actions', ['type', 'selector', 'data', 'action_id'], ['task_id' => $taskId], 'order by action_id desc');
+				$taskActions = $db->select('task_actions', ['type', 'selector', 'data', 'action_id'], ['task_id' => $taskId]);
 				$result = [
 					'task_id' => $taskId,
 					'task_actions' => $taskActions

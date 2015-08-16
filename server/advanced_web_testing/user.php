@@ -296,7 +296,7 @@ class User {
 					echo '<message type="error" value="test_action_insert_fail"/>';
 			}
 			echo '<test id="', $testId, '" name="', htmlspecialchars($test['name']), '">';
-			foreach ($db->select('test_actions', ['action_id', 'type', 'selector', 'data'], ['test_id' => $testId], 'order by action_id desc') as $action)
+			foreach ($db->select('test_actions', ['action_id', 'type', 'selector', 'data'], ['test_id' => $testId]) as $action)
 				echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '" data="', htmlspecialchars($action['data']), '" id="', $action['action_id'], '"/>';
 			echo '</test>';
 		} else

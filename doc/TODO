@@ -1,3 +1,5 @@
-* убрать addSql из select, сортировать в браузере
-* increment, decrement, cas для db - статические функции в классе Database\Relational\Tools
+* Делать focus только для .form-control для первого элемента
 * удалять test в корзину - добавить поля trash и time в tests
+* Утилита-браузер для заполнения xpath
+* административный интерфейс - статистика, мониторинг
+* increment, decrement, cas для db - статические функции в классе Database\Relational\Tools
