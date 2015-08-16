@@ -21,8 +21,8 @@ function process() {
 		throw new Error('task parsing failed');
 	var status = srv.req({
 		task_id: task.task_id,
-		status: 'started',
-		vnc: 'ws://stub',
+		status: 'running',
+		node_id: config.node_id
 	});
 	if (status.fail)
 		return status.fail;
@@ -152,6 +152,7 @@ function process() {
 	var params = {
 		task_id: task.task_id,
 		status: Object.keys(fails).length ? 'failed' : 'succeeded',
+		node_id: config.node_id
 	};
 	for (var id in fails)
 		params['fail' + id] = fails[id];

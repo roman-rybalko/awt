@@ -78,9 +78,8 @@ class Task {
 		$db = $this->db;
 		if ($this->checkAuth()) {
 			switch ($status) {
-				case 'started':
-					$vnc = $_POST['vnc'];
-					if ($db->update('tasks', ['data' => $vnc, 'status' => \AdvancedWebTesting\Task\Status::RUNNING, 'time' => time()], ['task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::STARTING]))
+				case 'running':
+					if ($db->update('tasks', ['status' => \AdvancedWebTesting\Task\Status::RUNNING, 'time' => time()], ['task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::STARTING]))
 						$result['ok'] = 1;
 					else
 						$result['fail'] = 'task update failed';
