@@ -176,7 +176,7 @@
 													</label>
 												</div>
 												<xsl:for-each select="//task_types//type">
-													<button type="submit" name="type" value="{@name}" class="btn btn-success space-x space-y">
+													<button type="submit" name="type" value="{@name}" class="btn btn-success btn-outline space-x space-y">
 														<xsl:value-of select="@name"/>
 													</button>
 												</xsl:for-each>
