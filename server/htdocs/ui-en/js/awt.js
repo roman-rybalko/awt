@@ -5,7 +5,7 @@ $(function() {
 		$('.table-dataTable').DataTable();
 	if ($('.modal').length)
 		$('.modal').on('shown.bs.modal', function() {
-			$(this).find('input').focus();
+			$(this).find('.form-control').first().focus();
 		});
 	if ($('#gallery-photobox').length) {
 		$('img.gallery-photobox-img').each(function() {
