@@ -160,11 +160,16 @@ class User {
 	params: test_id
 	submit: delete
 
+	Undelete
+	method: post
+	params: test_id
+	submit: undelete
+
 	Modify
 	method: post
 	params: test_id name
 	submit: modify
-	
+
 	Copy
 	method: post
 	params: test_id name
@@ -174,23 +179,27 @@ class User {
 		$db = $this->db;
 		$userId = $this->user->getId();
 		if (isset($_POST['add'])) {
-			if ($db->insert('tests', ['user_id' => $userId, 'name' => $_POST['name']]))
+			if ($db->insert('tests', ['user_id' => $userId, 'name' => $_POST['name'], 'time' => time()]))
 				echo '<message type="notice" value="test_add_ok"/>';
 			else
 				echo '<message type="error" value="test_add_fail"/>';
 		} else if (isset($_POST['delete'])) {
-			if ($db->delete('tests', ['user_id' => $userId, 'test_id' => $_POST['test_id']])) {
-				$db->delete('test_actions', ['test_id' => $_POST['test_id']]);
+			if ($db->update('tests', ['deleted' => 1, 'time' => time()], ['user_id' => $userId, 'test_id' => $_POST['test_id']]))
 				echo '<message type="notice" value="test_delete_ok"/>';
-			} else
+			else
 				echo '<message type="error" value="test_delete_fail"/>';
+		} else if (isset($_POST['undelete'])) {
+			if ($db->update('tests', ['deleted' => null, 'time' => time()], ['user_id' => $userId, 'test_id' => $_POST['test_id']]))
+				echo '<message type="notice" value="test_undelete_ok"/>';
+			else
+				echo '<message type="error" value="test_undelete_fail"/>';
 		} else if (isset($_POST['modify'])) {
-			if ($db->update('tests', ['name' => $_POST['name']], ['user_id' => $userId, 'test_id' => $_POST['test_id']]))
+			if ($db->update('tests', ['name' => $_POST['name'], 'time' => time()], ['user_id' => $userId, 'test_id' => $_POST['test_id']]))
 				echo '<message type="notice" value="test_modify_ok"/>';
 			else
 				echo '<message type="error" value="test_modify_fail"/>';
 		} else if (isset($_POST['copy'])) {
-			if ($testId = $db->insert('tests', ['user_id' => $userId, 'name' => $_POST['name']])) {
+			if ($testId = $db->insert('tests', ['user_id' => $userId, 'name' => $_POST['name'], 'time' => time()])) {
 				foreach ($db->select('test_actions', ['type', 'selector', 'data', 'action_id'], ['test_id' => $_POST['test_id']]) as $action) {
 					$action['test_id'] = $testId;
 					$db->insert('test_actions', $action);
@@ -200,8 +209,13 @@ class User {
 				echo '<message type="error" value="test_copy_fail"/>';
 		}
 		echo '<tests>';
-		foreach ($db->select('tests', ['test_id', 'name'], ['user_id' => $userId]) as $test)
-			echo '<test name="', htmlspecialchars($test['name']), '" id="', $test['test_id'], '"/>';
+		foreach ($db->select('tests', ['test_id', 'name', 'time', 'deleted'], ['user_id' => $userId]) as $test) {
+			echo '<test name="', htmlspecialchars($test['name']), '" id="', $test['test_id'], '"',
+				' time="', \AdvancedWebTesting\User\Tools::formatTime($test['time']), '"';
+			if ($test['deleted'])
+				echo ' deleted="1"';
+			echo '/>';
+		}
 		echo '</tests>';
 		echo '<task_types>';
 		foreach ($db->select('task_types', ['name', 'type_id', 'parent_type_id']) as $type)
@@ -240,30 +254,37 @@ class User {
 		$db = $this->db;
 		$testId = $_GET['test'];
 		$userId = $this->user->getId();
-		if ($tests = $db->select('tests', ['name'], ['user_id' => $userId, 'test_id' => $testId])) {
+		if ($tests = $db->select('tests', ['name', 'time', 'deleted'], ['user_id' => $userId, 'test_id' => $testId])) {
 			$test = $tests[0];
 			if (isset($_POST['add'])) {
 				$lastTestActionId = 0;
 				foreach ($db->select('test_actions', ['action_id'], ['test_id' => $testId]) as $testAction)
 					if ($testAction['action_id'] > $lastTestActionId)
 						$lastTestActionId = $testAction['action_id'];
-				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $lastTestActionId + 1, 'type' => $_POST['type'], 'selector' => $_POST['selector'] ? $_POST['selector'] : null, 'data' => $_POST['data'] ? $_POST['data'] : null]))
+				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $lastTestActionId + 1,
+					'type' => $_POST['type'],
+					'selector' => \AdvancedWebTesting\User\Tools::valueOrNull($_POST, 'selector'),
+					'data' => \AdvancedWebTesting\User\Tools::valueOrNull($_POST, 'data')
+				])) {
+					$db->update('tests', ['time' => time()], ['test_id' => $testId]);
 					echo '<message type="notice" value="test_action_add_ok"/>';
-				else
+				} else
 					echo '<message type="error" value="test_action_add_fail"/>';
 			} else if (isset($_POST['delete'])) {
-				if ($db->delete('test_actions', ['test_id' => $testId, 'action_id' => $_POST['action_id']]))
+				if ($db->delete('test_actions', ['test_id' => $testId, 'action_id' => $_POST['action_id']])) {
+					$db->update('tests', ['time' => time()], ['test_id' => $testId]);
 					echo '<message type="notice" value="test_action_delete_ok"/>';
-				else
+				} else
 					echo '<message type="error" value="test_action_delete_fail"/>';
 			} else if (isset($_POST['modify'])) {
 				$fields = [];
 				foreach(['type', 'selector', 'data'] as $field)
 					if (isset($_POST[$field]))
-						$fields[$field] = $_POST[$field] ? $_POST[$field] : null;
-				if ($db->update('test_actions', $fields, ['test_id' => $testId, 'action_id' => $_POST['action_id']]))
+						$fields[$field] = \AdvancedWebTesting\User\Tools::valueOrNull($_POST, $field);
+				if ($db->update('test_actions', $fields, ['test_id' => $testId, 'action_id' => $_POST['action_id']])) {
+					$db->update('tests', ['time' => time()], ['test_id' => $testId]);
 					echo '<message type="notice" value="test_action_modify_ok"/>';
-				else
+				} else
 					echo '<message type="error" value="test_action_modify_fail"/>';
 			} else if (isset($_POST['insert'])) {
 				$testActionId = 0;
@@ -290,12 +311,21 @@ class User {
 				foreach ($ids as $id)
 					if (!$db->update('test_actions', ['action_id' => $id + 1], ['test_id' => $testId, 'action_id' => $id]))
 						throw new \ErrorException('Something wrong in test_actions indexes: test_id=' . $testId . ', action_id=' . $id . ' move ids=[' . implode(', ', $ids) . ']', null, null, __FILE__, __LINE__);
-				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $testActionId, 'type' => $_POST['type'], 'selector' => $_POST['selector'] ? $_POST['selector'] : null, 'data' => $_POST['data'] ? $_POST['data'] : null]))
+				if ($db->insert('test_actions', ['test_id' => $testId, 'action_id' => $testActionId,
+						'type' => $_POST['type'],
+						'selector' => \AdvancedWebTesting\User\Tools::valueOrNull($_POST, 'selector'),
+						'data' => \AdvancedWebTesting\User\Tools::valueOrNull($_POST, 'data')
+				])) {
+					$db->update('tests', ['time' => time()], ['test_id' => $testId]);
 					echo '<message type="notice" value="test_action_insert_ok"/>';
-				else
+				} else
 					echo '<message type="error" value="test_action_insert_fail"/>';
 			}
-			echo '<test id="', $testId, '" name="', htmlspecialchars($test['name']), '">';
+			echo '<test id="', $testId, '" name="', htmlspecialchars($test['name']), '"',
+				' time="', \AdvancedWebTesting\User\Tools::formatTime($test['time']), '"';
+			if ($test['deleted'])
+				echo ' deleted="1"';
+			echo '>';
 			foreach ($db->select('test_actions', ['action_id', 'type', 'selector', 'data'], ['test_id' => $testId]) as $action)
 				echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '" data="', htmlspecialchars($action['data']), '" id="', $action['action_id'], '"/>';
 			echo '</test>';
@@ -351,15 +381,11 @@ class User {
 				echo '<message type="error" value="bad_task_id"/>';
 		}
 		echo '<tasks>';
-		foreach ($db->select('tasks', ['task_id', 'test_id', 'test_name', 'type', 'debug', 'status', 'data', 'time'], ['user_id' => $userId]) as $task) {
+		foreach ($db->select('tasks', ['task_id', 'test_id', 'test_name', 'type', 'debug', 'status', 'data', 'time'], ['user_id' => $userId]) as $task)
 			echo '<task id="', $task['task_id'], '" test_id="', $task['test_id'], '"',
 				' test_name="', htmlspecialchars($task['test_name']), '" type="', htmlspecialchars($task['type']), '"',
 				' ', $task['debug'] ? ' debug="1"' : '', ' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"',
-				' time="', date('Y/m/d H:i:s', $task['time']), '"';
-			if ($task['status'] == \AdvancedWebTesting\Task\Status::RUNNING)
-				echo ' vnc="', $task['data'], '"';
-			echo '/>';
-		}
+				' time="', \AdvancedWebTesting\User\Tools::formatTime($task['time']), '"/>';
 		echo '</tasks>';
 	}
 
@@ -378,8 +404,9 @@ class User {
 			$task = $tasks[0];
 			$status = $task['status'];
 			echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" test_name="', htmlspecialchars($task['test_name']), '"',
-				' ', $task['debug'] ? ' debug="1"' : '', ' type="', $task['type'], '" time="', date('Y/m/d H:i:s', $task['time']), '"',
+				' ', $task['debug'] ? ' debug="1"' : '', ' type="', $task['type'], '" time="', \AdvancedWebTesting\User\Tools::formatTime($task['time']), '"',
 				' status="', \AdvancedWebTesting\Task\Status::toString($status), '">';
+			$failed = false;
 			foreach ($db->select('task_actions', ['type', 'selector', 'data', 'action_id', 'scrn_filename', 'failed'], ['task_id' => $taskId]) as $action) {
 				echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '"',
 					' data="', htmlspecialchars($action['data']), '" id="', $action['action_id'], '"';

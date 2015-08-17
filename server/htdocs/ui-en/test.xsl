@@ -32,6 +32,11 @@
 								<b>Time</b>:
 								<xsl:value-of select="@time"/>
 							</div>
+							<xsl:if test="@deleted">
+								<div class="col-lg-4">
+									<b class="text-failure">Deleted</b>
+								</div>
+							</xsl:if>
 						</div>
 					</div>
 				</div>

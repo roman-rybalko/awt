@@ -1,4 +1,7 @@
-* удалять test в корзину - добавить поля trash и time в tests
+* Restore btn from deleted test
+* Run btn from test (not deleted)
+* Task status cancelled
+* Run btn from tasks (restart)
 * Утилита-браузер для заполнения xpath
 * административный интерфейс - статистика, мониторинг
 * increment, decrement, cas для db - статические функции в классе Database\Relational\Tools

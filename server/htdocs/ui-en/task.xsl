@@ -33,7 +33,7 @@
 									<xsl:value-of select="@test_name" />
 								</a>
 							</div>
-							<div class="col-lg-2">
+							<div class="col-lg-3">
 								<b>Type</b>:
 								<xsl:value-of select="@type"/>
 							</div>
@@ -72,7 +72,7 @@
 									</xsl:choose>
 								</span>
 							</div>
-							<div class="col-lg-4">
+							<div class="col-lg-3">
 								<b>Time</b>:
 								<xsl:value-of select="@time"/>
 							</div>

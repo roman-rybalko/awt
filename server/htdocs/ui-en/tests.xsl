@@ -22,180 +22,260 @@
 				</div>
 			</div>
 		</xsl:if>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<table class="table table-striped table-hover table-dataTable">
-							<xsl:if test="count(test) &lt;= 10">
-								<xsl:attribute name="data-paging">false</xsl:attribute>
-							</xsl:if>
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th data-orderable="false"></th>
-									<th data-orderable="false"></th>
-									<th data-orderable="false"></th>
-									<th data-orderable="false"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<xsl:for-each select="test">
+		<xsl:if test="test[not(@deleted)]">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<table class="table table-striped table-hover table-dataTable" data-order='[[1, "desc"]]'>
+								<xsl:if test="count(test[not(@deleted)]) &lt;= 10">
+									<xsl:attribute name="data-paging">false</xsl:attribute>
+								</xsl:if>
+								<thead>
 									<tr>
-										<td>
-											<a href="../?test={@id}">
-												<xsl:value-of select="@name" />
-											</a>
-										</td>
-										<td>
-											<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-test-modify-{@id}">
-												<i class="fa fa-pencil"></i>
-												Modify
-											</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-test-copy-{@id}">
-												<i class="fa fa-copy"></i>
-												Copy
-											</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-test-delete-{@id}">
-												<i class="glyphicon glyphicon-trash"></i>
-												Delete
-											</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-test-run-{@id}">
-												<i class="fa fa-play"></i>
-												Run
-											</button>
-										</td>
+										<th>Name</th>
+										<th>Time</th>
+										<th data-orderable="false"></th>
+										<th data-orderable="false"></th>
+										<th data-orderable="false"></th>
+										<th data-orderable="false"></th>
 									</tr>
-								</xsl:for-each>
-							</tbody>
-						</table>
-						<xsl:for-each select="test">
-							<div class="modal" id="modal-test-modify-{@id}" role="dialog">
-								<div class="modal-dialog modal-sm">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-											<button type="button" class="close" data-dismiss="modal">&#215;</button>
-											Modify: <xsl:value-of select="@name" />
-										</div>
-										<div class="panel-body">
-											<form role="form" method="post">
-												<input type="hidden" name="test_id" value="{@id}" />
-												<div class="form-group">
-													<input class="form-control" placeholder="New Name" name="name" type="text" />
-												</div>
-												<button type="submit" name="modify" class="btn btn-block btn-primary">
+								</thead>
+								<tbody>
+									<xsl:for-each select="test[not(@deleted)]">
+										<tr>
+											<td>
+												<a href="../?test={@id}">
+													<xsl:value-of select="@name" />
+												</a>
+											</td>
+											<td>
+												<xsl:value-of select="@time" />
+											</td>
+											<td>
+												<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-test-modify-{@id}">
 													<i class="fa fa-pencil"></i>
 													Modify
 												</button>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">
-												<i class="fa fa-undo"></i>
-												Cancel
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="modal" id="modal-test-copy-{@id}" role="dialog">
-								<div class="modal-dialog modal-sm">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-											<button type="button" class="close" data-dismiss="modal">&#215;</button>
-											Copy: <xsl:value-of select="@name" />
-										</div>
-										<div class="panel-body">
-											<form role="form" method="post">
-												<input type="hidden" name="test_id" value="{@id}" />
-												<div class="form-group">
-													<input class="form-control" placeholder="New Name" name="name" type="text" />
-												</div>
-												<button type="submit" name="copy" class="btn btn-block btn-primary">
+											</td>
+											<td>
+												<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-test-copy-{@id}">
 													<i class="fa fa-copy"></i>
 													Copy
 												</button>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">
-												<i class="fa fa-undo"></i>
-												Cancel
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="modal" id="modal-test-delete-{@id}" role="dialog">
-								<div class="modal-dialog modal-sm">
-									<div class="panel panel-danger">
-										<div class="panel-heading">
-											<button type="button" class="close" data-dismiss="modal">&#215;</button>
-											Delete: <xsl:value-of select="@name" />
-										</div>
-										<div class="panel-body">
-											<form method="post">
-												<input type="hidden" name="test_id" value="{@id}" />
-												<button type="submit" name="delete" class="btn btn-block btn-danger">
+											</td>
+											<td>
+												<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-test-delete-{@id}">
 													<i class="glyphicon glyphicon-trash"></i>
 													Delete
 												</button>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">
-												<i class="fa fa-undo"></i>
-												Cancel
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="modal" id="modal-test-run-{@id}" role="dialog">
-								<div class="modal-dialog">
-									<div class="panel panel-success">
-										<div class="panel-heading">
-											<button type="button" class="close" data-dismiss="modal">&#215;</button>
-											Run: <xsl:value-of select="@name" />
-										</div>
-										<div class="panel-body">
-											<form role="form" method="post" action="../?tasks=1">
-												<input type="hidden" name="test_id" value="{@id}" />
-												<input type="hidden" name="add" value="1" />
-												<div class="checkbox">
-													<label>
-														<input type="checkbox" name="debug"/>
-														<i class="fa fa-wrench"></i>
-														Debug
-													</label>
-												</div>
-												<xsl:for-each select="//task_types//type">
-													<button type="submit" name="type" value="{@name}" class="btn btn-success btn-outline space-x space-y">
-														<xsl:value-of select="@name"/>
+											</td>
+											<td>
+												<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-test-run-{@id}">
+													<i class="fa fa-play"></i>
+													Run
+												</button>
+											</td>
+										</tr>
+									</xsl:for-each>
+								</tbody>
+							</table>
+							<xsl:for-each select="test">
+								<div class="modal" id="modal-test-modify-{@id}" role="dialog">
+									<div class="modal-dialog modal-sm">
+										<div class="panel panel-primary">
+											<div class="panel-heading">
+												<button type="button" class="close" data-dismiss="modal">&#215;</button>
+												Modify: <xsl:value-of select="@name" />
+											</div>
+											<div class="panel-body">
+												<form role="form" method="post">
+													<input type="hidden" name="test_id" value="{@id}" />
+													<div class="form-group">
+														<input class="form-control" placeholder="New Name" name="name" type="text" />
+													</div>
+													<button type="submit" name="modify" class="btn btn-block btn-primary">
+														<i class="fa fa-pencil"></i>
+														Modify
 													</button>
-												</xsl:for-each>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">
-												<i class="fa fa-undo"></i>
-												Cancel
-											</button>
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">
+													<i class="fa fa-undo"></i>
+													Cancel
+												</button>
+											</div>
 										</div>
 									</div>
 								</div>
+								<div class="modal" id="modal-test-copy-{@id}" role="dialog">
+									<div class="modal-dialog modal-sm">
+										<div class="panel panel-primary">
+											<div class="panel-heading">
+												<button type="button" class="close" data-dismiss="modal">&#215;</button>
+												Copy: <xsl:value-of select="@name" />
+											</div>
+											<div class="panel-body">
+												<form role="form" method="post">
+													<input type="hidden" name="test_id" value="{@id}" />
+													<div class="form-group">
+														<input class="form-control" placeholder="New Name" name="name" type="text" />
+													</div>
+													<button type="submit" name="copy" class="btn btn-block btn-primary">
+														<i class="fa fa-copy"></i>
+														Copy
+													</button>
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">
+													<i class="fa fa-undo"></i>
+													Cancel
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal" id="modal-test-delete-{@id}" role="dialog">
+									<div class="modal-dialog modal-sm">
+										<div class="panel panel-danger">
+											<div class="panel-heading">
+												<button type="button" class="close" data-dismiss="modal">&#215;</button>
+												Delete: <xsl:value-of select="@name" />
+											</div>
+											<div class="panel-body">
+												<form role="form" method="post">
+													<input type="hidden" name="test_id" value="{@id}" />
+													<button type="submit" name="delete" class="btn btn-block btn-danger">
+														<i class="glyphicon glyphicon-trash"></i>
+														Delete
+													</button>
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">
+													<i class="fa fa-undo"></i>
+													Cancel
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal" id="modal-test-run-{@id}" role="dialog">
+									<div class="modal-dialog">
+										<div class="panel panel-success">
+											<div class="panel-heading">
+												<button type="button" class="close" data-dismiss="modal">&#215;</button>
+												Run: <xsl:value-of select="@name" />
+											</div>
+											<div class="panel-body">
+												<form role="form" method="post" action="../?tasks=1">
+													<input type="hidden" name="test_id" value="{@id}" />
+													<input type="hidden" name="add" value="1" />
+													<div class="checkbox">
+														<label>
+															<input type="checkbox" name="debug"/>
+															<i class="fa fa-wrench"></i>
+															Debug
+														</label>
+													</div>
+													<xsl:for-each select="//task_types//type">
+														<button type="submit" name="type" value="{@name}" class="btn btn-success btn-outline space-x space-y">
+															<xsl:value-of select="@name"/>
+														</button>
+													</xsl:for-each>
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">
+													<i class="fa fa-undo"></i>
+													Cancel
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</xsl:for-each>
+						</div>
+					</div>
+				</div>
+			</div>
+		</xsl:if>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-success">
+					<div class="panel-body">
+						<form role="form" method="post" class="form-inline">
+							<div class="form-group space-x">
+								<input class="form-control" placeholder="Name" name="name" type="text" autofocus="1"/>
 							</div>
-						</xsl:for-each>
+							<button type="submit" name="add" class="btn btn-success">
+								<i class="fa fa-plus"></i>
+								Add
+							</button>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
+		<xsl:if test="test[@deleted]">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel-group" id="trash">
+						<div class="panel panel-danger">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#trash" href="#trash-body">
+										<i class="glyphicon glyphicon-trash"></i>
+										Deleted
+									</a>
+								</h4>
+							</div>
+							<div id="trash-body" class="panel-collapse collapse">
+								<div class="panel-body">
+									<table class="table table-striped table-hover table-dataTable" data-order='[[1, "desc"]]'>
+										<xsl:if test="count(test[@deleted]) &lt;= 10">
+											<xsl:attribute name="data-paging">false</xsl:attribute>
+										</xsl:if>
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Time</th>
+												<th data-orderable="false"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<xsl:for-each select="test[@deleted]">
+												<tr>
+													<td>
+														<a href="../?test={@id}">
+															<xsl:value-of select="@name" />
+														</a>
+													</td>
+													<td>
+														<xsl:value-of select="@time" />
+													</td>
+													<td>
+														<form role="form" method="post">
+															<input type="hidden" name="test_id" value="{@id}"/>
+															<button type="submit" name="undelete" class="btn btn-xs btn-success">
+																<i class="fa fa-recycle"></i>
+																Restore
+															</button>
+														</form>
+													</td>
+												</tr>
+											</xsl:for-each>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</xsl:if>
 	</div>
 </xsl:template>
 
