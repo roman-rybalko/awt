@@ -28,13 +28,22 @@
 								<b>Name</b>:
 								<xsl:value-of select="@name" />
 							</div>
-							<div class="col-lg-4">
+							<div class="col-lg-3">
 								<b>Time</b>:
 								<xsl:value-of select="@time"/>
 							</div>
 							<xsl:if test="@deleted">
-								<div class="col-lg-4">
+								<div class="col-lg-1">
 									<b class="text-failure">Deleted</b>
+								</div>
+								<div class="col-lg-1">
+									<form role="form" method="post" action="../?tests=1">
+										<input type="hidden" name="test_id" value="{@id}"/>
+										<button type="submit" name="undelete" class="btn btn-xs btn-success">
+											<i class="fa fa-recycle"></i>
+											Restore
+										</button>
+									</form>
 								</div>
 							</xsl:if>
 						</div>
@@ -49,13 +58,13 @@
 					<div class="panel panel-success">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-lg-8">
+								<div class="col-lg-9">
 									<div class="row">
 										<xsl:apply-templates select="." mode="action_html" />
 									</div>
 								</div>
-								<div class="col-lg-4">
-									<button type="button" class="btn btn-primary space-x space-y" data-toggle="modal" data-target="#modal-action-modify-{@id}">
+								<div class="col-lg-3">
+									<button type="button" class="btn btn-xs btn-primary space-x space-y" data-toggle="modal" data-target="#modal-action-modify-{@id}">
 										<i class="fa fa-edit"></i>
 										Modify
 									</button>
@@ -89,7 +98,7 @@
 											</div>
 										</div>
 									</div>
-									<button type="button" class="btn btn-success space-x space-y" data-toggle="modal" data-target="#modal-action-insert-{@id}">
+									<button type="button" class="btn btn-xs btn-success space-x space-y" data-toggle="modal" data-target="#modal-action-insert-{@id}">
 										<i class="fa fa-expand"></i>
 										Insert
 									</button>
@@ -125,7 +134,7 @@
 											</div>
 										</div>
 									</div>
-									<button type="button" class="btn btn-danger space-x space-y" data-toggle="modal" data-target="#modal-action-delete-{@id}">
+									<button type="button" class="btn btn-xs btn-danger space-x space-y" data-toggle="modal" data-target="#modal-action-delete-{@id}">
 										<i class="glyphicon glyphicon-trash"></i>
 										Delete
 									</button>
@@ -177,8 +186,8 @@
 								<xsl:with-param name="id">add</xsl:with-param>
 							</xsl:call-template>
 							<div class="row">
-								<div class="col-lg-4 col-lg-offset-8">
-									<button type="submit" name="add" class="btn btn-block btn-success">
+								<div class="col-lg-3 col-lg-offset-9">
+									<button type="submit" name="add" class="btn btn-xs btn-block btn-success">
 										<i class="fa fa-plus"></i>
 										Add
 									</button>
