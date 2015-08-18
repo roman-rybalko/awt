@@ -44,6 +44,32 @@ $(function() {
 		action_form_update();
 		$('[data-action-type-id="' + id + '"]').on('change', action_form_update);
 	});
+	if (typeof task_types !== 'undefined' && task_types.length) {
+		var index = [];
+		for (var i = 0; i < task_types.length; ++i) {
+			index[task_types[i].name] = task_types[i];
+			index[task_types[i].id] = task_types[i];
+			task_types[i].children = [];
+		}
+		for (var i = 0; i < task_types.length; ++i) {
+			if (index[task_types[i].parent_id])
+				index[task_types[i].parent_id].children.push(task_types[i]);
+		}
+		$('.task-type').each(function() {
+			var name = $(this).html().replace(/\s+/g, '');
+			var type = index[name];
+			if (type) {
+				var names = [];
+				function walk(type) {
+					names.push(type.name);
+					for (var i = 0; i < type.children.length; ++i)
+						walk(type.children[i]);
+				}
+				walk(type);
+				$(this).attr('title', names.join(', '));
+			}
+		});
+	}
 });
 
 //Loads the correct sidebar on window load,

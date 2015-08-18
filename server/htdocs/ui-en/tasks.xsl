@@ -9,6 +9,7 @@
     <link href="css/dataTables.bootstrap.css" rel="stylesheet" />
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap.min.js"></script>
+    <xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
@@ -54,7 +55,7 @@
 													<xsl:value-of select="@test_name" />
 												</a>
 											</td>
-											<td>
+											<td class="task-type">
 												<xsl:value-of select="@type" />
 											</td>
 											<td>
@@ -133,7 +134,7 @@
 													<xsl:value-of select="@test_name" />
 												</a>
 											</td>
-											<td>
+											<td class="task-type">
 												<xsl:value-of select="@type" />
 											</td>
 											<td>
@@ -210,7 +211,7 @@
 													<xsl:value-of select="@test_name" />
 												</a>
 											</td>
-											<td>
+											<td class="task-type">
 												<xsl:value-of select="@type" />
 											</td>
 											<td>
@@ -290,7 +291,7 @@
 													<xsl:value-of select="@test_name" />
 												</a>
 											</td>
-											<td>
+											<td class="task-type">
 												<xsl:value-of select="@type" />
 											</td>
 											<td>

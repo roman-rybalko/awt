@@ -25,7 +25,7 @@
 							</label>
 						</div>
 						<xsl:for-each select="//task_types//type">
-							<button type="submit" name="type" value="{@name}" class="btn btn-success btn-outline space-x space-y">
+							<button type="submit" name="type" value="{@name}" class="btn btn-success btn-outline space-x space-y task-type">
 								<xsl:value-of select="@name"/>
 							</button>
 						</xsl:for-each>
@@ -40,6 +40,16 @@
 			</div>
 		</div>
 	</div>
+</xsl:template>
+
+<xsl:template name="js_task_types">
+	<script type="text/javascript">
+		task_types = [  // global
+			<xsl:for-each select="//task_types//type">
+				{name: "<xsl:value-of select="@name"/>", id: "<xsl:value-of select="@id"/>", parent_id: "<xsl:value-of select="@parent_id"/>"},
+			</xsl:for-each>
+		];
+	</script>
 </xsl:template>
 
 </xsl:stylesheet>
