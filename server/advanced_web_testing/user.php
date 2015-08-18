@@ -384,6 +384,7 @@ class User {
 				' ', $task['debug'] ? ' debug="1"' : '', ' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"',
 				' time="', \AdvancedWebTesting\User\Tools::formatTime($task['time']), '"/>';
 		echo '</tasks>';
+		$this->task_types();
 	}
 
 	private function task() {

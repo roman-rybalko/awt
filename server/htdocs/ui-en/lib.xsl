@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:template name="modal_test_run">
+<xsl:template name="modal_new_task">
 	<xsl:param name="modal_id"/>
 	<xsl:param name="test_name"/>
+	<xsl:param name="test_id"/>
 	<div class="modal" id="{$modal_id}" role="dialog">
 		<div class="modal-dialog">
 			<div class="panel panel-success">
@@ -14,7 +15,7 @@
 				</div>
 				<div class="panel-body">
 					<form role="form" method="post" action="../?tasks=1">
-						<input type="hidden" name="test_id" value="{@id}"/>
+						<input type="hidden" name="test_id" value="{$test_id}"/>
 						<input type="hidden" name="add" value="1"/>
 						<div class="checkbox">
 							<label>

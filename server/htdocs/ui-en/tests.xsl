@@ -162,9 +162,10 @@
 										</div>
 									</div>
 								</div>
-								<xsl:call-template name="modal_test_run">
+								<xsl:call-template name="modal_new_task">
 									<xsl:with-param name="modal_id">modal-test-run-<xsl:value-of select="@id"/></xsl:with-param>
 									<xsl:with-param name="test_name"><xsl:value-of select="@name"/></xsl:with-param>
+									<xsl:with-param name="test_id"><xsl:value-of select="@id"/></xsl:with-param>
 								</xsl:call-template>
 							</xsl:for-each>
 						</div>
