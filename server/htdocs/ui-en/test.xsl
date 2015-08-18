@@ -46,6 +46,18 @@
 									</form>
 								</div>
 							</xsl:if>
+							<xsl:if test="not(@deleted)">
+								<div class="col-lg-1">
+									<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-test-run-{@id}">
+										<i class="fa fa-play"></i>
+										Run
+									</button>
+								</div>
+								<xsl:call-template name="modal_test_run">
+									<xsl:with-param name="modal_id">modal-test-run-<xsl:value-of select="@id"/></xsl:with-param>
+									<xsl:with-param name="test_name"><xsl:value-of select="@name"/></xsl:with-param>
+								</xsl:call-template>
+							</xsl:if>
 						</div>
 					</div>
 				</div>

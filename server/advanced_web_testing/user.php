@@ -217,10 +217,7 @@ class User {
 			echo '/>';
 		}
 		echo '</tests>';
-		echo '<task_types>';
-		foreach ($db->select('task_types', ['name', 'type_id', 'parent_type_id']) as $type)
-			echo '<type name="', $type['name'], '" id="', $type['type_id'], '" parent_id="', $type['parent_type_id'], '"/>';
-		echo '</task_types>';
+		$this->task_types();
 	}
 
 	private function test() {
@@ -329,6 +326,7 @@ class User {
 			foreach ($db->select('test_actions', ['action_id', 'type', 'selector', 'data'], ['test_id' => $testId]) as $action)
 				echo '<action type="', htmlspecialchars($action['type']), '" selector="', htmlspecialchars($action['selector']), '" data="', htmlspecialchars($action['data']), '" id="', $action['action_id'], '"/>';
 			echo '</test>';
+			$this->task_types();
 		} else
 			echo '<test><message type="error" value="bad_test_id"/></test>';
 	}
@@ -421,6 +419,13 @@ class User {
 			echo '</task>';
 		} else
 			echo '<task><message type="error" value="bad_task_id"/></task>';
+	}
+
+	private function task_types() {
+		echo '<task_types>';
+		foreach ($this->db->select('task_types', ['name', 'type_id', 'parent_type_id']) as $type)
+			echo '<type name="', $type['name'], '" id="', $type['type_id'], '" parent_id="', $type['parent_type_id'], '"/>';
+		echo '</task_types>';
 	}
 
 	private function scheduler() {

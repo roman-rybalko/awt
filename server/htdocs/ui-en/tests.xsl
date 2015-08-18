@@ -162,40 +162,10 @@
 										</div>
 									</div>
 								</div>
-								<div class="modal" id="modal-test-run-{@id}" role="dialog">
-									<div class="modal-dialog">
-										<div class="panel panel-success">
-											<div class="panel-heading">
-												<button type="button" class="close" data-dismiss="modal">&#215;</button>
-												Run: <xsl:value-of select="@name" />
-											</div>
-											<div class="panel-body">
-												<form role="form" method="post" action="../?tasks=1">
-													<input type="hidden" name="test_id" value="{@id}" />
-													<input type="hidden" name="add" value="1" />
-													<div class="checkbox">
-														<label>
-															<input type="checkbox" name="debug"/>
-															<i class="fa fa-wrench"></i>
-															Debug
-														</label>
-													</div>
-													<xsl:for-each select="//task_types//type">
-														<button type="submit" name="type" value="{@name}" class="btn btn-success btn-outline space-x space-y">
-															<xsl:value-of select="@name"/>
-														</button>
-													</xsl:for-each>
-												</form>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default" data-dismiss="modal">
-													<i class="fa fa-undo"></i>
-													Cancel
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
+								<xsl:call-template name="modal_test_run">
+									<xsl:with-param name="modal_id">modal-test-run-<xsl:value-of select="@id"/></xsl:with-param>
+									<xsl:with-param name="test_name"><xsl:value-of select="@name"/></xsl:with-param>
+								</xsl:call-template>
 							</xsl:for-each>
 						</div>
 					</div>
