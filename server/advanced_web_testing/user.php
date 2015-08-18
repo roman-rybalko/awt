@@ -343,10 +343,10 @@ class User {
 	params: test_id [type] [debug]
 	submit: add
 
-	Delete
+	Cancel
 	method: post
 	params: task_id
-	submit: delete
+	submit: cancel
 -->
 <?php
 		$db = $this->db;
@@ -372,13 +372,12 @@ class User {
 					echo '<message type="error" value="task_add_fail"/>';
 			} else
 				echo '<message type="error" value="bad_test_id"/>';
-		} else if (isset($_POST['delete'])) {
+		} else if (isset($_POST['cancel'])) {
 			$taskId = $_POST['task_id'];
-			if ($db->delete('tasks', ['user_id' => $userId, 'task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::INITIAL])) {
-				$db->delete('task_actions', ['task_id' => $taskId]);
-				echo '<message type="notice" value="task_delete_ok"/>';
-			} else
-				echo '<message type="error" value="bad_task_id"/>';
+			if ($db->update('tasks', ['status' => \AdvancedWebTesting\Task\Status::CANCELED, 'time' => time()], ['user_id' => $userId, 'task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::INITIAL]))
+				echo '<message type="notice" value="task_cancel_ok"/>';
+			else
+				echo '<message type="error" value="task_cancel_fail"/>';
 		}
 		echo '<tasks>';
 		foreach ($db->select('tasks', ['task_id', 'test_id', 'test_name', 'type', 'debug', 'status', 'data', 'time'], ['user_id' => $userId]) as $task)

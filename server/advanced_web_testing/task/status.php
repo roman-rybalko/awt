@@ -8,6 +8,7 @@ class Status {
 	const RUNNING = 3;
 	const SUCCEEDED = 4;
 	const FAILED = 5;
+	const CANCELED = 6;
 
 	public static function toString($status) {
 		switch ($status) {
@@ -21,6 +22,8 @@ class Status {
 				return 'succeeded';
 			case Status::FAILED :
 				return 'failed';
+			case Status::CANCELED:
+				return 'canceled';
 			default :
 				return '';
 		}
