@@ -418,6 +418,7 @@ class User {
 				echo '/>';
 			}
 			echo '</task>';
+			$this->task_types();
 		} else
 			echo '<task><message type="error" value="bad_task_id"/></task>';
 	}

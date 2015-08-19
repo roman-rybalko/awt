@@ -9,6 +9,7 @@
     <link href="css/photobox.css" rel="stylesheet" />
     <link href="css/photobox.mod.css" rel="stylesheet" />
     <script src="js/jquery.photobox.min.js"></script>
+    <xsl:call-template name="js_task_types"/>
 	<div class="container-fluid" id="gallery-photobox">
 		<div class="row">
 			<div class="col-lg-12">
@@ -33,9 +34,11 @@
 									<xsl:value-of select="@test_name" />
 								</a>
 							</div>
-							<div class="col-lg-3">
+							<div class="col-lg-2">
 								<b>Type</b>:
-								<xsl:value-of select="@type"/>
+								<span class="task-type">
+									<xsl:value-of select="@type"/>
+								</span>
 							</div>
 							<div class="col-lg-2">
 								<b>Status</b>:
@@ -76,6 +79,17 @@
 								<b>Time</b>:
 								<xsl:value-of select="@time"/>
 							</div>
+							<div class="col-lg-1">
+								<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-test-restart">
+									<i class="fa fa-play"></i>
+									Restart
+								</button>
+							</div>
+							<xsl:call-template name="modal_new_task">
+								<xsl:with-param name="modal_id">modal-test-restart</xsl:with-param>
+								<xsl:with-param name="test_name"><xsl:value-of select="@test_name"/></xsl:with-param>
+								<xsl:with-param name="test_id"><xsl:value-of select="@test_id"/></xsl:with-param>
+							</xsl:call-template>
 						</div>
 					</div>
 				</div>
