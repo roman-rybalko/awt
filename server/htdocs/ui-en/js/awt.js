@@ -46,15 +46,14 @@ $(function() {
 	});
 	if (typeof task_types !== 'undefined' && task_types.length) {
 		var index = [];
-		for (var i = 0; i < task_types.length; ++i) {
-			index[task_types[i].name] = task_types[i];
-			index[task_types[i].id] = task_types[i];
-			task_types[i].children = [];
+		for (var tt in task_types) {
+			index[task_types[tt].name] = task_types[tt];
+			index[task_types[tt].id] = task_types[tt];
+			task_types[tt].children = [];
 		}
-		for (var i = 0; i < task_types.length; ++i) {
-			if (index[task_types[i].parent_id])
-				index[task_types[i].parent_id].children.push(task_types[i]);
-		}
+		for (var tt in task_types)
+			if (index[task_types[tt].parent_id])
+				index[task_types[tt].parent_id].children.push(task_types[tt]);
 		$('.task-type').each(function() {
 			var name = $(this).html().replace(/\s+/g, '');
 			var type = index[name];
@@ -62,14 +61,19 @@ $(function() {
 				var names = [];
 				function walk(type) {
 					names.push(type.name);
-					for (var i = 0; i < type.children.length; ++i)
-						walk(type.children[i]);
+					for (var c in type.children)
+						walk(type.children[c]);
 				}
 				walk(type);
 				$(this).attr('title', names.join(', '));
 			}
 		});
 	}
+	$('#xpath-composer-ok').click(function() {
+		var xpath = $('#xpath-composer-result').val();
+		$('input.action-xpath-element').val(xpath);
+		$('input.action-xpath-expression').val(xpath + '/@class');
+	});
 });
 
 //Loads the correct sidebar on window load,

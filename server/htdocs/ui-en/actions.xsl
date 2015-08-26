@@ -34,12 +34,12 @@
 		<b>Element exists</b>
 	</div>
 	<div class="col-lg-10" title="{@selector}">
-		<b>XPATH</b>: <xsl:value-of select="@selector"/>
+		<b>Element XPATH</b>: <xsl:value-of select="@selector"/>
 	</div>
 </xsl:template>
 
 <xsl:template match="action[@type = 'exists']" mode="action_text">
-	Element exists, XPATH: <xsl:value-of select="@selector"/>
+	Element exists, Element XPATH: <xsl:value-of select="@selector"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'exists']" mode="action_form">
@@ -51,8 +51,8 @@
 	</div>
 	<div class="col-lg-10">
 		<div class="form-group">
-			<label for="action-selector-{@type}-{$id}">XPATH</label>
-			<input class="form-control" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
+			<label for="action-selector-{@type}-{$id}">Element XPATH</label>
+			<input class="form-control action-xpath-element" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
 	</div>
 </xsl:template>
@@ -62,12 +62,12 @@
 		<b>Click</b>
 	</div>
 	<div class="col-lg-10" title="{@selector}">
-		<b>XPATH</b>: <xsl:value-of select="@selector"/>
+		<b>Element XPATH</b>: <xsl:value-of select="@selector"/>
 	</div>
 </xsl:template>
 
 <xsl:template match="action[@type = 'click']" mode="action_text">
-	Click, XPATH: <xsl:value-of select="@selector"/>
+	Click, Element XPATH: <xsl:value-of select="@selector"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'click']" mode="action_form">
@@ -79,8 +79,8 @@
 	</div>
 	<div class="col-lg-10">
 		<div class="form-group">
-			<label for="action-selector-{@type}-{$id}">XPATH</label>
-			<input class="form-control" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
+			<label for="action-selector-{@type}-{$id}">Element XPATH</label>
+			<input class="form-control action-xpath-element" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
 	</div>
 </xsl:template>
@@ -90,7 +90,7 @@
 		<b>Enter</b>
 	</div>
 	<div class="col-lg-6" title="{@selector}">
-		<b>XPATH</b>: <xsl:value-of select="@selector"/>
+		<b>Element XPATH</b>: <xsl:value-of select="@selector"/>
 	</div>
 	<div class="col-lg-4" title="{@data}">
 		<b>Value</b>: <xsl:value-of select="@data"/>
@@ -98,7 +98,7 @@
 </xsl:template>
 
 <xsl:template match="action[@type = 'enter']" mode="action_text">
-	Enter, XPATH: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
+	Enter, Element XPATH: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'enter']" mode="action_form">
@@ -110,8 +110,8 @@
 	</div>
 	<div class="col-lg-6">
 		<div class="form-group">
-			<label for="action-selector-{@type}-{$id}">XPATH</label>
-			<input class="form-control" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
+			<label for="action-selector-{@type}-{$id}">Element XPATH</label>
+			<input class="form-control action-xpath-element" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
 	</div>
 	<div class="col-lg-4">
@@ -127,7 +127,7 @@
 		<b>Match</b>
 	</div>
 	<div class="col-lg-6" title="{@selector}">
-		<b>XPATH</b>: <xsl:value-of select="@selector"/>
+		<b>XPATH Expression</b>: <xsl:value-of select="@selector"/>
 	</div>
 	<div class="col-lg-4" title="{@data}">
 		<b>RegExp</b>: <xsl:value-of select="@data"/>
@@ -135,7 +135,7 @@
 </xsl:template>
 
 <xsl:template match="action[@type = 'match']" mode="action_text">
-	Match, XPATH: <xsl:value-of select="@selector"/>, RegExp: <xsl:value-of select="@data"/>
+	Match, XPATH Expression: <xsl:value-of select="@selector"/>, RegExp: <xsl:value-of select="@data"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'match']" mode="action_form">
@@ -147,8 +147,8 @@
 	</div>
 	<div class="col-lg-6">
 		<div class="form-group">
-			<label for="action-selector-{@type}-{$id}">XPATH</label>
-			<input class="form-control" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
+			<label for="action-selector-{@type}-{$id}">XPATH Expression</label>
+			<input class="form-control action-xpath-expression" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
 	</div>
 	<div class="col-lg-4">
@@ -164,7 +164,7 @@
 		<b>Modify</b>
 	</div>
 	<div class="col-lg-6" title="{@selector}">
-		<b>XPATH</b>: <xsl:value-of select="@selector"/>
+		<b>XPATH Expression</b>: <xsl:value-of select="@selector"/>
 	</div>
 	<div class="col-lg-4" title="{@data}">
 		<b>Value</b>: <xsl:value-of select="@data"/>
@@ -172,7 +172,7 @@
 </xsl:template>
 
 <xsl:template match="action[@type = 'modify']" mode="action_text">
-	Modify, XPATH: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
+	Modify, XPATH Expression: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'modify']" mode="action_form">
@@ -184,8 +184,8 @@
 	</div>
 	<div class="col-lg-6">
 		<div class="form-group">
-			<label for="action-selector-{@type}-{$id}">XPATH</label>
-			<input class="form-control" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
+			<label for="action-selector-{@type}-{$id}">XPATH Expression</label>
+			<input class="form-control action-xpath-expression" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
 	</div>
 	<div class="col-lg-4">
@@ -241,12 +241,12 @@
 		<b>Variable</b>: <xsl:value-of select="@selector"/>
 	</div>
 	<div class="col-lg-6" title="{@data}">
-		<b>XPATH</b>: <xsl:value-of select="@data"/>
+		<b>XPATH Expression</b>: <xsl:value-of select="@data"/>
 	</div>
 </xsl:template>
 
 <xsl:template match="action[@type = 'var_xpath']" mode="action_text">
-	Set variable to value from xpath, Variable: <xsl:value-of select="@selector"/>, XPATH: <xsl:value-of select="@data"/>
+	Set variable to value from xpath, Variable: <xsl:value-of select="@selector"/>, XPATH Expression: <xsl:value-of select="@data"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'var_xpath']" mode="action_form">
@@ -264,8 +264,8 @@
 	</div>
 	<div class="col-lg-6">
 		<div class="form-group">
-			<label for="action-data-{@type}-{$id}">XPATH</label>
-			<input class="form-control" type="text" name="data" value="{@data}" id="action-data-{@type}-{$id}"/>
+			<label for="action-data-{@type}-{$id}">XPATH Expression</label>
+			<input class="form-control action-xpath-expression" type="text" name="data" value="{@data}" id="action-data-{@type}-{$id}"/>
 		</div>
 	</div>
 </xsl:template>
