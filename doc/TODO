@@ -1,6 +1,6 @@
-* Утилита-браузер для заполнения xpath
 * cron: clear canceled tasks
 * cron: clear deleted tests
 * cron: clear finished tasks
+* Helper wells, close by cookie, expire 42 days
 * административный интерфейс - статистика, мониторинг
 * increment, decrement, cas для db - статические функции в классе Database\Relational\Tools
