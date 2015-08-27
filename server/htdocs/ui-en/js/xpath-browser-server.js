@@ -97,7 +97,7 @@
 				if (url2 != url)
 					$(this).attr('src', url2);
 			});
-			$('body *').click(function(ev) {
+			$('body *').mousedown(function(ev) {
 				if (ev.eventPhase != Event.AT_TARGET) return;
 				var els = [];
 				var el = this;
