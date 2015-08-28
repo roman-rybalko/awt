@@ -78,7 +78,7 @@ $(function() {
 					var upd_fl = false;
 					for (var a in tags[t].attrs) {
 						var attr = tags[t].attrs[a];
-						if (attr.expr.match(/@id|@name|@type|@value|contains.+@src|contains.+@href|contains.+@action/)) {
+						if (attr.expr.match(/@id|@name|@type|@value|contains.+@src|contains.+@href|contains.+@action|@role/i)) {
 							upd_fl = true;
 							attr.enabled = true;
 							$('#xpath-composer-tags .xpath-composer-attr-control[data-tag-id=' + t + '][data-attr-id=' + a + ']').prop('checked', true);
@@ -95,7 +95,13 @@ $(function() {
 							--tag_cnt;
 							break;
 						}
-				if (tag_cnt) {
+				for (var t in tags)
+					if (tags[t].name.match(/form|input|button/i)) {
+						tags[t].enabled = true;
+						$('#xpath-composer-tags .xpath-composer-tag-control[data-tag-id=' + t + ']').prop('checked', true);
+						--tag_cnt;
+					}
+				if (tag_cnt > 0) {
 					var t = tags.length - 1;
 					tags[t].enabled = true;
 					$('#xpath-composer-tags .xpath-composer-tag-control[data-tag-id=' + t + ']').prop('checked', true);
