@@ -184,7 +184,7 @@
 							</div>
 							<button type="submit" name="add" class="btn btn-success">
 								<i class="fa fa-plus"></i>
-								Add
+								New
 							</button>
 						</form>
 					</div>

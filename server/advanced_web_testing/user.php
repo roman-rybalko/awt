@@ -179,9 +179,11 @@ class User {
 		$db = $this->db;
 		$userId = $this->user->getId();
 		if (isset($_POST['add'])) {
-			if ($db->insert('tests', ['user_id' => $userId, 'name' => $_POST['name'], 'time' => time()]))
+			if ($test_id = $db->insert('tests', ['user_id' => $userId, 'name' => $_POST['name'], 'time' => time()])) {
 				echo '<message type="notice" value="test_add_ok"/>';
-			else
+				$this->redirect('?test=' . $test_id);
+				return;
+			} else
 				echo '<message type="error" value="test_add_fail"/>';
 		} else if (isset($_POST['delete'])) {
 			if ($db->update('tests', ['deleted' => 1, 'time' => time()], ['user_id' => $userId, 'test_id' => $_POST['test_id']]))

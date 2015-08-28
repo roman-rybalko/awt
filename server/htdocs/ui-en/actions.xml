@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui>
-	<action id="" type="open" data=""/>
-	<action id="" type="exists" selector=""/>
-	<action id="" type="click" selector=""/>
-	<action id="" type="enter" selector="" data=""/>
-	<action id="" type="match" selector="" data=""/>
-	<action id="" type="modify" selector="" data=""/>
-	<action id="" type="var" selector="" data=""/>
-	<action id="" type="var_xpath" selector="" data=""/>
+	<action id="" type="open" selector=""/> <!-- selector="url" -->
+	<action id="" type="exists" selector=""/> <!-- selector="element xpath" -->
+	<action id="" type="click" selector=""/> <!-- selector="element xpath" -->
+	<action id="" type="enter" selector="" data=""/> <!-- selector="element xpath" data="value" -->
+	<action id="" type="modify" selector="" data=""/> <!-- selector="xpath expression" data="value" -->
+	<action id="" type="url" selector=""/> <!-- selector="regexp" -->
+	<action id="" type="title" selector=""/> <!-- selector="regexp" -->
+	<action id="" type="var_regexp" selector="" data=""/> <!-- selector="name" data="regexp" -->
+	<action id="" type="var_xpath" selector="" data=""/> <!-- selector="name" data="xpath expression" -->
+	<action id="" type="var_url" selector=""/> <!-- selector="name" -->
+	<action id="" type="var_title" selector=""/> <!-- selector="name" -->
 </ui>

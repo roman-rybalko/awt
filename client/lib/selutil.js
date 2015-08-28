@@ -13,29 +13,30 @@ function promise2nodecb(promise, cb) {
 	});
 }
 
-function selenium_wait_promise(promise) {
+function wait_promise(promise) {
 	return wait.for(promise2nodecb, promise);
 }
 
 function sleep(ms) {
 	wait.for(function(cb) {
 		setTimeout(function() {
-			cb(undefined, 1);
+			cb(undefined, ms);
 		}, ms);
 	});
 }
 
-function selenium_wait_xpath(selenium, xpath) {
+function wait_condition(condition) {
 	var start_time = new Date().getTime();
 	while (new Date().getTime() < start_time + config.selenium_timeout)
-		if (selenium_wait_promise(selenium.isElementPresent({xpath: xpath})))
+		if (condition())
 			return true;
 		else
 			sleep(100);
+	return false;
 }
 
 function get_scrn(selenium) {
-	var scrn = selenium_wait_promise(selenium.takeScreenshot());
+	var scrn = wait_promise(selenium.takeScreenshot());
 	return {
 		data: new Buffer(scrn, 'base64'),
 		ext: '.png'
@@ -57,7 +58,7 @@ function show_selection(selenium, area) {
 		area.x = 0;
 	if (area.y < 0)
 		area.y = 0;
-	selenium_wait_promise(selenium.executeScript(function() {
+	wait_promise(selenium.executeScript(function() {
 		var id = arguments[0];
 		var area = arguments[1];
 		var border = arguments[2];
@@ -73,7 +74,7 @@ function show_selection(selenium, area) {
 }
 
 function hide_selection(selenium) {
-	selenium_wait_promise(selenium.executeScript(function() {
+	wait_promise(selenium.executeScript(function() {
 		var id = arguments[0];
 		var el = document.getElementById(id);
 		if (el) el.parentElement.removeChild(el);
@@ -81,30 +82,64 @@ function hide_selection(selenium) {
 }
 
 function scroll(selenium, pos) {
-	var win_size = selenium_wait_promise(selenium.manage().window().getSize());
+	var win_size = wait_promise(selenium.manage().window().getSize());
 	pos.x -= Math.round(win_size.width / 2);  // the center of the window
 	pos.y -= Math.round(win_size.height / 2);  // the center of the window
 	if (pos.x < 0)
 		pos.x = 0;
 	if (pos.y < 0)
 		pos.y = 0;
-	selenium_wait_promise(selenium.executeScript('window.scrollTo(' + pos.x + ', ' + pos.y + ');'));
+	wait_promise(selenium.executeScript('window.scrollTo(' + pos.x + ', ' + pos.y + ');'));
 }
 
 function show_element(selenium, xpath) {
-	if (!selenium_wait_xpath(selenium, xpath))
+	if (!wait_condition(function(){return wait_promise(selenium.isElementPresent({xpath: xpath}));}))
 		throw new Error('element xpath ' + xpath + ' is not found');
-	var el = selenium_wait_promise(selenium.findElement({xpath: xpath}));
-	var location = selenium_wait_promise(el.getLocation());
-	var size = selenium_wait_promise(el.getSize());
+	var el = wait_promise(selenium.findElement({xpath: xpath}));
+	var location = wait_promise(el.getLocation());
+	var size = wait_promise(el.getSize());
 	scroll(selenium, {x: location.x + Math.round(size.width / 2), y: location.y + Math.round(size.height / 2)});
 	show_selection(selenium, {x: location.x, y: location.y, w: size.width, h: size.height});
 	return el;
 }
 
+function select_window(selenium, condition) {
+	var handle_idx = -1;
+	var handles = wait_promise(selenium.getAllWindowHandles());
+	for (var h in handles) {
+		wait_promise(selenium.switchTo().window(handles[h]));
+		if (condition()) {
+			handle_idx = h;
+			break;
+		}
+	}
+	if (handle_idx != -1) {
+		for (var h in handles) {
+			wait_promise(selenium.switchTo().window(handles[h]));
+			if (h != handle_idx)
+				wait_promise(selenium.close());
+		}
+		wait_promise(selenium.switchTo().window(handles[handle_idx]));
+	}
+	return handle_idx != -1;
+}
+
+function select_element(selenium, el) {
+	var location = wait_promise(el.getLocation());
+	var size = wait_promise(el.getSize());
+	scroll(selenium, {x: location.x + Math.round(size.width / 2), y: location.y + Math.round(size.height / 2)});
+	show_selection(selenium, {x: location.x, y: location.y, w: size.width, h: size.height});
+}
+
 module.exports = {
-	wait: selenium_wait_promise,
+	wait: function(arg) {
+		if (typeof(arg) == 'function')
+			return wait_condition(arg);
+		else
+			return wait_promise(arg);
+	},
 	get_scrn: get_scrn,
-	locate_el: show_element,
+	select_element: select_element,
+	select_window: select_window,
 	hide_selection: hide_selection
 };

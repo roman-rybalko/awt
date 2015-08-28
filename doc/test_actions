@@ -1,9 +1,9 @@
 xpath может задавать как элемент так и атрибут.
-data может содержать переменные, имя переменной задается структурой {NAME}
+selector и data могут содержать переменные, имя переменной задается структурой {NAME}
 в дальнейшем структуры {XXX ...} можно будет дополнить математическими и строковыми операциями
 
 type: open
-data: url
+selector: url
 Открыть страницу
 
 type: exists
@@ -19,22 +19,33 @@ selector: xpath
 data: значение
 Ввести данные в поле ввода (input)
 
-type: match
-selctor: xpath
-data: regexp
-Сравнить содержимое xpath со значением regexp
-
 type: modify
 selector: xpath
 data: значение
 Изменить значение
 
-type: var
+type: url
+selector: regexp
+Ожидать появления URL в браузере
+
+type: title
+selector: regexp
+Ожидать появления Title в браузере
+
+type: var_regexp
 selector: имя
-data: значение
-Установить переменную
+data: regexp
+Установить переменную, применив RegExp к её значению
 
 type: var_xpath
 selector: имя
 data: xpath
 Установить переменную в значение, полученное из xpath
+
+type: var_url
+selector: имя
+Записать URL браузера в переменную
+
+type: var_title
+selector: имя
+Записать Title браузера в переменную

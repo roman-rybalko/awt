@@ -3,7 +3,7 @@
 var spawn = require('child_process').spawn;
 var tempfile = require('create-temp-file')( /* generator */ );
 var fs = require('fs');
-var config = require('../config');
+var wait = require('wait.for');
 
 function scrot(cb) {
 	var ext = '.jpg';
@@ -30,5 +30,5 @@ function scrot(cb) {
 }
 
 module.exports = {
-	get_scrn: scrot
+	get_scrn: function() {return wait.for(scrot);}
 }
