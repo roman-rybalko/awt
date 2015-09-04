@@ -43,14 +43,20 @@
 						</li>
 						<li>
 							<a href="../?tests=1">
-								<i class="fa fa-list-alt fa-fw"></i>
+								<i class="fa fa-code fa-fw"></i>
 								Tests
 							</a>
 						</li>
 						<li>
 							<a href="../?tasks=1">
-								<i class="fa fa-tasks fa-fw"></i>
+								<i class="fa fa-play fa-fw"></i>
 								Tasks
+							</a>
+						</li>
+						<li>
+							<a href="../?schedule=1">
+								<i class="fa fa-clock-o fa-fw"></i>
+								Schedule
 							</a>
 						</li>
 					</ul>

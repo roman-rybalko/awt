@@ -1,8 +1,6 @@
 $(function() {
 	if ($('#side-menu').length)
 		$('#side-menu').metisMenu();
-	if ($('.table-dataTable').length)
-		$('.table-dataTable').DataTable();
 	if ($('.modal').length)
 		$('.modal').on('shown.bs.modal', function() {
 			$(this).find('.form-control').first().focus();
@@ -74,6 +72,61 @@ $(function() {
 		$('input.action-xpath-element').val(xpath);
 		$('input.action-xpath-expression').val(xpath + '/@class');
 	});
+	var datetime_format = 'YYYY-MM-DD HH:mm:ss';
+	$('.date input').each(function() {
+		var value = $(this).val();
+		if (value.match(/^\s*$/))
+			$(this).val(moment(new Date().getTime() + 3600000).format(datetime_format));
+		if (value.match(/^\s*\d+\s*$/))
+			$(this).val(moment.unix(value).format(datetime_format));
+	});
+	if ($('.date').length)
+		$('.date').datetimepicker({
+			allowInputToggle: true,
+			format: datetime_format
+		});
+	$('.form-schedule-task').submit(function() {
+		$(this).find('.date input').each(function() {
+			$(this).val(moment($(this).val(), datetime_format).unix());
+		});
+	});
+	if (typeof task_tests !== 'undefined' && task_tests.length) {
+		var tests = [];
+		for (var tt in task_tests)
+			tests[task_tests[tt].id] = task_tests[tt].name;
+		$('.test-id2name').each(function() {
+			var id = $(this).html().replace(/\s+/g, '');
+			if (tests[id])
+				$(this).html(tests[id]);
+			else {
+				$(this).html('<i class="fa fa-times text-failure" title="Deleted"></i><span style="display: none;">' + id + ' (order data)</span>');
+				$(this).closest('tr').toggleClass('danger', true);
+			}
+		});
+	}
+	$('.period-unix2human').each(function() {
+		var period = $(this).html().replace(/\s+/g, '');
+		var data = [];
+		var units = 0;
+		if (units = period % 60)
+			data.unshift(units + (units == 1 ? ' second' : ' seconds'));
+		period = (period - units) / 60;
+		if (units = period % 60)
+			data.unshift(units + (units == 1 ? ' minute' : ' minutes'));
+		period = (period - units) / 60;
+		if (units = period % 24)
+			data.unshift(units + (units == 1 ? ' hour' : ' hours'));
+		period = (period - units) / 24;
+		if (period)
+			data.unshift(period + (period == 1 ? ' day' :' days'));
+		$(this).html(data.join(' '));
+	});
+	$('.time-unix2human').each(function() {
+		var time = $(this).html().replace(/\s+/g, '');
+		$(this).html(moment.unix(time).format(datetime_format));
+	});
+	if ($('.table-dataTable').length)  // the last
+		$('.table-dataTable').DataTable();
 });
 
 //Loads the correct sidebar on window load,

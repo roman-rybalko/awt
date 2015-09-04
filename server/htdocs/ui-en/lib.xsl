@@ -52,4 +52,14 @@
 	</script>
 </xsl:template>
 
+<xsl:template name="js_task_tests">
+	<script type="text/javascript">
+		task_tests = [  // global
+			<xsl:for-each select="//task_tests//test">
+				{name: "<xsl:value-of select="@name"/>", id: "<xsl:value-of select="@id"/>"},
+			</xsl:for-each>
+		];
+	</script>
+</xsl:template>
+
 </xsl:stylesheet>

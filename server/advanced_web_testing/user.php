@@ -32,8 +32,8 @@ class User {
 	Task
 	action: ?task=xxx
 
-	Scheduler
-	action: ?scheduler=1
+	Schedule
+	action: ?schedule=1
 
 	Billing
 	action: ?billing=1
@@ -52,8 +52,8 @@ class User {
 				$this->tasks();
 			} else if (isset($_GET['task'])) {
 				$this->task();
-			} else if (isset($_GET['scheduler'])) {
-				$this->scheduler();
+			} else if (isset($_GET['schedule'])) {
+				$this->schedule();
 			} else if (isset($_GET['billing'])) {
 				$this->billing();
 			} else {
@@ -353,25 +353,17 @@ class User {
 		$userId = $this->user->getId();
 		if (isset($_POST['add'])) {
 			$testId = $_POST['test_id'];
-			$type = '';
+			$type = null;
 			if (isset($_POST['type']) && $_POST['type'])
 				$type = $_POST['type'];
-			$debug = null;
+			$debug = false;
 			if (isset($_POST['debug']) && $_POST['debug'])
-				$debug = 1;
-			if ($tests = $db->select('tests', ['name'], ['user_id' => $userId, 'test_id' => $testId])) {
-				$test = $tests[0];
-				if ($taskId = $db->insert('tasks', ['user_id' => $userId, 'test_id' => $testId, 'test_name' => $test['name'], 'type' => $type, 'debug' => $debug, 'status' => -1, 'time' => time()])) {
-					foreach ($db->select('test_actions', ['type', 'selector', 'data', 'action_id'], ['test_id' => $testId]) as $action) {
-						$action['task_id'] = $taskId;
-						$db->insert('task_actions', $action);
-					}
-					$db->update('tasks', ['status' => \AdvancedWebTesting\Task\Status::INITIAL], ['task_id' => $taskId]);
-					echo '<message type="notice" value="task_add_ok"/>';
-				} else
-					echo '<message type="error" value="task_add_fail"/>';
-			} else
-				echo '<message type="error" value="bad_test_id"/>';
+				$debug = true;
+			$taskMgr = new \AdvancedWebTesting\Task\Manager($db);
+			if ($taskMgr->add($userId, $testId, $type, $debug))
+				echo '<message type="notice" value="task_add_ok"/>';
+			else
+				echo '<message type="error" value="task_add_fail"/>';
 		} else if (isset($_POST['cancel'])) {
 			$taskId = $_POST['task_id'];
 			if ($db->update('tasks', ['status' => \AdvancedWebTesting\Task\Status::CANCELED, 'time' => time()], ['user_id' => $userId, 'task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::INITIAL]))
@@ -432,13 +424,75 @@ class User {
 		echo '</task_types>';
 	}
 
-	private function scheduler() {
+	private function schedule() {
 ?>
 <!--
-	Scheduler
+	Schedule
+
+	Add
+	method: post
+	params: name test_id type start period
+	submit: add
+
+	Delete
+	method: post
+	params: id
+	submit: delete
+
+	Modify
+	method: post
+	params: id [name] [test_id] [type] [start] [period]
+	submit: modify
 -->
 <?php
-		echo '<scheduler/>';
+		$db = $this->db;
+		$anacron = new \WebConstructionSet\Database\Relational\Anacron($db);
+		$userId = $this->user->getId();
+		if (isset($_POST['add'])) {
+			if ($db->select('tests', ['test_id'], ['test_id' => $_POST['test_id'], 'user_id' => $userId, 'deleted' => null]))
+				if ($anacron->create(['start' => $_POST['start'], 'period' => $_POST['period'],
+						'data' => ['test_id' => $_POST['test_id'], 'type' => $_POST['type'], 'name' => $_POST['name']]], $userId))
+					echo '<message type="notice" value="sched_add_ok"/>';
+				else
+					echo '<message type="error" value="sched_add_fail"/>';
+			else
+				echo '<message type="error" value="bad_test_id"/>';
+		} else if (isset($_POST['delete'])) {
+			if ($anacron->delete($_POST['id'], $userId))
+				echo '<message type="notice" value="sched_delete_ok"/>';
+			else
+				echo '<message type="error" value="sched_delete_fail"/>';
+		} else if (isset($_POST['modify'])) {
+			$task = [];
+			foreach (['name', 'test_id', 'type'] as $param)
+				if (isset($_POST[$param])) {
+					$tasks = $anacron->get([$_POST['id']], $userId);
+					if ($tasks)
+						$task['data'] = $tasks[0]['data'];
+					break;
+				}
+			foreach (['name', 'test_id', 'type'] as $param)
+				if (isset($_POST[$param]))
+					$task['data'][$param] = $_POST[$param];
+			foreach (['start', 'period'] as $param)
+				if (isset($_POST[$param]))
+					$task[$param] = $_POST[$param];
+			if ($anacron->update($_POST['id'], $task, $userId))
+				echo '<message type="notice" value="sched_modify_ok"/>';
+			else
+				echo '<message type="error" value="sched_modify_fail"/>';
+		}
+		echo '<schedule>';
+		foreach ($anacron->get(null, $userId) as $task)
+			echo '<task id="', $task['id'], '" name="', $task['data']['name'], '"',
+				' start="', $task['start'], '" period="', $task['period'], '"',
+				' type="', htmlspecialchars($task['data']['type']), '" test_id="', $task['data']['test_id'], '"/>';
+		echo '</schedule>';
+		echo '<task_tests>';
+		foreach ($db->select('tests', ['test_id', 'name'], ['user_id' => $userId, 'deleted' => null]) as $test)
+			echo '<test name="', htmlspecialchars($test['name']), '" id="', $test['test_id'], '"/>';
+		echo '</task_tests>';
+		$this->task_types();
 	}
 
 	private function billing() {
