@@ -40,8 +40,8 @@
 									<th>Name</th>
 									<th>Test</th>
 									<th>Type</th>
-									<th>Start Time</th>
-									<th>Execution Period</th>
+									<th>Start time</th>
+									<th>Execution period</th>
 									<th data-orderable="false"></th>
 									<th data-orderable="false"></th>
 								</tr>
@@ -123,9 +123,9 @@
 													</div>
 													<div class="col-lg-4">
 														<div class="form-group">
-															<label>Start Time</label>
+															<label>Start time</label>
 															<div class="input-group date">
-																<input class="form-control" placeholder="Start Time" name="start" type="text" value="{@start}"/>
+																<input class="form-control" placeholder="Start time" name="start" type="text" value="{@start}"/>
 																<span class="input-group-addon">
 																	<span class="glyphicon glyphicon-time"></span>
 																</span>
@@ -134,7 +134,7 @@
 													</div>
 													<div class="col-lg-2">
 														<div class="form-group">
-															<label>Execution Period</label>
+															<label>Execution period</label>
 															<select class="form-control" name="period">
 																<xsl:call-template name="opts_periods">
 																	<xsl:with-param name="value" select="@period"/>
@@ -223,9 +223,9 @@
 								</div>
 								<div class="col-lg-4">
 									<div class="form-group">
-										<label>Start Time</label>
+										<label>Start time</label>
 										<div class="input-group date">
-											<input class="form-control" placeholder="Start Time" name="start" type="text"/>
+											<input class="form-control" placeholder="Start time" name="start" type="text"/>
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-time"></span>
 											</span>
@@ -234,7 +234,7 @@
 								</div>
 								<div class="col-lg-2">
 									<div class="form-group">
-										<label>Execution Period</label>
+										<label>Execution period</label>
 										<select class="form-control" name="period">
 											<xsl:call-template name="opts_periods"/>
 										</select>

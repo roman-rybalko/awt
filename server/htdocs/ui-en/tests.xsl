@@ -9,6 +9,7 @@
     <link href="css/dataTables.bootstrap.css" rel="stylesheet" />
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/moment.min.js"></script>
     <xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
@@ -50,7 +51,7 @@
 													<xsl:value-of select="@name" />
 												</a>
 											</td>
-											<td>
+											<td class="time-unix2human">
 												<xsl:value-of select="@time" />
 											</td>
 											<td>
@@ -225,7 +226,7 @@
 															<xsl:value-of select="@name" />
 														</a>
 													</td>
-													<td>
+													<td class="time-unix2human">
 														<xsl:value-of select="@time" />
 													</td>
 													<td>

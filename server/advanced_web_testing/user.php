@@ -213,7 +213,7 @@ class User {
 		echo '<tests>';
 		foreach ($db->select('tests', ['test_id', 'name', 'time', 'deleted'], ['user_id' => $userId]) as $test) {
 			echo '<test name="', htmlspecialchars($test['name']), '" id="', $test['test_id'], '"',
-				' time="', \AdvancedWebTesting\User\Tools::formatTime($test['time']), '"';
+				' time="', $test['time'], '"';
 			if ($test['deleted'])
 				echo ' deleted="1"';
 			echo '/>';
@@ -321,7 +321,7 @@ class User {
 					echo '<message type="error" value="test_action_insert_fail"/>';
 			}
 			echo '<test id="', $testId, '" name="', htmlspecialchars($test['name']), '"',
-				' time="', \AdvancedWebTesting\User\Tools::formatTime($test['time']), '"';
+				' time="', $test['time'], '"';
 			if ($test['deleted'])
 				echo ' deleted="1"';
 			echo '>';
@@ -376,7 +376,7 @@ class User {
 			echo '<task id="', $task['task_id'], '" test_id="', $task['test_id'], '"',
 				' test_name="', htmlspecialchars($task['test_name']), '" type="', htmlspecialchars($task['type']), '"',
 				' ', $task['debug'] ? ' debug="1"' : '', ' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"',
-				' time="', \AdvancedWebTesting\User\Tools::formatTime($task['time']), '"/>';
+				' time="', $task['time'], '"/>';
 		echo '</tasks>';
 		$this->task_types();
 	}
@@ -396,7 +396,7 @@ class User {
 			$task = $tasks[0];
 			$status = $task['status'];
 			echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" test_name="', htmlspecialchars($task['test_name']), '"',
-				' ', $task['debug'] ? ' debug="1"' : '', ' type="', $task['type'], '" time="', \AdvancedWebTesting\User\Tools::formatTime($task['time']), '"',
+				' ', $task['debug'] ? ' debug="1"' : '', ' type="', $task['type'], '" time="', $task['time'], '"',
 				' status="', \AdvancedWebTesting\Task\Status::toString($status), '">';
 			$failed = false;
 			foreach ($db->select('task_actions', ['type', 'selector', 'data', 'action_id', 'scrn_filename', 'failed'], ['task_id' => $taskId]) as $action) {
@@ -448,7 +448,7 @@ class User {
 		$db = $this->db;
 		$anacron = new \WebConstructionSet\Database\Relational\Anacron($db);
 		$userId = $this->user->getId();
-		if (isset($_POST['add'])) {
+		if (isset($_POST['add']) && isset($_POST['test_id'])) {
 			if ($db->select('tests', ['test_id'], ['test_id' => $_POST['test_id'], 'user_id' => $userId, 'deleted' => null]))
 				if ($anacron->create(['start' => $_POST['start'], 'period' => $_POST['period'],
 						'data' => ['test_id' => $_POST['test_id'], 'type' => $_POST['type'], 'name' => $_POST['name']]], $userId))

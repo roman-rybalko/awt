@@ -42,7 +42,7 @@ $(function() {
 		action_form_update();
 		$('[data-action-type-id="' + id + '"]').on('change', action_form_update);
 	});
-	if (typeof task_types !== 'undefined' && task_types.length) {
+	if (typeof task_types !== 'undefined') {
 		var index = [];
 		for (var tt in task_types) {
 			index[task_types[tt].name] = task_types[tt];
@@ -90,7 +90,7 @@ $(function() {
 			$(this).val(moment($(this).val(), datetime_format).unix());
 		});
 	});
-	if (typeof task_tests !== 'undefined' && task_tests.length) {
+	if (typeof task_tests !== 'undefined') {
 		var tests = [];
 		for (var tt in task_tests)
 			tests[task_tests[tt].id] = task_tests[tt].name;

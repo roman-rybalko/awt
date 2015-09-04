@@ -11,6 +11,7 @@
     <link href="css/jquery-ui.min.css" rel="stylesheet" />
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/jquery.cookie.min.js"></script>
+    <script type="text/javascript" src="js/moment.min.js"></script>
     <xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
@@ -36,7 +37,9 @@
 							</div>
 							<div class="col-lg-3">
 								<b>Time</b>:
-								<xsl:value-of select="@time"/>
+								<span class="time-unix2human">
+									<xsl:value-of select="@time"/>
+								</span>
 							</div>
 							<xsl:if test="@deleted">
 								<div class="col-lg-1">

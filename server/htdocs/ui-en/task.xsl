@@ -9,6 +9,7 @@
     <link href="css/photobox.css" rel="stylesheet" />
     <link href="css/photobox.mod.css" rel="stylesheet" />
     <script src="js/jquery.photobox.min.js"></script>
+    <script type="text/javascript" src="js/moment.min.js"></script>
     <xsl:call-template name="js_task_types"/>
 	<div class="container-fluid" id="gallery-photobox">
 		<div class="row">
@@ -77,7 +78,9 @@
 							</div>
 							<div class="col-lg-3">
 								<b>Time</b>:
-								<xsl:value-of select="@time"/>
+								<span class="time-unix2human">
+									<xsl:value-of select="@time"/>
+								</span>
 							</div>
 							<div class="col-lg-1">
 								<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-test-restart">
