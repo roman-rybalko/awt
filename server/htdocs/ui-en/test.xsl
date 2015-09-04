@@ -8,10 +8,6 @@
 <xsl:template match="test" mode="menu">
 	<link href="css/jquery-ui.min.css" rel="stylesheet"/>
 	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/jquery.cookie.min.js"></script>
-	<script src="js/jquery.storageapi.min.js"></script>
-	<script type="text/javascript" src="js/moment.min.js"></script>
-	<script src="js/storage.js"></script>
 	<script src="js/xpath-browser.js"></script>
 	<script src="js/xpath-composer.js"></script>
 	<xsl:call-template name="js_task_types"/>
@@ -214,6 +210,12 @@
 				<div class="col-lg-12">
 					<div class="panel panel-success">
 						<div class="panel-body">
+							<xsl:call-template name="helper_tip">
+								<xsl:with-param name="state">test-vars</xsl:with-param>
+								<xsl:with-param name="text">
+									Variable substitution {var} works for all fields.
+								</xsl:with-param>
+							</xsl:call-template>
 							<form role="form" method="post" id="action-form">
 								<xsl:call-template name="new_action_form">
 									<xsl:with-param name="id">add</xsl:with-param>
@@ -366,6 +368,17 @@
 								</div>
 							</div>
 						</form>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<xsl:call-template name="helper_tip">
+								<xsl:with-param name="state">test-xpath-browser-wnd-resizable</xsl:with-param>
+								<xsl:with-param name="text">
+									The bottom of the window is resizable.
+									It will expand when you open the site.
+								</xsl:with-param>
+							</xsl:call-template>
+						</div>
 					</div>
 					<div class="xpath-browser-wnd ui-widget-content" id="xpath-browser-wnd-{$id}">
 						<iframe src="" id="xpath-browser-iframe-{$id}" class="xpath-browser-iframe" sandbox="allow-forms allow-same-origin allow-scripts">

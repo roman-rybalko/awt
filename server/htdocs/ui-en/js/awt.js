@@ -127,6 +127,19 @@ $(function() {
 	});
 	if ($('.table-dataTable').length)  // the last
 		$('.table-dataTable').DataTable();
+	if ($('[data-dismiss="alert"][data-dismiss-state]').length) {
+		var storage = new Storage('dismiss-state-', 42 /* expire days */);
+		$('[data-dismiss="alert"][data-dismiss-state]').each(function() {
+			var name = $(this).attr('data-dismiss-state');
+			var value = storage.get(name);
+			if (value)
+				$(this).closest('.alert').alert('close');
+		});
+		$('[data-dismiss="alert"][data-dismiss-state]').click(function() {
+			var name = $(this).attr('data-dismiss-state');
+			storage.set(name, true);
+		});
+	}
 });
 
 //Loads the correct sidebar on window load,

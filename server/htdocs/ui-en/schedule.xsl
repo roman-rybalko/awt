@@ -9,7 +9,6 @@
 	<link href="css/dataTables.bootstrap.css" rel="stylesheet"/>
 	<script src="js/jquery.dataTables.min.js"></script>
 	<script src="js/dataTables.bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/moment.min.js"></script>
 	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"/>
 	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 	<xsl:call-template name="js_task_types"/>
@@ -18,6 +17,12 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Schedule</h1>
+				<xsl:call-template name="helper_tip">
+					<xsl:with-param name="state">schedule-create-test</xsl:with-param>
+					<xsl:with-param name="text">
+						Create a test then make a scheduled task.
+					</xsl:with-param>
+				</xsl:call-template>
 			</div>
 		</div>
 		<xsl:if test="//message">
@@ -282,7 +287,7 @@
 </xsl:template>
 
 <xsl:template name="opts_periods">
-	<xsl:param name="value" select="86400"/>
+	<xsl:param name="value">86400</xsl:param>
 	<option value="60">
 		<xsl:if test="$value = 60">
 			<xsl:attribute name="selected"/>

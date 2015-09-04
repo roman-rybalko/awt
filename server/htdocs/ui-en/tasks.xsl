@@ -9,12 +9,17 @@
 	<link href="css/dataTables.bootstrap.css" rel="stylesheet"/>
 	<script src="js/jquery.dataTables.min.js"></script>
 	<script src="js/dataTables.bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/moment.min.js"></script>
 	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Tasks</h1>
+				<xsl:call-template name="helper_tip">
+					<xsl:with-param name="state">tasks-create-test</xsl:with-param>
+					<xsl:with-param name="text">
+						Create a test then run a task.
+					</xsl:with-param>
+				</xsl:call-template>
 			</div>
 		</div>
 		<xsl:if test="//message">
@@ -101,6 +106,13 @@
 							</xsl:for-each>
 						</div>
 					</div>
+					<xsl:call-template name="helper_tip">
+						<xsl:with-param name="state">tasks-cancel</xsl:with-param>
+						<xsl:with-param name="text">
+							New tasks may be canceled.
+							When the task starts running it may not be canceled.
+						</xsl:with-param>
+					</xsl:call-template>
 				</div>
 			</div>
 		</xsl:if>
@@ -331,6 +343,16 @@
 				</div>
 			</div>
 		</xsl:if>
+		<div class="row">
+			<div class="col-lg-12">
+				<xsl:call-template name="helper_tip">
+					<xsl:with-param name="state">tasks-cleanup</xsl:with-param>
+					<xsl:with-param name="text">
+						All tasks will be cleaned up after 42 days.
+					</xsl:with-param>
+				</xsl:call-template>
+			</div>
+		</div>
 	</div>
 </xsl:template>
 

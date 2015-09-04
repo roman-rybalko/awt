@@ -9,7 +9,6 @@
 	<link href="css/photobox.css" rel="stylesheet"/>
 	<link href="css/photobox.mod.css" rel="stylesheet"/>
 	<script src="js/jquery.photobox.min.js"></script>
-	<script type="text/javascript" src="js/moment.min.js"></script>
 	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid" id="gallery-photobox">
 		<div class="row">

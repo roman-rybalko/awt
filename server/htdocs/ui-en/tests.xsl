@@ -9,7 +9,6 @@
 	<link href="css/dataTables.bootstrap.css" rel="stylesheet"/>
 	<script src="js/jquery.dataTables.min.js"></script>
 	<script src="js/dataTables.bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/moment.min.js"></script>
 	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
@@ -248,6 +247,12 @@
 					</div>
 				</div>
 			</div>
+			<xsl:call-template name="helper_tip">
+				<xsl:with-param name="state">tests-deleted-cleanup</xsl:with-param>
+				<xsl:with-param name="text">
+					Deleted tests will be cleaned up after 42 days.
+				</xsl:with-param>
+			</xsl:call-template>
 		</xsl:if>
 	</div>
 </xsl:template>

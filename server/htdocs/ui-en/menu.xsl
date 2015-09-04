@@ -3,6 +3,10 @@
 <xsl:template name="menu">
 	<link href="css/metisMenu.min.css" rel="stylesheet" />
 	<script src="js/metisMenu.min.js"></script>
+	<script src="js/jquery.cookie.min.js"></script>
+	<script src="js/jquery.storageapi.min.js"></script>
+	<script src="js/storage.js"></script>
+	<script src="js/moment.min.js"></script>
 	<div id="wrapper">
 		<nav class="navbar navbar-default navbar-static-top" role="navigation"
 			style="margin-bottom: 0">
