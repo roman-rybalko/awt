@@ -1,21 +1,23 @@
 $(function() {
 
 	var debug = true;
+	var storage_expire = 42;  // days
 
 	if ($('.xpath-browser-wnd').length) {
+		var storage = new Storage('xpath-browser-', storage_expire);
 		$('.xpath-browser-wnd').resizable({
 			handles: 's',
 			disabled: true,
 			stop: function(ev, ui) {
-				$.cookie('xpath-browser-height', ui.size.height, {expires: 365});
+				storage.set('height', ui.size.height);
 			}
 		});
 		function browser_url(url) {
 			if (url) {
 				$('.xpath-browser-url').val(url);
-				$.cookie('xpath-browser-url', url, {expires: 365});
+				storage.set('url', url);
 			} else {
-				url = $.cookie('xpath-browser-url');
+				url = storage.get('url');
 				$('.xpath-browser-url').val(url);
 			}
 		}
@@ -23,7 +25,7 @@ $(function() {
 			if (url) {
 				$('#xpath-browser-iframe-' + id).attr('src', 'php/proxy.php?' + url);
 				$('#xpath-browser-wnd-' + id).resizable('option', 'disabled', false);
-				$('#xpath-browser-wnd-' + id).height($.cookie('xpath-browser-height') || 400);
+				$('#xpath-browser-wnd-' + id).height(storage.get('height') || 400);
 			} else {
 				$('#xpath-browser-iframe-' + id).attr('src', '');
 				$('#xpath-browser-wnd-' + id).resizable('option', 'disabled', true);
@@ -31,28 +33,24 @@ $(function() {
 			}
 		}
 		function url_history(pos) {
-			var data = $.cookie('xpath-browser-history');
-			if (data)
-				data = JSON.parse(data);
-			else
+			var data = storage.get('history');
+			if (!data)
 				data = {pos: -1, urls: []};
 			pos += data.pos;
 			if (pos < 0 || pos >= data.urls.length)
 				return null;
 			data.pos = pos;
 			var url = data.urls[pos];
-			$.cookie('xpath-browser-history', JSON.stringify(data), {expires: 365});
+			storage.set('history', data);
 			return url;
 		}
 		function url_history_add(url) {
-			var data = $.cookie('xpath-browser-history');
-			if (data)
-				data = JSON.parse(data);
-			else
+			var data = storage.get('history');
+			if (!data)
 				data = {pos: -1, urls: []};
 			data.urls.splice(data.pos + 1, data.urls.length - (data.pos + 1), url);
 			data.pos = data.urls.length - 1;
-			$.cookie('xpath-browser-history', JSON.stringify(data), {expires: 365});
+			storage.set('history', data);
 		}
 		browser_url();
 		$('.xpath-browser-back').click(function() {

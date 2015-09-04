@@ -6,13 +6,15 @@
 </xsl:template>
 
 <xsl:template match="test" mode="menu">
-    <script src="js/xpath-browser.js"></script>
-    <script src="js/xpath-composer.js"></script>
-    <link href="css/jquery-ui.min.css" rel="stylesheet" />
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.cookie.min.js"></script>
-    <script type="text/javascript" src="js/moment.min.js"></script>
-    <xsl:call-template name="js_task_types"/>
+	<link href="css/jquery-ui.min.css" rel="stylesheet"/>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/jquery.cookie.min.js"></script>
+	<script src="js/jquery.storageapi.min.js"></script>
+	<script type="text/javascript" src="js/moment.min.js"></script>
+	<script src="js/storage.js"></script>
+	<script src="js/xpath-browser.js"></script>
+	<script src="js/xpath-composer.js"></script>
+	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">

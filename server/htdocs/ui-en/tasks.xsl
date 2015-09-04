@@ -6,11 +6,11 @@
 </xsl:template>
 
 <xsl:template match="tasks" mode="menu">
-    <link href="css/dataTables.bootstrap.css" rel="stylesheet" />
-    <script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/moment.min.js"></script>
-    <xsl:call-template name="js_task_types"/>
+	<link href="css/dataTables.bootstrap.css" rel="stylesheet"/>
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/moment.min.js"></script>
+	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">

@@ -6,14 +6,14 @@
 </xsl:template>
 
 <xsl:template match="schedule" mode="menu">
-    <link href="css/dataTables.bootstrap.css" rel="stylesheet" />
-    <script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/moment.min.js"></script>
-    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
-    <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
-    <xsl:call-template name="js_task_types"/>
-    <xsl:call-template name="js_task_tests"/>
+	<link href="css/dataTables.bootstrap.css" rel="stylesheet"/>
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/moment.min.js"></script>
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"/>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<xsl:call-template name="js_task_types"/>
+	<xsl:call-template name="js_task_tests"/>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
