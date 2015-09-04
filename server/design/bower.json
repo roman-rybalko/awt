@@ -36,6 +36,10 @@
     "morrisjs": "~0.5.1",
     "datatables-responsive": "~1.0.3",
     "bootstrap-social": "~4.8.0",
-    "flot.tooltip": "~0.8.4"
+    "flot.tooltip": "~0.8.4",
+    "eonasdan-bootstrap-datetimepicker": "~4.15.35",
+    "jquery-ui": "~1.11.4",
+    "jquery.cookie": "~1.4.1",
+    "photobox": "~1.9.9"
   }
 }
