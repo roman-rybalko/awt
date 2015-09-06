@@ -45,7 +45,7 @@
 								</div>
 								<div class="col-lg-1">
 									<form role="form" method="post" action="../?tests=1">
-										<input type="hidden" name="test_id" value="{@id}"/>
+										<input type="hidden" name="id" value="{@id}"/>
 										<button type="submit" name="restore" class="btn btn-xs btn-success">
 											<i class="fa fa-recycle"></i>
 											Restore
@@ -98,7 +98,7 @@
 													</div>
 													<div class="panel-body">
 														<form role="form" method="post">
-															<input type="hidden" name="action_id" value="{@id}" />
+															<input type="hidden" name="id" value="{@id}" />
 															<div class="row">
 																<xsl:apply-templates select="." mode="action_form">
 																	<xsl:with-param name="id">modify-<xsl:value-of select="@id"/></xsl:with-param>
@@ -137,7 +137,7 @@
 													</div>
 													<div class="panel-body">
 														<form role="form" method="post" id="action-form-{@id}">
-															<input type="hidden" name="action_id" value="{@id}" />
+															<input type="hidden" name="id" value="{@id}" />
 															<xsl:call-template name="new_action_form">
 																<xsl:with-param name="id">insert-<xsl:value-of select="@id"/></xsl:with-param>
 															</xsl:call-template>
@@ -179,7 +179,7 @@
 														<div class="row">
 															<div class="col-lg-12">
 																<form role="form" method="post">
-																	<input type="hidden" name="action_id" value="{@id}" />
+																	<input type="hidden" name="id" value="{@id}" />
 																	<button type="submit" name="delete" class="btn btn-block btn-danger">
 																		<i class="glyphicon glyphicon-trash"></i>
 																		Delete

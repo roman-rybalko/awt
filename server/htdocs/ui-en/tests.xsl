@@ -54,9 +54,9 @@
 												<xsl:value-of select="@time" />
 											</td>
 											<td>
-												<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-test-modify-{@id}">
+												<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-test-rename-{@id}">
 													<i class="fa fa-pencil"></i>
-													Modify
+													Rename
 												</button>
 											</td>
 											<td>
@@ -82,22 +82,22 @@
 								</tbody>
 							</table>
 							<xsl:for-each select="test">
-								<div class="modal" id="modal-test-modify-{@id}" role="dialog">
+								<div class="modal" id="modal-test-rename-{@id}" role="dialog">
 									<div class="modal-dialog modal-sm">
 										<div class="panel panel-primary">
 											<div class="panel-heading">
 												<button type="button" class="close" data-dismiss="modal">&#215;</button>
-												Modify: <xsl:value-of select="@name" />
+												Rename: <xsl:value-of select="@name" />
 											</div>
 											<div class="panel-body">
 												<form role="form" method="post">
-													<input type="hidden" name="test_id" value="{@id}" />
+													<input type="hidden" name="id" value="{@id}" />
 													<div class="form-group">
-														<input class="form-control" placeholder="New Name" name="name" type="text" />
+														<input class="form-control" placeholder="New Name" name="name" type="text" value="{@name}" />
 													</div>
-													<button type="submit" name="modify" class="btn btn-block btn-primary">
+													<button type="submit" name="rename" class="btn btn-block btn-primary">
 														<i class="fa fa-pencil"></i>
-														Modify
+														Rename
 													</button>
 												</form>
 											</div>
@@ -119,7 +119,7 @@
 											</div>
 											<div class="panel-body">
 												<form role="form" method="post">
-													<input type="hidden" name="test_id" value="{@id}" />
+													<input type="hidden" name="id" value="{@id}" />
 													<div class="form-group">
 														<input class="form-control" placeholder="New Name" name="name" type="text" />
 													</div>
@@ -147,7 +147,7 @@
 											</div>
 											<div class="panel-body">
 												<form role="form" method="post">
-													<input type="hidden" name="test_id" value="{@id}" />
+													<input type="hidden" name="id" value="{@id}" />
 													<button type="submit" name="delete" class="btn btn-block btn-danger">
 														<i class="glyphicon glyphicon-trash"></i>
 														Delete
@@ -230,7 +230,7 @@
 													</td>
 													<td>
 														<form role="form" method="post">
-															<input type="hidden" name="test_id" value="{@id}"/>
+															<input type="hidden" name="id" value="{@id}"/>
 															<button type="submit" name="restore" class="btn btn-xs btn-success">
 																<i class="fa fa-recycle"></i>
 																Restore

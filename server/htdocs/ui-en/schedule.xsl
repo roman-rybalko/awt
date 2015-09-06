@@ -12,7 +12,13 @@
 	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"/>
 	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 	<xsl:call-template name="js_task_types"/>
-	<xsl:call-template name="js_task_tests"/>
+	<script type="text/javascript">
+		sched_tests = [  // global
+			<xsl:for-each select="test">
+				{name: "<xsl:value-of select="@name"/>", id: "<xsl:value-of select="@id"/>"},
+			</xsl:for-each>
+		];
+	</script>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
@@ -276,7 +282,7 @@
 
 <xsl:template name="opts_task_tests">
 	<xsl:param name="value"></xsl:param>
-	<xsl:for-each select="//task_tests/test">
+	<xsl:for-each select="//schedule/test">
 		<option value="{@id}">
 			<xsl:if test="@id = $value">
 				<xsl:attribute name="selected"/>

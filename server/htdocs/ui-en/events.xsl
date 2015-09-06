@@ -81,15 +81,15 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="event[@name='test_modify']" mode="severity">
+<xsl:template match="event[@name='test_rename']" mode="severity">
 	info
 </xsl:template>
 
-<xsl:template match="event[@name='test_modify']" mode="title">
+<xsl:template match="event[@name='test_rename']" mode="title">
 	Rename Test
 </xsl:template>
 
-<xsl:template match="event[@name='test_modify']" mode="data">
+<xsl:template match="event[@name='test_rename']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">

@@ -90,10 +90,10 @@ $(function() {
 			$(this).val(moment($(this).val(), datetime_format).unix());
 		});
 	});
-	if (typeof task_tests !== 'undefined') {
+	if (typeof sched_tests !== 'undefined') {
 		var tests = [];
-		for (var tt in task_tests)
-			tests[task_tests[tt].id] = task_tests[tt].name;
+		for (var st in sched_tests)
+			tests[sched_tests[st].id] = sched_tests[st].name;
 		$('.test-id2name').each(function() {
 			var id = $(this).html().replace(/\s+/g, '');
 			if (tests[id])

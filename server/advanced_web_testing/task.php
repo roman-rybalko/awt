@@ -2,6 +2,10 @@
 
 namespace AdvancedWebTesting;
 
+/**
+ * Интерфейс selenium-клиента
+ * View, Controller (MVC)
+ */
 class Task {
 	private $db;
 
@@ -16,12 +20,12 @@ class Task {
 	 *
 	 * Update the task
 	 * method: post
-	 * params: task_id status=started vnc token
+	 * params: task_id status=started token
 	 *
 	 * method: post
 	 * enctype: multipart/form-data
-	 * params: task_id status=succeeded|failed [fail1 .. fail[action_id] .. failXX] token
-	 * files: [scrn1 .. scrn{action_id} .. scrnXX]
+	 * params: task_id status=succeeded|failed [fail1 .. fail[action id] .. failXX] token
+	 * files: [scrn1 .. scrn{action id} .. scrnXX]
 	 */
 
 	public function run() {
@@ -32,36 +36,25 @@ class Task {
 	}
 
 	private function lock() {
-		$type = $_POST['task_type'];
-		$db = $this->db;
 		if ($this->checkAuth()) {
-			while(true) {
-				foreach ($this->getCompatibleTypes($type) as $type2) {
-					$tasks = $db->select('tasks', ['task_id', 'debug'], ['status' => \AdvancedWebTesting\Task\Status::INITIAL, 'type' => $type2]);
-					if ($tasks)
-						break;
+			$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, null);
+			if ($task = $taskMgr->lock($_POST['task_type'], $_POST['node_id'])) {
+				$result = ['task' => ['id' => $task['id']]];
+				if ($task['debug'])
+					$result['task']['debug'] = true;
+				$taskActMgr = new \AdvancedWebTesting\Task\Action\Manager($this->db, $task['id']);
+				$data = $taskActMgr->get();
+				$actions = [];
+				foreach ($data as $data1) {
+					$action = [];
+					foreach (['id', 'type', 'selector', 'data'] as $param)
+						$action[$param] = $data1[$param];
+					$actions[] = $action;
 				}
-				if (!$tasks)
-					break;
-				foreach ($tasks as $task)
-					if ($db->update('tasks', ['status' => \AdvancedWebTesting\Task\Status::STARTING, 'type' => $type], ['task_id' => $task['task_id'], 'status' => \AdvancedWebTesting\Task\Status::INITIAL])) {
-						$taskId = $task['task_id'];
-						$taskDebug = $task['debug'];
-						break 2;
-					}
-			}
-			if (isset($taskId)) {
-				$db->update('tasks', ['data' => $_POST['node_id'], 'time' => time()], ['task_id' => $taskId]);
-				$taskActions = $db->select('task_actions', ['type', 'selector', 'data', 'action_id'], ['task_id' => $taskId]);
-				$result = [
-					'task_id' => $taskId,
-					'task_actions' => $taskActions
-				];
-				if ($taskDebug)
-					$result['task_debug'] = 1;
+				$result['task']['actions'] = $actions;
 			} else {
 				$result = [
-					'empty' => 1
+					'empty' => true
 				];
 			}
 		} else {
@@ -77,9 +70,10 @@ class Task {
 		$status = $_POST['status'];
 		$db = $this->db;
 		if ($this->checkAuth()) {
+			$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, null);
 			switch ($status) {
 				case 'running':
-					if ($db->update('tasks', ['status' => \AdvancedWebTesting\Task\Status::RUNNING, 'time' => time()], ['task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::STARTING]))
+					if ($taskMgr->start($taskId))
 						$result['ok'] = 1;
 					else
 						$result['fail'] = 'task update failed';
@@ -88,20 +82,21 @@ class Task {
 				case 'failed':
 					$taskDataDir = $taskId . '-' . rand();
 					$statusId = $status == 'succeeded' ? \AdvancedWebTesting\Task\Status::SUCCEEDED : \AdvancedWebTesting\Task\Status::FAILED;
-					if ($db->update('tasks', ['data' => $taskDataDir, 'status' => $statusId, 'time' => time()], ['task_id' => $taskId, 'status' => \AdvancedWebTesting\Task\Status::RUNNING])) {
+					if ($taskMgr->finish($taskId, $statusId, $taskDataDir)) {
 						$taskDataPath = \Config::$rootPath . \Config::RESULT_DATA_PATH . $taskDataDir . '/';
 						$this->prepareTaskDataPath($taskDataPath);
-						$result['ok'] = 0;
-						foreach ($db->select('task_actions', ['type', 'selector', 'data', 'action_id'], ['task_id' => $taskId]) as $action) {
-							$scrnX = 'scrn' . $action['action_id'];
+						$result['ok'] = 1;
+						$taskActMgr = new \AdvancedWebTesting\Task\Action\Manager($this->db, $taskId);
+						foreach ($taskActMgr->get() as $action) {
+							$scrnX = 'scrn' . $action['id'];
 							if (isset($_FILES[$scrnX])) {
 								$scrnFilename = basename($_FILES[$scrnX]['name']);
 								$result['ok'] += move_uploaded_file($_FILES[$scrnX]['tmp_name'], $taskDataPath . $scrnFilename);
-								$result['ok'] += $db->update('task_actions', ['scrn_filename' => $scrnFilename], ['task_id' => $taskId, 'action_id' => $action['action_id']]);
 							}
-							$failX = 'fail' . $action['action_id'];
-							if (isset($_POST[$failX]))
-								$result['ok'] += $db->update('task_actions', ['failed' => $_POST[$failX]], ['task_id' => $taskId, 'action_id' => $action['action_id']]);
+							$failX = 'fail' . $action['id'];
+							$result['ok'] += $taskActMgr->update($action['id'],
+								isset($_FILES[$scrnX]) ? $scrnFilename : null,
+								isset($_POST[$failX]) ? $_POST[$failX] : null);
 						}
 					} else
 						$result['fail'] = 'task update failed';
@@ -125,23 +120,5 @@ class Task {
 	private function prepareTaskDataPath($path) {
 		exec('rm -Rf ' . $path);
 		mkdir($path);
-	}
-	
-	private function getCompatibleTypes($typeName) {
-		$db = $this->db;
-		if ($types = $db->select('task_types', ['parent_type_id'], ['name' => $typeName])) {
-			$type = $types[0];
-			$typeNames = [$typeName];
-			$typeId = $type['parent_type_id'];
-		}
-		while ($typeId) {
-			if ($types = $db->select('task_types', ['name', 'parent_type_id'], ['type_id' => $typeId])) {
-				$type = $types[0];
-				$typeNames[] = $type['name'];
-				$typeId = $type['parent_type_id'];
-			} else
-				$typeId = null;
-		}
-		return $typeNames;
 	}
 }
