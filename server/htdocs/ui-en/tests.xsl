@@ -231,7 +231,7 @@
 													<td>
 														<form role="form" method="post">
 															<input type="hidden" name="test_id" value="{@id}"/>
-															<button type="submit" name="undelete" class="btn btn-xs btn-success">
+															<button type="submit" name="restore" class="btn btn-xs btn-success">
 																<i class="fa fa-recycle"></i>
 																Restore
 															</button>

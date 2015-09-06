@@ -2,6 +2,9 @@
 
 namespace AdvancedWebTesting\Task;
 
+/**
+ * Управление задачами
+ */
 class Manager {
 	private $db;
 
@@ -39,5 +42,20 @@ class Manager {
 				throw new \ErrorException('Task insert failed', null, null, __FILE__, __LINE__);
 		}
 		return $taskId;
+	}
+
+	/**
+	 * Получить идентификатор теста по идентификатору задачи
+	 * @param integer $taskId
+	 * @return integer
+	 */
+	public function id2id($taskId) {
+		$testId = -1;
+		$tasks = $this->db->select('tasks', ['test_id'], ['task_id' => $taskId]);
+		if ($tasks) {
+			$task = $tasks[0];
+			$testId = $task['test_id'];
+		}
+		return $testId;
 	}
 }

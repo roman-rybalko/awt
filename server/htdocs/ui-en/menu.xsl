@@ -63,6 +63,12 @@
 								Schedule
 							</a>
 						</li>
+						<li>
+							<a href="../?history=1">
+								<i class="fa fa-calendar fa-fw"></i>
+								History
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>

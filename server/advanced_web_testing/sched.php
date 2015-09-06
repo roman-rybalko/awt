@@ -3,27 +3,26 @@
 namespace AdvancedWebTesting;
 
 class Sched {
-	private $db, $anacronDb, $taskMgr;
+	private $anacron, $taskMgr, $history, $testMgr;
 
 	public function __construct() {
-		$db = $this->db = new \WebConstructionSet\Database\Relational\Pdo(\Config::DB_DSN, \Config::DB_USER, \Config::DB_PASSWORD);
-		$this->anacronDb = new \WebConstructionSet\Database\Relational\Anacron($db);
+		$db = new \WebConstructionSet\Database\Relational\Pdo(\Config::DB_DSN, \Config::DB_USER, \Config::DB_PASSWORD);
+		$this->anacron = new \WebConstructionSet\Database\Relational\Anacron($db);
 		$this->taskMgr = new \AdvancedWebTesting\Task\Manager($db);
+		$this->history = new \WebConstructionSet\Database\Relational\History($db);
+		$this->testMgr = new \AdvancedWebTesting\Test\Manager($db);
 	}
 
 	public function run() {
-		$db = $this->db;
-		$anacron = $this->anacronDb;
-		$mgr = $this->taskMgr;
-		$tasks = $anacron->ready(null);
+		$tasks = $this->anacron->ready(null);
 		foreach ($tasks as $task) {
 			$userId = $task['key'];
 			$testId = $task['data']['test_id'];
 			$type = $task['data']['type'];
-			if ($taskId = $mgr->add($userId, $testId, $type))
-				error_log('task ' . $taskId . ' for test ' . $testId . ' user ' . $userId . ' created');
-			else
-				error_log('task for test ' . $testId . ' user ' . $userId . ' create failed');
+			if ($taskId = $this->taskMgr->add($userId, $testId, $type))
+				$this->history->add('task_sched', ['task_id' => $taskId,
+					'test_id' => $testId, 'test_name' => $this->testMgr->id2name($testId), 'type' => $type,
+					'sched_id' => $task['id'], 'sched_name' => $task['data']['name']], $userId);
 		}
 	}
 }

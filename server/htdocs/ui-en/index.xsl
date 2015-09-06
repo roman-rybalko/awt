@@ -16,4 +16,6 @@
 	<xsl:include href="tasks.xsl" />
 	<xsl:include href="task.xsl" />
 	<xsl:include href="schedule.xsl" />
+	<xsl:include href="events.xsl" />
+	<xsl:include href="history.xsl" />
 </xsl:stylesheet>
