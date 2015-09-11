@@ -7,11 +7,10 @@ namespace AdvancedWebTesting\Test;
  * Model (MVC)
  */
 class Manager {
-	private $table, $userId;
+	private $table;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
-		$this->table = new \WebConstructionSet\Database\TableWrapper($db, 'tests');
-		$this->userId = $userId;
+		$this->table = new \WebConstructionSet\Database\TableWrapper($db, 'tests', ['user_id' => $userId]);
 	}
 
 	/**
@@ -20,7 +19,7 @@ class Manager {
 	 * @return integer testId
 	 */
 	public function add($name) {
-		return $this->table->insert(['user_id' => $this->userId, 'name' => $name, 'time' => time()]);
+		return $this->table->insert(['name' => $name, 'time' => time()]);
 	}
 
 	/**
@@ -29,7 +28,7 @@ class Manager {
 	 * @return boolean
 	 */
 	public function delete($testId) {
-		return $this->table->update(['deleted' => 1, 'time' => time()], ['user_id' => $this->userId, 'test_id' => $testId]);
+		return $this->table->update(['deleted' => 1, 'time' => time()], ['test_id' => $testId]);
 	}
 
 	/**
@@ -38,7 +37,7 @@ class Manager {
 	 * @return boolean
 	 */
 	public function restore($testId) {
-		return $this->table->update(['deleted' => null, 'time' => time()], ['user_id' => $this->userId, 'test_id' => $testId]);
+		return $this->table->update(['deleted' => null, 'time' => time()], ['test_id' => $testId]);
 	}
 
 	/**
@@ -47,7 +46,7 @@ class Manager {
 	 * @param string $name
 	 */
 	public function rename($testId, $name) {
-		return $this->table->update(['name' => $name, 'time' => time()], ['user_id' => $this->userId, 'test_id' => $testId]);
+		return $this->table->update(['name' => $name, 'time' => time()], ['test_id' => $testId]);
 	}
 
 	/**
@@ -58,10 +57,10 @@ class Manager {
 	public function get($testIds = null) {
 		$data = [];
 		if ($testIds === null)
-			$data = $this->table->select(['test_id', 'name', 'time', 'deleted'], ['user_id' => $this->userId]);
+			$data = $this->table->select(['test_id', 'name', 'time', 'deleted']);
 		else
 			foreach ($testIds as $testId)
-				if ($data1 = $this->table->select(['test_id', 'name', 'time', 'deleted'], ['user_id' => $this->userId, 'test_id' => $testId]))
+				if ($data1 = $this->table->select(['test_id', 'name', 'time', 'deleted'], ['test_id' => $testId]))
 					$data = array_merge($data, $data1);
 		$tests = [];
 		foreach ($data as $data1) {

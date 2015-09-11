@@ -24,6 +24,9 @@ class User {
 	Logout
 	action: ?logout=1
 
+	Settings
+	action: ?settings=1
+
 	Tests
 	action: ?tests=1
 
@@ -51,6 +54,8 @@ class User {
 <?php
 			if (isset($_GET['logout'])) {
 				$this->logout($user);
+			} else if (isset($_GET['settings'])) {
+				$this->settings($userDb);
 			} else if (isset($_GET['tests'])) {
 				$this->tests();
 			} else if (isset($_GET['test'])) {
@@ -129,7 +134,7 @@ class User {
 -->
 <?php
 		if (isset($_POST['register'])) {
-			if ($_POST['password1'] != $_POST['password2']) {
+			if ($_POST['password1'] !== $_POST['password2']) {
 				echo '<message type="error" value="passwords_dont_match"/>';
 				$this->redirect('?' . $_SERVER['QUERY_STRING'], 3);
 			} else {
@@ -158,6 +163,54 @@ class User {
 		unset($this->userId);
 		echo '<message type="notice" value="logout_ok"/>';
 		$this->redirect('', 0);
+	}
+
+	private function settings($userDb) {
+?>
+<!--
+	Settings
+
+	Change password
+	method: post
+	params: password password2
+
+	Change e-mail
+	method: post
+	params: email
+
+	On/Off e-mail reports on task failure
+	method: post
+	params: task_fail_email_report (0/1)
+
+	On/Off e-mail reports on task success
+	method: post
+	params: task_success_email_report (0/1)
+-->
+<?php
+		$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $this->userId);
+		if (isset($_POST['password'])) {
+			if ($_POST['password'] === $_POST['password2']) {
+				if ($userDb->password($this->userId, $_POST['password']))
+					echo '<message type="notice" value="password_change_ok"/>';
+				else
+					echo '<message type="error" value="password_change_fail"/>';
+			} else
+				echo '<message type="error" value="passwords_dont_match"/>';
+		}
+		if (isset($_POST['email']) || isset($_POST['task_fail_email_report']) || isset($_POST['task_success_email_report'])) {
+			if ($settMgr->set(
+				isset($_POST['email']) ? $_POST['email'] : null,
+				isset($_POST['task_fail_email_report']) ? $_POST['task_fail_email_report'] : null,
+				isset($_POST['task_success_email_report']) ? $_POST['task_success_email_report'] : null
+			))
+				echo '<message type="notice" value="settings_change_ok"/>';
+			else
+				echo '<message type="error" value="settings_change_fail"/>';
+		}
+		echo '<settings';
+		foreach ($settMgr->get() as $name => $value)
+			echo ' ', $name, '="', htmlspecialchars($value), '"';
+		echo '/>';
 	}
 
 	private function tests() {
@@ -383,7 +436,7 @@ class User {
 			echo '</test>';
 			$this->task_types();
 		} else
-			echo '<test><message type="error" value="bad_test_id"/></test>';
+			echo '<message type="error" value="bad_test_id"/><test/>';
 	}
 
 	private function tasks() {
@@ -480,7 +533,7 @@ class User {
 			echo '</task>';
 			$this->task_types();
 		} else
-			echo '<task><message type="error" value="bad_task_id"/></task>';
+			echo '<message type="error" value="bad_task_id"/><task/>';
 	}
 
 	private function task_types() {

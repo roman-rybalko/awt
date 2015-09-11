@@ -28,6 +28,13 @@
 					</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li>
+							<a href="../?settings=1">
+								<i class="fa fa-gear fa-fw"></i>
+								Settings
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
 							<a href="../?logout=1">
 								<i class="fa fa-sign-out fa-fw"></i>
 								Logout
