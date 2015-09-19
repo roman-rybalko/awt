@@ -29,6 +29,12 @@
 						Create a test then make a scheduled task.
 					</xsl:with-param>
 				</xsl:call-template>
+				<xsl:call-template name="helper_tip">
+					<xsl:with-param name="state">schedule-set-email</xsl:with-param>
+					<xsl:with-param name="text">
+						Set E-Mail in Settings to receive regular Task Reports.
+					</xsl:with-param>
+				</xsl:call-template>
 			</div>
 		</div>
 		<xsl:if test="//message">

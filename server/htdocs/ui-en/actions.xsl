@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:template match="action[@type = 'open']" mode="action_html">
+<xsl:template match="action[@type = 'open']" mode="html">
 	<div class="col-lg-2">
 		<b>Open URL</b>
 	</div>
@@ -10,11 +10,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'open']" mode="action_text">
-	Open URL: <xsl:value-of select="@selector"/>
+<xsl:template match="action[@type = 'open']" mode="text">
+	<xsl:text/>Open URL: <xsl:value-of select="@selector"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'open']" mode="action_form">
+<xsl:template match="action[@type = 'open']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -33,7 +33,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'exists']" mode="action_html">
+<xsl:template match="action[@type = 'exists']" mode="html">
 	<div class="col-lg-2">
 		<b>Element exists</b>
 	</div>
@@ -42,11 +42,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'exists']" mode="action_text">
-	Element exists, Element XPATH: <xsl:value-of select="@selector"/>
+<xsl:template match="action[@type = 'exists']" mode="text">
+	<xsl:text/>Element exists, Element XPATH: <xsl:value-of select="@selector"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'exists']" mode="action_form">
+<xsl:template match="action[@type = 'exists']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -65,7 +65,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'click']" mode="action_html">
+<xsl:template match="action[@type = 'click']" mode="html">
 	<div class="col-lg-2">
 		<b>Click</b>
 	</div>
@@ -74,11 +74,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'click']" mode="action_text">
-	Click, Element XPATH: <xsl:value-of select="@selector"/>
+<xsl:template match="action[@type = 'click']" mode="text">
+	<xsl:text/>Click, Element XPATH: <xsl:value-of select="@selector"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'click']" mode="action_form">
+<xsl:template match="action[@type = 'click']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -97,7 +97,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'enter']" mode="action_html">
+<xsl:template match="action[@type = 'enter']" mode="html">
 	<div class="col-lg-2">
 		<b>Enter data</b>
 	</div>
@@ -109,11 +109,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'enter']" mode="action_text">
-	Enter data, Input XPATH: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
+<xsl:template match="action[@type = 'enter']" mode="text">
+	<xsl:text/>Enter data, Input XPATH: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'enter']" mode="action_form">
+<xsl:template match="action[@type = 'enter']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -140,7 +140,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'modify']" mode="action_html">
+<xsl:template match="action[@type = 'modify']" mode="html">
 	<div class="col-lg-2">
 		<b>Modify XPATH</b>
 	</div>
@@ -152,11 +152,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'modify']" mode="action_text">
-	Modify XPATH, XPATH Expression: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
+<xsl:template match="action[@type = 'modify']" mode="text">
+	<xsl:text/>Modify XPATH, XPATH Expression: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'modify']" mode="action_form">
+<xsl:template match="action[@type = 'modify']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -183,7 +183,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'url']" mode="action_html">
+<xsl:template match="action[@type = 'url']" mode="html">
 	<div class="col-lg-2">
 		<b>Match URL</b>
 	</div>
@@ -192,11 +192,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'url']" mode="action_text">
-	Match URL: <xsl:value-of select="@selector"/>
+<xsl:template match="action[@type = 'url']" mode="text">
+	<xsl:text/>Match URL: <xsl:value-of select="@selector"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'url']" mode="action_form">
+<xsl:template match="action[@type = 'url']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -215,7 +215,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'title']" mode="action_html">
+<xsl:template match="action[@type = 'title']" mode="html">
 	<div class="col-lg-2">
 		<b>Match Title</b>
 	</div>
@@ -224,11 +224,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'title']" mode="action_text">
-	Match Title: <xsl:value-of select="@selector"/>
+<xsl:template match="action[@type = 'title']" mode="text">
+	<xsl:text/>Match Title: <xsl:value-of select="@selector"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'title']" mode="action_form">
+<xsl:template match="action[@type = 'title']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -247,7 +247,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_regexp']" mode="action_html">
+<xsl:template match="action[@type = 'var_regexp']" mode="html">
 	<div class="col-lg-2">
 		<b>Apply RegExp to Variable</b>
 	</div>
@@ -259,11 +259,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_regexp']" mode="action_text">
-	Apply RegExp to Variable, Variable: <xsl:value-of select="@selector"/>, RegExp: <xsl:value-of select="@data"/>
+<xsl:template match="action[@type = 'var_regexp']" mode="text">
+	<xsl:text/>Apply RegExp to Variable, Variable: <xsl:value-of select="@selector"/>, RegExp: <xsl:value-of select="@data"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_regexp']" mode="action_form">
+<xsl:template match="action[@type = 'var_regexp']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -290,7 +290,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_xpath']" mode="action_html">
+<xsl:template match="action[@type = 'var_xpath']" mode="html">
 	<div class="col-lg-2">
 		<b>Save XPATH to Variable</b>
 	</div>
@@ -302,11 +302,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_xpath']" mode="action_text">
-	Save XPATH to Variable, Variable: <xsl:value-of select="@selector"/>, XPATH Expression: <xsl:value-of select="@data"/>
+<xsl:template match="action[@type = 'var_xpath']" mode="text">
+	<xsl:text/>Save XPATH to Variable, Variable: <xsl:value-of select="@selector"/>, XPATH Expression: <xsl:value-of select="@data"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_xpath']" mode="action_form">
+<xsl:template match="action[@type = 'var_xpath']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -333,7 +333,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_url']" mode="action_html">
+<xsl:template match="action[@type = 'var_url']" mode="html">
 	<div class="col-lg-2">
 		<b>Save URL to Variable</b>
 	</div>
@@ -342,11 +342,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_url']" mode="action_text">
-	Save URL to Variable, Variable: <xsl:value-of select="@selector"/>
+<xsl:template match="action[@type = 'var_url']" mode="text">
+	<xsl:text/>Save URL to Variable, Variable: <xsl:value-of select="@selector"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_url']" mode="action_form">
+<xsl:template match="action[@type = 'var_url']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -365,7 +365,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_title']" mode="action_html">
+<xsl:template match="action[@type = 'var_title']" mode="html">
 	<div class="col-lg-2">
 		<b>Save Title to Variable</b>
 	</div>
@@ -374,11 +374,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_title']" mode="action_text">
-	Save Title to Variable, Variable: <xsl:value-of select="@selector"/>
+<xsl:template match="action[@type = 'var_title']" mode="text">
+	<xsl:text/>Save Title to Variable, Variable: <xsl:value-of select="@selector"/>
 </xsl:template>
 
-<xsl:template match="action[@type = 'var_title']" mode="action_form">
+<xsl:template match="action[@type = 'var_title']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
@@ -397,7 +397,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action" mode="action_html">
+<xsl:template match="action" mode="html">
 	<div class="col-lg-2">
 		<b><xsl:value-of select="@type"/></b>
 	</div>
@@ -409,11 +409,11 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="action" mode="action_text">
+<xsl:template match="action" mode="text">
 	<xsl:value-of select="@type"/>, Selector: <xsl:value-of select="@selector"/>, Data: <xsl:value-of select="@data"/>
 </xsl:template>
 
-<xsl:template match="action" mode="action_form">
+<xsl:template match="action" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">

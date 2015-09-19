@@ -50,7 +50,7 @@ class Manager {
 	/**
 	 * Получить
 	 * @param [integer]|null $taskIds null - все
-	 * @return [][id => integer, test_id => integer, test_name => integer, type => string, debug => boolean, status => integer, result => string|null, node_id => string|null, time => integer]
+	 * @return [][id => integer, test_id => integer, test_name => string, type => string, debug => boolean, status => integer, result => string|null, node_id => string|null, time => integer]
 	 */
 	public function get($taskIds = null) {
 		$data = [];
@@ -84,10 +84,10 @@ class Manager {
 			$type1 = $typeData['name'];
 			if ($data = $this->db->select('tasks', ['task_id', 'debug'], ['status' => Status::INITIAL, 'type' => $type1]))
 				foreach ($data as $data1) {
-					$task = ['type' => $type1];
+					$task = ['type' => $type];
 					foreach (['task_id' => 'id', 'debug' => 'debug'] as $src => $dst)
 						$task[$dst] = $data1[$src];
-					if ($this->db->update('tasks', ['status' => Status::STARTING, 'type' => $type1, 'node_id' => $nodeId, 'time' => time()], ['task_id' => $data1['task_id'], 'status' => Status::INITIAL]))
+					if ($this->db->update('tasks', ['status' => Status::STARTING, 'type' => $type, 'node_id' => $nodeId, 'time' => time()], ['task_id' => $data1['task_id'], 'status' => Status::INITIAL]))
 						return $task;
 				}
 		}
@@ -112,5 +112,18 @@ class Manager {
 	 */
 	public function finish($taskId, $status, $result) {
 		return $this->db->update('tasks', ['status' => $status, 'result' => $result, 'time' => time()], ['task_id' => $taskId, 'status' => Status::RUNNING]);
+	}
+
+	/**
+	 * @param integer $taskId
+	 * @return integer
+	 */
+	public function getUserId($taskId) {
+		if ($this->userId !== null && $this->get([$taskId]))
+			return $this->userId;
+		$data = $this->db->select('tasks', ['user_id'], ['task_id' => $taskId]);
+		if ($data)
+			return $data[0]['user_id'];
+		return null;
 	}
 }

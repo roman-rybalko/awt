@@ -80,7 +80,7 @@
 							<div class="row">
 								<div class="col-lg-9">
 									<div class="row">
-										<xsl:apply-templates select="." mode="action_html" />
+										<xsl:apply-templates select="." mode="html" />
 									</div>
 								</div>
 								<xsl:if test="not(../@deleted)">
@@ -100,7 +100,7 @@
 														<form role="form" method="post">
 															<input type="hidden" name="id" value="{@id}" />
 															<div class="row">
-																<xsl:apply-templates select="." mode="action_form">
+																<xsl:apply-templates select="." mode="form">
 																	<xsl:with-param name="id">modify-<xsl:value-of select="@id"/></xsl:with-param>
 																</xsl:apply-templates>
 															</div>
@@ -174,7 +174,7 @@
 													</div>
 													<div class="panel-body">
 														<div class="row">
-															<xsl:apply-templates select="." mode="action_html" />
+															<xsl:apply-templates select="." mode="html" />
 														</div>
 														<div class="row">
 															<div class="col-lg-12">
@@ -318,7 +318,7 @@
 	</div>
 	<xsl:for-each select="document('actions.xml')//action">
 		<div class="row" data-action-type="{@type}" data-action-id="{$id}">
-			<xsl:apply-templates select="." mode="action_form">
+			<xsl:apply-templates select="." mode="form">
 				<xsl:with-param name="id" select="$id"/>
 			</xsl:apply-templates>
 		</div>

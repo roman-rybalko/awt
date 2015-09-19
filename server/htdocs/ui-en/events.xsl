@@ -35,7 +35,7 @@
 <xsl:template match="event[@name='test_add']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-3">
+			<div class="col-lg-12">
 				<b class="space-x">Test:</b>
 				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
@@ -54,7 +54,7 @@
 <xsl:template match="event[@name='test_delete']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-3">
+			<div class="col-lg-12">
 				<b class="space-x">Test:</b>
 				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
@@ -73,7 +73,7 @@
 <xsl:template match="event[@name='test_restore']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-3">
+			<div class="col-lg-12">
 				<b class="space-x">Test:</b>
 				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
@@ -92,7 +92,7 @@
 <xsl:template match="event[@name='test_rename']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-3">
+			<div class="col-lg-12">
 				<b class="space-x">Test:</b>
 				<a href="../?test={@test_id}">
 					<xsl:value-of select="@old_test_name"/>
@@ -117,7 +117,7 @@
 <xsl:template match="event[@name='test_copy']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-3">
+			<div class="col-lg-12">
 				<b class="space-x">Test:</b>
 				<a href="../?test={@orig_test_id}">
 					<xsl:value-of select="@orig_test_name"/>
@@ -302,7 +302,7 @@
 				<b class="space-x">Test:</b>
 				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Type:</b>
 				<span class="task-type">
 					<xsl:value-of select="@type"/>
@@ -323,11 +323,11 @@
 <xsl:template match="event[@name='task_cancel']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Task:</b>
 				<a href="../?task={@task_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Test:</b>
 				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
@@ -354,7 +354,7 @@
 				<b class="space-x">Test:</b>
 				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Type:</b>
 				<span class="task-type">
 					<xsl:value-of select="@type"/>
@@ -362,13 +362,13 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Start:</b>
 				<span class="time-unix2human">
 					<xsl:value-of select="@start"/>
 				</span>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Period:</b>
 				<span class="period-unix2human">
 					<xsl:value-of select="@period"/>
@@ -397,7 +397,7 @@
 				<b class="space-x">Test:</b>
 				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Type:</b>
 				<span class="task-type">
 					<xsl:value-of select="@type"/>
@@ -405,13 +405,13 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Start:</b>
 				<span class="time-unix2human">
 					<xsl:value-of select="@start"/>
 				</span>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Period:</b>
 				<span class="period-unix2human">
 					<xsl:value-of select="@period"/>
@@ -456,7 +456,7 @@
 					<xsl:value-of select="@test_name"/>
 				</a>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Type:</b>
 				<xsl:if test="@old_type">
 					<span class="task-type">
@@ -470,7 +470,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Start:</b>
 				<xsl:if test="@old_start">
 					<span class="time-unix2human">
@@ -482,7 +482,7 @@
 					<xsl:value-of select="@start"/>
 				</span>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-6">
 				<b class="space-x">Period:</b>
 				<xsl:if test="@old_period">
 					<span class="period-unix2human">
@@ -526,6 +526,70 @@
 				<span class="task-type">
 					<xsl:value-of select="@type"/>
 				</span>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='mail_verification']" mode="severity">
+	warning
+</xsl:template>
+
+<xsl:template match="event[@name='mail_verification']" mode="title">
+	Send E-Mail Verification
+</xsl:template>
+
+<xsl:template match="event[@name='mail_verification']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-6">
+				<b class="space-x">Recipient:</b>
+				<xsl:value-of select="@rcpt"/>
+			</div>
+			<div class="col-lg-6">
+				<b class="space-x">Message-Id:</b>
+				<xsl:value-of select="@message_id"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<b class="space-x">SMTP Response:</b>
+				<xsl:value-of select="@smtp_response"/>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='mail_task']" mode="severity">
+	warning
+</xsl:template>
+
+<xsl:template match="event[@name='mail_task']" mode="title">
+	Send Task Report
+</xsl:template>
+
+<xsl:template match="event[@name='mail_task']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-6">
+				<b class="space-x">Task:</b>
+				<a href="../?task={@task_id}"><xsl:value-of select="@test_name"/></a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+				<b class="space-x">Recipient:</b>
+				<xsl:value-of select="@rcpt"/>
+			</div>
+			<div class="col-lg-6">
+				<b class="space-x">Message-Id:</b>
+				<xsl:value-of select="@message_id"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<b class="space-x">SMTP Response:</b>
+				<xsl:value-of select="@smtp_response"/>
 			</div>
 		</div>
 	</div>

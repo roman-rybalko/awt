@@ -56,7 +56,7 @@
 							</div>
 							<button type="submit" class="btn btn-success">
 								<i class="fa fa-pencil"></i>
-								Change E-Mail
+								Set E-Mail
 							</button>
 						</form>
 					</div>
@@ -86,7 +86,7 @@
 							</div>
 							<button type="submit" name="task_fail_email_report" value="" class="btn btn-success">
 								<i class="fa fa-pencil"></i>
-								Change E-Mail Report Setting
+								Set E-Mail Report Setting
 							</button>
 						</form>
 					</div>
@@ -114,7 +114,7 @@
 							</div>
 							<button type="submit" name="task_success_email_report" value="" class="btn btn-success">
 								<i class="fa fa-pencil"></i>
-								Change E-Mail Report Setting
+								Set E-Mail Report Setting
 							</button>
 						</form>
 					</div>

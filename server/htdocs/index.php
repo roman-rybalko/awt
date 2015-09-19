@@ -5,6 +5,5 @@ header('Content-Type: text/xml');
 \WebConstructionSet\OutputBuffer\XmlFormatter::init();
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 echo '<?xml-stylesheet type="text/xsl" href="ui-en/index.xsl"?>';
-\Config::$rootPath = __DIR__ . '/';
 $user = new \AdvancedWebTesting\User();
 $user->run();

@@ -1,4 +1,3 @@
-* profile (password, e-mail, notifications), mail
 * dashboard
 * billing
 * messages
@@ -10,3 +9,4 @@
 * cron: clear deleted tests
 * cron: clear history
 * XPATH Browser в iframe/отдельном окне, с/без прокси (пользователь сам подгружает скрипт)
+* XMPP Reports

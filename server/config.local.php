@@ -5,8 +5,18 @@ class Config {
 	const DB_USER = 'awt';
 	const DB_PASSWORD = 'awt';
 	const TESTNODE_TOKEN = 'EtZGlOGWMGtEOptUcaQN98KTnPrXpvXgpY1orOue04';
-	const RESULT_DATA_PATH = 'results/';
 	public static $rootPath;
+	const RESULT_DATA_PATH = 'htdocs/results/';
+	const MAIL_HOST = 'smtp.yandex.ru';
+	const MAIL_PORT = 587;
+	const MAIL_USER = 'test@advancedwebtesting.com';
+	const MAIL_PASSWORD = 'test12';
+	const MAIL_SENDER_NAME = 'Advanced Web Testing';
+	const MAIL_SENDER_EMAIL = 'test@advancedwebtesting.com';
+	const MAIL_TEMPLATE_PATH = 'mail/';
+	const WWW_PATH = 'htdocs/';
 }
+
+\Config::$rootPath = __DIR__ . '/';
 
 ?>

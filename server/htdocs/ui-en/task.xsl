@@ -122,7 +122,7 @@
 						<div class="row">
 							<div class="col-lg-8">
 								<div class="row">
-									<xsl:apply-templates select="." mode="action_html" />
+									<xsl:apply-templates select="." mode="html" />
 								</div>
 							</div>
 							<div class="col-lg-2">
@@ -144,7 +144,7 @@
 												<xsl:if test="@failed">
 													failed:
 												</xsl:if>
-												<xsl:apply-templates select="." mode="action_text" />
+												<xsl:apply-templates select="." mode="text" />
 												<xsl:if test="@failed">
 													, <xsl:value-of select="@failed"/>
 												</xsl:if>

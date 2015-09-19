@@ -100,6 +100,16 @@ class Task {
 						}
 					} else
 						$result['fail'] = 'task update failed';
+					$userId = $taskMgr->getUserId($taskId);
+					$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);
+					$settings = $settMgr->get();
+					if ($settings['email'] && ($settings['task_fail_email_report'] || $settings['task_success_email_report'])) {
+						$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $userId);
+						if ($status == 'failed' && $settings['task_fail_email_report'])
+							$mailMgr->scheduleTaskReport($settings['email'], $taskId);
+						if ($status == 'succeeded' && $settings['task_success_email_report'])
+							$mailMgr->scheduleTaskReport($settings['email'], $taskId);
+					}
 					break;
 				default:
 					$result['fail'] = 'bad status';

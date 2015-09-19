@@ -4,6 +4,11 @@ body {
 #wrapper {
   width: 100%;
 }
+#mail-page-wrapper {
+  padding: 0 15px;
+  min-height: 568px;
+  background-color: white;
+}
 #page-wrapper {
   padding: 0 15px;
   min-height: 568px;

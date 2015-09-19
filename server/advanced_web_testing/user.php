@@ -10,7 +10,7 @@ class User {
 	private $db, $userId;
 
 	public function __construct() {
-		$this->db = $db = new \WebConstructionSet\Database\Relational\Pdo(\Config::DB_DSN, \Config::DB_USER, \Config::DB_PASSWORD);
+		$this->db = new \WebConstructionSet\Database\Relational\Pdo(\Config::DB_DSN, \Config::DB_USER, \Config::DB_PASSWORD);
 	}
 
 	public function run() {
@@ -178,6 +178,10 @@ class User {
 	method: post
 	params: email
 
+	Change e-mail (commit)
+	method: get
+	params: email_code
+
 	On/Off e-mail reports on task failure
 	method: post
 	params: task_fail_email_report (0/1)
@@ -191,21 +195,45 @@ class User {
 		if (isset($_POST['password'])) {
 			if ($_POST['password'] === $_POST['password2']) {
 				if ($userDb->password($this->userId, $_POST['password']))
-					echo '<message type="notice" value="password_change_ok"/>';
+					echo '<message type="notice" value="password_modify_ok"/>';
 				else
-					echo '<message type="error" value="password_change_fail"/>';
+					echo '<message type="error" value="password_modify_fail"/>';
 			} else
 				echo '<message type="error" value="passwords_dont_match"/>';
 		}
-		if (isset($_POST['email']) || isset($_POST['task_fail_email_report']) || isset($_POST['task_success_email_report'])) {
+		if (isset($_POST['task_fail_email_report']) || isset($_POST['task_success_email_report'])) {
 			if ($settMgr->set(
-				isset($_POST['email']) ? $_POST['email'] : null,
+				null,
 				isset($_POST['task_fail_email_report']) ? $_POST['task_fail_email_report'] : null,
 				isset($_POST['task_success_email_report']) ? $_POST['task_success_email_report'] : null
 			))
-				echo '<message type="notice" value="settings_change_ok"/>';
+				echo '<message type="notice" value="settings_modify_ok"/>';
 			else
-				echo '<message type="error" value="settings_change_fail"/>';
+				echo '<message type="error" value="settings_modify_fail"/>';
+		}
+		if (isset($_POST['email'])) {
+			$_SESSION['settings_email'] = $_POST['email'];
+			$_SESSION['settings_email_code'] = rand();
+			$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $this->userId);
+			if ($mailMgr->scheduleEmailVerification($_POST['email'],
+				\WebConstructionSet\Url\Tools::addParams(
+					\WebConstructionSet\Url\Tools::getMyUrl(), ['email_code' => $_SESSION['settings_email_code']])))
+				echo '<message type="notice" value="email_verification_pending"/>';
+			else
+				echo '<message type="error" value="email_modify_fail"/>';
+		}
+		if (isset($_GET['email_code'])) {
+			if (isset($_SESSION['settings_email_code']) && $_SESSION['settings_email_code'] == $_GET['email_code']) {
+				if ($settMgr->set($_SESSION['settings_email']))
+					echo '<message type="notice" value="email_modify_ok"/>';
+				else
+					echo '<message type="error" value="email_modify_fail"/>';
+				unset($_SESSION['settings_email_code']);
+				unset($_SESSION['settings_email']);
+			} else
+				echo '<message type="error" value="bad_email_code"/>';
+			$this->redirect('?settings=1');
+			return;
 		}
 		echo '<settings';
 		foreach ($settMgr->get() as $name => $value)
@@ -509,31 +537,9 @@ class User {
 	params: task
 -->
 <?php
-		$taskId = $_GET['task'];
-		$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $this->userId);
-		if ($tasks = $taskMgr->get([$taskId])) {
-			$task = $tasks[0];
-			$taskActMgr = new \AdvancedWebTesting\Task\Action\Manager($this->db, $taskId);
-			echo '<task id="', $taskId, '" test_id="', $task['test_id'], '" test_name="', htmlspecialchars($task['test_name']), '"',
-				' ', $task['debug'] ? ' debug="1"' : '', ' type="', $task['type'], '" time="', $task['time'], '"',
-				' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '">';
-			foreach ($taskActMgr->get() as $action) {
-				echo '<action id="', $action['id'], '" type="', htmlspecialchars($action['type']), '"';
-				foreach (['selector', 'data'] as $param)
-					if ($action[$param] !== null)
-						echo ' ', $param, '="', htmlspecialchars($action[$param]), '"';
-				if ($action['scrn'])
-					echo ' scrn="', $task['result'] . '/' . $action['scrn'], '"';
-				if ($action['failed'])
-					echo ' failed="', htmlspecialchars($action['failed']), '"';
-				if ($action['succeeded'])
-					echo ' succeeded="1"';
-				echo '/>';
-			}
-			echo '</task>';
-			$this->task_types();
-		} else
-			echo '<message type="error" value="bad_task_id"/><task/>';
+		$task = new \AdvancedWebTesting\User\Task($this->db, $this->userId);
+		echo $task->get($_GET['task']);
+		$this->task_types();
 	}
 
 	private function task_types() {
@@ -565,14 +571,12 @@ class User {
 	submit: modify
 -->
 <?php
-		$schedMgr = new \AdvancedWebTesting\Schedule\Manager($this->db, $this->userId);
+		$taskSched = new \AdvancedWebTesting\Task\Schedule($this->db, $this->userId);
+		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
 		if (isset($_POST['add']) && isset($_POST['test_id'])) {
-			$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
 			if ($tests = $testMgr->get([$_POST['test_id']])) {
 				$test = $tests[0];
-				if ($schedId = $schedMgr->add($_POST['start'], $_POST['period'],
-					['test_id' => $_POST['test_id'], 'type' => $_POST['type'], 'name' => $_POST['name']])
-				) {
+				if ($schedId = $taskSched->add($_POST['start'], $_POST['period'], $_POST['test_id'], $_POST['type'], $_POST['name'])) {
 					echo '<message type="notice" value="sched_add_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$histMgr->add('sched_add', ['sched_id' => $schedId, 'sched_name' => $_POST['name'],
@@ -583,54 +587,41 @@ class User {
 			} else
 				echo '<message type="error" value="bad_test_id"/>';
 		} else if (isset($_POST['delete'])) {
-			if ($scheds = $schedMgr->get([$_POST['id']])) {
+			if ($scheds = $taskSched->get([$_POST['id']])) {
 				$sched = $scheds[0];
-				if ($schedMgr->delete($_POST['id'])) {
+				if ($taskSched->delete($_POST['id'])) {
 					echo '<message type="notice" value="sched_delete_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-					$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
-					if ($tests = $testMgr->get([$sched['data']['test_id']]))
+					if ($tests = $testMgr->get([$sched['test_id']]))
 						$test = $tests[0];
 					else
 						$test = ['name' => '__deleted__', 'deleted' => true];
-					$histMgr->add('sched_delete', ['sched_id' => $_POST['id'], 'sched_name' => $sched['data']['name'],
-						'test_id' => $sched['data']['test_id'], 'test_name' => $test['name'], 'test_deleted' => $test['deleted'],
-						'type' => $sched['data']['type'], 'start' => $sched['start'], 'period' => $sched['period']]);
+					$histMgr->add('sched_delete', ['sched_id' => $_POST['id'], 'sched_name' => $sched['name'],
+						'test_id' => $sched['test_id'], 'test_name' => $test['name'], 'test_deleted' => $test['deleted'],
+						'type' => $sched['type'], 'start' => $sched['start'], 'period' => $sched['period']]);
 				} else
 					echo '<message type="error" value="sched_delete_fail"/>';
 			} else
 				echo '<message type="error" value="bad_sched_id"/>';
 		} else if (isset($_POST['modify'])) {
-			if ($scheds = $schedMgr->get([$_POST['id']])) {
+			if ($scheds = $taskSched->get([$_POST['id']])) {
 				$sched = $scheds[0];
-				$data = null;
-				foreach (['name', 'test_id', 'type'] as $param)
-					if (\AdvancedWebTesting\Tools::valueOrNull($_POST, $param, $sched['data'][$param]) !== null) {
-						if ($data === null)
-							$data = $sched['data'];
-						$data[$param] = $_POST[$param];
-					}
-				if ($schedMgr->modify($_POST['id'],
+				if ($taskSched->modify($_POST['id'],
 					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'start', $sched['start']),
 					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'period', $sched['period']),
-					$data)
+					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'test_id', $sched['test_id']),
+					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'type', $sched['type']),
+					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'name', $sched['name']))
 				) {
 					echo '<message type="notice" value="sched_modify_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$event = [];
-					foreach (['start', 'period'] as $param)
+					foreach (['start' => 'start', 'period' => 'period', 'name' => 'sched_name', 'test_id' => 'test_id', 'type' => 'type'] as $param => $evParam)
 						if (\AdvancedWebTesting\Tools::valueOrNull($_POST, $param, $sched[$param]) !== null) {
-							$event[$param] = $_POST[$param];
-							$event['old_' . $param] = $sched[$param];
-						} else
-							$event[$param] = $sched[$param];
-					foreach (['name' => 'sched_name', 'test_id' => 'test_id', 'type' => 'type'] as $param => $evParam)
-						if (\AdvancedWebTesting\Tools::valueOrNull($_POST, $param, $sched['data'][$param]) !== null) {
 							$event[$evParam] = $_POST[$param];
-							$event['old_' . $evParam] = $sched['data'][$param];
+							$event['old_' . $evParam] = $sched[$param];
 						} else
-							$event[$evParam] = $sched['data'][$param];
-					$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
+							$event[$evParam] = $sched[$param];
 					if ($tests = $testMgr->get([$event['test_id']]))
 						$event['test_name'] = $tests[0]['name'];
 					else
@@ -647,11 +638,10 @@ class User {
 				echo '<message type="error" value="bad_sched_id"/>';
 		}
 		echo '<schedule>';
-		foreach ($schedMgr->get() as $sched)
-			echo '<task id="', $sched['id'], '" name="', $sched['data']['name'], '"',
+		foreach ($taskSched->get() as $sched)
+			echo '<task id="', $sched['id'], '" name="', $sched['name'], '"',
 				' start="', $sched['start'], '" period="', $sched['period'], '"',
-				' type="', htmlspecialchars($sched['data']['type']), '" test_id="', $sched['data']['test_id'], '"/>';
-		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
+				' type="', htmlspecialchars($sched['type']), '" test_id="', $sched['test_id'], '"/>';
 		foreach ($testMgr->get() as $test)
 			if (!$test['deleted'])
 				echo '<test name="', htmlspecialchars($test['name']), '" id="', $test['id'], '"/>';

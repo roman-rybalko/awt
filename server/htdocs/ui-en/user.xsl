@@ -6,7 +6,7 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="Advanced Web Testing / Web Automation service" />
+		<meta name="description" content="Advanced Web Testing / Web Automation Service" />
 		<base href="ui-en/" />
 		<title>Advanced Web Testing</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet" />
