@@ -10,3 +10,4 @@
 * cron: clear history
 * XPATH Browser в iframe/отдельном окне, с/без прокси (пользователь сам подгружает скрипт)
 * XMPP Reports
+* php xsltprocessor recursion bug report
