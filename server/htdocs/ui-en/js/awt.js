@@ -140,6 +140,98 @@ $(function() {
 			storage.set(name, true);
 		});
 	}
+	function aggregate_day(data) {
+		var d = new Date();
+		var offset = d.getTime() - d.getTime() % 86400000 - new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime();
+		function day_start(time) {
+			return time - (time + offset) % 86400000;
+		}
+		var result = {};
+		for (var i in data) {
+			var time = day_start(data[i][0]);
+			if (!result[time])
+				result[time] = 0;
+			result[time] += data[i][1];
+		}
+		var result2 = [];
+		for (var i in result)
+			result2.push([i, result[i]]);
+		return result2.sort(function(a,b){return a[0]-b[0];});
+	}
+	if ($('#tasks-chart').length) {
+		var options = {
+			series: {
+				bars: {
+					show: true,
+					barWidth: 86400000,
+					fill: true
+				}
+			},
+			xaxis: {
+				mode: "time",
+				timeformat: "%d",
+				minTickSize: [1, "day"]
+			},
+			yaxis: {
+				tickDecimals: 0
+			},
+			grid: {
+				hoverable: true // for tooltp
+			},
+			tooltip: true,
+			tooltipOpts: {
+				content: "%y"
+			}
+		};
+		var data1 = {
+			label: 'Finished',
+			color: '#679dc6',
+			bars: {
+				fillColor: '#679dc6'
+			},
+			data: aggregate_day(tasks_finished)
+		};
+		var data2 = {
+			label: 'Failed',
+			color: '#cb4b4b',
+			bars: {
+				fillColor: '#cb4b4b'
+			},
+			data: aggregate_day(tasks_failed),
+		};
+		$('#tasks-chart').plot([data1, data2], options);
+	}
+	if ($('#task-actions-chart').length) {
+		var options = {
+			series: {
+				bars: {
+					show: true,
+					barWidth: 86400000,
+				}
+			},
+			xaxis: {
+				mode: "time",
+				timeformat: "%d",
+				minTickSize: [1, "day"]
+			},
+			yaxis: {
+				tickDecimals: 0
+			},
+			grid: {
+				hoverable: true // for tooltp
+			},
+			tooltip: true,
+			tooltipOpts: {
+				content: "%y"
+			}
+		};
+		var data1 = {
+			label: 'Executed',
+			color: '#edc240',
+			data: aggregate_day(task_actions_executed)
+		};
+		$('#task-actions-chart').plot([data1], options);
+	}
 });
 
 //Loads the correct sidebar on window load,

@@ -98,18 +98,24 @@ class Task {
 								isset($_FILES[$scrnX]) ? $scrnFilename : null,
 								isset($_POST[$failX]) ? $_POST[$failX] : null);
 						}
+						$userId = $taskMgr->getUserId($taskId);
+						$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);
+						$settings = $settMgr->get();
+						if ($settings['email'] && ($settings['task_fail_email_report'] || $settings['task_success_email_report'])) {
+							$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $userId);
+							if ($status == 'failed' && $settings['task_fail_email_report'])
+								$mailMgr->scheduleTaskReport($settings['email'], $taskId);
+							if ($status == 'succeeded' && $settings['task_success_email_report'])
+								$mailMgr->scheduleTaskReport($settings['email'], $taskId);
+						}
+						$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $userId);
+						$actExecCnt = 0;
+						foreach ($taskActMgr->get() as $action)
+						if ($action['failed'] || $action['succeeded'])
+							++$actExecCnt;
+						$statMgr->add(1, $statusId == \AdvancedWebTesting\Task\Status::FAILED ? 1 : 0, $actExecCnt);
 					} else
 						$result['fail'] = 'task update failed';
-					$userId = $taskMgr->getUserId($taskId);
-					$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);
-					$settings = $settMgr->get();
-					if ($settings['email'] && ($settings['task_fail_email_report'] || $settings['task_success_email_report'])) {
-						$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $userId);
-						if ($status == 'failed' && $settings['task_fail_email_report'])
-							$mailMgr->scheduleTaskReport($settings['email'], $taskId);
-						if ($status == 'succeeded' && $settings['task_success_email_report'])
-							$mailMgr->scheduleTaskReport($settings['email'], $taskId);
-					}
 					break;
 				default:
 					$result['fail'] = 'bad status';

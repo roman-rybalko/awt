@@ -48,8 +48,8 @@
 					<ul class="nav" id="side-menu">
 						<li>
 							<a href="../">
-								<i class="fa fa-dashboard fa-fw"></i>
-								Dashboard
+								<i class="fa fa-bar-chart-o fa-fw"></i>
+								Stats
 							</a>
 						</li>
 						<li>

@@ -48,7 +48,7 @@ class User {
 	Billing
 	action: ?billing=1
 
-	Dashboard
+	Stats
 	action: index
 -->
 <?php
@@ -71,7 +71,7 @@ class User {
 			} else if (isset($_GET['billing'])) {
 				$this->billing();
 			} else {
-				$this->dashboard();
+				$this->stats();
 			}
 		} else {
 ?>
@@ -676,12 +676,36 @@ class User {
 		echo '<billing/>';
 	}
 
-	private function dashboard() {
+	private function stats() {
 ?>
 <!--
-	Dashboard
+	Stats
 -->
 <?php
-		echo '<dashboard/>';
+		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
+		$testsCnt = 0;
+		$testIds = [];
+		foreach ($testMgr->get() as $test)
+			if (!$test['deleted']) {
+				++$testsCnt;
+				$testIds[$test['id']] = true;
+			}
+		$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $this->userId);
+		$tasksCnt = 0;
+		foreach ($taskMgr->get() as $task)
+			if ($task['status'] == \AdvancedWebTesting\Task\Status::FAILED || $task['status'] == \AdvancedWebTesting\Task\Status::SUCCEEDED)
+				++$tasksCnt;
+		$schedMgr = new \AdvancedWebTesting\Task\Schedule($this->db, $this->userId);
+		$schedsCnt = 0;
+		foreach ($schedMgr->get() as $sched)
+			if (isset($testIds[$sched['test_id']]))
+				++$schedsCnt;
+		echo '<stats tests="', $testsCnt, '" tasks_finished="', $tasksCnt, '" tasks_scheduled="', $schedsCnt, '">';
+		$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $this->userId);
+		$stats = $statMgr->get();
+		foreach ($stats as $stat)
+			echo '<stat time="', $stat['time'], '" tasks_finished="', $stat['tasks_finished'], '"',
+				' tasks_failed="', $stat['tasks_failed'], '" task_actions_executed="', $stat['task_actions_executed'], '"/>';
+		echo '</stats>';
 	}
 }

@@ -18,5 +18,5 @@
 	<xsl:include href="schedule.xsl" />
 	<xsl:include href="events.xsl" />
 	<xsl:include href="history.xsl" />
-	<xsl:include href="dashboard.xsl" />
+	<xsl:include href="stats.xsl" />
 </xsl:stylesheet>
