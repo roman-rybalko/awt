@@ -24,6 +24,9 @@
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 						<i class="fa fa-user fa-fw"></i>
+						<span class="space-x">
+							<xsl:value-of select="../@login"/>
+						</span>
 						<i class="fa fa-caret-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-user">

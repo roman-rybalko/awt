@@ -14,11 +14,11 @@ class User {
 	}
 
 	public function run() {
-		echo '<user>';
 		$userDb = new \WebConstructionSet\Database\Relational\User($this->db);
 		$user = new \WebConstructionSet\Accounting\User($userDb);
 		$this->userId = $user->getId();
 		if ($this->userId) {
+			echo '<user login="', htmlspecialchars($user->getLogin()), '">';
 ?>
 <!--
 	Logout
@@ -74,6 +74,7 @@ class User {
 				$this->stats();
 			}
 		} else {
+			echo '<user>';
 ?>
 <!--
 	Login
