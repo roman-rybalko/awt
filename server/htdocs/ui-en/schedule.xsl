@@ -26,7 +26,7 @@
 				<xsl:call-template name="helper_tip">
 					<xsl:with-param name="state">schedule-create-test</xsl:with-param>
 					<xsl:with-param name="text">
-						Create a test then make a scheduled task.
+						Create a test to make schedule available.
 					</xsl:with-param>
 				</xsl:call-template>
 				<xsl:call-template name="helper_tip">
@@ -44,233 +44,235 @@
 				</div>
 			</div>
 		</xsl:if>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<table class="table table-striped table-hover table-dataTable" data-order='[[3, "asc"]]'>
-							<xsl:if test="count(task) &lt;= 10">
-								<xsl:attribute name="data-paging">false</xsl:attribute>
-							</xsl:if>
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Test</th>
-									<th>Type</th>
-									<th>Start time</th>
-									<th>Execution period</th>
-									<th data-orderable="false"></th>
-									<th data-orderable="false"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<xsl:for-each select="task">
+		<xsl:if test="test">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<table class="table table-striped table-hover table-dataTable" data-order='[[3, "asc"]]'>
+								<xsl:if test="count(task) &lt;= 10">
+									<xsl:attribute name="data-paging">false</xsl:attribute>
+								</xsl:if>
+								<thead>
 									<tr>
-										<td>
-											<xsl:value-of select="@name"/>
-										</td>
-										<td>
-											<a href="../?test={@test_id}" class="test-id2name">
-												<xsl:value-of select="@test_id"/>
-											</a>
-										</td>
-										<td class="task-type">
-											<xsl:value-of select="@type"/>
-										</td>
-										<td class="time-unix2human">
-											<xsl:value-of select="@start"/>
-										</td>
-										<td class="period-unix2human">
-											<xsl:value-of select="@period"/>
-										</td>
-										<td>
-											<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-task-modify-{@id}">
-												<i class="fa fa-pencil"></i>
-												Modify
-											</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-task-delete-{@id}">
-												<i class="glyphicon glyphicon-trash"></i>
-												Delete
-											</button>
-										</td>
+										<th>Name</th>
+										<th>Test</th>
+										<th>Type</th>
+										<th>Start time</th>
+										<th>Execution period</th>
+										<th data-orderable="false"></th>
+										<th data-orderable="false"></th>
 									</tr>
-								</xsl:for-each>
-							</tbody>
-						</table>
-						<xsl:for-each select="task">
-							<div class="modal" id="modal-task-modify-{@id}" role="dialog">
-								<div class="modal-dialog modal-lg">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-											<button type="button" class="close" data-dismiss="modal">&#215;</button>
-											Modify:
-											<xsl:value-of select="@name"/>
-										</div>
-										<div class="panel-body">
-											<form role="form" method="post" class="form-schedule-task">
-												<input type="hidden" name="id" value="{@id}"/>
-												<div class="row">
-													<div class="col-lg-2">
-														<div class="form-group">
-															<label>Name</label>
-															<input class="form-control" placeholder="Name" name="name" type="text" value="{@name}"/>
-														</div>
-													</div>
-													<div class="col-lg-2">
-														<div class="form-group">
-															<label>Test</label>
-															<select class="form-control" name="test_id">
-																<xsl:call-template name="opts_task_tests">
-																	<xsl:with-param name="value" select="@test_id"/>
-																</xsl:call-template>
-															</select>
-														</div>
-													</div>
-													<div class="col-lg-2">
-														<div class="form-group">
-															<label>Type</label>
-															<select class="form-control" name="type">
-																<xsl:call-template name="opts_task_types">
-																	<xsl:with-param name="value" select="@type"/>
-																</xsl:call-template>
-															</select>
-														</div>
-													</div>
-													<div class="col-lg-4">
-														<div class="form-group">
-															<label>Start time</label>
-															<div class="input-group date">
-																<input class="form-control" placeholder="Start time" name="start" type="text" value="{@start}"/>
-																<span class="input-group-addon">
-																	<span class="glyphicon glyphicon-time"></span>
-																</span>
-															</div>
-														</div>
-													</div>
-													<div class="col-lg-2">
-														<div class="form-group">
-															<label>Execution period</label>
-															<select class="form-control" name="period">
-																<xsl:call-template name="opts_periods">
-																	<xsl:with-param name="value" select="@period"/>
-																</xsl:call-template>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-lg-12">
-														<button type="submit" name="modify" class="btn btn-block btn-primary">
-															<i class="fa fa-pencil"></i>
-															Modify
-														</button>
-													</div>
-												</div>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">
-												<i class="fa fa-undo"></i>
-												Cancel
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="modal" id="modal-task-delete-{@id}" role="dialog">
-								<div class="modal-dialog modal-sm">
-									<div class="panel panel-danger">
-										<div class="panel-heading">
-											<button type="button" class="close" data-dismiss="modal">&#215;</button>
-											Delete:
-											<xsl:value-of select="@name"/>
-										</div>
-										<div class="panel-body">
-											<form role="form" method="post">
-												<input type="hidden" name="id" value="{@id}"/>
-												<button type="submit" name="delete" class="btn btn-block btn-danger">
+								</thead>
+								<tbody>
+									<xsl:for-each select="task">
+										<tr>
+											<td>
+												<xsl:value-of select="@name"/>
+											</td>
+											<td>
+												<a href="../?test={@test_id}" class="test-id2name">
+													<xsl:value-of select="@test_id"/>
+												</a>
+											</td>
+											<td class="task-type">
+												<xsl:value-of select="@type"/>
+											</td>
+											<td class="time-unix2human">
+												<xsl:value-of select="@start"/>
+											</td>
+											<td class="period-unix2human">
+												<xsl:value-of select="@period"/>
+											</td>
+											<td>
+												<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-task-modify-{@id}">
+													<i class="fa fa-pencil"></i>
+													Modify
+												</button>
+											</td>
+											<td>
+												<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-task-delete-{@id}">
 													<i class="glyphicon glyphicon-trash"></i>
 													Delete
 												</button>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">
-												<i class="fa fa-undo"></i>
-												Cancel
-											</button>
+											</td>
+										</tr>
+									</xsl:for-each>
+								</tbody>
+							</table>
+							<xsl:for-each select="task">
+								<div class="modal" id="modal-task-modify-{@id}" role="dialog">
+									<div class="modal-dialog modal-lg">
+										<div class="panel panel-primary">
+											<div class="panel-heading">
+												<button type="button" class="close" data-dismiss="modal">&#215;</button>
+												Modify:
+												<xsl:value-of select="@name"/>
+											</div>
+											<div class="panel-body">
+												<form role="form" method="post" class="form-schedule-task">
+													<input type="hidden" name="id" value="{@id}"/>
+													<div class="row">
+														<div class="col-lg-2">
+															<div class="form-group">
+																<label>Name</label>
+																<input class="form-control" placeholder="Name" name="name" type="text" value="{@name}"/>
+															</div>
+														</div>
+														<div class="col-lg-2">
+															<div class="form-group">
+																<label>Test</label>
+																<select class="form-control" name="test_id">
+																	<xsl:call-template name="opts_task_tests">
+																		<xsl:with-param name="value" select="@test_id"/>
+																	</xsl:call-template>
+																</select>
+															</div>
+														</div>
+														<div class="col-lg-2">
+															<div class="form-group">
+																<label>Type</label>
+																<select class="form-control" name="type">
+																	<xsl:call-template name="opts_task_types">
+																		<xsl:with-param name="value" select="@type"/>
+																	</xsl:call-template>
+																</select>
+															</div>
+														</div>
+														<div class="col-lg-4">
+															<div class="form-group">
+																<label>Start time</label>
+																<div class="input-group date">
+																	<input class="form-control" placeholder="Start time" name="start" type="text" value="{@start}"/>
+																	<span class="input-group-addon">
+																		<span class="glyphicon glyphicon-time"></span>
+																	</span>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-2">
+															<div class="form-group">
+																<label>Execution period</label>
+																<select class="form-control" name="period">
+																	<xsl:call-template name="opts_periods">
+																		<xsl:with-param name="value" select="@period"/>
+																	</xsl:call-template>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-12">
+															<button type="submit" name="modify" class="btn btn-block btn-primary">
+																<i class="fa fa-pencil"></i>
+																Modify
+															</button>
+														</div>
+													</div>
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">
+													<i class="fa fa-undo"></i>
+													Cancel
+												</button>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</xsl:for-each>
+								<div class="modal" id="modal-task-delete-{@id}" role="dialog">
+									<div class="modal-dialog modal-sm">
+										<div class="panel panel-danger">
+											<div class="panel-heading">
+												<button type="button" class="close" data-dismiss="modal">&#215;</button>
+												Delete:
+												<xsl:value-of select="@name"/>
+											</div>
+											<div class="panel-body">
+												<form role="form" method="post">
+													<input type="hidden" name="id" value="{@id}"/>
+													<button type="submit" name="delete" class="btn btn-block btn-danger">
+														<i class="glyphicon glyphicon-trash"></i>
+														Delete
+													</button>
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">
+													<i class="fa fa-undo"></i>
+													Cancel
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</xsl:for-each>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-success">
-					<div class="panel-body">
-						<form role="form" method="post" class="form-schedule-task">
-							<div class="row">
-								<div class="col-lg-2">
-									<div class="form-group">
-										<label>Name</label>
-										<input class="form-control" placeholder="Name" name="name" type="text" autofocus="1"/>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-success">
+						<div class="panel-body">
+							<form role="form" method="post" class="form-schedule-task">
+								<div class="row">
+									<div class="col-lg-2">
+										<div class="form-group">
+											<label>Name</label>
+											<input class="form-control" placeholder="Name" name="name" type="text" autofocus="1"/>
+										</div>
 									</div>
-								</div>
-								<div class="col-lg-2">
-									<div class="form-group">
-										<label>Test</label>
-										<select class="form-control" name="test_id">
-											<xsl:call-template name="opts_task_tests"/>
-										</select>
+									<div class="col-lg-2">
+										<div class="form-group">
+											<label>Test</label>
+											<select class="form-control" name="test_id">
+												<xsl:call-template name="opts_task_tests"/>
+											</select>
+										</div>
 									</div>
-								</div>
-								<div class="col-lg-2">
-									<div class="form-group">
-										<label>Type</label>
-										<select class="form-control" name="type">
-											<xsl:call-template name="opts_task_types"/>
-										</select>
+									<div class="col-lg-2">
+										<div class="form-group">
+											<label>Type</label>
+											<select class="form-control" name="type">
+												<xsl:call-template name="opts_task_types"/>
+											</select>
+										</div>
 									</div>
-								</div>
-								<div class="col-lg-4">
-									<div class="form-group">
-										<label>Start time</label>
-										<div class="input-group date">
-											<input class="form-control" placeholder="Start time" name="start" type="text"/>
-											<span class="input-group-addon">
-												<span class="glyphicon glyphicon-time"></span>
-											</span>
+									<div class="col-lg-4">
+										<div class="form-group">
+											<label>Start time</label>
+											<div class="input-group date">
+												<input class="form-control" placeholder="Start time" name="start" type="text"/>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-time"></span>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-2">
+										<div class="form-group">
+											<label>Execution period</label>
+											<select class="form-control" name="period">
+												<xsl:call-template name="opts_periods"/>
+											</select>
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-2">
-									<div class="form-group">
-										<label>Execution period</label>
-										<select class="form-control" name="period">
-											<xsl:call-template name="opts_periods"/>
-										</select>
+								<div class="row">
+									<div class="col-lg-12">
+										<button type="submit" name="add" class="btn btn-block btn-success">
+											<i class="fa fa-plus"></i>
+											New
+										</button>
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<button type="submit" name="add" class="btn btn-block btn-success">
-										<i class="fa fa-plus"></i>
-										New
-									</button>
-								</div>
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</xsl:if>
 	</div>
 </xsl:template>
 

@@ -573,7 +573,7 @@ class User {
 <?php
 		$taskSched = new \AdvancedWebTesting\Task\Schedule($this->db, $this->userId);
 		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
-		if (isset($_POST['add']) && isset($_POST['test_id'])) {
+		if (isset($_POST['add'])) {
 			if ($tests = $testMgr->get([$_POST['test_id']])) {
 				$test = $tests[0];
 				if ($schedId = $taskSched->add($_POST['start'], $_POST['period'], $_POST['test_id'], $_POST['type'], $_POST['name'])) {
