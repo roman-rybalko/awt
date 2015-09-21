@@ -1,5 +1,6 @@
 * billing
 * messages
+* lp
 * административный интерфейс - статистика, мониторинг
 * increment, decrement, cas для db - статические функции в классе Database\Relational\Tools
 * cron: clear canceled tasks
