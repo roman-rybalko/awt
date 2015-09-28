@@ -50,7 +50,7 @@
 				<div class="sidebar-nav navbar-collapse">
 					<ul class="nav" id="side-menu">
 						<li>
-							<a href="../">
+							<a href="../?stats=1">
 								<i class="fa fa-bar-chart-o fa-fw"></i>
 								Stats
 							</a>
@@ -71,6 +71,12 @@
 							<a href="../?schedule=1">
 								<i class="fa fa-clock-o fa-fw"></i>
 								Schedule
+							</a>
+						</li>
+						<li>
+							<a href="../?billing=1">
+								<i class="fa fa-money fa-fw"></i>
+								Billing
 							</a>
 						</li>
 						<li>

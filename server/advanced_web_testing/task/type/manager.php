@@ -10,7 +10,7 @@ class Manager {
 	private $table;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db) {
-		$this->table = new \WebConstructionSet\Database\TableWrapper($db, 'task_types');
+		$this->table = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'task_types');
 	}
 
 	/**

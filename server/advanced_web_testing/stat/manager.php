@@ -10,7 +10,7 @@ class Manager {
 	private $table;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
-		$this->table = new \WebConstructionSet\Database\TableWrapper($db, 'stats', ['user_id' => $userId]);
+		$this->table = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'stats', ['user_id' => $userId]);
 	}
 
 	public function add($tasks_finished = 0,  $tasks_failed = 0, $task_actions_executed = 0, $time = null) {

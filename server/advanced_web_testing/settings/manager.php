@@ -10,7 +10,7 @@ class Manager {
 	private $table;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
-		$this->table = new \WebConstructionSet\Database\TableWrapper($db, 'settings', ['user_id' => $userId]);
+		$this->table = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'settings', ['user_id' => $userId]);
 		if (!$this->table->select(['user_id']))
 			if (!$this->table->insert([]))
 				throw \ErrorException('Settings data init failed', null, null, __FILE__, __LINE__);

@@ -35,15 +35,15 @@
 						Set E-Mail in Settings to receive regular Task Reports.
 					</xsl:with-param>
 				</xsl:call-template>
+				<xsl:if test="//message">
+					<div class="row">
+						<div class="col-lg-12">
+							<xsl:apply-templates select="//message" />
+						</div>
+					</div>
+				</xsl:if>
 			</div>
 		</div>
-		<xsl:if test="//message">
-			<div class="row">
-				<div class="col-lg-12">
-					<xsl:apply-templates select="//message" />
-				</div>
-			</div>
-		</xsl:if>
 		<xsl:if test="test">
 			<div class="row">
 				<div class="col-lg-12">

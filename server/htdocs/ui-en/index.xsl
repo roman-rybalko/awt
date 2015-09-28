@@ -10,13 +10,15 @@
 	<xsl:include href="login.xsl" />
 	<xsl:include href="register.xsl" />
 	<xsl:include href="settings.xsl" />
+	<xsl:include href="stats.xsl" />
 	<xsl:include href="actions.xsl" />
 	<xsl:include href="tests.xsl" />
 	<xsl:include href="test.xsl" />
 	<xsl:include href="tasks.xsl" />
 	<xsl:include href="task.xsl" />
 	<xsl:include href="schedule.xsl" />
+	<xsl:include href="transactions.xsl" />
+	<xsl:include href="billing.xsl" />
 	<xsl:include href="events.xsl" />
 	<xsl:include href="history.xsl" />
-	<xsl:include href="stats.xsl" />
 </xsl:stylesheet>

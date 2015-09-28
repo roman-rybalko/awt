@@ -7,28 +7,26 @@ namespace AdvancedWebTesting\Task\Action;
  * Model (MVC)
  */
 class Manager {
-	private $db, $taskId;
+	private $actions, $tasks;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $taskId) {
-		$this->db = $db;
-		$this->taskId = $taskId;
+		$this->actions = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'task_actions', ['task_id' => $taskId]);
+		$this->tasks = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'tasks', ['task_id' => $taskId]);
 	}
 
 	/**
-	 * Скопировать из теста
-	 * @param integer $testId
-	 * @return последний actionId
+	 * @param [][id => integer, type => string, selector => string|null, data => string|null] $actions
+	 * @throws \ErrorException
+	 * @return Последний actionId
 	 */
-	public function import($testId) {
+	public function import($actions) {
 		$actionId = 0;
-		$testActMgr = new \AdvancedWebTesting\Test\Action\Manager($this->db, $testId);
-		$data = $testActMgr->get();
-		usort($data, function($a,$b){return $a['id']-$b['id'];});
-		foreach ($data as $data1) {
-			$fields = ['task_id' => $this->taskId, 'action_id' => ++$actionId];
+		usort($actions, function($a,$b){return $a['id']-$b['id'];});
+		foreach ($actions as $action) {
+			$fields = ['action_id' => ++$actionId];
 			foreach (['type', 'selector', 'data'] as $param)
-				$fields[$param] = $data1[$param];
-			if (!$this->db->insert('task_actions', $fields))
+				$fields[$param] = $action[$param];
+			if (!$this->actions->insert($fields))
 				throw new \ErrorException('Task action insert failed', null, null, __FILE__, __LINE__);
 		}
 		return $actionId;
@@ -47,7 +45,7 @@ class Manager {
 			$fields['scrn'] = $scrn;
 		if ($failed !== null)
 			$fields['failed'] = $failed;
-		return $this->db->update('task_actions', $fields, ['task_id' => $this->taskId, 'action_id' => $actionId]);
+		return $this->actions->update($fields, ['action_id' => $actionId]);
 	}
 
 	/**
@@ -55,14 +53,14 @@ class Manager {
 	 * @return [][id => integer, type => string, selector => string|null, data => string|null, scrn => string|null, failed => boolean, succeeded => boolean]
 	 */
 	public function get($actionIds = null) {
-		if ($tasks = $this->db->select('tasks', ['debug', 'status'], ['task_id' => $this->taskId]))
+		if ($tasks = $this->tasks->select(['debug', 'status']))
 			$task = $tasks[0];
 		$data = [];
 		if ($actionIds === null)
-			$data = $this->db->select('task_actions', ['type', 'selector', 'data', 'action_id', 'scrn', 'failed'], ['task_id' => $this->taskId]);
+			$data = $this->actions->select(['type', 'selector', 'data', 'action_id', 'scrn', 'failed']);
 		else
 			foreach ($actionIds as $actionId)
-				if ($data1 = $this->db->select('task_actions', ['type', 'selector', 'data', 'action_id', 'scrn', 'failed'], ['task_id' => $this->taskId, 'action_id' => $actionId]))
+				if ($data1 = $this->actions->select(['type', 'selector', 'data', 'action_id', 'scrn', 'failed'], ['action_id' => $actionId]))
 					$data = array_merge($data, $data1);
 		$actions = [];
 		$failed = false;

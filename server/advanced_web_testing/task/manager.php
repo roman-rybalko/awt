@@ -24,6 +24,14 @@ class Manager {
 	 * @return NULL|$taskId
 	 */
 	public function add($testId, $testName, $type, $debug = false) {
+		$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
+		$actions_available = $billMgr->getActionsCount();
+		if ($actions_available < \AdvancedWebTesting\Billing\Price::TASK_START)
+			return null;
+		$testActMgr = new \AdvancedWebTesting\Test\Action\Manager($this->db, $testId);
+		$actions = $testActMgr->get();
+		if ($actions_available < \AdvancedWebTesting\Billing\Price::TASK_ACTION * count($actions))
+			return null;
 		if ($type === null) {
 			$typeMgr = new Type\Manager($this->db);
 			$types = $typeMgr->get($typeMgr->getTop());
@@ -31,9 +39,10 @@ class Manager {
 		}
 		if ($taskId = $this->db->insert('tasks', ['user_id' => $this->userId, 'test_id' => $testId, 'test_name' => $testName, 'type' => $type, 'debug' => $debug, 'status' => -1, 'time' => time()])) {
 			$taskActMgr = new \AdvancedWebTesting\Task\Action\Manager($this->db, $taskId);
-			$taskActMgr->import($testId);
+			$taskActMgr->import($actions);
 			if (!$this->db->update('tasks', ['status' => Status::INITIAL], ['task_id' => $taskId]))
 				throw new \ErrorException('Task ' . $taskId . ' final update failed', null, null, __FILE__, __LINE__);
+			$billMgr->taskStart($taskId, $testName);
 		}
 		return $taskId;
 	}

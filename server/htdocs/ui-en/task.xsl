@@ -14,15 +14,15 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Task</h1>
+				<xsl:if test="//message">
+					<div class="row">
+						<div class="col-lg-12">
+							<xsl:apply-templates select="//message" />
+						</div>
+					</div>
+				</xsl:if>
 			</div>
 		</div>
-		<xsl:if test="//message">
-			<div class="row">
-				<div class="col-lg-12">
-					<xsl:apply-templates select="//message" />
-				</div>
-			</div>
-		</xsl:if>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-info">

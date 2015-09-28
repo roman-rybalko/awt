@@ -17,18 +17,18 @@
 				<xsl:call-template name="helper_tip">
 					<xsl:with-param name="state">tasks-create-test</xsl:with-param>
 					<xsl:with-param name="text">
-						Create a test then run a task.
+						Create a test to run a task.
 					</xsl:with-param>
 				</xsl:call-template>
+				<xsl:if test="//message">
+					<div class="row">
+						<div class="col-lg-12">
+							<xsl:apply-templates select="//message" />
+						</div>
+					</div>
+				</xsl:if>
 			</div>
 		</div>
-		<xsl:if test="//message">
-			<div class="row">
-				<div class="col-lg-12">
-					<xsl:apply-templates select="//message" />
-				</div>
-			</div>
-		</xsl:if>
 		<xsl:if test="task[@status = 'initial']">
 			<div class="row">
 				<div class="col-lg-12">
@@ -109,7 +109,7 @@
 					<xsl:call-template name="helper_tip">
 						<xsl:with-param name="state">tasks-cancel</xsl:with-param>
 						<xsl:with-param name="text">
-							New tasks may be canceled.
+							New task may be canceled.
 							When the task starts running it may not be canceled.
 						</xsl:with-param>
 					</xsl:call-template>
@@ -348,7 +348,7 @@
 				<xsl:call-template name="helper_tip">
 					<xsl:with-param name="state">tasks-cleanup</xsl:with-param>
 					<xsl:with-param name="text">
-						All tasks will be cleaned up after 42 days.
+						Tasks are cleared after 42 days.
 					</xsl:with-param>
 				</xsl:call-template>
 			</div>

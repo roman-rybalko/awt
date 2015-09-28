@@ -14,15 +14,15 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Tests</h1>
+				<xsl:if test="//message">
+					<div class="row">
+						<div class="col-lg-12">
+							<xsl:apply-templates select="//message" />
+						</div>
+					</div>
+				</xsl:if>
 			</div>
 		</div>
-		<xsl:if test="//message">
-			<div class="row">
-				<div class="col-lg-12">
-					<xsl:apply-templates select="//message" />
-				</div>
-			</div>
-		</xsl:if>
 		<xsl:if test="test[not(@deleted)]">
 			<div class="row">
 				<div class="col-lg-12">
@@ -250,7 +250,7 @@
 			<xsl:call-template name="helper_tip">
 				<xsl:with-param name="state">tests-deleted-cleanup</xsl:with-param>
 				<xsl:with-param name="text">
-					Deleted tests will be cleaned up after 42 days.
+					Deleted tests are cleared after 42 days.
 				</xsl:with-param>
 			</xsl:call-template>
 		</xsl:if>

@@ -108,12 +108,17 @@ class Task {
 							if ($status == 'succeeded' && $settings['task_success_email_report'])
 								$mailMgr->scheduleTaskReport($settings['email'], $taskId);
 						}
-						$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $userId);
 						$actExecCnt = 0;
 						foreach ($taskActMgr->get() as $action)
 						if ($action['failed'] || $action['succeeded'])
 							++$actExecCnt;
+						$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $userId);
 						$statMgr->add(1, $statusId == \AdvancedWebTesting\Task\Status::FAILED ? 1 : 0, $actExecCnt);
+						$taskMgr1 = new \AdvancedWebTesting\Task\Manager($this->db, $userId);
+						if ($tasks = $taskMgr1->get([$taskId]))
+							$task = $tasks[0];
+						$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $userId);
+						$billMgr->taskEnd($taskId, $task['test_name'], $actExecCnt);
 					} else
 						$result['fail'] = 'task update failed';
 					break;

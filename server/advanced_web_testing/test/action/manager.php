@@ -7,11 +7,11 @@ namespace AdvancedWebTesting\Test\Action;
  * Model (MVC)
  */
 class Manager {
-	private $db, $testId;
+	private $actions, $tests;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $testId) {
-		$this->db = $db;
-		$this->testId = $testId;
+		$this->actions = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'test_actions', ['test_id' => $testId]);
+		$this->tests = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'tests', ['test_id' => $testId]);
 	}
 
 	/**
@@ -23,18 +23,18 @@ class Manager {
 	 */
 	public function add($type, $selector, $data) {
 		$lastActionId = 0;
-		foreach ($this->db->select('test_actions', ['action_id'], ['test_id' => $this->testId]) as $action)
+		foreach ($this->actions->select(['action_id']) as $action)
 			if ($action['action_id'] > $lastActionId)
 				$lastActionId = $action['action_id'];
 		$actionId = $lastActionId + 1;
-		$fields = ['type' => $type];
+		$fields = ['type' => $type, 'action_id' => $actionId];
 		if ($selector !== null)
 			$fields['selector'] = $selector;
 		if ($data !== null)
 			$fields['data'] = $data;
-		if (!$this->db->insert('test_actions', array_merge(['test_id' => $this->testId, 'action_id' => $actionId], $fields)))
+		if (!$this->actions->insert($fields))
 			throw new \ErrorException('Test action insert failed', null, null, __FILE__, __LINE__);
-		if (!$this->db->update('tests', ['time' => time()], ['test_id' => $this->testId]))
+		if (!$this->tests->update(['time' => time()], []))
 			throw new \ErrorException('Test update failed', null, null, __FILE__, __LINE__);
 		return $actionId;
 	}
@@ -50,7 +50,7 @@ class Manager {
 	public function insert($actionId, $type, $selector, $data) {
 		// получаем список идентификаторов, которые надо изменить
 		$ids = [];
-		foreach ($this->db->select('test_actions', ['action_id'], ['test_id' => $this->testId]) as $action)
+		foreach ($this->actions->select(['action_id']) as $action)
 			if ($action['action_id'] >= $actionId)
 				$ids[] = $action['action_id'];
 		// находим промежуток в порядковых номерах, образовавшийся при удалении, и отбрасываем оставшуюся часть, т.к. её изменять нет смысла
@@ -67,17 +67,17 @@ class Manager {
 		// делаем изменения
 		$ids = array_reverse($ids);
 		foreach ($ids as $id)
-			if (!$this->db->update('test_actions', ['action_id' => $id + 1], ['test_id' => $this->testId, 'action_id' => $id]))
+			if (!$this->actions->update(['action_id' => $id + 1], ['action_id' => $id]))
 				throw new \ErrorException('Something wrong in test_actions indexes: test_id=' . $this->testId . ', action_id=' . $id . ' move ids=[' . implode(', ', $ids) . ']', null, null, __FILE__, __LINE__);
 		// вставляем
-		$fields = ['type' => $type];
+		$fields = ['type' => $type, 'action_id' => $actionId];
 		if ($selector !== null)
 			$fields['selector'] = $selector;
 		if ($data !== null)
 			$fields['data'] = $data;
-		if (!$this->db->insert('test_actions', array_merge(['test_id' => $this->testId, 'action_id' => $actionId], $fields)))
+		if (!$this->actions->insert($fields))
 			throw new \ErrorException('Test action insert failed', null, null, __FILE__, __LINE__);
-		if (!$this->db->update('tests', ['time' => time()], ['test_id' => $this->testId]))
+		if (!$this->tests->update(['time' => time()], []))
 			throw new \ErrorException('Test update failed', null, null, __FILE__, __LINE__);
 		return $actionId;
 	}
@@ -88,26 +88,25 @@ class Manager {
 	 * @return boolean
 	 */
 	public function delete($actionId) {
-		if ($result = $this->db->delete('test_actions', ['test_id' => $this->testId, 'action_id' => $actionId]))
-			$this->db->update('tests', ['time' => time()], ['test_id' => $this->testId]);
+		if ($result = $this->actions->delete(['action_id' => $actionId]))
+			$this->tests->update(['time' => time()], []);
 		return $result;
 	}
 
 	/**
-	 * Скопировать
-	 * @param integer $testId Получатель
+	 * @param [][id => integer, type => string, selector => string|null, data => string|null] $actions
 	 * @throws \ErrorException
 	 * @return integer Последний actionId
 	 */
-	public function copy($testId) {
-		$actions = $this->db->select('test_actions', ['type', 'selector', 'data', 'action_id'], ['test_id' => $this->testId]);
-		usort($actions, function($a, $b){return $a['action_id']-$b['action_id'];});
+	public function import($actions) {
 		$actionId = 0;
+		usort($actions, function($a,$b){return $a['id']-$b['id'];});
 		foreach ($actions as $action) {
-			$action['action_id'] = ++$actionId;
-			$action['test_id'] = $testId;
-			if (!$this->db->insert('test_actions', $action))
-				throw new \ErrorException('Insert test action failed', null, null, __FILE__, __LINE__);
+			$fields = ['action_id' => ++$actionId];
+			foreach (['type', 'selector', 'data'] as $param)
+				$fields[$param] = $action[$param];
+			if (!$this->actions->insert($fields))
+				throw new \ErrorException('Test action insert failed', null, null, __FILE__, __LINE__);
 		}
 		return $actionId;
 	}
@@ -125,8 +124,8 @@ class Manager {
 			$fields['selector'] = $selector;
 		if ($data !== null)
 			$fields['data'] = $data;
-		if ($result = $this->db->update('test_actions', $fields, ['test_id' => $this->testId, 'action_id' => $actionId]))
-			$this->db->update('tests', ['time' => time()], ['test_id' => $this->testId]);
+		if ($result = $this->actions->update($fields, ['action_id' => $actionId]))
+			$this->tests->update(['time' => time()], []);
 		return $result;
 	}
 
@@ -138,10 +137,10 @@ class Manager {
 	public function get($actionIds = null) {
 		$data = [];
 		if ($actionIds === null)
-			$data = $this->db->select('test_actions', ['action_id', 'type', 'selector', 'data'], ['test_id' => $this->testId]);
+			$data = $this->actions->select(['action_id', 'type', 'selector', 'data']);
 		else
 			foreach ($actionIds as $actionId)
-				if ($data1 = $this->db->select('test_actions', ['action_id', 'type', 'selector', 'data'], ['action_id' => $actionId, 'test_id' => $this->testId]))
+				if ($data1 = $this->actions->select(['action_id', 'type', 'selector', 'data'], ['action_id' => $actionId]))
 					$data = array_merge($data, $data1);
 		$actions = [];
 		usort($data, function($a,$b){return $a['action_id']-$b['action_id'];});

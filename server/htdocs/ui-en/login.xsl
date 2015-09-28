@@ -13,12 +13,10 @@
 						<form role="form" method="post">
 							<fieldset>
 								<div class="form-group">
-									<input class="form-control" placeholder="Login" name="user"
-										type="text" autofocus="1" />
+									<input class="form-control" placeholder="Login" name="user" type="text" autofocus="1" />
 								</div>
 								<div class="form-group">
-									<input class="form-control" placeholder="Password" name="password"
-										type="password" value="" />
+									<input class="form-control" placeholder="Password" name="password" type="password" value="" />
 								</div>
 								<input type="submit" name="login" value="Login"
 									class="btn btn-lg btn-success btn-block" />

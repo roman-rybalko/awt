@@ -54,6 +54,8 @@ class User {
 <?php
 			if (isset($_GET['logout'])) {
 				$this->logout($user);
+			} else if (isset($_GET['stats'])) {
+				$this->stats();
 			} else if (isset($_GET['settings'])) {
 				$this->settings($userDb);
 			} else if (isset($_GET['tests'])) {
@@ -320,8 +322,9 @@ class User {
 			if ($tests = $testMgr->get([$_POST['id']])) {
 				$test = $tests[0];
 				if ($testId = $testMgr->add($_POST['name'])) {
-					$testActMgr = new \AdvancedWebTesting\Test\Action\Manager($this->db, $_POST['id']);
-					$testActMgr->copy($testId);
+					$testActMgrSrc = new \AdvancedWebTesting\Test\Action\Manager($this->db, $_POST['id']);
+					$testActMgrDst = new \AdvancedWebTesting\Test\Action\Manager($this->db, $testId);
+					$testActMgrDst->import($testActMgrSrc->get());
 					echo '<message type="notice" value="test_copy_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$histMgr->add('test_copy', ['test_id' => $testId, 'test_name' => $_POST['name'],
@@ -501,7 +504,7 @@ class User {
 						'test_id' => $testId, 'test_name' => $test['name'],
 						'type' => $type]);
 				} else
-					echo '<message type="error" value="task_add_fail"/>';
+					echo '<message type="error" value="no_funds"/>';
 			} else
 				echo '<message type="error" value="bad_test_id"/>';
 		} else if (isset($_POST['cancel'])) {
@@ -672,9 +675,55 @@ class User {
 ?>
 <!--
 	Billing
+
+	Top Up (Test)
+	method: post
+	params: actions amount
+	submit: top_up
+
+	Service Charge
+	method: post
+	params actions data
+	submit: service
 -->
 <?php
-		echo '<billing/>';
+		$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
+		if (isset($_POST['top_up'])) {
+			if ($billMgr->topUp($_POST['actions'], \AdvancedWebTesting\Billing\PaymentType::MANUAL, $_POST['amount'], 'test'))
+				echo '<message type="notice" value="top_up_ok"/>';
+			else
+				echo '<message type="error" value="top_up_fail"/>';
+		} else if (isset($_POST['service'])) {
+			if ($billMgr->service($_POST['actions'], $_POST['data']))
+				echo '<message type="notice" value="service_ok"/>';
+			else
+				echo '<message type="error" value="service_fail"/>';
+		}
+		echo '<billing actions_available="', $billMgr->getActionsCount(), '">';
+		foreach ($billMgr->getTransactions() as $transaction) {
+			echo '<transaction id="', $transaction['id'], '" type="', \AdvancedWebTesting\Billing\TransactionType::toString($transaction['type']), '"',
+				' time="', $transaction['time'], '"',
+				' actions_before="', $transaction['actions_before'], '"',
+				' actions_after="', $transaction['actions_after'], '"',
+				' actions="', $transaction['actions'], '"';
+			switch ($transaction['type']) {
+				case \AdvancedWebTesting\Billing\TransactionType::SERVICE:
+					echo ' data="', htmlspecialchars($transaction['data']), '"';
+					break;
+				case \AdvancedWebTesting\Billing\TransactionType::TOP_UP:
+					echo ' payment_type="', \AdvancedWebTesting\Billing\PaymentType::toString($transaction['payment_type']), '"',
+						' payment_amount="', $transaction['payment_amount'], '"',
+						' payment_data="', htmlspecialchars($transaction['payment_data']), '"';
+					break;
+				case \AdvancedWebTesting\Billing\TransactionType::TASK_START:
+				case \AdvancedWebTesting\Billing\TransactionType::TASK_END:
+					echo ' task_id="', $transaction['task_id'], '"',
+						' test_name="', htmlspecialchars($transaction['test_name']), '"';
+					break;
+			}
+			echo '/>';
+		}
+		echo '</billing>';
 	}
 
 	private function stats() {
@@ -701,7 +750,9 @@ class User {
 		foreach ($schedMgr->get() as $sched)
 			if (isset($testIds[$sched['test_id']]))
 				++$schedsCnt;
-		echo '<stats tests="', $testsCnt, '" tasks_finished="', $tasksCnt, '" tasks_scheduled="', $schedsCnt, '">';
+		$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
+		echo '<stats tests="', $testsCnt, '" tasks_finished="', $tasksCnt, '" scheds="', $schedsCnt, '"',
+			' actions_available="', $billMgr->getActionsCount(), '">';
 		$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $this->userId);
 		$stats = $statMgr->get();
 		foreach ($stats as $stat)

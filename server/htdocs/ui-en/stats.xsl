@@ -39,15 +39,15 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Stats</h1>
+				<xsl:if test="//message">
+					<div class="row">
+						<div class="col-lg-12">
+							<xsl:apply-templates select="//message" />
+						</div>
+					</div>
+				</xsl:if>
 			</div>
 		</div>
-		<xsl:if test="//message">
-			<div class="row">
-				<div class="col-lg-12">
-					<xsl:apply-templates select="//message" />
-				</div>
-			</div>
-		</xsl:if>
 		<div class="row">
 			<div class="col-lg-3 col-md-6">
 				<div class="panel panel-green">
@@ -110,13 +110,39 @@
 							</div>
 							<div class="col-xs-9 text-right">
 								<div class="huge">
-									<xsl:value-of select="@tasks_scheduled"/>
+									<xsl:value-of select="@scheds"/>
 								</div>
-								<div>Scheduled Tasks</div>
+								<div>Schedule Jobs</div>
 							</div>
 						</div>
 					</div>
 					<a href="../?schedule=1">
+						<div class="panel-footer">
+							<span class="pull-left">Details</span>
+							<span class="pull-right">
+								<i class="fa fa-arrow-circle-right"></i>
+							</span>
+							<div class="clearfix"></div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-red">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-money fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge">
+									<xsl:value-of select="@actions_available"/>
+								</div>
+								<div>Available Actions</div>
+							</div>
+						</div>
+					</div>
+					<a href="../?billing=1">
 						<div class="panel-footer">
 							<span class="pull-left">Details</span>
 							<span class="pull-right">

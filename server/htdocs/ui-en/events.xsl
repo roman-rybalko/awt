@@ -510,7 +510,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">
-				<b class="space-x">Schedule:</b>
+				<b class="space-x">Schedule Job:</b>
 				<a href="../?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-3">
