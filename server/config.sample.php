@@ -17,6 +17,7 @@ class Config {
 	const MAIL_ROOT_URL = 'http://advancedwebtesting.com/';
 	const WWW_PATH = 'htdocs/';
 	const REGISTRATION_TOP_UP = 100;
+	const DEMO_PASSWORD = '';
 }
 
 \Config::$rootPath = __DIR__ . '/';

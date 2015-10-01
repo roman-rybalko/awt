@@ -17,6 +17,7 @@ class Config {
 	const MAIL_ROOT_URL = 'http://www/awt/server/htdocs/';
 	const WWW_PATH = 'htdocs/';
 	const REGISTRATION_TOP_UP = 100;
+	const DEMO_PASSWORD = 'Kh2j9EIE2oMPyaYTz7u83XdLnPPf7AoHLIDkyQdu19';
 }
 
 \Config::$rootPath = __DIR__ . '/';
