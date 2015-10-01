@@ -10,6 +10,7 @@
 * cron: clear finished tasks
 * cron: clear deleted tests
 * cron: clear history
-* XPATH Browser в iframe/отдельном окне, с/без прокси (пользователь сам подгружает скрипт)
+* XPATH Browser в iframe/отдельном окне, с/без прокси (пользователь сам подгружает скрипт, Tip: Browser plugin)
+* XPATH -> jQuery/CSS3 selector translator
 * XMPP Reports
 * php xsltprocessor recursion bug report
