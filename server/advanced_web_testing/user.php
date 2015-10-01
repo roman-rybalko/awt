@@ -141,10 +141,14 @@ class User {
 			if ($captcha->get() === $_POST['captcha']) {
 				if ($_POST['password1'] == $_POST['password2']) {
 					if ($user->register($_POST['user'], $_POST['password1'])) {
+						$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $user->getId());
+						$billMgr->topUp(\Config::REGISTRATION_TOP_UP,
+							\AdvancedWebTesting\Billing\PaymentType::MANUAL,
+							\Config::REGISTRATION_TOP_UP . ' test actions', 'sign up bonus');
 						echo '<message type="notice" value="register_ok"/>';
 						$this->redirect('');
 					} else {
-						echo '<message type="error" value="register_fail"/>';
+						echo '<message type="error" value="login_busy"/>';
 						$this->redirect('?' . $_SERVER['QUERY_STRING'], 3);
 					}
 				} else {

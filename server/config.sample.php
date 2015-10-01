@@ -16,6 +16,7 @@ class Config {
 	const MAIL_TEMPLATE_PATH = 'mail/';
 	const MAIL_ROOT_URL = 'http://advancedwebtesting.com/';
 	const WWW_PATH = 'htdocs/';
+	const REGISTRATION_TOP_UP = 100;
 }
 
 \Config::$rootPath = __DIR__ . '/';
