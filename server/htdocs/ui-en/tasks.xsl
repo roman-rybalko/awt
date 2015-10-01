@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="tasks">
-	<xsl:call-template name="menu" />
+	<xsl:call-template name="menu"/>
 </xsl:template>
 
 <xsl:template match="tasks" mode="menu">
@@ -23,7 +23,7 @@
 				<xsl:if test="//message">
 					<div class="row">
 						<div class="col-lg-12">
-							<xsl:apply-templates select="//message" />
+							<xsl:apply-templates select="//message"/>
 						</div>
 					</div>
 				</xsl:if>
@@ -58,11 +58,11 @@
 										<tr>
 											<td>
 												<a href="../?test={@test_id}">
-													<xsl:value-of select="@test_name" />
+													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
 											<td class="task-type">
-												<xsl:value-of select="@type" />
+												<xsl:value-of select="@type"/>
 											</td>
 											<td>
 												<xsl:if test="@debug">
@@ -70,11 +70,11 @@
 												</xsl:if>
 											</td>
 											<td class="time-unix2human">
-												<xsl:value-of select="@time" />
+												<xsl:value-of select="@time"/>
 											</td>
 											<td>
 												<form role="form" method="post">
-													<input type="hidden" name="task_id" value="{@id}" />
+													<input type="hidden" name="task_id" value="{@id}"/>
 													<button type="submit" name="cancel" class="btn btn-xs btn-danger">
 														<i class="glyphicon glyphicon-trash"></i>
 														Cancel
@@ -144,11 +144,11 @@
 										<tr>
 											<td>
 												<a href="../?test={@test_id}">
-													<xsl:value-of select="@test_name" />
+													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
 											<td class="task-type">
-												<xsl:value-of select="@type" />
+												<xsl:value-of select="@type"/>
 											</td>
 											<td>
 												<xsl:if test="@debug">
@@ -156,7 +156,7 @@
 												</xsl:if>
 											</td>
 											<td class="time-unix2human">
-												<xsl:value-of select="@time" />
+												<xsl:value-of select="@time"/>
 											</td>
 											<td>
 												<a href="../?task={@id}">
@@ -221,11 +221,11 @@
 											</xsl:if>
 											<td>
 												<a href="../?test={@test_id}">
-													<xsl:value-of select="@test_name" />
+													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
 											<td class="task-type">
-												<xsl:value-of select="@type" />
+												<xsl:value-of select="@type"/>
 											</td>
 											<td>
 												<xsl:if test="@debug">
@@ -233,7 +233,7 @@
 												</xsl:if>
 											</td>
 											<td class="time-unix2human">
-												<xsl:value-of select="@time" />
+												<xsl:value-of select="@time"/>
 											</td>
 											<td>
 												<xsl:if test="@status = 'succeeded'">
@@ -301,11 +301,11 @@
 										<tr>
 											<td>
 												<a href="../?test={@test_id}">
-													<xsl:value-of select="@test_name" />
+													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
 											<td class="task-type">
-												<xsl:value-of select="@type" />
+												<xsl:value-of select="@type"/>
 											</td>
 											<td>
 												<xsl:if test="@debug">
@@ -313,7 +313,7 @@
 												</xsl:if>
 											</td>
 											<td class="time-unix2human">
-												<xsl:value-of select="@time" />
+												<xsl:value-of select="@time"/>
 											</td>
 											<td>
 												<a href="../?task={@id}">

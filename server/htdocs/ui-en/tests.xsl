@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="tests">
-	<xsl:call-template name="menu" />
+	<xsl:call-template name="menu"/>
 </xsl:template>
 
 <xsl:template match="tests" mode="menu">
@@ -17,7 +17,7 @@
 				<xsl:if test="//message">
 					<div class="row">
 						<div class="col-lg-12">
-							<xsl:apply-templates select="//message" />
+							<xsl:apply-templates select="//message"/>
 						</div>
 					</div>
 				</xsl:if>
@@ -47,11 +47,11 @@
 										<tr>
 											<td>
 												<a href="../?test={@id}">
-													<xsl:value-of select="@name" />
+													<xsl:value-of select="@name"/>
 												</a>
 											</td>
 											<td class="time-unix2human">
-												<xsl:value-of select="@time" />
+												<xsl:value-of select="@time"/>
 											</td>
 											<td>
 												<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-test-rename-{@id}">
@@ -87,13 +87,13 @@
 										<div class="panel panel-primary">
 											<div class="panel-heading">
 												<button type="button" class="close" data-dismiss="modal">&#215;</button>
-												Rename: <xsl:value-of select="@name" />
+												Rename: <xsl:value-of select="@name"/>
 											</div>
 											<div class="panel-body">
 												<form role="form" method="post">
-													<input type="hidden" name="id" value="{@id}" />
+													<input type="hidden" name="id" value="{@id}"/>
 													<div class="form-group">
-														<input class="form-control" placeholder="New Name" name="name" type="text" value="{@name}" />
+														<input class="form-control" placeholder="New Name" name="name" type="text" value="{@name}"/>
 													</div>
 													<button type="submit" name="rename" class="btn btn-block btn-primary">
 														<i class="fa fa-pencil"></i>
@@ -115,13 +115,13 @@
 										<div class="panel panel-primary">
 											<div class="panel-heading">
 												<button type="button" class="close" data-dismiss="modal">&#215;</button>
-												Copy: <xsl:value-of select="@name" />
+												Copy: <xsl:value-of select="@name"/>
 											</div>
 											<div class="panel-body">
 												<form role="form" method="post">
-													<input type="hidden" name="id" value="{@id}" />
+													<input type="hidden" name="id" value="{@id}"/>
 													<div class="form-group">
-														<input class="form-control" placeholder="New Name" name="name" type="text" />
+														<input class="form-control" placeholder="New Name" name="name" type="text"/>
 													</div>
 													<button type="submit" name="copy" class="btn btn-block btn-primary">
 														<i class="fa fa-copy"></i>
@@ -143,11 +143,11 @@
 										<div class="panel panel-danger">
 											<div class="panel-heading">
 												<button type="button" class="close" data-dismiss="modal">&#215;</button>
-												Delete: <xsl:value-of select="@name" />
+												Delete: <xsl:value-of select="@name"/>
 											</div>
 											<div class="panel-body">
 												<form role="form" method="post">
-													<input type="hidden" name="id" value="{@id}" />
+													<input type="hidden" name="id" value="{@id}"/>
 													<button type="submit" name="delete" class="btn btn-block btn-danger">
 														<i class="glyphicon glyphicon-trash"></i>
 														Delete
@@ -222,11 +222,11 @@
 												<tr>
 													<td>
 														<a href="../?test={@id}">
-															<xsl:value-of select="@name" />
+															<xsl:value-of select="@name"/>
 														</a>
 													</td>
 													<td class="time-unix2human">
-														<xsl:value-of select="@time" />
+														<xsl:value-of select="@time"/>
 													</td>
 													<td>
 														<form role="form" method="post">

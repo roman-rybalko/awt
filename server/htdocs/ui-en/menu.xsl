@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template name="menu">
-	<link href="css/metisMenu.min.css" rel="stylesheet" />
+	<link href="css/metisMenu.min.css" rel="stylesheet"/>
 	<script src="js/metisMenu.min.js"></script>
 	<script src="js/jquery.cookie.min.js"></script>
 	<script src="js/jquery.storageapi.min.js"></script>
@@ -90,7 +90,7 @@
 			</div>
 		</nav>
 		<div id="page-wrapper">
-			<xsl:apply-templates select="." mode="menu" />
+			<xsl:apply-templates select="." mode="menu"/>
 		</div>
 	</div>
 </xsl:template>

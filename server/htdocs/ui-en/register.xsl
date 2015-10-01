@@ -9,23 +9,23 @@
 						<h3 class="panel-title">Sign Up</h3>
 					</div>
 					<div class="panel-body">
-						<xsl:apply-templates select="//message" />
+						<xsl:apply-templates select="//message"/>
 						<form role="form" method="post">
 							<fieldset>
 								<div class="form-group">
 									<input class="form-control" placeholder="Login" name="user"
-										type="text" autofocus="1" />
+										type="text" autofocus="1"/>
 								</div>
 								<div class="form-group">
 									<input class="form-control" placeholder="Password" name="password1"
-										type="password" value="" />
+										type="password" value=""/>
 								</div>
 								<div class="form-group">
 									<input class="form-control" placeholder="Password (confirm)"
-										name="password2" type="password" value="" />
+										name="password2" type="password" value=""/>
 								</div>
 								<input type="submit" name="register" value="Register"
-									class="btn btn-lg btn-success btn-block" />
+									class="btn btn-lg btn-success btn-block"/>
 								<div class="form-group">
 									<a href="../">Sign In</a>
 								</div>

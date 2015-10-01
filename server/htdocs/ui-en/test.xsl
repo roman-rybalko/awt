@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="test">
-	<xsl:call-template name="menu" />
+	<xsl:call-template name="menu"/>
 </xsl:template>
 
 <xsl:template match="test" mode="menu">
@@ -18,7 +18,7 @@
 				<xsl:if test="//message">
 					<div class="row">
 						<div class="col-lg-12">
-							<xsl:apply-templates select="//message" />
+							<xsl:apply-templates select="//message"/>
 						</div>
 					</div>
 				</xsl:if>
@@ -31,7 +31,7 @@
 						<div class="row">
 							<div class="col-lg-3">
 								<b>Name</b>:
-								<xsl:value-of select="@name" />
+								<xsl:value-of select="@name"/>
 							</div>
 							<div class="col-lg-3">
 								<b>Time</b>:
@@ -80,7 +80,7 @@
 							<div class="row">
 								<div class="col-lg-9">
 									<div class="row">
-										<xsl:apply-templates select="." mode="html" />
+										<xsl:apply-templates select="." mode="html"/>
 									</div>
 								</div>
 								<xsl:if test="not(../@deleted)">
@@ -94,11 +94,11 @@
 												<div class="panel panel-primary">
 													<div class="panel-heading">
 														<button type="button" class="close" data-dismiss="modal">&#215;</button>
-														Modify: <xsl:value-of select="@name" />
+														Modify: <xsl:value-of select="@name"/>
 													</div>
 													<div class="panel-body">
 														<form role="form" method="post">
-															<input type="hidden" name="id" value="{@id}" />
+															<input type="hidden" name="id" value="{@id}"/>
 															<div class="row">
 																<xsl:apply-templates select="." mode="form">
 																	<xsl:with-param name="id">modify-<xsl:value-of select="@id"/></xsl:with-param>
@@ -137,7 +137,7 @@
 													</div>
 													<div class="panel-body">
 														<form role="form" method="post" id="action-form-{@id}">
-															<input type="hidden" name="id" value="{@id}" />
+															<input type="hidden" name="id" value="{@id}"/>
 															<xsl:call-template name="new_action_form">
 																<xsl:with-param name="id">insert-<xsl:value-of select="@id"/></xsl:with-param>
 															</xsl:call-template>
@@ -174,12 +174,12 @@
 													</div>
 													<div class="panel-body">
 														<div class="row">
-															<xsl:apply-templates select="." mode="html" />
+															<xsl:apply-templates select="." mode="html"/>
 														</div>
 														<div class="row">
 															<div class="col-lg-12">
 																<form role="form" method="post">
-																	<input type="hidden" name="id" value="{@id}" />
+																	<input type="hidden" name="id" value="{@id}"/>
 																	<button type="submit" name="delete" class="btn btn-block btn-danger">
 																		<i class="glyphicon glyphicon-trash"></i>
 																		Delete

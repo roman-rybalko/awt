@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="history">
-	<xsl:call-template name="menu" />
+	<xsl:call-template name="menu"/>
 </xsl:template>
 
 <xsl:template match="history" mode="menu">
@@ -17,7 +17,7 @@
 				<xsl:if test="//message">
 					<div class="row">
 						<div class="col-lg-12">
-							<xsl:apply-templates select="//message" />
+							<xsl:apply-templates select="//message"/>
 						</div>
 					</div>
 				</xsl:if>

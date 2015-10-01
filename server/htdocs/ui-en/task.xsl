@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="task">
-	<xsl:call-template name="menu" />
+	<xsl:call-template name="menu"/>
 </xsl:template>
 
 <xsl:template match="task" mode="menu">
@@ -17,7 +17,7 @@
 				<xsl:if test="//message">
 					<div class="row">
 						<div class="col-lg-12">
-							<xsl:apply-templates select="//message" />
+							<xsl:apply-templates select="//message"/>
 						</div>
 					</div>
 				</xsl:if>
@@ -31,7 +31,7 @@
 							<div class="col-lg-2">
 								<b>Test</b>:
 								<a href="../?test={@test_id}">
-									<xsl:value-of select="@test_name" />
+									<xsl:value-of select="@test_name"/>
 								</a>
 							</div>
 							<div class="col-lg-2">
@@ -53,7 +53,7 @@
 											text-failure
 										</xsl:attribute>
 									</xsl:if>
-									<xsl:value-of select="@status" />
+									<xsl:value-of select="@status"/>
 								</span>
 							</div>
 							<div class="col-lg-2">
@@ -122,14 +122,14 @@
 						<div class="row">
 							<div class="col-lg-8">
 								<div class="row">
-									<xsl:apply-templates select="." mode="html" />
+									<xsl:apply-templates select="." mode="html"/>
 								</div>
 							</div>
 							<div class="col-lg-2">
 								<xsl:if test="@failed">
 									<b class="text-failure">Failure</b>:
 									<span class="text-failure">
-										<xsl:value-of select="@failed" />
+										<xsl:value-of select="@failed"/>
 									</span>
 								</xsl:if>
 							</div>
@@ -144,7 +144,7 @@
 												<xsl:if test="@failed">
 													failed:
 												</xsl:if>
-												<xsl:apply-templates select="." mode="text" />
+												<xsl:apply-templates select="." mode="text"/>
 												<xsl:if test="@failed">
 													, <xsl:value-of select="@failed"/>
 												</xsl:if>

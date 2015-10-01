@@ -4,14 +4,14 @@
 <xsl:template match="message[@type='notice']">
 	<div class="alert alert-success alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&#215;</button>
-		<xsl:apply-templates select="." mode="message" />
+		<xsl:apply-templates select="." mode="message"/>
 	</div>
 </xsl:template>
 
 <xsl:template match="message[@type='error']">
 	<div class="alert alert-danger alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&#215;</button>
-		<xsl:apply-templates select="." mode="message" />
+		<xsl:apply-templates select="." mode="message"/>
 	</div>
 </xsl:template>
 
@@ -36,7 +36,7 @@
 </xsl:template>
 
 <xsl:template match="message" mode="message">
-	<xsl:value-of select="@value" />
+	<xsl:value-of select="@value"/>
 </xsl:template>
 
 </xsl:stylesheet>

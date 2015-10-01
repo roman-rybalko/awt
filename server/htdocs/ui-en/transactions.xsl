@@ -71,12 +71,12 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="transaction" mode="severity" />
+<xsl:template match="transaction" mode="severity"/>
 
 <xsl:template match="transaction" mode="title">
 	<xsl:value-of select="@type"/>
 </xsl:template>
 
-<xsl:template match="transaction" mode="data" />
+<xsl:template match="transaction" mode="data"/>
 
 </xsl:stylesheet>

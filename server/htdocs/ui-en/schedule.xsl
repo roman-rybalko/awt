@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="schedule">
-	<xsl:call-template name="menu" />
+	<xsl:call-template name="menu"/>
 </xsl:template>
 
 <xsl:template match="schedule" mode="menu">
@@ -38,7 +38,7 @@
 				<xsl:if test="//message">
 					<div class="row">
 						<div class="col-lg-12">
-							<xsl:apply-templates select="//message" />
+							<xsl:apply-templates select="//message"/>
 						</div>
 					</div>
 				</xsl:if>
@@ -69,24 +69,24 @@
 								<xsl:for-each select="task">
 									<tr>
 										<td>
-											<xsl:value-of select="@id" />
+											<xsl:value-of select="@id"/>
 										</td>
 										<td>
-											<xsl:value-of select="@name" />
+											<xsl:value-of select="@name"/>
 										</td>
 										<td>
 											<a href="../?test={@test_id}" class="test-id2name">
-												<xsl:value-of select="@test_id" />
+												<xsl:value-of select="@test_id"/>
 											</a>
 										</td>
 										<td class="task-type">
-											<xsl:value-of select="@type" />
+											<xsl:value-of select="@type"/>
 										</td>
 										<td class="time-unix2human">
-											<xsl:value-of select="@start" />
+											<xsl:value-of select="@start"/>
 										</td>
 										<td class="period-unix2human">
-											<xsl:value-of select="@period" />
+											<xsl:value-of select="@period"/>
 										</td>
 										<td>
 											<button type="button" class="btn btn-xs btn-primary"
@@ -113,17 +113,17 @@
 										<div class="panel-heading">
 											<button type="button" class="close" data-dismiss="modal">&#215;</button>
 											Modify:
-											<xsl:value-of select="@name" />
+											<xsl:value-of select="@name"/>
 										</div>
 										<div class="panel-body">
 											<form role="form" method="post" class="form-schedule-task">
-												<input type="hidden" name="id" value="{@id}" />
+												<input type="hidden" name="id" value="{@id}"/>
 												<div class="row">
 													<div class="col-lg-2">
 														<div class="form-group">
 															<label>Name</label>
 															<input class="form-control" placeholder="Name" name="name"
-																type="text" value="{@name}" />
+																type="text" value="{@name}"/>
 														</div>
 													</div>
 													<div class="col-lg-2">
@@ -131,7 +131,7 @@
 															<label>Test</label>
 															<select class="form-control" name="test_id">
 																<xsl:call-template name="opts_task_tests">
-																	<xsl:with-param name="value" select="@test_id" />
+																	<xsl:with-param name="value" select="@test_id"/>
 																</xsl:call-template>
 															</select>
 														</div>
@@ -141,7 +141,7 @@
 															<label>Type</label>
 															<select class="form-control" name="type">
 																<xsl:call-template name="opts_task_types">
-																	<xsl:with-param name="value" select="@type" />
+																	<xsl:with-param name="value" select="@type"/>
 																</xsl:call-template>
 															</select>
 														</div>
@@ -151,7 +151,7 @@
 															<label>Start time</label>
 															<div class="input-group date">
 																<input class="form-control" placeholder="Start time"
-																	name="start" type="text" value="{@start}" />
+																	name="start" type="text" value="{@start}"/>
 																<span class="input-group-addon">
 																	<span class="glyphicon glyphicon-time"></span>
 																</span>
@@ -163,7 +163,7 @@
 															<label>Execution period</label>
 															<select class="form-control" name="period">
 																<xsl:call-template name="opts_periods">
-																	<xsl:with-param name="value" select="@period" />
+																	<xsl:with-param name="value" select="@period"/>
 																</xsl:call-template>
 															</select>
 														</div>
@@ -196,11 +196,11 @@
 										<div class="panel-heading">
 											<button type="button" class="close" data-dismiss="modal">&#215;</button>
 											Delete:
-											<xsl:value-of select="@name" />
+											<xsl:value-of select="@name"/>
 										</div>
 										<div class="panel-body">
 											<form role="form" method="post">
-												<input type="hidden" name="id" value="{@id}" />
+												<input type="hidden" name="id" value="{@id}"/>
 												<button type="submit" name="delete" class="btn btn-block btn-danger">
 													<i class="glyphicon glyphicon-trash"></i>
 													Delete

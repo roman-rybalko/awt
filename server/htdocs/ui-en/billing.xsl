@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="billing">
-	<xsl:call-template name="menu" />
+	<xsl:call-template name="menu"/>
 </xsl:template>
 
 <xsl:template match="billing" mode="menu">
@@ -16,7 +16,7 @@
 				<xsl:if test="//message">
 					<div class="row">
 						<div class="col-lg-12">
-							<xsl:apply-templates select="//message" />
+							<xsl:apply-templates select="//message"/>
 						</div>
 					</div>
 				</xsl:if>
@@ -90,28 +90,28 @@
 								<xsl:for-each select="transaction">
 									<tr>
 										<xsl:attribute name="class">
-											<xsl:apply-templates select="." mode="severity" />
+											<xsl:apply-templates select="." mode="severity"/>
 										</xsl:attribute>
 										<td>
-											<xsl:value-of select="@id" />
+											<xsl:value-of select="@id"/>
 										</td>
 										<td class="time-unix2human">
-											<xsl:value-of select="@time" />
+											<xsl:value-of select="@time"/>
 										</td>
 										<td>
-											<xsl:apply-templates select="." mode="title" />
+											<xsl:apply-templates select="." mode="title"/>
 										</td>
 										<td>
-											<xsl:value-of select="@actions_before" />
+											<xsl:value-of select="@actions_before"/>
 										</td>
 										<td>
-											<xsl:value-of select="@actions" />
+											<xsl:value-of select="@actions"/>
 										</td>
 										<td>
-											<xsl:value-of select="@actions_after" />
+											<xsl:value-of select="@actions_after"/>
 										</td>
 										<td>
-											<xsl:apply-templates select="." mode="data" />
+											<xsl:apply-templates select="." mode="data"/>
 										</td>
 									</tr>
 								</xsl:for-each>
@@ -145,11 +145,11 @@
 					<form role="form" method="post" class="form-inline">
 						<div class="form-group space-x">
 							<input type="text" class="form-control" name="actions"
-								placeholder="Actions Count" />
+								placeholder="Actions Count"/>
 						</div>
 						<div class="form-group space-x">
 							<input type="text" class="form-control" name="amount"
-								placeholder="Amount" />
+								placeholder="Amount"/>
 						</div>
 						<div class="form-group">
 							<button type="submit" name="top_up" class="btn btn-block btn-danger">
@@ -178,10 +178,10 @@
 				<div class="panel-body">
 					<form role="form" method="post" class="form-inline">
 						<div class="form-group space-x">
-							<input type="text" class="form-control" name="actions" placeholder="Actions Count" />
+							<input type="text" class="form-control" name="actions" placeholder="Actions Count"/>
 						</div>
 						<div class="form-group space-x">
-							<input type="text" class="form-control" name="data" placeholder="Data" />
+							<input type="text" class="form-control" name="data" placeholder="Data"/>
 						</div>
 						<div class="form-group">
 							<button type="submit" name="service" class="btn btn-block btn-danger">

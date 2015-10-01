@@ -667,12 +667,12 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="event" mode="severity" />
+<xsl:template match="event" mode="severity"/>
 
 <xsl:template match="event" mode="title">
 	<xsl:value-of select="@name"/>
 </xsl:template>
 
-<xsl:template match="event" mode="data" />
+<xsl:template match="event" mode="data"/>
 
 </xsl:stylesheet>
