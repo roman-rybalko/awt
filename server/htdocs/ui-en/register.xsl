@@ -24,6 +24,20 @@
 									<input class="form-control" placeholder="Password (confirm)"
 										name="password2" type="password" value=""/>
 								</div>
+								<div class="form-group">
+									<a href="#">
+										<xsl:attribute name="onclick">
+											$('#captcha').attr('src','../captcha.php?id=' + Math.random());
+											return false;
+										</xsl:attribute>
+										<img src="../captcha.php" alt="Captcha" id="captcha"/>
+										Change
+									</a>
+								</div>
+								<div class="form-group">
+									<input class="form-control" placeholder="Captcha"
+										name="captcha" type="text" value=""/>
+								</div>
 								<input type="submit" name="register" value="Register"
 									class="btn btn-lg btn-success btn-block"/>
 								<div class="form-group">

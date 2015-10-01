@@ -132,22 +132,28 @@ class User {
 <!--
 	Register/Signup
 	method: post
-	params: user password1 password2
+	params: user password1 password2 captcha
 	subit: register
 -->
 <?php
 		if (isset($_POST['register'])) {
-			if ($_POST['password1'] !== $_POST['password2']) {
-				echo '<message type="error" value="passwords_dont_match"/>';
-				$this->redirect('?' . $_SERVER['QUERY_STRING'], 3);
-			} else {
-				if ($user->register($_POST['user'], $_POST['password1'])) {
-					echo '<message type="notice" value="register_ok"/>';
-					$this->redirect('');
+			$captcha = new \AdvancedWebTesting\Captcha();
+			if ($captcha->get() === $_POST['captcha']) {
+				if ($_POST['password1'] == $_POST['password2']) {
+					if ($user->register($_POST['user'], $_POST['password1'])) {
+						echo '<message type="notice" value="register_ok"/>';
+						$this->redirect('');
+					} else {
+						echo '<message type="error" value="register_fail"/>';
+						$this->redirect('?' . $_SERVER['QUERY_STRING'], 3);
+					}
 				} else {
-					echo '<message type="error" value="register_fail"/>';
+					echo '<message type="error" value="passwords_dont_match"/>';
 					$this->redirect('?' . $_SERVER['QUERY_STRING'], 3);
 				}
+			} else {
+				echo '<message type="error" value="bad_captcha"/>';
+				$this->redirect('?' . $_SERVER['QUERY_STRING'], 3);
 			}
 		} else {
 			echo '<register/>';
