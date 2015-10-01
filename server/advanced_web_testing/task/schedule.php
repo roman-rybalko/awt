@@ -100,8 +100,11 @@ class Schedule {
 				$this->startFailReport($userId, 'test_is_deleted', $testId, $test['name'], $type, $job['id'], $job['data']['name']);
 				continue;
 			}
-			$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $userId);
-			if ($taskId = $taskMgr->add($testId, $test['name'], $type)) {
+			$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $userId);
+			if ($billMgr->getActionsCount() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
+				$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $userId);
+				$taskId = $taskMgr->add($testId, $test['name'], $type);
+				$billMgr->taskStart($taskId, $test['name'], $job['id'], $job['data']['name']);
 				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $userId);
 				$histMgr->add('task_sched', ['task_id' => $taskId,
 					'test_id' => $testId, 'test_name' => $test['name'], 'type' => $type,
@@ -114,7 +117,7 @@ class Schedule {
 
 	private function startFailReport($userId, $message, $testId, $testName, $type, $schedId, $schedName) {
 		$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $userId);
-		$histMgr->add('task_sched_fail', ['message' => $message,
+		$histMgr->add('sched_fail', ['message' => $message,
 				'test_id' => $testId, 'test_name' => $testName, 'type' => $type,
 				'sched_id' => $schedId, 'sched_name' => $schedName]);
 		$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);

@@ -69,7 +69,7 @@
 								<xsl:for-each select="task">
 									<tr>
 										<td>
-											<xsl:value-of select="@id"/>
+											#<xsl:value-of select="@id"/>
 										</td>
 										<td>
 											<xsl:value-of select="@name"/>

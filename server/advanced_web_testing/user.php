@@ -497,14 +497,20 @@ class User {
 			$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
 			if ($tests = $testMgr->get([$testId])) {
 				$test = $tests[0];
-				if ($taskId = $taskMgr->add($testId, $test['name'], $type, $debug)) {
-					echo '<message type="notice" value="task_add_ok"/>';
-					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-					$histMgr->add('task_add', ['task_id' => $taskId,
-						'test_id' => $testId, 'test_name' => $test['name'],
-						'type' => $type]);
+				if (!$test['deleted']) {
+					$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
+					if ($billMgr->getActionsCount() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
+						$taskId = $taskMgr->add($testId, $test['name'], $type, $debug);
+						$billMgr->taskStart($taskId, $test['name']);
+						echo '<message type="notice" value="task_add_ok"/>';
+						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+						$histMgr->add('task_add', ['task_id' => $taskId,
+							'test_id' => $testId, 'test_name' => $test['name'],
+							'type' => $type]);
+					} else
+						echo '<message type="error" value="no_funds"/>';
 				} else
-					echo '<message type="error" value="no_funds"/>';
+					echo '<message type="error" value="test_is_deleted"/>';
 			} else
 				echo '<message type="error" value="bad_test_id"/>';
 		} else if (isset($_POST['cancel'])) {
@@ -716,6 +722,10 @@ class User {
 						' payment_data="', htmlspecialchars($transaction['payment_data']), '"';
 					break;
 				case \AdvancedWebTesting\Billing\TransactionType::TASK_START:
+					if (isset($transaction['sched_id']))
+						echo ' sched_id="', $transaction['sched_id'], '"',
+							' sched_name="', htmlspecialchars($transaction['sched_name']), '"';
+					// no break
 				case \AdvancedWebTesting\Billing\TransactionType::TASK_END:
 					echo ' task_id="', $transaction['task_id'], '"',
 						' test_name="', htmlspecialchars($transaction['test_name']), '"';

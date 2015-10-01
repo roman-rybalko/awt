@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 
 <xsl:template match="sched_fail" mode="headers">
-<xsl:text/>Subject: [Report] Schedule Job "<xsl:value-of select="@sched_name"/>" FAILED
+<xsl:text/>Subject: [Report] Schedule Job "<xsl:value-of select="@sched_name"/>" start FAILED
 </xsl:template>
 
 <xsl:template match="sched_fail" mode="text">

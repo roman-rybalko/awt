@@ -58,7 +58,28 @@
 	Task Finish
 </xsl:template>
 
-<xsl:template match="transaction[@type='task_start' or @type='task_end']" mode="data">
+<xsl:template match="transaction[@type='task_start']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-6">
+				<b class="space-x">Task:</b>
+				<a href="../?task={@task_id}">
+					<xsl:value-of select="@test_name"/>
+				</a>
+			</div>
+			<xsl:if test="@sched_id">
+				<div class="col-lg-6">
+					<b class="space-x">Schedule Job:</b>
+					<a href="../?schedule=1#{@sched_id}">
+						<xsl:value-of select="@sched_name"/>
+					</a>
+				</div>
+			</xsl:if>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="transaction[@type='task_end']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">

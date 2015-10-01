@@ -93,7 +93,7 @@
 											<xsl:apply-templates select="." mode="severity"/>
 										</xsl:attribute>
 										<td>
-											<xsl:value-of select="@id"/>
+											#<xsl:value-of select="@id"/>
 										</td>
 										<td class="time-unix2human">
 											<xsl:value-of select="@time"/>

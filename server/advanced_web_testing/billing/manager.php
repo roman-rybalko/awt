@@ -17,13 +17,18 @@ class Manager {
 	/**
 	 * Списывает средства за запуск
 	 * @param integer $taskId
-	 * @param string $taskName
+	 * @param string $testName
+	 * @param $schedId
+	 * @param $schedName
 	 * @return integer transactionId
 	 */
-	public function taskStart($taskId, $testName) {
-		return $this->billing->transaction(- Price::TASK_START,
-			['type' => TransactionType::TASK_START, 'task_id' => $taskId, 'test_name' => $testName],
-			$this->userId);
+	public function taskStart($taskId, $testName, $schedId = null, $schedName = null) {
+		$fields = ['type' => TransactionType::TASK_START, 'task_id' => $taskId, 'test_name' => $testName];
+		if ($schedId !== null) {
+			$fields['sched_id'] = $schedId;
+			$fields['sched_name'] = $schedName;
+		}
+		return $this->billing->transaction(- Price::TASK_START, $fields, $this->userId);
 	}
 
 	/**
@@ -76,6 +81,7 @@ class Manager {
 	 * @param [integer]|null $transactionIds
 	 * @return [][id => integer, time => integer, actions_before => integer, actions_after => integer, type => integer,
 	 *  task_id (optional) => integer, test_name => string,
+	 *  sched_id (optional) => integer, sched_name => string,
 	 *  payment_type (optional) => integer, payment_amount => double, payment_data => string]
 	 */
 	public function getTransactions($transactionIds = null) {

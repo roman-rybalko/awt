@@ -531,15 +531,15 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="event[@name='task_sched_fail']" mode="severity">
+<xsl:template match="event[@name='sched_fail']" mode="severity">
 	danger
 </xsl:template>
 
-<xsl:template match="event[@name='task_sched_fail']" mode="title">
-	Schedule Task Failed
+<xsl:template match="event[@name='sched_fail']" mode="title">
+	Schedule Job start Failed
 </xsl:template>
 
-<xsl:template match="event[@name='task_sched_fail']" mode="data">
+<xsl:template match="event[@name='sched_fail']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">
