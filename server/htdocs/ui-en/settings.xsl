@@ -28,11 +28,15 @@
 					<div class="panel-body">
 						<form role="form" method="post">
 							<div class="form-group">
-								<label>Password</label>
-								<input class="form-control" placeholder="New password" name="password" type="password"/>
+								<label>Current Password</label>
+								<input class="form-control" placeholder="current password" name="password" type="password"/>
 							</div>
 							<div class="form-group">
-								<label>Password (confirm)</label>
+								<label>New Password</label>
+								<input class="form-control" placeholder="New password" name="password1" type="password"/>
+							</div>
+							<div class="form-group">
+								<label>New Password (confirm)</label>
 								<input class="form-control" placeholder="New password" name="password2" type="password"/>
 							</div>
 							<button type="submit" class="btn btn-success">

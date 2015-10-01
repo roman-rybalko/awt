@@ -24,6 +24,25 @@
 	Sign out
 </xsl:template>
 
+<xsl:template match="event[@name='password_change']" mode="title">
+	Change Password
+</xsl:template>
+
+<xsl:template match="event[@name='password_change']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">IP:</b>
+				<xsl:value-of select="@ip"/>
+			</div>
+			<div class="col-lg-9">
+				<b class="space-x">User-Agent:</b>
+				<i><xsl:value-of select="@ua"/></i>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
 <xsl:template match="event[@name='test_add']" mode="severity">
 	success
 </xsl:template>

@@ -57,7 +57,7 @@ class User {
 			} else if (isset($_GET['stats'])) {
 				$this->stats();
 			} else if (isset($_GET['settings'])) {
-				$this->settings($userDb);
+				$this->settings($userDb, $user->getLogin());
 			} else if (isset($_GET['tests'])) {
 				$this->tests();
 			} else if (isset($_GET['test'])) {
@@ -168,14 +168,14 @@ class User {
 		$this->redirect('', 0);
 	}
 
-	private function settings($userDb) {
+	private function settings(\WebConstructionSet\Database\Relational\User $userDb, $login) {
 ?>
 <!--
 	Settings
 
 	Change password
 	method: post
-	params: password password2
+	params: password password1 password2
 
 	Change e-mail
 	method: post
@@ -196,13 +196,18 @@ class User {
 <?php
 		$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $this->userId);
 		if (isset($_POST['password'])) {
-			if ($_POST['password'] === $_POST['password2']) {
-				if ($userDb->password($this->userId, $_POST['password']))
-					echo '<message type="notice" value="password_modify_ok"/>';
-				else
-					echo '<message type="error" value="password_modify_fail"/>';
+			if ($userDb->check($login, $_POST['password'])) {
+				if ($_POST['password1'] === $_POST['password2']) {
+					if ($userDb->password($this->userId, $_POST['password1'])) {
+						echo '<message type="notice" value="password_change_ok"/>';
+						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+						$histMgr->add('password_change', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => $_SERVER['HTTP_USER_AGENT']]);
+					} else
+						echo '<message type="error" value="password_change_fail"/>';
+				} else
+					echo '<message type="error" value="passwords_dont_match"/>';
 			} else
-				echo '<message type="error" value="passwords_dont_match"/>';
+				echo '<message type="error" value="bad_current_password"/>';
 		}
 		if (isset($_POST['task_fail_email_report']) || isset($_POST['task_success_email_report'])) {
 			if ($settMgr->set(
