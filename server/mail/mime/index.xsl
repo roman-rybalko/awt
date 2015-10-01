@@ -3,6 +3,7 @@
 	<xsl:output method="text" media-type="message/rfc822" />
 	<xsl:include href="mail.xsl" />
 	<xsl:include href="verification.xsl" />
-	<xsl:include href="task.xsl" />
 	<xsl:include href="../../htdocs/ui-en/actions.xsl"/>
+	<xsl:include href="task.xsl" />
+	<xsl:include href="sched_fail.xsl" />
 </xsl:stylesheet>

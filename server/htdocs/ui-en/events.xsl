@@ -531,6 +531,39 @@
 	</div>
 </xsl:template>
 
+<xsl:template match="event[@name='task_sched_fail']" mode="severity">
+	danger
+</xsl:template>
+
+<xsl:template match="event[@name='task_sched_fail']" mode="title">
+	Schedule Task Failed
+</xsl:template>
+
+<xsl:template match="event[@name='task_sched_fail']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">Schedule Job:</b>
+				<a href="../?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Test:</b>
+				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Type:</b>
+				<span class="task-type">
+					<xsl:value-of select="@type"/>
+				</span>
+			</div>
+			<div class="col-lg-3 text-failure">
+				<b class="space-x">Failure:</b>
+				<xsl:value-of select="@message"/>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
 <xsl:template match="event[@name='mail_verification']" mode="severity">
 	warning
 </xsl:template>
@@ -574,6 +607,45 @@
 			<div class="col-lg-6">
 				<b class="space-x">Task:</b>
 				<a href="../?task={@task_id}"><xsl:value-of select="@test_name"/></a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+				<b class="space-x">Recipient:</b>
+				<xsl:value-of select="@rcpt"/>
+			</div>
+			<div class="col-lg-6">
+				<b class="space-x">Message-Id:</b>
+				<xsl:value-of select="@message_id"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<b class="space-x">SMTP Response:</b>
+				<xsl:value-of select="@smtp_response"/>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='mail_sched_fail']" mode="severity">
+	warning
+</xsl:template>
+
+<xsl:template match="event[@name='mail_sched_fail']" mode="title">
+	Send Schedule Job Fail Report
+</xsl:template>
+
+<xsl:template match="event[@name='mail_sched_fail']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-6">
+				<b class="space-x">Schedule Job:</b>
+				<a href="../?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
+			</div>
+			<div class="col-lg-6">
+				<b class="space-x">Test:</b>
+				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 		</div>
 		<div class="row">

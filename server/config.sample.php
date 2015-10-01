@@ -14,6 +14,7 @@ class Config {
 	const MAIL_SENDER_NAME = 'AWT Reporter';
 	const MAIL_SENDER_EMAIL = 'dev@null.com';
 	const MAIL_TEMPLATE_PATH = 'mail/';
+	const MAIL_ROOT_URL = 'http://advancedwebtesting.com/';
 	const WWW_PATH = 'htdocs/';
 }
 

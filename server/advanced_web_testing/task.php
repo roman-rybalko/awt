@@ -104,9 +104,9 @@ class Task {
 						if ($settings['email'] && ($settings['task_fail_email_report'] || $settings['task_success_email_report'])) {
 							$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $userId);
 							if ($status == 'failed' && $settings['task_fail_email_report'])
-								$mailMgr->scheduleTaskReport($settings['email'], $taskId);
+								$mailMgr->taskReport($settings['email'], $taskId);
 							if ($status == 'succeeded' && $settings['task_success_email_report'])
-								$mailMgr->scheduleTaskReport($settings['email'], $taskId);
+								$mailMgr->taskReport($settings['email'], $taskId);
 						}
 						$actExecCnt = 0;
 						foreach ($taskActMgr->get() as $action)

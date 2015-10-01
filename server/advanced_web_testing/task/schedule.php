@@ -92,17 +92,36 @@ class Schedule {
 			$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $userId);
 			if ($tests = $testMgr->get([$testId]))
 				$test = $tests[0];
-			else
+			else {
+				$this->startFailReport($userId, 'bad_test_id', $testId, $test['name'], $type, $job['id'], $job['data']['name']);
 				continue;
-			if ($test['deleted'])
+			}
+			if ($test['deleted']) {
+				$this->startFailReport($userId, 'test_is_deleted', $testId, $test['name'], $type, $job['id'], $job['data']['name']);
 				continue;
+			}
 			$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $userId);
 			if ($taskId = $taskMgr->add($testId, $test['name'], $type)) {
 				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $userId);
 				$histMgr->add('task_sched', ['task_id' => $taskId,
 					'test_id' => $testId, 'test_name' => $test['name'], 'type' => $type,
 					'sched_id' => $job['id'], 'sched_name' => $job['data']['name']]);
+			} else {
+				$this->startFailReport($userId, 'no_funds', $testId, $test['name'], $type, $job['id'], $job['data']['name']);
 			}
+		}
+	}
+
+	private function startFailReport($userId, $message, $testId, $testName, $type, $schedId, $schedName) {
+		$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $userId);
+		$histMgr->add('task_sched_fail', ['message' => $message,
+				'test_id' => $testId, 'test_name' => $testName, 'type' => $type,
+				'sched_id' => $schedId, 'sched_name' => $schedName]);
+		$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);
+		$settings = $settMgr->get();
+		if ($settings['email'] && $settings['task_fail_email_report']) {
+			$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $userId);
+			$mailMgr->schedFailReport($settings['email'], $testId, $testName, $schedId, $schedName, $message);
 		}
 	}
 }

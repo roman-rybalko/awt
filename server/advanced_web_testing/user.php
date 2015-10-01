@@ -218,7 +218,7 @@ class User {
 			$_SESSION['settings_email'] = $_POST['email'];
 			$_SESSION['settings_email_code'] = rand();
 			$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $this->userId);
-			if ($mailMgr->scheduleEmailVerification($_POST['email'],
+			if ($mailMgr->emailVerification($_POST['email'],
 				\WebConstructionSet\Url\Tools::addParams(
 					\WebConstructionSet\Url\Tools::getMyUrl(), ['email_code' => $_SESSION['settings_email_code']])))
 				echo '<message type="notice" value="email_verification_pending"/>';
