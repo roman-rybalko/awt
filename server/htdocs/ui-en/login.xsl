@@ -21,7 +21,8 @@
 								<input type="submit" name="login" value="Login"
 									class="btn btn-lg btn-success btn-block"/>
 								<div class="form-group">
-									<a href="../?register=1">Sign Up</a>
+									<a href="../?register=1" class="space-x">Sign Up</a>
+									<a href="../demo.php">Demo</a>
 								</div>
 							</fieldset>
 						</form>
