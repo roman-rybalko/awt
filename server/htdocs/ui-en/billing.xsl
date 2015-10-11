@@ -81,7 +81,7 @@
 									<th>Time</th>
 									<th>Transaction</th>
 									<th>Before</th>
-									<th>Charge</th>
+									<th>Charge/Credit</th>
 									<th>After</th>
 									<th data-orderable="false">Data</th>
 								</tr>
