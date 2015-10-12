@@ -2,11 +2,11 @@
 
 function composer_file2b64($scope, $name) {
 	switch ($scope) {
-		case 'www':
-			$path = \Config::$rootPath . \Config::WWW_PATH . $name;
+		case 'ui':
+			$path = \Config::$rootPath . \Config::UI_PATH . $name;
 			break;
-		case 'result':
-			$path = \Config::$rootPath . \Config::RESULT_DATA_PATH . $name;
+		case 'results':
+			$path = \Config::$rootPath . \Config::RESULTS_PATH . $name;
 			break;
 		default:
 			return '';

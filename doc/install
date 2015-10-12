@@ -1,2 +1,8 @@
+php5-json
+php5-mysql
+php5-xsl
+php5-gd
+php-pear
+
 task_types.sql
 Зарегистрировать пустой логин и ввести сложный пароль.

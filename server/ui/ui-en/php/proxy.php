@@ -28,4 +28,6 @@ $mod->addScript(\WebConstructionSet\Url\Tools::getNeighbourUrl('../js/xpath-brow
 $mod->addScript(\WebConstructionSet\Url\Tools::getNeighbourUrl('../js/xpath-composer-server.js'));
 $mod->addScript(\WebConstructionSet\Url\Tools::getNeighbourUrl('../js/proxy.js'));
 $proxy->addModifier($mod);
-$proxy->run();
+try {
+	$proxy->run();
+} catch (ErrorException $e) {}

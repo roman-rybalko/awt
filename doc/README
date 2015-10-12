@@ -13,3 +13,8 @@ Web-сервер nginx.
 Модуль node.
 Система, на хосте, который выполняет тесты.
 На хосте может быть несколько модулей node. Каждый находится в отдельном пользователе.
+
+server/ui/ - User Interface (user cnsole)
+server/si/ - Service Interface (task, merchant callback)
+server/lp/ - Landing Page(s)
+server/ai/ - Admin Interface (monitoring, stats)

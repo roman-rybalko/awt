@@ -71,13 +71,13 @@ Content-Type: text/css
 Content-Transfer-Encoding: base64
 Content-Id: <![CDATA[<bootstrap.min.css>]]>
 
-<xsl:value-of select="php:function('composer_file2b64', 'www', 'ui-en/css/bootstrap.min.css')"/>
+<xsl:value-of select="php:function('composer_file2b64', 'ui', 'ui-en/css/bootstrap.min.css')"/>
 --<xsl:value-of select="$boundary"/>
 Content-Type: text/css
 Content-Transfer-Encoding: base64
 Content-Id: <![CDATA[<awt.css>]]>
 
-<xsl:value-of select="php:function('composer_file2b64', 'www', 'ui-en/css/awt.css')"/>
+<xsl:value-of select="php:function('composer_file2b64', 'ui', 'ui-en/css/awt.css')"/>
 
 <xsl:for-each select="action">
 	<xsl:if test="@scrn">
@@ -87,7 +87,7 @@ Content-Transfer-Encoding: base64
 Content-Id: <![CDATA[<]]><xsl:value-of select="@scrn"/><![CDATA[>]]>
 Content-Disposition: attachment; filename="<xsl:value-of select="php:function('composer_basename', string(@scrn))"/>"
 
-<xsl:value-of select="php:function('composer_file2b64', 'result', string(@scrn))"/>
+<xsl:value-of select="php:function('composer_file2b64', 'results', string(@scrn))"/>
 	</xsl:if>
 </xsl:for-each>
 </xsl:template>

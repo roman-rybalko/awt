@@ -186,7 +186,7 @@
 						<div class="form-group">
 							<button type="submit" name="service" class="btn btn-block btn-danger">
 								<i class="fa fa-credit-card"></i>
-								Charge
+								Credit
 							</button>
 						</div>
 					</form>

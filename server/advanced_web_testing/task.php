@@ -83,7 +83,7 @@ class Task {
 					$taskDataDir = $taskId . '-' . rand();
 					$statusId = $status == 'succeeded' ? \AdvancedWebTesting\Task\Status::SUCCEEDED : \AdvancedWebTesting\Task\Status::FAILED;
 					if ($taskMgr->finish($taskId, $statusId, $taskDataDir)) {
-						$taskDataPath = \Config::$rootPath . \Config::RESULT_DATA_PATH . $taskDataDir . '/';
+						$taskDataPath = \Config::$rootPath . \Config::RESULTS_PATH . $taskDataDir . '/';
 						$this->prepareTaskDataPath($taskDataPath);
 						$result['ok'] = 1;
 						$taskActMgr = new \AdvancedWebTesting\Task\Action\Manager($this->db, $taskId);

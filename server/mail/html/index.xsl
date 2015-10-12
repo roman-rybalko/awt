@@ -3,7 +3,7 @@
 	<xsl:output method="html" doctype-system="about:legacy-compat"/>
 	<xsl:include href="mail.xsl"/>
 	<xsl:include href="verification.xsl"/>
-	<xsl:include href="../../htdocs/ui-en/actions.xsl"/>
+	<xsl:include href="../../ui/ui-en/actions.xsl"/>
 	<xsl:include href="task.xsl"/>
 	<xsl:include href="sched_fail.xsl"/>
 </xsl:stylesheet>

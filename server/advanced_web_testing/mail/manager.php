@@ -25,7 +25,7 @@ class Manager {
 		return $this->anacron->create(['start' => time(), 'period' => Manager::RETRY_TIMEOUT, 'data' => [
 			'type' => Type::EMAIL_VERIFICATION, 'email' => $email,
 			'url' => $url,
-			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::MAIL_ROOT_URL
+			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::UI_URL
 		]], $this->userId);
 	}
 
@@ -38,7 +38,7 @@ class Manager {
 		return $this->anacron->create(['start' => time(), 'period' => Manager::RETRY_TIMEOUT, 'data' => [
 			'type' => Type::TASK_REPORT, 'email' => $email,
 			'task_id' => $taskId,
-			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::MAIL_ROOT_URL
+			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::UI_URL
 		]], $this->userId);
 	}
 
@@ -46,7 +46,7 @@ class Manager {
 		return $this->anacron->create(['start' => time(), 'period' => Manager::RETRY_TIMEOUT, 'data' => [
 			'type' => Type::SCHED_FAIL_REPORT, 'email' => $email,
 			'test_id' => $testId, 'test_name' => $testName, 'sched_id' => $schedId, 'sched_name' => $schedName, 'message' => $message,
-			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::MAIL_ROOT_URL
+			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::UI_URL
 		]], $this->userId);
 	}
 
@@ -109,6 +109,6 @@ class Manager {
 	}
 
 	private function makeMessageId() {
-		return time() . rand() . '@' . parse_url(\Config::MAIL_ROOT_URL)['host'];
+		return time() . rand() . '@' . parse_url(\Config::UI_URL)['host'];
 	}
 }

@@ -1,5 +1,5 @@
 module.exports = {
-	server_url: 'http://www/awt/server/htdocs/task.php',
+	server_url: 'http://www/awt/server/si/task.php',
 	server_token: 'EtZGlOGWMGtEOptUcaQN98KTnPrXpvXgpY1orOue04',
 	task_type: 'gc_1920x1080_test',
 	node_id: 'test1',

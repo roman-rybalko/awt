@@ -31,13 +31,13 @@ Content-Type: text/css
 Content-Transfer-Encoding: base64
 Content-Id: <![CDATA[<bootstrap.min.css>]]>
 
-<xsl:value-of select="php:function('composer_file2b64', 'www', 'ui-en/css/bootstrap.min.css')"/>
+<xsl:value-of select="php:function('composer_file2b64', 'ui', 'ui-en/css/bootstrap.min.css')"/>
 --<xsl:value-of select="$boundary"/>
 Content-Type: text/css
 Content-Transfer-Encoding: base64
 Content-Id: <![CDATA[<awt.css>]]>
 
-<xsl:value-of select="php:function('composer_file2b64', 'www', 'ui-en/css/awt.css')"/>
+<xsl:value-of select="php:function('composer_file2b64', 'ui', 'ui-en/css/awt.css')"/>
 </xsl:template>
 
 </xsl:stylesheet>

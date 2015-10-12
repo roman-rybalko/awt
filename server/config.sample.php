@@ -6,7 +6,7 @@ class Config {
 	const DB_PASSWORD = 'XXX';
 	const TESTNODE_TOKEN = 'xxx';
 	public static $rootPath;
-	const RESULT_DATA_PATH = 'htdocs/results/';
+	const RESULTS_PATH = 'ui/results/';
 	const MAIL_HOST = 'localhost';
 	const MAIL_PORT = 25;
 	const MAIL_USER = null;
@@ -14,8 +14,8 @@ class Config {
 	const MAIL_SENDER_NAME = 'AWT Reporter';
 	const MAIL_SENDER_EMAIL = 'dev@null.com';
 	const MAIL_TEMPLATE_PATH = 'mail/';
-	const MAIL_ROOT_URL = 'http://advancedwebtesting.com/';
-	const WWW_PATH = 'htdocs/';
+	const UI_URL = 'https://advancedwebtesting.com/ui/';
+	const UI_PATH = 'ui/';
 	const REGISTRATION_TOP_UP = 100;
 	const DEMO_PASSWORD = '';
 }

@@ -33,7 +33,7 @@
 </xsl:template>
 
 <xsl:template match="transaction[@type='service']" mode="title">
-	Service Charge
+	Service Charge/Credit
 </xsl:template>
 
 <xsl:template match="transaction[@type='service']" mode="data">
