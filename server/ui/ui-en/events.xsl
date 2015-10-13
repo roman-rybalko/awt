@@ -43,6 +43,23 @@
 	</div>
 </xsl:template>
 
+<xsl:template match="event[@name='email_change']" mode="title">
+	Change E-Mail
+</xsl:template>
+
+<xsl:template match="event[@name='email_change']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<b class="space-x">E-Mail Address:</b>
+				<xsl:value-of select="@old_email"/>
+				-&gt;
+				<xsl:value-of select="@email"/>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
 <xsl:template match="event[@name='test_add']" mode="severity">
 	success
 </xsl:template>

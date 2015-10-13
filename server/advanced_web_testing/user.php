@@ -242,10 +242,13 @@ class User {
 		}
 		if (isset($_GET['email_code'])) {
 			if (isset($_SESSION['settings_email_code']) && $_SESSION['settings_email_code'] == $_GET['email_code']) {
-				if ($settMgr->set($_SESSION['settings_email']))
-					echo '<message type="notice" value="email_modify_ok"/>';
-				else
-					echo '<message type="error" value="email_modify_fail"/>';
+				$oldEmail = $settMgr->get()['email'];
+				if ($settMgr->set($_SESSION['settings_email'])) {
+					echo '<message type="notice" value="email_change_ok"/>';
+					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+					$histMgr->add('email_change', ['email' => $_SESSION['settings_email'], 'old_email' => $oldEmail]);
+				} else
+					echo '<message type="error" value="email_chane_fail"/>';
 				unset($_SESSION['settings_email_code']);
 				unset($_SESSION['settings_email']);
 			} else
