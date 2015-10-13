@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf8">
+<meta charset="utf8">
+<title>Advanced Web Testing / Web Automation</title>
+<link href="favicon.ico" type="image/x-icon" rel="icon">
+<link href="favicon.ico" type="image/x-icon" rel="shortcut icon">
+<link href="bootstrap.css" rel="stylesheet">
+<link href="bootstrap-responsive.min.css" rel="stylesheet">
+<link href="awt.css" rel="stylesheet">
+</head>
+<body>
+	<div id="awt-page">
+		<div id="awt-header">
+			<div class="container">
+				<h1 id="description">
+					Advanced Web Testing
+				</h1>
+				<p class="lead">
+					Web Automation
+				</p>
+			</div>
+		</div>
+		<div class="container">
+			<div class="navbar" id="menubar">
+				<div class="navbar-inner">
+					<ul class="nav">
+						<li id="menubar-item-description" class="active"><a href="#description"><i class="icon-info-sign"></i>Description</a></li>
+						<li id="menubar-item-use-cases"><a href="#use-cases"><i class="icon-flag"></i>Use Cases</a></li>
+						<li id="menubar-item-features"><a href="#features"><i class="icon-thumbs-up"></i>Features</a></li>
+					</ul>
+					<ul class="nav pull-right">
+						<li><a href="../ui/"><i class="icon-user"></i>Sign In</a></li>
+						<li><a href="../ui/demo.php"><i class="icon-gift"></i>Demo</a></li>
+						<li><a href="../ui/?register=1"><i class="icon-edit"></i>Sign Up</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="navbar" id="menubar-placeholder" style="display:none">
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section">
+						Create a Test. The Test comprises of Test Actions.
+						Test Action may be like "open site", "click the link", "enter the value into an input", etc.
+						See supported Test Actions in <a href="#features">Features</a>.
+					</p>
+					<img src="descr1.png" class="awt-image-floated">
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section">
+						Run the Test. The test will be executed automatically on a chosen Web Browser.
+						See supported Web Browsers in <a href="#features">Features</a>.
+					</p>
+					<img src="descr2.png" class="awt-image-floated">
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section">
+						Set up a Schedule and E-Mail reports.
+						The Test will be executed periodically on a Schedule, results will be sent by E-Mail.
+					</p>
+					<img src="descr3.png" class="awt-image-floated" id="use-cases">
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<h3>
+						Use Cases
+					</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section">
+						Web Site development, auto-testing.
+					</p>
+					<img src="case1.png" class="awt-image-floated">
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section">
+						Web Site monitoring. Complex third-party integration link monitoring.
+					</p>
+					<img src="case2.png" class="awt-image-floated">
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section">
+						Data mining.
+						Check site ranking.
+						Check the advertisement is still on the board.
+						Check market prices.
+					</p>
+					<img src="case3.png" class="awt-image-floated">
+				</div>
+			</div>
+			<div class="row" id="features">
+				<div class="span12">
+					<a href="../ui/demo.php" class="btn btn-large btn-info btn-block">Try Demo</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<h3>
+						Features
+					</h3>
+					<ul>
+						<li>
+							Auto-Testing + Scheduling + Notifications = Monitoring
+						</li>
+						<li>
+							Variables (variable substitution in Test Action parameters)
+						</li>
+					</ul>
+					<h4>
+						Supported Test Actions
+					</h4>
+					<ul>
+						<li>
+							Open URL
+						</li>
+						<li>
+							Check element exists
+						</li>
+						<li>
+							Enter value into input
+						</li>
+						<li>
+							Click
+						</li>
+						<li>
+							Set value to arbitrary element attribute or text (Modify XPATH)
+						</li>
+						<li>
+							Check browser URL (Match URL)
+						</li>
+						<li>
+							Check browser Title (Match Title)
+						</li>
+						<li>
+							Save XPATH/URL/Title into variable, apply RegExp to variable
+						</li>
+						<li>
+						<b>
+							Request any other Test Action and we implement it in 2 days
+						</b>
+						</li>
+					</ul>
+					<h4>
+						Supported Web Browsers
+					</h4>
+						<ul>
+							<li>
+								Firefox
+							</li>
+							<li>
+								Google Chrome / Chromium
+							</li>
+							<li>
+								Internet Explorer 6/7/8/9 (beta)
+							</li>
+							<li>
+							<b>
+								Request a particular browser version and we set it up
+							</b>
+							</li>
+						</ul>
+					<h4>
+						Supported Notifications
+					</h4>
+					<ul>
+						<li>
+							E-Mail
+						</li>
+						<li>
+							XMPP/Jabber (beta)
+						</li>
+						<li>
+							SMS/Text (beta)
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<div class="awt-redirect">
+						<a href="../ui/?register=1" class="btn btn-large btn-block btn-success">Sign Up</a>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<!-- PayPal Logo --><table border="0" cellpadding="10" cellspacing="0" align="center"><tr><td align="center"></td></tr><tr><td align="center"><a href="https://www.paypal.com/webapps/mpp/paypal-popup" title="How PayPal Works" onclick="javascript:window.open('https://www.paypal.com/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;"><img src="https://www.paypalobjects.com/webstatic/mktg/logo/bdg_now_accepting_pp_2line_w.png" border="0" alt="Now accepting PayPal"></a><div style="text-align:center"><a href="https://www.paypal.com/webapps/mpp/how-paypal-works"><font size="2" face="Arial" color="#0079CD">How PayPal Works</font></a></div></td></tr></table><!-- PayPal Logo -->
+				</div>
+			</div>
+		</div>
+		<div id="awt-page-push"></div>
+	</div>
+	<div id="awt-footer">
+		<div class="container">
+			<p class="muted awt-footer-line-1">
+				Advanced Web Testing
+				2015
+			</p>
+			<p class="muted awt-footer-line-2">
+				<a href="terms.txt">
+					Terms
+				</a>
+				<a href="mailto:support@advancedwebtesting.com">
+					Support
+				</a>
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="bootstrap.min.js"></script>
+	<script type="text/javascript" src="awt.js"></script>
+</body>
+</html>
