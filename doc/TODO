@@ -1,8 +1,11 @@
-* требовать E-Mail после регистрации, удалять аккаунты без E-Mail из cron
+* требовать E-Mail после регистрации, начислять sign up bonus после первоначального ввода E-Mail
+* password restore
 * paypal
+* test export/import
 * messages
 * административный интерфейс - статистика, мониторинг
 * increment, decrement, cas для db - статические функции в классе Database\Relational\Tools
+* cleanup (stats, tasks, billing, accounts - see concept)
 * cron: clear canceled tasks
 * cron: clear deleted tests
 * cron: clear finished tasks
