@@ -18,7 +18,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="../">Advanced Web Testing</a>
+				<a class="navbar-brand" href="../../">Advanced Web Testing</a>
 			</div>
 			<ul class="nav navbar-top-links navbar-right">
 				<li class="dropdown">

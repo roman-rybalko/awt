@@ -21,6 +21,9 @@ class User {
 			echo '<user login="', htmlspecialchars($user->getLogin()), '">';
 ?>
 <!--
+	Register
+	action: ?register=1
+
 	Logout
 	action: ?logout=1
 
@@ -52,7 +55,9 @@ class User {
 	action: index
 -->
 <?php
-			if (isset($_GET['logout'])) {
+			if (isset($_GET['register'])) {
+				$this->logout($user, '?register=1');
+			} else if (isset($_GET['logout'])) {
 				$this->logout($user);
 			} else if (isset($_GET['stats'])) {
 				$this->stats();
@@ -164,7 +169,7 @@ class User {
 		}
 	}
 
-	private function logout(\WebConstructionSet\Accounting\User $user) {
+	private function logout(\WebConstructionSet\Accounting\User $user, $redirect = '') {
 ?>
 <!--
 	Logout
@@ -175,7 +180,7 @@ class User {
 		$user->logout();
 		unset($this->userId);
 		echo '<message type="notice" value="logout_ok"/>';
-		$this->redirect('', 0);
+		$this->redirect($redirect, 0);
 	}
 
 	private function settings(\WebConstructionSet\Database\Relational\User $userDb, $login) {
