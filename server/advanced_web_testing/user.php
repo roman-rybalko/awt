@@ -122,7 +122,13 @@ class User {
 				echo '<message type="notice" value="login_ok"/>';
 				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 				$histMgr->add('login', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => $_SERVER['HTTP_USER_AGENT']]);
-				$this->redirect('');
+				$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $this->userId);
+				if ($settMgr->get()['email'])
+					$this->redirect('');
+				else {
+					echo '<message type="info" value="set_up_email"/>';
+					$this->redirect('?settings=1', 3);
+				}
 			} else {
 				echo '<message type="error" value="bad_login"/>';
 				$this->redirect('', 3);
@@ -146,12 +152,9 @@ class User {
 			if ($captcha->get() === $_POST['captcha']) {
 				if ($_POST['password1'] == $_POST['password2']) {
 					if ($user->register($_POST['user'], $_POST['password1'])) {
-						$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $user->getId());
-						$billMgr->topUp(\Config::REGISTRATION_TOP_UP,
-							\AdvancedWebTesting\Billing\PaymentType::MANUAL,
-							\Config::REGISTRATION_TOP_UP . ' test actions', 'sign up bonus');
 						echo '<message type="notice" value="register_ok"/>';
-						$this->redirect('');
+						echo '<message type="info" value="set_up_email"/>';
+						$this->redirect('?settings=1', 3);
 					} else {
 						echo '<message type="error" value="login_busy"/>';
 						$this->redirect('?' . $_SERVER['QUERY_STRING'], 3);
@@ -248,6 +251,12 @@ class User {
 		if (isset($_GET['email_code'])) {
 			if (isset($_SESSION['settings_email_code']) && $_SESSION['settings_email_code'] == $_GET['email_code']) {
 				$oldEmail = $settMgr->get()['email'];
+				if (!$oldEmail) {
+					$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
+					$billMgr->topUp(\Config::REGISTRATION_TOP_UP,
+						\AdvancedWebTesting\Billing\PaymentType::MANUAL,
+						\Config::REGISTRATION_TOP_UP . ' test actions', 'Sign Up bonus');
+				}
 				if ($settMgr->set($_SESSION['settings_email'])) {
 					echo '<message type="notice" value="email_change_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);

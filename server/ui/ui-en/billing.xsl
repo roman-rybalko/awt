@@ -25,7 +25,7 @@
 						billing-email
 					</xsl:with-param>
 					<xsl:with-param name="text">
-						Please, set up E-Mail in Settings to receive Billing notifications.
+						Please, check your E-Mail in Settings.
 					</xsl:with-param>
 				</xsl:call-template>
 			</div>
