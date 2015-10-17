@@ -9,6 +9,7 @@
 	<xsl:include href="redirect.xsl"/>
 	<xsl:include href="login.xsl"/>
 	<xsl:include href="register.xsl"/>
+	<xsl:include href="password_reset.xsl"/>
 	<xsl:include href="settings.xsl"/>
 	<xsl:include href="stats.xsl"/>
 	<xsl:include href="actions.xsl"/>

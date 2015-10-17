@@ -52,7 +52,7 @@ class User {
 	action: ?billing=1
 
 	Stats
-	action: index
+	action: ?stats=1
 -->
 <?php
 			if (isset($_GET['register'])) {
@@ -89,10 +89,15 @@ class User {
 
 	Register
 	action: ?register=1
+
+	Password Reset
+	action: ?password_reset=1
 -->
 <?php
 			if (isset($_GET['register'])) {
 				$this->register($user);
+			} else if (isset($_GET['password_reset'])) {
+				$this->passwordReset($userDb);
 			} else {
 				$this->login($user);
 			}
@@ -144,7 +149,7 @@ class User {
 	Register/Signup
 	method: post
 	params: user password1 password2 captcha
-	subit: register
+	submit: register
 -->
 <?php
 		if (isset($_POST['register'])) {
@@ -170,6 +175,81 @@ class User {
 		} else {
 			echo '<register/>';
 		}
+	}
+
+	private function passwordReset(\WebConstructionSet\Database\Relational\User $userDb) {
+?>
+<!--
+	Password Reset
+
+	Reset
+	method: post
+	params: user password1 password2 captcha
+	submit: reset
+
+	Reset (commit)
+	method: get
+	params: reset_code
+-->
+<?php
+		if (isset($_POST['reset'])) {
+			$captcha = new \AdvancedWebTesting\Captcha();
+			if ($captcha->get() === $_POST['captcha']) {
+				if ($_POST['password1'] == $_POST['password2']) {
+					$userId = $userDb->getId($_POST['user']);
+					if ($userId) {
+						$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);
+						$email = $settMgr->get()['email'];
+						if ($email) {
+							$_SESSION['password_reset_password'] = $_POST['password1'];
+							$_SESSION['password_reset_user_id'] = $userId;
+							$_SESSION['password_reset_code'] = rand();
+							$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $userId);
+							if ($mailMgr->passwordReset($email, $_POST['user'],
+								\WebConstructionSet\Url\Tools::addParams(
+									\WebConstructionSet\Url\Tools::getMyUrl(),
+										['reset_code' => $_SESSION['password_reset_code']])))
+							{
+								echo '<message type="notice" value="email_verification_pending"/>';
+								$this->redirect('', 3);
+								return;
+							} else {
+								error_log('Password Reset: user:' . $_POST['user'] . ' - Mail Manager error');
+								echo '<message type="error" value="password_reset_fail"/>';
+							}
+						} else {
+							error_log('Password Reset: user:' . $_POST['user'] . ' - no E-Mail');
+							echo '<message type="error" value="password_reset_fail"/>';
+						}
+					} else {
+						error_log('Password Reset: user:' . $_POST['user'] . ' - no such login');
+						echo '<message type="error" value="password_reset_fail"/>';
+					}
+				} else {
+					echo '<message type="error" value="passwords_dont_match"/>';
+				}
+			} else {
+				echo '<message type="error" value="bad_captcha"/>';
+			}
+		} else if (isset($_GET['reset_code'])) {
+			if (isset($_SESSION['password_reset_code']) && $_SESSION['password_reset_code'] == $_GET['reset_code']) {
+				if ($userDb->password($_SESSION['password_reset_user_id'], $_SESSION['password_reset_password'])) {
+					echo '<message type="notice" value="password_change_ok"/>';
+					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $_SESSION['password_reset_user_id']);
+					$histMgr->add('password_change', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => $_SERVER['HTTP_USER_AGENT']]);
+				} else {
+					error_log('Password Reset: userDb error');
+					echo '<message type="error" value="password_reset_fail"/>';
+				}
+				unset($_SESSION['password_reset_password']);
+				unset($_SESSION['password_reset_user_id']);
+				unset($_SESSION['password_reset_code']);
+			} else
+				echo '<message type="error" value="bad_reset_code"/>';
+			$this->redirect('', 3);
+			return;
+		}
+		echo '<password_reset/>';
 	}
 
 	private function logout(\WebConstructionSet\Accounting\User $user, $redirect = '') {
@@ -237,18 +317,17 @@ class User {
 			else
 				echo '<message type="error" value="settings_modify_fail"/>';
 		}
-		if (isset($_POST['email'])) {
+		if (isset($_POST['email']) && $_POST['email']) {
 			$_SESSION['settings_email'] = $_POST['email'];
 			$_SESSION['settings_email_code'] = rand();
 			$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $this->userId);
-			if ($mailMgr->emailVerification($_POST['email'],
+			if ($mailMgr->emailVerification($_POST['email'], $login,
 				\WebConstructionSet\Url\Tools::addParams(
 					\WebConstructionSet\Url\Tools::getMyUrl(), ['email_code' => $_SESSION['settings_email_code']])))
 				echo '<message type="notice" value="email_verification_pending"/>';
 			else
 				echo '<message type="error" value="email_modify_fail"/>';
-		}
-		if (isset($_GET['email_code'])) {
+		} else if (isset($_GET['email_code'])) {
 			if (isset($_SESSION['settings_email_code']) && $_SESSION['settings_email_code'] == $_GET['email_code']) {
 				$oldEmail = $settMgr->get()['email'];
 				if (!$oldEmail) {
@@ -262,7 +341,7 @@ class User {
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$histMgr->add('email_change', ['email' => $_SESSION['settings_email'], 'old_email' => $oldEmail]);
 				} else
-					echo '<message type="error" value="email_chane_fail"/>';
+					echo '<message type="error" value="email_change_fail"/>';
 				unset($_SESSION['settings_email_code']);
 				unset($_SESSION['settings_email']);
 			} else

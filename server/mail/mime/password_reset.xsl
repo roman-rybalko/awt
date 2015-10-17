@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 
-<xsl:template match="verification" mode="headers">
-<xsl:text>Subject: E-Mail Verification
+<xsl:template match="password_reset" mode="headers">
+<xsl:text>Subject: Password Reset Confirmation
 </xsl:text>
 </xsl:template>
 
-<xsl:template match="verification" mode="text">
+<xsl:template match="password_reset" mode="text">
 <xsl:text/>Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 Hi <xsl:value-of select="@login"/>,
 Thank you for subscribing to Advanced Web Testing / Web Automation Service.
-This is an E-Mail verification message.
+We got a request to reset your password.
 
-Please, confirm your E-Mail by visiting the link below.
+Please, confirm password reset by visiting the link below.
 <xsl:value-of select="@url"/>
 If you cannot click the URL above, please copy and paste it into your web browser.
 
@@ -24,14 +24,14 @@ If you do not want to confirm or this message was reached you by mistake, please
 Advanced Web Testing / Web Automation
 </xsl:template>
 
-<xsl:template match="verification" mode="html">
+<xsl:template match="password_reset" mode="html">
 <xsl:text/>Content-Type: text/html; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 <xsl:value-of select="php:function('composer_transform', 'html/index.xsl', ..)"/>
 </xsl:template>
 
-<xsl:template match="verification" mode="attachments">
+<xsl:template match="password_reset" mode="attachments">
 	<xsl:param name="boundary"/>
 --<xsl:value-of select="$boundary"/>
 Content-Type: text/css
