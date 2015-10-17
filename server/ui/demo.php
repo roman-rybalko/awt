@@ -5,5 +5,5 @@ $userDb = new \WebConstructionSet\Database\Relational\User($db);
 $user = new \WebConstructionSet\Accounting\User($userDb);
 if ($user->getId())
 	$user->logout();
-$user->login('', \Config::DEMO_PASSWORD);
+$user->login('', null);
 header('Location: ./');

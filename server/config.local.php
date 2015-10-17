@@ -17,7 +17,6 @@ class Config {
 	const UI_URL = 'http://www/awt/server/ui/';
 	const UI_PATH = 'ui/';
 	const REGISTRATION_TOP_UP = 100;
-	const DEMO_PASSWORD = 'Kh2j9EIE2oMPyaYTz7u83XdLnPPf7AoHLIDkyQdu19';
 }
 
 \Config::$rootPath = __DIR__ . '/';

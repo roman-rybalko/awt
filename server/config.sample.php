@@ -17,7 +17,6 @@ class Config {
 	const UI_URL = 'https://advancedwebtesting.com/ui/';
 	const UI_PATH = 'ui/';
 	const REGISTRATION_TOP_UP = 100;
-	const DEMO_PASSWORD = '';
 }
 
 \Config::$rootPath = __DIR__ . '/';
