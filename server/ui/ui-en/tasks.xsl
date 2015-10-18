@@ -110,7 +110,7 @@
 						<xsl:with-param name="state">tasks-cancel</xsl:with-param>
 						<xsl:with-param name="text">
 							New task may be canceled.
-							When the task starts running it may not be canceled.
+							When the task is running it may not be canceled.
 						</xsl:with-param>
 					</xsl:call-template>
 				</div>
