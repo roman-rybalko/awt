@@ -71,6 +71,89 @@
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-4">
+								<a href="../file.php?test={@id}" class="btn btn-block btn-primary">
+									<i class="glyphicon glyphicon-export"></i>
+									Export
+								</a>
+							</div>
+							<div class="col-lg-4">
+								<a href="#" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-import">
+									<i class="glyphicon glyphicon-import"></i>
+									Import
+								</a>
+							</div>
+							<div class="col-lg-4">
+								<a href="#" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal-clear">
+									<i class="glyphicon glyphicon-trash"></i>
+									Clear
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal" id="modal-import" role="dialog">
+			<div class="modal-dialog modal-sm">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<button type="button" class="close" data-dismiss="modal">&#215;</button>
+						Import
+					</div>
+					<div class="panel-body">
+						<form role="form" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+							<p>
+								<input name="data" type="file" accept=".json,application/json"/>
+							</p>
+							<button type="submit" name="import" class="btn btn-block btn-success">
+								<i class="glyphicon glyphicon-import"></i>
+								Import
+							</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							<i class="fa fa-undo"></i>
+							Cancel
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal" id="modal-clear" role="dialog">
+			<div class="modal-dialog modal-sm">
+				<div class="panel panel-danger">
+					<div class="panel-heading">
+						<button type="button" class="close" data-dismiss="modal">&#215;</button>
+						Clear
+					</div>
+					<div class="panel-body">
+						<form role="form" method="post">
+							<p>
+								Delete All Test Actions ?
+							</p>
+							<button type="submit" name="clear" class="btn btn-block btn-danger">
+								<i class="glyphicon glyphicon-trash"></i>
+								Clear
+							</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							<i class="fa fa-undo"></i>
+							Cancel
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<xsl:for-each select="action">
 			<xsl:sort select="@id" data-type="number" order="ascending"/>
 			<div class="row">

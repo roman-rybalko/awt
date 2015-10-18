@@ -34,8 +34,7 @@ class Manager {
 			$fields['data'] = $data;
 		if (!$this->actions->insert($fields))
 			throw new \ErrorException('Test action insert failed', null, null, __FILE__, __LINE__);
-		if (!$this->tests->update(['time' => time()], []))
-			throw new \ErrorException('Test update failed', null, null, __FILE__, __LINE__);
+		$this->tests->update(['time' => time()], []);  // no check - may be the same time
 		return $actionId;
 	}
 
@@ -77,8 +76,7 @@ class Manager {
 			$fields['data'] = $data;
 		if (!$this->actions->insert($fields))
 			throw new \ErrorException('Test action insert failed', null, null, __FILE__, __LINE__);
-		if (!$this->tests->update(['time' => time()], []))
-			throw new \ErrorException('Test update failed', null, null, __FILE__, __LINE__);
+		$this->tests->update(['time' => time()], []);  // no check - may be the same time
 		return $actionId;
 	}
 
