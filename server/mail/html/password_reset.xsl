@@ -25,7 +25,7 @@
 				and paste it into your web browser.
 			</div>
 			<div class="alert alert-warning">
-				If you do not want to confirm or this message was reached you by mistake, please ignore it.
+				If you do not want to reset your password or this message was reached you by mistake, please ignore it.
 			</div>
 		</div>
 	</div>

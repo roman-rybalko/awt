@@ -18,7 +18,7 @@ Please, confirm password reset by visiting the link below.
 <xsl:value-of select="@url"/>
 If you cannot click the URL above, please copy and paste it into your web browser.
 
-If you do not want to confirm or this message was reached you by mistake, please ignore it.
+If you do not want to reset your password or this message was reached you by mistake, please ignore it.
 
 --
 Advanced Web Testing / Web Automation
