@@ -4,5 +4,8 @@ php5-xsl
 php5-gd
 php-pear
 
+xvfb
+dwm
+
 task_types.sql
 Зарегистрировать пустой логин и ввести сложный пароль.

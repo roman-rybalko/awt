@@ -1,4 +1,5 @@
 * paypal
+* close account
 * messages
 * административный интерфейс - статистика, мониторинг
 * increment, decrement, cas для db - статические функции в классе Database\Relational\Tools
