@@ -15,7 +15,7 @@ function process() {
 	if (resp.fail)
 		return resp.fail;
 	if (!resp.task || !resp.task.id)
-		throw new Error('response parsing failed');
+		throw new Error('response parsing failed, resp:' + JSON.stringify(resp));
 	var task = resp.task;
 	var resp = srv.req({
 		task_id: task.id,
@@ -25,7 +25,7 @@ function process() {
 	if (resp.fail)
 		return resp.fail;
 	if (!resp.ok)
-		throw new Error('response[2] parsing failed');
+		throw new Error('response[2] parsing failed, resp:' + JSON.stringify(resp));
 	var fails = {}, scrns = {};
 	if (task.actions.length) {
 		var selenium = new webdriver.Builder().forBrowser(config.selenium_browser).usingServer(config.selenium_server).build();
@@ -228,7 +228,7 @@ function process() {
 	if (resp.fail)
 		return resp.fail;
 	if (!resp.ok)
-		throw new Error('response[3] parsing failed');
+		throw new Error('response[3] parsing failed, resp:' + JSON.stringify(resp));
 }
 
 module.exports = function(cb) {
