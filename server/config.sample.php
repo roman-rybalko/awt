@@ -17,6 +17,10 @@ class Config {
 	const UI_URL = 'https://advancedwebtesting.com/ui/';
 	const UI_PATH = 'ui/';
 	const REGISTRATION_TOP_UP = 100;
+	const PAYPAL_USER = 'XX';
+	const PAYPAL_PASSWORD = 'XXXX';
+	const PAYPAL_SIGNATURE = 'XXXXX';
+	const PAYPAL_SANDBOX = true;
 }
 
 \Config::$rootPath = __DIR__ . '/';

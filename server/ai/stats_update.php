@@ -1,5 +1,5 @@
 <?php
-require_once 'web_construction_set/autoload.php';
+require_once '../web_construction_set/autoload.php';
 $db = new \WebConstructionSet\Database\Relational\Pdo(\Config::DB_DSN, \Config::DB_USER, \Config::DB_PASSWORD);
 $userDb = new \WebConstructionSet\Database\Relational\User($db);
 $users = $userDb->get();

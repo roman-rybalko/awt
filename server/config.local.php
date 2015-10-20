@@ -17,6 +17,10 @@ class Config {
 	const UI_URL = 'http://www/awt/server/ui/';
 	const UI_PATH = 'ui/';
 	const REGISTRATION_TOP_UP = 100;
+	const PAYPAL_USER = 'paypal-dev-biz1_api1.romanr.info';
+	const PAYPAL_PASSWORD = 'EVZ94D6J4D79666B';
+	const PAYPAL_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31A4mKpRLpIJARBcgYnwfQqUCoZFC3';
+	const PAYPAL_SANDBOX = true;
 }
 
 \Config::$rootPath = __DIR__ . '/';

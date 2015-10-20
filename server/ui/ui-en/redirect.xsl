@@ -10,19 +10,27 @@
 					</div>
 					<div class="panel-body">
 						<xsl:apply-templates select="//message"/>
-						<a href="../{@url}" id="redirect">Continue</a>
+						<a href="../" id="redirect">Continue</a>
 						<script type="text/javascript">
 							$(function(){
-							<xsl:choose>
-								<xsl:when test="@timeout">
-									window.setTimeout(function(){
+								<xsl:choose>
+									<xsl:when test="contains(@url, '://')">
+										$('#redirect').attr('href', '<xsl:value-of select="@url"/>');
+									</xsl:when>
+									<xsl:otherwise>
+										$('#redirect').attr('href', '../<xsl:value-of select="@url"/>');
+									</xsl:otherwise>
+								</xsl:choose>
+								<xsl:choose>
+									<xsl:when test="@timeout">
+										window.setTimeout(function(){
+											window.location = $('#redirect').attr('href');
+										}, <xsl:value-of select="@timeout"/>000);
+									</xsl:when>
+									<xsl:otherwise>
 										window.location = $('#redirect').attr('href');
-									}, <xsl:value-of select="@timeout"/>000);
-								</xsl:when>
-								<xsl:otherwise>
-									window.location = $('#redirect').attr('href');
-								</xsl:otherwise>
-							</xsl:choose>
+									</xsl:otherwise>
+								</xsl:choose>
 							});
 						</script>
 					</div>

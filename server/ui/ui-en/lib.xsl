@@ -58,6 +58,21 @@
 	</script>
 </xsl:template>
 
+<xsl:template name="billing_payment_type">
+	<xsl:choose>
+		<xsl:when test="@payment_type = 1">
+			PayPal
+		</xsl:when>
+		<xsl:when test="@payment_type = 2">
+			RBK Money
+		</xsl:when>
+		<xsl:otherwise>
+			<b class="space-x">Payment Type:</b>
+			<xsl:value-of select="@payment_type"/>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
 <xsl:template name="helper_tip">
 	<xsl:param name="text"/>
 	<xsl:param name="state"/>

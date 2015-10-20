@@ -51,6 +51,9 @@ class User {
 	Billing
 	action: ?billing=1
 
+	Billing Archive
+	action: ?billing_archive=1
+
 	Stats
 	action: ?stats=1
 -->
@@ -59,8 +62,6 @@ class User {
 				$this->logout($user, '?register=1');
 			} else if (isset($_GET['logout'])) {
 				$this->logout($user);
-			} else if (isset($_GET['stats'])) {
-				$this->stats();
 			} else if (isset($_GET['settings'])) {
 				$this->settings($userDb, $user->getLogin());
 			} else if (isset($_GET['tests'])) {
@@ -77,6 +78,10 @@ class User {
 				$this->history();
 			} else if (isset($_GET['billing'])) {
 				$this->billing();
+			} else if (isset($_GET['billing_archive'])) {
+				$this->billingArchive();
+			} else if (isset($_GET['stats'])) {
+				$this->stats();
 			} else {
 				$this->stats();
 			}
@@ -672,9 +677,9 @@ class User {
 				$test = $tests[0];
 				if (!$test['deleted']) {
 					$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
-					if ($billMgr->getActionsCount() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
+					if ($billMgr->getAvailableActionsCnt() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
 						$taskId = $taskMgr->add($testId, $test['name'], $type, $debug);
-						$billMgr->taskStart($taskId, $test['name']);
+						$billMgr->startTask($taskId, $test['name']);
 						echo '<message type="notice" value="task_add_ok"/>';
 						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 						$histMgr->add('task_add', ['task_id' => $taskId,
@@ -855,58 +860,148 @@ class User {
 <!--
 	Billing
 
-	Top Up (Test)
+	Top Up
 	method: post
-	params: actions amount
+	params: payment_type actions_cnt [subscription]
 	submit: top_up
 
-	Service Charge
+	Refund Transaction
 	method: post
-	params actions data
-	submit: service
+	params: id
+	submit: refund
+
+	Cancel Pending Transaction
+	method: post
+	params: payment_type id
+	submit: cancel_pending_transaction
+
+	Cancel Subscription
+	method: post
+	params: payment_type id
+	submit: cancel_subscription
+
+	Top Up by Subscription
+	method: post
+	params: payment_type id
+	submit: top_up_subscription
+
+	Modify Subscription
+	method: post
+	params: payment_type id actions_cnt
+	submit: modify_subscription
 -->
 <?php
 		$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
 		if (isset($_POST['top_up'])) {
-			if ($billMgr->topUp($_POST['actions'], \AdvancedWebTesting\Billing\PaymentType::MANUAL, $_POST['amount'], 'test'))
-				echo '<message type="notice" value="top_up_ok"/>';
-			else
+			$actionsCnt = $_POST['actions_cnt'] + 0;
+			if ($actionsCnt && \AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type'])) {
+				while (true) {
+					$id = $billMgr->topUp($actionsCnt, $_POST['payment_type'], isset($_POST['subscription']) && $_POST['subscription']);
+					if (!$id)
+						break;
+					$data = $billMgr->getPendingTransactions($_POST['payment_type'], [$id]);
+					if (!$data)
+						break;
+					$transaction = $data[0];
+					echo '<message type="notice" value="top_up_ok"/>';
+					$this->redirect($transaction['url']);
+					return;
+				}
 				echo '<message type="error" value="top_up_fail"/>';
-		} else if (isset($_POST['service'])) {
-			if ($billMgr->service($_POST['actions'], $_POST['data']))
-				echo '<message type="notice" value="service_ok"/>';
+			} else
+				echo '<message type="error" value="bad_params"/>';
+		} else if (isset($_POST['refund'])) {
+			if ($billMgr->refund($_POST['id']))
+				echo '<message type="notice" value="refund_ok"/>';
 			else
-				echo '<message type="error" value="service_fail"/>';
+				echo '<message type="error" value="refund_fail"/>';
+		} else if (isset($_POST['cancel_pending_transaction'])) {
+			if (\AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
+				if ($billMgr->cancelPendingTransaction($_POST['payment_type'], $_POST['id']))
+					echo '<message type="notice" value="cancel_pending_transaction_ok"/>';
+				else
+					echo '<message type="error" value="cancel_pending_transaction_fail"/>';
+			else
+				echo '<message type="error" value="bad_params"/>';
+		} else if (isset($_POST['cancel_subscription'])) {
+			if (\AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
+				if ($billMgr->cancelSubscription($_POST['payment_type'], $_POST['id']))
+					echo '<message type="notice" value="cancel_subscription_ok"/>';
+				else
+					echo '<message type="error" value="cancel_subscription_fail"/>';
+			else
+				echo '<message type="error" value="bad_params"/>';
+		} else if (isset($_POST['top_up_subscription'])) {
+			if (\AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
+				if ($billMgr->processSubscription($_POST['payment_type'], $_POST['id']))
+					echo '<message type="notice" value="top_up_subscription_ok"/>';
+				else
+					echo '<message type="error" value="top_up_subscription_fail"/>';
+			else
+				echo '<message type="error" value="bad_params"/>';
+		} else if (isset($_POST['modify_subscription'])) {
+			$actionsCnt = $_POST['actions_cnt'] + 0;
+			if ($actionsCnt && \AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
+				if ($billMgr->modifySubscription($_POST['payment_type'], $_POST['id'], $actionsCnt))
+					echo '<message type="notice" value="modify_subscription_ok"/>';
+				else
+					echo '<message type="error" value="modify_subscription_fail"/>';
+			else
+				echo '<message type="error" value="bad_params"/>';
 		}
-		echo '<billing actions_available="', $billMgr->getActionsCount(), '">';
+		echo '<billing actions_available="', $billMgr->getAvailableActionsCnt(), '">';
 		foreach ($billMgr->getTransactions() as $transaction) {
-			echo '<transaction id="', $transaction['id'], '" type="', \AdvancedWebTesting\Billing\TransactionType::toString($transaction['type']), '"',
-				' time="', $transaction['time'], '"',
-				' actions_before="', $transaction['actions_before'], '"',
-				' actions_after="', $transaction['actions_after'], '"',
-				' actions="', $transaction['actions'], '"';
-			switch ($transaction['type']) {
-				case \AdvancedWebTesting\Billing\TransactionType::SERVICE:
-					echo ' data="', htmlspecialchars($transaction['data']), '"';
-					break;
-				case \AdvancedWebTesting\Billing\TransactionType::TOP_UP:
-					echo ' payment_type="', \AdvancedWebTesting\Billing\PaymentType::toString($transaction['payment_type']), '"',
-						' payment_amount="', $transaction['payment_amount'], '"',
-						' payment_data="', htmlspecialchars($transaction['payment_data']), '"';
-					break;
-				case \AdvancedWebTesting\Billing\TransactionType::TASK_START:
-					if (isset($transaction['sched_id']))
-						echo ' sched_id="', $transaction['sched_id'], '"',
-							' sched_name="', htmlspecialchars($transaction['sched_name']), '"';
-					// no break
-				case \AdvancedWebTesting\Billing\TransactionType::TASK_END:
-					echo ' task_id="', $transaction['task_id'], '"',
-						' test_name="', htmlspecialchars($transaction['test_name']), '"';
-					break;
+			unset($transaction['user_id']);
+			echo '<transaction';
+			foreach ($transaction as $name => $value) {
+				echo ' ', $name, '="';
+				if ($name == 'type')
+					echo \AdvancedWebTesting\Billing\TransactionType::toString($value);
+				else
+					echo htmlspecialchars($value);
+				echo '"';
 			}
 			echo '/>';
 		}
+		foreach ($billMgr->getPendingTransactions() as $pendingTransaction) {
+			unset($pendingTransaction['user_id']);
+			echo '<pending_transaction';
+			foreach ($pendingTransaction as $name => $value)
+				echo ' ', $name, '="', htmlspecialchars($value), '"';
+			echo '/>';
+		}
+		foreach ($billMgr->getSubscriptions() as $subscription) {
+			unset($subscription['user_id']);
+			echo '<subscription';
+			foreach ($subscription as $name => $value)
+				echo ' ', $name, '="', htmlspecialchars($value), '"';
+			echo '/>';
+		}
 		echo '</billing>';
+	}
+
+	private function billingArchive() {
+?>
+<!--
+	Billing Archive
+-->
+<?php
+		$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
+		echo '<billing_archive>';
+		foreach ($billMgr->getTransactions(null, 0) as $transaction) {
+			unset($transaction['user_id']);
+			echo '<transaction';
+			foreach ($transaction as $name => $value) {
+				echo ' ', $name, '="';
+				if ($name == 'type')
+					echo \AdvancedWebTesting\Billing\TransactionType::toString($value);
+				else
+					echo htmlspecialchars($value);
+				echo '"';
+			}
+			echo '/>';
+		}
+		echo '</billing_archive>';
 	}
 
 	private function stats() {
@@ -935,7 +1030,7 @@ class User {
 				++$schedsCnt;
 		$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
 		echo '<stats tests="', $testsCnt, '" tasks_finished="', $tasksCnt, '" scheds="', $schedsCnt, '"',
-			' actions_available="', $billMgr->getActionsCount(), '">';
+			' actions_available="', $billMgr->getAvailableActionsCnt(), '">';
 		$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $this->userId);
 		$stats = $statMgr->get();
 		foreach ($stats as $stat)

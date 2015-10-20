@@ -101,10 +101,10 @@ class Schedule {
 				continue;
 			}
 			$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $userId);
-			if ($billMgr->getActionsCount() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
+			if ($billMgr->getAvailableActionsCnt() >= \AdvancedWebTesting\Billing\Price::TASK_START || $billMgr->getSubscriptions()) {
 				$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $userId);
 				$taskId = $taskMgr->add($testId, $test['name'], $type);
-				$billMgr->taskStart($taskId, $test['name'], $job['id'], $job['data']['name']);
+				$billMgr->startTask($taskId, $test['name'], $job['id'], $job['data']['name']);
 				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $userId);
 				$histMgr->add('task_sched', ['task_id' => $taskId,
 					'test_id' => $testId, 'test_name' => $test['name'], 'type' => $type,

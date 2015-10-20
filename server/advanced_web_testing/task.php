@@ -118,7 +118,7 @@ class Task {
 						if ($tasks = $taskMgr1->get([$taskId]))
 							$task = $tasks[0];
 						$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $userId);
-						$billMgr->taskEnd($taskId, $task['test_name'], $actExecCnt);
+						$billMgr->finishTask($taskId, $task['test_name'], $actExecCnt);
 					} else
 						$result['fail'] = 'task update failed';
 					break;
