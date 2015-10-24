@@ -45,6 +45,8 @@ class Manager {
 			$fields['scrn'] = $scrn;
 		if ($failed !== null)
 			$fields['failed'] = $failed;
+		if (!$fields)
+			return false;
 		return $this->actions->update($fields, ['action_id' => $actionId]);
 	}
 
