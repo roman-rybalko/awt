@@ -60,9 +60,12 @@
 <xsl:template name="billing_payment_type">
 	<xsl:choose>
 		<xsl:when test="@payment_type = 1">
-			PayPal
+			Demo
 		</xsl:when>
 		<xsl:when test="@payment_type = 2">
+			PayPal
+		</xsl:when>
+		<xsl:when test="@payment_type = 3">
 			RBK Money
 		</xsl:when>
 		<xsl:otherwise>

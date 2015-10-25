@@ -11,3 +11,5 @@ create table settings(user_id integer primary key not null, email varchar(256), 
 create table stats(user_id integer not null, time integer not null, tasks_finished integer not null default 0, tasks_failed integer not null default 0, task_actions_executed integer not null default 0);
 create unique index stats_idx on stats(user_id, time);
 create table paypal_subscription_actions(id integer primary key not null, cnt integer not null);
+create table demo_subscriptions(id integer primary key not null auto_increment, time integer not null, actions_cnt integer not null, user_id integer not null);
+create index demo_subscriptions_idx on demo_subscriptions(user_id);

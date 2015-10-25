@@ -158,6 +158,8 @@ class Paypal implements \AdvancedWebTesting\Billing\PaymentBackend {
 		$data = $this->paypal->refund($transactionData, $params);
 		if (!$data)
 			return null;
+		if (!$data['data'])
+			$data['data'] = $actionsCnt ? 'Partial Refund' : 'Full Refund';
 		return ['payment_amount' => $data['amt'] . ' ' . $data['currencycode'],
 			'payment_data' => $data['data'], 'transaction_data' => $data['transactionid']];
 	}

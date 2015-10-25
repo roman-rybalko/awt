@@ -11,6 +11,7 @@ class Manager {
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
 		$this->billing = new \WebConstructionSet\Database\Relational\Billing($db, 0, $userId);
+		$this->paymentBackends[PaymentType::DEMO] = new PaymentBackend\Demo($db, $userId);
 		$this->paymentBackends[PaymentType::PAYPAL] = new PaymentBackend\Paypal($db, $userId);
 	}
 
@@ -144,7 +145,7 @@ class Manager {
 		if ($paymentType)
 			$paymentTypes = [$paymentType];
 		else
-			$paymentTypes = [PaymentType::PAYPAL];
+			$paymentTypes = array_keys($this->paymentBackends);
 		foreach ($paymentTypes as $paymentType)
 			if (isset($this->paymentBackends[$paymentType]))
 				foreach ($this->paymentBackends[$paymentType]->getTransactions($pendingTransactionIds) as $transaction) {
@@ -215,7 +216,7 @@ class Manager {
 		if ($paymentType)
 			$paymentTypes = [$paymentType];
 		else
-			$paymentTypes = [PaymentType::PAYPAL];
+			$paymentTypes = array_keys($this->paymentBackends);
 		foreach ($paymentTypes as $paymentType)
 			if (isset($this->paymentBackends[$paymentType]))
 				foreach ($this->paymentBackends[$paymentType]->getSubscriptions($subscriptionIds) as $subscription) {
