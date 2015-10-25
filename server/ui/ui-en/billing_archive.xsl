@@ -20,7 +20,7 @@
 				<div class="alert alert-info alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-clear">&#215;</button>
 					<b>Tip:</b>
-					Transaction data is cleared after 2 years.
+					Transaction data is purged after 2 years.
 				</div>
 			</div>
 		</div>

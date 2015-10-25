@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:template match="password_reset">
+<xsl:template match="reset_password">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Password Reset Confirmation</h1>
@@ -15,7 +15,7 @@
 				<p>We got a request to reset your password.</p>
 			</h4>
 			<p>
-				<a href="{@url}" class="btn btn-success">Please, confirm password reset.</a>
+				<a href="{@url}" class="btn btn-success">Please, confirm your password reset.</a>
 			</p>
 			<div class="alert alert-info">
 				If you cannot click the link/button above, please copy the URL

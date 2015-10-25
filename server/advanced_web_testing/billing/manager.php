@@ -110,7 +110,7 @@ class Manager {
 	 *  task_id (optional) => integer, test_name => string,
 	 *  sched_id (optional) => integer, sched_name => string,
 	 *  payment_type (optional) => integer, payment_amount => string, payment_data => string,
-	 *  refundable => boolean]
+	 *  refundable (optional) => boolean]
 	 */
 	public function getTransactions($transactionIds = null, $time = null) {
 		if ($time === null)
@@ -317,7 +317,7 @@ class Manager {
 		if ($actionsCnt > $transaction['amount'])
 			$actionsCnt = $transaction['amount'];
 		else
-			$note = 'Transaction: ' . $transaction['amount'] . ' Test Actions, Available (Balance): ' . $actionsCnt . ' Test Actions, Partial Refund.';
+			$note = 'Top Up: ' . $transaction['amount'] . ' Test Actions, Available (Balance): ' . $actionsCnt . ' Test Actions, Partial Refund.';
 		$fields = ['type' => TransactionType::REFUND, 'ref_id' => $transactionId,
 			'payment_type' => $paymentType, 'payment_data' => $transaction['data']['payment_data']];
 		$refundTransactionId = $this->billing->transaction(- $actionsCnt, $fields);

@@ -33,8 +33,8 @@
 				<div class="col-lg-12">
 					<div class="panel panel-info">
 						<div class="panel-heading">
-							<i class="fa fa-file-o"></i>
-							New
+							<i class="fa fa-spinner"></i>
+							Pending
 						</div>
 						<div class="panel-body">
 							<table class="table table-striped table-hover table-dataTable" data-order='[[3, "desc"]]'>
@@ -346,7 +346,7 @@
 				<div class="alert alert-info alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cleanup">&#215;</button>
 					<b>Tip:</b>
-					Tasks are cleared after 42 days.
+					Tasks are purged after 42 days.
 				</div>
 			</div>
 		</div>

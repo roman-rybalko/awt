@@ -250,7 +250,7 @@
 			<div class="alert alert-info alert-dismissable">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tests-deleted-cleanup">&#215;</button>
 				<b>Tip:</b>
-				Deleted tests are cleared after 42 days.
+				Deleted tests are purged after 42 days.
 			</div>
 		</xsl:if>
 	</div>

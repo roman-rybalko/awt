@@ -323,7 +323,7 @@
 							<table style="width:100%;">
 								<tr>
 									<td style="text-align:center;">
-										<input type="radio" id="modal-top_up-payment_type-paypal" name="payment_type" value="1" checked=""/>
+										<input type="radio" id="modal-top_up-payment_type-paypal" name="payment_type" value="2" checked=""/>
 									</td>
 									<td style="text-align:center;">
 										<label for="modal-top_up-payment_type-paypal">
@@ -335,7 +335,7 @@
 								</tr>
 								<tr>
 									<td style="text-align:center;">
-										<input type="radio" id="modal-top_up-payment_type-rbkmoney" name="payment_type" value="2"/>
+										<input type="radio" id="modal-top_up-payment_type-rbkmoney" name="payment_type" value="3"/>
 									</td>
 									<td style="text-align:center;">
 										<label for="modal-top_up-payment_type-rbkmoney">

@@ -28,17 +28,15 @@ class Manager {
 	}
 
 	/**
-	 * @return [email => string, task_fail_email_report => boolean, task_success_email_report => boolean]
+	 * @return [email => string, task_fail_email_report => boolean, task_success_email_report => boolean, undeletable => boolean]
 	 */
 	public function get() {
-		$settings = [];
-		if ($data = $this->table->select(['email', 'task_fail_email_report', 'task_success_email_report'])) {
+		$settings = ['email' => '', 'task_fail_email_report' => false, 'task_success_email_report' => false, 'undeletable' => false];
+		if ($data = $this->table->select(array_keys($settings))) {
 			$data1 = $data[0];
-			foreach (['email', 'task_fail_email_report', 'task_success_email_report'] as $param)
+			foreach (array_keys($settings) as $param)
 				if ($data1[$param])
 					$settings[$param] = $data1[$param];
-				else
-					$settings[$param] = '';
 		}
 		return $settings;
 	}

@@ -10,3 +10,4 @@ dwm
 task_types.sql
 Зарегистрировать пустой логин и ввести сложный пароль.
 Добавить demo_subscription для демо-логина.
+Выставить undeletable в settings для демо-логина.

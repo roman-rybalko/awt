@@ -250,7 +250,7 @@ class User {
 				unset($_SESSION['password_reset_user_id']);
 				unset($_SESSION['password_reset_code']);
 			} else
-				echo '<message type="error" value="bad_reset_code"/>';
+				echo '<message type="error" value="bad_code"/>';
 			$this->redirect('', 3);
 			return;
 		}
@@ -295,6 +295,14 @@ class User {
 	On/Off e-mail reports on task success
 	method: post
 	params: task_success_email_report (0/1)
+
+	Delete account
+	method: post
+	submit: delete_account
+
+	Delete account (commit)
+	method: get
+	params: delete_account_code
 -->
 <?php
 		$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $this->userId);
@@ -318,9 +326,9 @@ class User {
 				isset($_POST['task_fail_email_report']) ? $_POST['task_fail_email_report'] : null,
 				isset($_POST['task_success_email_report']) ? $_POST['task_success_email_report'] : null
 			))
-				echo '<message type="notice" value="settings_modify_ok"/>';
+				echo '<message type="notice" value="settings_change_ok"/>';
 			else
-				echo '<message type="error" value="settings_modify_fail"/>';
+				echo '<message type="error" value="settings_change_fail"/>';
 		}
 		if (isset($_POST['email']) && $_POST['email']) {
 			$_SESSION['settings_email'] = $_POST['email'];
@@ -329,17 +337,16 @@ class User {
 			if ($mailMgr->emailVerification($_POST['email'], $login,
 				\WebConstructionSet\Url\Tools::addParams(
 					\WebConstructionSet\Url\Tools::getMyUrl(), ['email_code' => $_SESSION['settings_email_code']])))
+			{
 				echo '<message type="notice" value="email_verification_pending"/>';
-			else
-				echo '<message type="error" value="email_modify_fail"/>';
+			} else
+				echo '<message type="error" value="email_change_fail"/>';
 		} else if (isset($_GET['email_code'])) {
 			if (isset($_SESSION['settings_email_code']) && $_SESSION['settings_email_code'] == $_GET['email_code']) {
 				$oldEmail = $settMgr->get()['email'];
 				if (!$oldEmail) {
 					$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
-					$billMgr->topUp(\Config::REGISTRATION_TOP_UP,
-						\AdvancedWebTesting\Billing\PaymentType::MANUAL,
-						\Config::REGISTRATION_TOP_UP . ' test actions', 'Sign Up bonus');
+					$billMgr->service(\Config::SIGN_UP_BONUS, 'Sign Up bonus');
 				}
 				if ($settMgr->set($_SESSION['settings_email'])) {
 					echo '<message type="notice" value="email_change_ok"/>';
@@ -350,9 +357,54 @@ class User {
 				unset($_SESSION['settings_email_code']);
 				unset($_SESSION['settings_email']);
 			} else
-				echo '<message type="error" value="bad_email_code"/>';
+				echo '<message type="error" value="bad_code"/>';
 			$this->redirect('?settings=1');
 			return;
+		}
+		if (isset($_POST['delete_account'])) {
+			$settings = $settMgr->get();
+			if (!$settings['undeletable']) {
+				$email = $settings['email'];
+				if ($email) {
+					$_SESSION['delete_account_code'] = rand();
+					$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $this->userId);
+					if ($mailMgr->deleteAccount($email, $login,
+						\WebConstructionSet\Url\Tools::addParams(
+							\WebConstructionSet\Url\Tools::getMyUrl(), ['delete_account_code' => $_SESSION['delete_account_code']])))
+					{
+						echo '<message type="notice" value="email_verification_pending"/>';
+					} else
+						echo '<message type="error" value="delete_account_fail"/>';
+				} else {
+					$account = new \AdvancedWebTesting\User\Account($this->db, $this->userId);
+					$data = $account->delete();
+					if ($data)
+						echo $data;
+					else {
+						echo '<message type="notice" value="delete_account_ok"/>';
+						$this->redirect('?logout=1', 3);
+						return;
+					}
+				}
+			} else
+				echo '<message type="error" value="delete_account_fail"/>';
+		} else if (isset($_GET['delete_account_code'])) {
+			if (isset($_SESSION['delete_account_code']) && $_SESSION['delete_account_code'] == $_GET['delete_account_code']) {
+				unset($_SESSION['delete_account_code']);
+				if (!$settMgr->get()['undeletable']) {
+					$account = new \AdvancedWebTesting\User\Account($this->db, $this->userId);
+					$data = $account->delete();
+					if ($data)
+						echo $data;
+					else {
+						echo '<message type="notice" value="delete_account_ok"/>';
+						$this->redirect('?logout=1', 3);
+						return;
+					}
+				} else
+					echo '<message type="error" value="delete_account_fail"/>';
+			} else
+				echo '<message type="error" value="bad_code"/>';
 		}
 		echo '<settings';
 		foreach ($settMgr->get() as $name => $value)
@@ -903,7 +955,7 @@ class User {
 					if (!$data)
 						break;
 					$transaction = $data[0];
-					echo '<message type="notice" value="top_up_ok"/>';
+					echo '<message type="notice" value="payment_pending"/>';
 					$this->redirect($transaction['url']);
 					return;
 				}
