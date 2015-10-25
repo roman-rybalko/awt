@@ -247,12 +247,11 @@
 					</div>
 				</div>
 			</div>
-			<xsl:call-template name="helper_tip">
-				<xsl:with-param name="state">tests-deleted-cleanup</xsl:with-param>
-				<xsl:with-param name="text">
-					Deleted tests are cleared after 42 days.
-				</xsl:with-param>
-			</xsl:call-template>
+			<div class="alert alert-info alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tests-deleted-cleanup">&#215;</button>
+				<b>Tip:</b>
+				Deleted tests are cleared after 42 days.
+			</div>
 		</xsl:if>
 	</div>
 </xsl:template>

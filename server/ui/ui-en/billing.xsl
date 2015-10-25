@@ -20,14 +20,11 @@
 						</div>
 					</div>
 				</xsl:if>
-				<xsl:call-template name="helper_tip">
-					<xsl:with-param name="state">
-						billing-email
-					</xsl:with-param>
-					<xsl:with-param name="text">
-						Please, check your E-Mail in Settings.
-					</xsl:with-param>
-				</xsl:call-template>
+				<div class="alert alert-info alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-email">&#215;</button>
+					<b>Tip:</b>
+					Please, check your E-Mail in <a href="../?settings=1">Settings</a>.
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -228,14 +225,11 @@
 						</table>
 					</div>
 				</div>
-				<xsl:call-template name="helper_tip">
-					<xsl:with-param name="state">
-						billing-pending-transactions-process
-					</xsl:with-param>
-					<xsl:with-param name="text">
-						Pending Transactions are processed every minute.
-					</xsl:with-param>
-				</xsl:call-template>
+				<div class="alert alert-info alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-pending-transactions-process">&#215;</button>
+					<b>Tip:</b>
+					Pending Transactions are processed every minute.
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -303,14 +297,11 @@
 						</table>
 					</div>
 				</div>
-				<xsl:call-template name="helper_tip">
-					<xsl:with-param name="state">
-						billing-transactions
-					</xsl:with-param>
-					<xsl:with-param name="text">
-						Transactions are displayed for 42 days only. See Billing Archive for the full list.
-					</xsl:with-param>
-				</xsl:call-template>
+				<div class="alert alert-info alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-transactions">&#215;</button>
+					<b>Tip:</b>
+					Transactions are displayed for 42 days only. See <a href="../?billing_archive=1">Billing Archive</a> for the full list.
+				</div>
 			</div>
 		</div>
 	</div>

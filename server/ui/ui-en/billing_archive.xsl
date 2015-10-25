@@ -17,14 +17,11 @@
 						</div>
 					</div>
 				</xsl:if>
-				<xsl:call-template name="helper_tip">
-					<xsl:with-param name="state">
-						billing-clear
-					</xsl:with-param>
-					<xsl:with-param name="text">
-						Transaction data is cleared after 2 years.
-					</xsl:with-param>
-				</xsl:call-template>
+				<div class="alert alert-info alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-clear">&#215;</button>
+					<b>Tip:</b>
+					Transaction data is cleared after 2 years.
+				</div>
 			</div>
 		</div>
 		<div class="row">

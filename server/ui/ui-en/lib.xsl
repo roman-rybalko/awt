@@ -14,12 +14,11 @@
 					<xsl:value-of select="$test_name"/>
 				</div>
 				<div class="panel-body">
-					<xsl:call-template name="helper_tip">
-						<xsl:with-param name="state">modal-new-task-debug</xsl:with-param>
-						<xsl:with-param name="text">
-							When Debug is ON all actions will be executed regardless of error.
-						</xsl:with-param>
-					</xsl:call-template>
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="modal-new-task-debug">&#215;</button>
+						<b>Tip:</b>
+						When Debug is ON all actions will be executed regardless of error.
+					</div>
 					<form role="form" method="post" action="../?tasks=1">
 						<input type="hidden" name="test_id" value="{$test_id}"/>
 						<input type="hidden" name="add" value="1"/>
@@ -71,16 +70,6 @@
 			<xsl:value-of select="@payment_type"/>
 		</xsl:otherwise>
 	</xsl:choose>
-</xsl:template>
-
-<xsl:template name="helper_tip">
-	<xsl:param name="text"/>
-	<xsl:param name="state"/>
-	<div class="alert alert-info alert-dismissable">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="{$state}">&#215;</button>
-		<b>Tip:</b>
-		<xsl:value-of select="$text"/>
-	</div>
 </xsl:template>
 
 </xsl:stylesheet>

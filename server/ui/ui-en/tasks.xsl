@@ -14,12 +14,6 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Tasks</h1>
-				<xsl:call-template name="helper_tip">
-					<xsl:with-param name="state">tasks-create-test</xsl:with-param>
-					<xsl:with-param name="text">
-						Create a test to run a task.
-					</xsl:with-param>
-				</xsl:call-template>
 				<xsl:if test="//message">
 					<div class="row">
 						<div class="col-lg-12">
@@ -27,6 +21,11 @@
 						</div>
 					</div>
 				</xsl:if>
+				<div class="alert alert-info alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-create-test">&#215;</button>
+					<b>Tip:</b>
+					Create a <a href="../?tests=1">test</a> to run a task.
+				</div>
 			</div>
 		</div>
 		<xsl:if test="task[@status = 'initial']">
@@ -106,13 +105,12 @@
 							</xsl:for-each>
 						</div>
 					</div>
-					<xsl:call-template name="helper_tip">
-						<xsl:with-param name="state">tasks-cancel</xsl:with-param>
-						<xsl:with-param name="text">
-							New task may be canceled.
-							When the task is running it may not be canceled.
-						</xsl:with-param>
-					</xsl:call-template>
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cancel">&#215;</button>
+						<b>Tip:</b>
+						New task may be canceled.
+						When the task is running it may not be canceled.
+					</div>
 				</div>
 			</div>
 		</xsl:if>
@@ -345,12 +343,11 @@
 		</xsl:if>
 		<div class="row">
 			<div class="col-lg-12">
-				<xsl:call-template name="helper_tip">
-					<xsl:with-param name="state">tasks-cleanup</xsl:with-param>
-					<xsl:with-param name="text">
-						Tasks are cleared after 42 days.
-					</xsl:with-param>
-				</xsl:call-template>
+				<div class="alert alert-info alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cleanup">&#215;</button>
+					<b>Tip:</b>
+					Tasks are cleared after 42 days.
+				</div>
 			</div>
 		</div>
 	</div>

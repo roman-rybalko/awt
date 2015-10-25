@@ -59,12 +59,11 @@
 						</table>
 					</div>
 				</div>
-				<xsl:call-template name="helper_tip">
-					<xsl:with-param name="state">history-clear</xsl:with-param>
-					<xsl:with-param name="text">
-						History data is cleared after 42 days.
-					</xsl:with-param>
-				</xsl:call-template>
+				<div class="alert alert-info alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="history-clear">&#215;</button>
+					<b>Tip:</b>
+					History data is cleared after 42 days.
+				</div>
 			</div>
 		</div>
 	</div>

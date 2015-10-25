@@ -84,7 +84,7 @@
 		</a>
 	</xsl:if>
 	<xsl:if test="@ref_id">
-		<b class="space-x">Linked Transaction:</b>
+		<b class="space-x">Refunded:</b>
 		<a href="../?billing_archive=1#{@ref_id}" class="space-x">
 			#<xsl:value-of select="@ref_id"/>
 		</a>

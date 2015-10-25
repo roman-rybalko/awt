@@ -23,18 +23,6 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Schedule</h1>
-				<xsl:call-template name="helper_tip">
-					<xsl:with-param name="state">schedule-create-test</xsl:with-param>
-					<xsl:with-param name="text">
-						Create a test to make schedule available.
-					</xsl:with-param>
-				</xsl:call-template>
-				<xsl:call-template name="helper_tip">
-					<xsl:with-param name="state">schedule-set-email</xsl:with-param>
-					<xsl:with-param name="text">
-						Set E-Mail in Settings to receive regular Task Reports.
-					</xsl:with-param>
-				</xsl:call-template>
 				<xsl:if test="//message">
 					<div class="row">
 						<div class="col-lg-12">
@@ -42,6 +30,16 @@
 						</div>
 					</div>
 				</xsl:if>
+				<div class="alert alert-info alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="schedule-create-test">&#215;</button>
+					<b>Tip:</b>
+					Create a <a href="../?tests=1">test</a> to make schedule available.
+				</div>
+				<div class="alert alert-info alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="schedule-set-email">&#215;</button>
+					<b>Tip:</b>
+					Set E-Mail in <a href="../?settings=1">Settings</a> to receive regular Task Reports.
+				</div>
 			</div>
 		</div>
 		<div class="row">

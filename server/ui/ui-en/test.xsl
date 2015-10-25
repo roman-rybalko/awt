@@ -293,12 +293,11 @@
 				<div class="col-lg-12">
 					<div class="panel panel-success">
 						<div class="panel-body">
-							<xsl:call-template name="helper_tip">
-								<xsl:with-param name="state">test-vars</xsl:with-param>
-								<xsl:with-param name="text">
-									Variable substitution {var} works for all fields.
-								</xsl:with-param>
-							</xsl:call-template>
+							<div class="alert alert-info alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="test-vars">&#215;</button>
+								<b>Tip:</b>
+								Variable substitution {var} works for all fields.
+							</div>
 							<form role="form" method="post" id="action-form">
 								<xsl:call-template name="new_action_form">
 									<xsl:with-param name="id">add</xsl:with-param>
@@ -454,13 +453,12 @@
 					</div>
 					<div class="row">
 						<div class="col-lg-12">
-							<xsl:call-template name="helper_tip">
-								<xsl:with-param name="state">test-xpath-browser-wnd-resizable</xsl:with-param>
-								<xsl:with-param name="text">
-									The bottom of the window is resizable.
-									It will expand when you open the site.
-								</xsl:with-param>
-							</xsl:call-template>
+							<div class="alert alert-info alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="test-xpath-browser-wnd-resizable">&#215;</button>
+								<b>Tip:</b>
+								The bottom of the window is resizable.
+								It will expand when you open the site.
+							</div>
 						</div>
 					</div>
 					<div class="xpath-browser-wnd ui-widget-content" id="xpath-browser-wnd-{$id}">
