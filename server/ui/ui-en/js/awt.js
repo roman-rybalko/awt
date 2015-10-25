@@ -125,8 +125,12 @@ $(function() {
 		var time = $(this).html().replace(/\s+/g, '');
 		$(this).html(moment.unix(time).format(datetime_format));
 	});
-	if ($('.table-dataTable').length)  // the last
-		$('.table-dataTable').DataTable();
+	if ($('.table-dataTable').length) {  // after .time-unix2human .period-unix2human
+		var table = $('.table-dataTable').DataTable();
+		var hash = window.location.hash;
+		if (hash)
+			table.search(hash).draw();
+	}
 	if ($('[data-dismiss="alert"][data-dismiss-state]').length) {
 		var storage = new Storage('dismiss-state-', 42 /* expire days */);
 		$('[data-dismiss="alert"][data-dismiss-state]').each(function() {
