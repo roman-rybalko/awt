@@ -29,6 +29,7 @@ class Task {
 	 */
 
 	public function run() {
+		header('Content-Type: application/json');
 		if (isset($_POST['task_type']))
 			$this->lock();
 		else if (isset($_POST['task_id']))
