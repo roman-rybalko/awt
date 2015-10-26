@@ -200,17 +200,17 @@
 											</a>
 										</td>
 										<td>
-											<a href="{@url}" target="_blank">
+											<a href="{@url}">
 												<xsl:value-of select="@actions_cnt"/>
 											</a>
 										</td>
 										<td>
-											<a href="{@url}" target="_blank">
+											<a href="{@url}">
 												<xsl:value-of select="@payment_amount"/>
 											</a>
 										</td>
 										<td>
-											<a href="{@url}" target="_blank">
+											<a href="{@url}">
 												<xsl:value-of select="@payment_data"/>
 											</a>
 										</td>

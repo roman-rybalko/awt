@@ -1,4 +1,3 @@
-* paypal processing
 * убрать все Content-Type из ui/ si/
 * redirect via http-equiv
 * messages

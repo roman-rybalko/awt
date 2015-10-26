@@ -21,10 +21,13 @@ class Cron {
 		foreach ($userDb->get() as $user) {
 			$userId = $user['id'];
 			$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $userId);
-			foreach ($billMgr->getPendingTransactions() as $pendingTransaction)
+			foreach ($billMgr->getPendingTransactions() as $pendingTransaction) {
+				if ($pendingTransaction['payment_type'] == \AdvancedWebTesting\Billing\PaymentType::PAYPAL)
+					continue;  // PayPal hack: транзакции PayPal обрабатываются на странице ?billing=1
 				if (!$billMgr->processPendingTransaction($pendingTransaction['payment_type'], $pendingTransaction['id']))
 					if (isset($pendingTransaction['subscription_id']))
 						$billMgr->cancelSubscription($pendingTransaction['payment_type'], $pendingTransaction['subscription_id']);
+			}
 			/**
 			 * Пользователь может за период тратить больше, чем пополняет подписка.
 			 * Можно пополнять на сумму подписки плюс долг (отрицательный баланс),

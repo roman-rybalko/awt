@@ -183,7 +183,7 @@ class Manager {
 		if (!$this->billing->update($transaction['id'], $transaction['data']))
 			error_log(new \ErrorException('Transaction update failed, transaction:' . json_encode($transaction), null, null, __FILE__, __LINE__));
 		if (!$result['transaction_data'])
-			return false;
+			return true;  // обработали, но без пополнения
 		if (!$this->billing->commit($transaction['id'])) {
 			error_log(new \ErrorException('Transaction commit failed, transaction:' . json_encode($transaction), null, null, __FILE__, __LINE__));
 			if (!$paymentBackend->refund($result['transaction_data']))

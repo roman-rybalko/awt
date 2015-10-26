@@ -1001,6 +1001,27 @@ class User {
 			else
 				echo '<message type="error" value="bad_params"/>';
 		}
+		if (isset($_GET['token'])) {
+			// PayPal hack
+			$token = $_GET['token'];
+			$tokenFound = false;
+			foreach ($billMgr->getPendingTransactions(\AdvancedWebTesting\Billing\PaymentType::PAYPAL) as $pendingTransaction) {
+				$params = [];
+				parse_str(parse_url($pendingTransaction['url'], PHP_URL_QUERY), $params);
+				if (isset($params['token']) && $params['token'] === $token) {
+					$tokenFound = true;
+					if ($billMgr->processPendingTransaction(\AdvancedWebTesting\Billing\PaymentType::PAYPAL, $pendingTransaction['id']))
+						echo '<message type="notice" value="paypal_ok"/>';
+					else
+						echo '<message type="error" value="paypal_fail"/>';
+					break;
+				}
+			}
+			if (!$tokenFound)
+				echo '<message type="error" value="bad_paypal_token"/>';
+			$this->redirect('?billing=1', 3);
+			return;
+		}
 		echo '<billing actions_available="', $billMgr->getAvailableActionsCnt(), '">';
 		foreach ($billMgr->getTransactions() as $transaction) {
 			unset($transaction['user_id']);
