@@ -351,7 +351,7 @@ class User {
 				$oldEmail = $settMgr->get()['email'];
 				if (!$oldEmail) {
 					$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
-					$billMgr->service(\Config::SIGN_UP_BONUS, 'Sign Up bonus');
+					$billMgr->service(\Config::SIGNUP_BONUS, 'Sign Up bonus');
 				}
 				if ($settMgr->set($_SESSION['settings_email'])) {
 					echo '<message type="notice" value="email_change_ok"/>';
