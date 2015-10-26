@@ -220,7 +220,7 @@ class User {
 									\WebConstructionSet\Url\Tools::getMyUrl(),
 										['reset_code' => $_SESSION['password_reset_code']])))
 							{
-								echo '<message type="notice" value="email_verification_pending"/>';
+								echo '<message type="notice" value="email_confirmation_pending"/>';
 								$this->redirect('', 3);
 								return;
 							} else {
@@ -343,7 +343,7 @@ class User {
 				\WebConstructionSet\Url\Tools::addParams(
 					\WebConstructionSet\Url\Tools::getMyUrl(), ['email_code' => $_SESSION['settings_email_code']])))
 			{
-				echo '<message type="notice" value="email_verification_pending"/>';
+				echo '<message type="notice" value="email_confirmation_pending"/>';
 			} else
 				echo '<message type="error" value="email_change_fail"/>';
 		} else if (isset($_GET['email_code'])) {
@@ -377,7 +377,7 @@ class User {
 						\WebConstructionSet\Url\Tools::addParams(
 							\WebConstructionSet\Url\Tools::getMyUrl(), ['delete_account_code' => $_SESSION['delete_account_code']])))
 					{
-						echo '<message type="notice" value="email_verification_pending"/>';
+						echo '<message type="notice" value="email_confirmation_pending"/>';
 					} else
 						echo '<message type="error" value="delete_account_fail"/>';
 				} else {

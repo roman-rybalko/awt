@@ -1,0 +1,209 @@
+
+login_ok
+	Welcome
+
+set_up_email
+	Please, set up your E-Mail (you will get a Signup bonus).
+
+bad_login
+	Invalid credentials
+
+register_ok
+	Registration is successful. Welcome!
+
+login_busy
+	The Login is already registered
+
+passwords_dont_match
+	Password do not match Confirm Password
+
+bad_captcha
+	CAPTCHA mismatch
+
+email_confirmation_pending
+	E-Mail confirmation message has been sent, please check your mailbox and proceed according to the instructions.
+
+password_reset_fail
+	Reset Password failed (try <a href="mailto:support@advancedwebtesting.com">support request</a>)
+
+password_change_ok
+	Password has been changed
+
+bad_code
+	Invalid code (the session may expired)
+
+logout_ok
+	Goodbye
+
+password_change_fail
+	Change Password failed (please, try again later).
+
+bad_current_password
+	Invalid current password
+
+settings_change_ok
+	Settings has been changed
+
+settings_change_fail
+	Change settings failed
+
+email_change_fail
+	Change E-Mail failed
+
+email_change_ok
+	E-Mail has been changed
+
+delete_account_fail
+	Delete Account failed (please, try again later).
+
+delete_account_ok
+	Account has been deleted
+
+test_add_ok
+	Test has been added
+
+test_add_fail
+	Add Test failed
+
+test_delete_ok
+	Test has been deleted
+
+test_delete_fail
+	Delete Test failed
+
+bad_test_id
+	Invalid Test Id
+
+test_restore_ok
+	Test has been restored
+
+test_restore_fail
+	Restore Test failed
+
+test_rename_ok
+	Test has been renamed
+
+test_rename_fail
+	Rename Test failed
+
+test_copy_ok
+	Test has been copied
+
+test_copy_fail
+	Copy Test failed
+
+test_action_add_ok
+	Action has been added
+
+test_action_delete_ok
+	Action deleted
+
+test_action_delete_fail
+	Delete Action failed
+
+bad_action_id
+	Invalid Action Id
+
+test_action_modify_ok
+	Action has been modified
+
+test_action_modify_fail
+	Modify Action failed (perhaps invalid parameter)
+
+test_action_insert_ok
+	Action has been inserted
+
+test_action_insert_fail
+	Insert Action failed
+
+test_import_fail
+	Import Test failed (please, check the syntax).
+
+task_add_ok
+	Task has been added
+
+no_funds
+	Available Actions (Balance) are exhausted, please <a href="../?billing=1">Top Up</a>.
+
+test_is_deleted
+	Test has been deleted
+
+task_cancel_ok
+	Task has been canceled
+
+task_cancel_fail
+	Cancel Task failed
+
+bad_task_id
+	Invalid Task Id
+
+sched_add_ok
+	Schedule Job has been created
+
+sched_add_fail
+	Add Schedule Job failed (perhaps there is an empty string or null somewhere)
+
+sched_delete_ok
+	Schedule Job has been deleted
+
+sched_delete_fail
+	Delete Schedule Job failed
+
+bad_sched_id
+	Invalid Schedule Job Id
+
+sched_modify_ok
+	Schedule Job has been modified
+
+sched_modify_fail
+	Modify Schedule Job failed
+
+payment_pending
+	The payment has been staged, please proceed to payment system.
+
+top_up_fail
+	Top Up failed (please, try again later or try another payment system).
+
+bad_params
+	Invalid parameters (perhaps there is a null or empty string which is forbidden)
+
+refund_ok
+	Refunded.
+	Come again!
+
+refund_fail
+	Refund failed (please, try again later or ask <a href="mailto:billing@advancedwebtesting.com">support</a>).
+
+cancel_pending_transaction_ok
+	Pending Transaction has been canceled
+
+cancel_pending_transaction_fail
+	Cancel Pending Transaction failed
+
+cancel_subscription_ok
+	Subscription has been canceled
+
+cancel_subscription_fail
+	Cancel Subscription failed (perhaps it has already been canceled or cancel of this subscription is forbidden)
+
+top_up_subscription_ok
+	Top Up by Subscription complete
+
+top_up_subscription_fail
+	Top Up by Subscription failed (please, check the <a href="../?billing=1">Transaction log</a>).
+
+modify_subscription_ok
+	Subscription has been modified
+
+modify_subscription_fail
+	Modification of Subscription failed (perhaps it is canceled by the payment system, invalid or modification is forbidden).
+
+paypal_ok
+	PayPal has been processed successfully (the transaction may be declined though, see the <a href="../?billing=1">Transactions log</a>).
+
+paypal_fail
+	PayPal processing failed
+
+bad_paypal_token
+	Invalid PayPal Token
+
