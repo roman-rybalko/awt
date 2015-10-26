@@ -53,7 +53,7 @@ class Manager {
 
 	public function passwordReset($email, $login, $url) {
 		return $this->anacron->create(['start' => time(), 'period' => Manager::RETRY_TIMEOUT, 'data' => [
-			'type' => Type::RESET_PASSWORD, 'email' => $email,
+			'type' => Type::PASSWORD_RESET, 'email' => $email,
 			'login' => $login, 'url' => $url,
 			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::UI_URL
 		]], $this->userId);
@@ -98,8 +98,8 @@ class Manager {
 							. ' sched_id="' . $data['sched_id'] . '" sched_name="' . htmlspecialchars($data['sched_name']) . '"'
 							. '/>';
 						break;
-					case Type::RESET_PASSWORD:
-						$mailData .= '<reset_password login="' . htmlspecialchars($data['login']) . '" url="' . htmlspecialchars($data['url']) . '"/>';
+					case Type::PASSWORD_RESET:
+						$mailData .= '<password_reset login="' . htmlspecialchars($data['login']) . '" url="' . htmlspecialchars($data['url']) . '"/>';
 						break;
 					case Type::DELETE_ACCOUNT:
 						$mailData .= '<delete_account login="' . htmlspecialchars($data['login']) . '" url="' . htmlspecialchars($data['url']) . '"/>';
@@ -129,8 +129,8 @@ class Manager {
 									'test_id' => $data['test_id'], 'test_name' => $data['test_name'],
 									'sched_id' => $data['sched_id'], 'sched_name' => $data['sched_name']]);
 								break;
-							case Type::RESET_PASSWORD:
-								$histMgr->add('mail_reset_password', ['rcpt' => $data['email'] , 'message_id' => $data['message_id'], 'smtp_response' => $reply]);
+							case Type::PASSWORD_RESET:
+								$histMgr->add('mail_password_reset', ['rcpt' => $data['email'] , 'message_id' => $data['message_id'], 'smtp_response' => $reply]);
 								break;
 							case Type::DELETE_ACCOUNT:
 								$histMgr->add('mail_delete_account', ['rcpt' => $data['email'] , 'message_id' => $data['message_id'], 'smtp_response' => $reply]);

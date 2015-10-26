@@ -600,7 +600,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="event[@name='mail_verification' or @name='mail_reset_password' or @name='mail_delete_account']" mode="severity">
+<xsl:template match="event[@name='mail_verification' or @name='mail_password_reset' or @name='mail_delete_account']" mode="severity">
 	warning
 </xsl:template>
 
@@ -608,7 +608,7 @@
 	Send E-Mail Verification
 </xsl:template>
 
-<xsl:template match="event[@name='mail_reset_password']" mode="title">
+<xsl:template match="event[@name='mail_password_reset']" mode="title">
 	Send Password Reset Confirmation
 </xsl:template>
 
@@ -616,7 +616,7 @@
 	Send Delete Account Confirmation
 </xsl:template>
 
-<xsl:template match="event[@name='mail_verification' or @name='mail_reset_password' or @name='mail_delete_account']" mode="data">
+<xsl:template match="event[@name='mail_verification' or @name='mail_password_reset' or @name='mail_delete_account']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-6">

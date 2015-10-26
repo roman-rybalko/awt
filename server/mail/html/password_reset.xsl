@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:template match="reset_password">
+<xsl:template match="password_reset">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Password Reset Confirmation</h1>
