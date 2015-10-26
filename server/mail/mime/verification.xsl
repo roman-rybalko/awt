@@ -11,7 +11,7 @@
 Content-Transfer-Encoding: 8bit
 
 Hi <xsl:value-of select="@login"/>,
-Thank you for subscribing to Advanced Web Testing / Web Automation Service.
+Thank you for subscribing to Advanced Web Testing service.
 This is an E-Mail verification message.
 
 Please, confirm your E-Mail by visiting the link below.

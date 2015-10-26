@@ -11,11 +11,11 @@
 		<div class="col-lg-12">
 			<h4>
 				<p>Hi <b><xsl:value-of select="@login"/></b>,</p>
-				<p>Thank you for subscribing to Advanced Web Testing / Web Automation Service.</p>
-				<p>We got a request to reset your password.</p>
+				<p>Thank you for subscribing to Advanced Web Testing service.</p>
+				<p>We got a request to <b>reset your password</b>.</p>
 			</h4>
 			<p>
-				<a href="{@url}" class="btn btn-success">Please, confirm your password reset.</a>
+				<a href="{@url}" class="btn btn-danger">Please, confirm your password reset.</a>
 			</p>
 			<div class="alert alert-info">
 				If you cannot click the link/button above, please copy the URL

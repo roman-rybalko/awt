@@ -11,7 +11,7 @@
 Content-Transfer-Encoding: 8bit
 
 Hi <xsl:value-of select="@login"/>,
-Thank you for subscribing to Advanced Web Testing / Web Automation Service.
+Thank you for subscribing to Advanced Web Testing service.
 We got a request to reset your password.
 
 Please, confirm your password reset by visiting the link below.

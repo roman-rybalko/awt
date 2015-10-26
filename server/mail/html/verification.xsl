@@ -11,7 +11,7 @@
 		<div class="col-lg-12">
 			<h4>
 				<p>Hi <b><xsl:value-of select="@login"/></b>,</p>
-				<p>Thank you for subscribing to Advanced Web Testing / Web Automation Service.</p>
+				<p>Thank you for subscribing to Advanced Web Testing service.</p>
 				<p>This is an E-Mail verification message.</p>
 			</h4>
 			<p>

@@ -7,9 +7,9 @@
 		<meta charset="utf-8"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<meta name="description" content="Advanced Web Testing / Web Automation"/>
+		<meta name="description" content="Advanced Web Testing, Web Automation, Web Monitoring"/>
 		<base href="ui-en/"/>
-		<title>Advanced Web Testing / Web Automation</title>
+		<title>Advanced Web Testing</title>
 		<xsl:if test="redirect">
 			<xsl:choose>
 				<xsl:when test="redirect/@timeout">
