@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
 <xsl:template match="user">
 <html lang="en">
 	<head>
@@ -9,6 +10,30 @@
 		<meta name="description" content="Advanced Web Testing / Web Automation"/>
 		<base href="ui-en/"/>
 		<title>Advanced Web Testing / Web Automation</title>
+		<xsl:if test="redirect">
+			<xsl:choose>
+				<xsl:when test="redirect/@timeout">
+					<xsl:choose>
+						<xsl:when test="contains(redirect/@url, '://')">
+							<meta http-equiv="refresh" content="{redirect/@timeout};url={redirect/@url}"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<meta http-equiv="refresh" content="{redirect/@timeout};url=../{redirect/@url}"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="contains(redirect/@url, '://')">
+							<meta http-equiv="refresh" content="0;url={redirect/@url}"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<meta http-equiv="refresh" content="0;url=../{redirect/@url}"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:if>
 		<link href="css/bootstrap.min.css" rel="stylesheet"/>
 		<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<!--[if lt IE 9]>
@@ -25,4 +50,5 @@
 	</body>
 </html>
 </xsl:template>
+
 </xsl:stylesheet>

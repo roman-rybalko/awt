@@ -147,7 +147,7 @@
 			<div class="panel panel-danger">
 				<div class="panel-heading">
 					<button type="button" class="close" data-dismiss="modal">&#215;</button>
-					Delete Account: <xsl:value-of select="//user/@login"/>
+					Delete Account: <xsl:value-of select="../@login"/>
 				</div>
 				<div class="panel-body">
 					When you delete your account,
