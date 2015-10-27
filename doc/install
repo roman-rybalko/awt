@@ -7,6 +7,14 @@ php-pear
 xvfb
 dwm
 scrot
+jre (openjdk)
+x11vnc
+
+wine
+
+firefox
+chromium-brwser
+flashplugin-installer
 
 task_types.sql
 Зарегистрировать пустой логин и ввести сложный пароль.
