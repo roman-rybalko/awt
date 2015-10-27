@@ -7,6 +7,8 @@ process.title = config.node_id + '-selenium';
 process.env['DISPLAY'] = ':' + config.xdisplay;
 process.env['XAUTHORITY'] = config.xauth;
 
+console.log('HOME=' + process.env['HOME']);
+
 selenium.start({
 	spawnOptions: {stdio: 'inherit'},
 	seleniumArgs: ["-port", config.selenium_port]
