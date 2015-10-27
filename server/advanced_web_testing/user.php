@@ -516,7 +516,7 @@ class User {
 			echo '/>';
 		}
 		echo '</tests>';
-		$this->task_types();
+		$this->taskTypes();
 	}
 
 	private function test() {
@@ -701,7 +701,7 @@ class User {
 				echo '/>';
 			}
 			echo '</test>';
-			$this->task_types();
+			$this->taskTypes();
 		} else
 			echo '<message type="error" value="bad_test_id"/><test/>';
 	}
@@ -771,7 +771,7 @@ class User {
 				' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"',
 				' time="', $task['time'], '"/>';
 		echo '</tasks>';
-		$this->task_types();
+		$this->taskTypes();
 	}
 
 	private function task() {
@@ -784,10 +784,10 @@ class User {
 <?php
 		$task = new \AdvancedWebTesting\User\Task($this->db, $this->userId);
 		echo $task->get($_GET['task']);
-		$this->task_types();
+		$this->taskTypes();
 	}
 
-	private function task_types() {
+	private function taskTypes() {
 		echo '<task_types>';
 		$typeMgr = new \AdvancedWebTesting\Task\Type\Manager($this->db);
 		foreach ($typeMgr->get() as $type)
@@ -891,7 +891,7 @@ class User {
 			if (!$test['deleted'])
 				echo '<test name="', htmlspecialchars($test['name']), '" id="', $test['id'], '"/>';
 		echo '</schedule>';
-		$this->task_types();
+		$this->taskTypes();
 	}
 
 	private function history() {
@@ -909,7 +909,7 @@ class User {
 			echo '/>';
 		}
 		echo '</history>';
-		$this->task_types();
+		$this->taskTypes();
 	}
 
 	private function billing() {
