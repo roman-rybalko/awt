@@ -156,7 +156,7 @@ class User {
 	private function register(\WebConstructionSet\Accounting\User $user) {
 ?>
 <!--
-	Register/Signup
+	Register/Sign Up
 	method: post
 	params: user password1 password2 captcha
 	submit: register
