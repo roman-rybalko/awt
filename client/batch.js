@@ -13,6 +13,8 @@ process.env['XAUTHORITY'] = config.xauth;
 
 function cb(err, val) {
 	console.info('task done, err:', err, 'val:', val);
+	if (config.batch_finish_cb)
+		config.batch_finish_cb(err, val);
 	if (err && err.stack)
 		console.error(err.stack);
 	--count;
@@ -28,6 +30,8 @@ function cb(err, val) {
 
 function new_task() {
 	wait.launchFiber(function(){
+		if (config.batch_start_cb)
+			config.batch_start_cb();
 		task(cb);
 	});
 	++count;

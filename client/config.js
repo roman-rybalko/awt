@@ -1,3 +1,5 @@
+var spawncb = require('./lib/spawncb');
+
 module.exports = {
 	server_url: 'http://www/awt/server/si/task.php',
 	server_token: 'EtZGlOGWMGtEOptUcaQN98KTnPrXpvXgpY1orOue04',
@@ -10,6 +12,8 @@ module.exports = {
 	selenium_fullscreen: false,
 	batch_count: 1,  // a starving bug somewhere prevents efficient parallel run
 	batch_timeout: 5000,  // msec
+	batch_start_cb: null,
+	batch_finish_cb: spawncb('true'),
 	xdisplay: 10,
 	xauth: "/tmp/xauth10",
 	xscrsize: "1920x1080x24"
