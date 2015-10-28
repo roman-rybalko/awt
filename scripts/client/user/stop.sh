@@ -9,3 +9,4 @@ for s in batch selenium x; do
 	pgrep ${NODE_ID}-$s | xargs kill
 	while pgrep ${NODE_ID}-$s; do sleep 1; done
 done
+rm -Rf "$X_FILE"
