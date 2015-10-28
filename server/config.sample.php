@@ -24,5 +24,3 @@ class Config {
 }
 
 \Config::$rootPath = __DIR__ . '/';
-
-?>
