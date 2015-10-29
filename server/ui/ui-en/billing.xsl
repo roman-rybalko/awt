@@ -339,8 +339,8 @@
 									</td>
 									<td style="text-align:center;">
 										<label for="modal-top_up-payment_type-rbkmoney">
-											<img src="http://www.rbkmoney.com/sites/default/files/image/logos/logo_1_big.png" border="0" height="150" alt="RBK Money" style="display:inline;"/>
-											<img src="http://www.rbkmoney.com/sites/default/themes/rbkm/rbkm-internals/images/uploaded/visalogo1.gif" border="0" alt="RBK Money" style="display:inline;"/>
+											<img src="https://www.rbkmoney.com/sites/default/files/image/logos/logo_1_big.png" border="0" height="150" alt="RBK Money" style="display:inline;"/>
+											<img src="https://www.rbkmoney.com/sites/default/themes/rbkm/rbkm-internals/images/uploaded/visalogo1.gif" border="0" alt="RBK Money" style="display:inline;"/>
 										</label>
 									</td>
 								</tr>
