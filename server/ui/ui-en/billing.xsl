@@ -157,7 +157,7 @@
 				<div class="alert alert-info alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-subscription-order">&#215;</button>
 					<b>Tip:</b>
-					Firstly processed the subscription with higher amount.
+					Firstly is processed the subscription with higher amount.
 				</div>
 			</div>
 		</div>
