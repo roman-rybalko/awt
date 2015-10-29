@@ -1,6 +1,8 @@
 * добавить subject во все mailto
 * при смене email отправлять уведомление по старому адресу тоже, только уведомление
 * записывать в лог адрес изменившего e-mail и другие настройки
+* cron: restart tasks running more 10 min (config setup option)
+* sign up: create zero stats for past 42 days for fancy graphs
 * refund при закрытии аккаунта перенести в billing, т.к. refund не изменяет баланс мгновенно (может генерировать транзакцию)
 * административный интерфейс - статистика, мониторинг
 * increment, decrement, cas для db - статические функции в классе Database\Relational\Tools
