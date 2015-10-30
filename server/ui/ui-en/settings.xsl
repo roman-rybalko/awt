@@ -85,7 +85,7 @@
 											<xsl:attribute name="checked"></xsl:attribute>
 										</xsl:if>
 									</input>
-									Send e-mail report when the task is FAILED.
+									Send e-mail report when a Task is FAILED.
 								</label>
 							</div>
 							<button type="submit" name="task_fail_email_report" value="" class="btn btn-block btn-success">
@@ -113,7 +113,7 @@
 											<xsl:attribute name="checked"></xsl:attribute>
 										</xsl:if>
 									</input>
-									Send e-mail report when the task is succeeded.
+									Send e-mail report when a Task is succeeded.
 								</label>
 							</div>
 							<button type="submit" name="task_success_email_report" value="" class="btn btn-block btn-success">
