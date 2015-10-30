@@ -146,11 +146,11 @@ class Manager {
 	/**
 	 * Перевести все задачи старше $time из status = RUNNING|STARTING в status = INITIAL
 	 * @param integer $time Задачи с временем модификации (time) меньше заданного будут перезаущены
-	 * @return integer Количество перезапущенных задач
 	 */
 	public function restart($time) {
-		$cnt = $this->tasks->update(['status' => Status::INITIAL, 'time' => time()], ['time' => $this->tasks->predicate('less_eq', $time), 'status' => Status::RUNNING]);
-		$cnt += $this->tasks->update(['status' => Status::INITIAL, 'time' => time()], ['time' => $this->tasks->predicate('less_eq', $time), 'status' => Status::STARTING]);
-		return $cnt;
+		foreach ([Status::RUNNING, Status::STARTING] as $status)
+			foreach ($this->tasks->select(['node_id', 'task_id', 'user_id', 'time'], ['time' => $this->tasks->predicate('less_eq', $time), 'status' => $status]) as $task)
+				if ($this->tasks->update(['status' => Status::INITIAL, 'time' => time()], ['task_id' => $task['task_id'], 'status' => $status]))
+					error_log('Task restarted, node_id: ' . $task['node_id'] . ', status: ' . $status . ', user_id: ' . $task['user_id'] . ', task_id: ' . $task['task_id'] . ', time: ' . $task['time'] . ', time now: ' . time());
 	}
 }
