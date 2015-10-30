@@ -7,11 +7,14 @@ namespace AdvancedWebTesting\Task;
  * Model (MVC)
  */
 class Manager {
-	private $db, $userId;
+	private $db, $tasks;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
 		$this->db = $db;
-		$this->userId = $userId;
+		$fields = [];
+		if ($userId !== null)
+			$fields['user_id'] = $userId;
+		$this->tasks = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'tasks', $fields);
 	}
 
 	/**
@@ -21,7 +24,7 @@ class Manager {
 	 * @param string $type
 	 * @param boolean $debug
 	 * @throws \ErrorException
-	 * @return $taskId
+	 * @return $taskId|null
 	 */
 	public function add($testId, $testName, $type, $debug = false) {
 		if ($type === null) {
@@ -29,11 +32,14 @@ class Manager {
 			$types = $typeMgr->get($typeMgr->getTop());
 			$type = $types[0]['name'];
 		}
-		if ($taskId = $this->db->insert('tasks', ['user_id' => $this->userId, 'test_id' => $testId, 'test_name' => $testName, 'type' => $type, 'debug' => $debug, 'status' => -1, 'time' => time()])) {
-			$testActMgr = new \AdvancedWebTesting\Test\Action\Manager($this->db, $testId);
+		$testActMgr = new \AdvancedWebTesting\Test\Action\Manager($this->db, $testId);
+		$actions = $testActMgr->get();
+		if (count($actions) > \Config::TEST_MAX_ACTIONS_CNT)
+			return null;
+		if ($taskId = $this->tasks->insert(['test_id' => $testId, 'test_name' => $testName, 'type' => $type, 'debug' => $debug, 'time' => time()])) {
 			$taskActMgr = new \AdvancedWebTesting\Task\Action\Manager($this->db, $taskId);
-			$taskActMgr->import($testActMgr->get());
-			if (!$this->db->update('tasks', ['status' => Status::INITIAL], ['task_id' => $taskId]))
+			$taskActMgr->import($actions);
+			if (!$this->tasks->update(['status' => Status::INITIAL], ['task_id' => $taskId]))
 				throw new \ErrorException('Task ' . $taskId . ' final update failed', null, null, __FILE__, __LINE__);
 		} else {
 			throw new \ErrorException('Task insert failed', null, null, __FILE__, __LINE__);
@@ -47,32 +53,41 @@ class Manager {
 	 * @return boolean
 	 */
 	public function cancel($taskId) {
-		return $this->db->update('tasks', ['status' => Status::CANCELED, 'time' => time()], ['user_id' => $this->userId, 'task_id' => $taskId, 'status' => Status::INITIAL]);
+		if ($this->tasks->update(['status' => Status::CANCELED, 'time' => time()], ['task_id' => $taskId, 'status' => Status::INITIAL]))
+			return true;
+		$data = $this->tasks->select(['time'], ['task_id' => $taskId]);
+		if (!$data)
+			return false;
+		$task = $data[0];
+		$taskActMgr = new \AdvancedWebTesting\Task\Action\Manager($this->db, $taskId);
+		if ($task['time'] <= time() - \Config::TASK_ACTION_TIMEOUT * count($taskActMgr->get())) {
+			$cnt = $this->tasks->update(['status' => Status::CANCELED, 'time' => time()], ['task_id' => $taskId, 'status' => Status::RUNNING]);
+			$cnt += $this->tasks->update(['status' => Status::CANCELED, 'time' => time()], ['task_id' => $taskId, 'status' => Status::STARTING]);
+			return $cnt;
+		}
+		return false;
 	}
 
 	/**
 	 * Получить
 	 * @param [integer]|null $taskIds null - все
-	 * @return [][id => integer, test_id => integer, test_name => string, type => string, debug => boolean, status => integer, result => string|null, node_id => string|null, time => integer]
+	 * @return [][id => integer, test_id => integer, test_name => string, type => string, debug => boolean,
+	 *  status => integer, result => string|null, node_id => string|null, time => integer, user_id => integer]
 	 */
 	public function get($taskIds = null) {
+		$fields = ['task_id', 'test_id', 'test_name', 'type', 'debug', 'status', 'result', 'node_id', 'time', 'user_id'];
 		$data = [];
 		if ($taskIds === null)
-			$data = $this->db->select('tasks', ['task_id', 'test_id', 'test_name', 'type', 'debug', 'status', 'result', 'node_id', 'time'], ['user_id' => $this->userId]);
+			$data = $this->tasks->select($fields);
 		else
 			foreach ($taskIds as $taskId)
-				if ($data1 = $this->db->select('tasks', ['task_id', 'test_id', 'test_name', 'type', 'debug', 'status', 'result', 'node_id', 'time'], ['user_id' => $this->userId, 'task_id' => $taskId]))
+				if ($data1 = $this->tasks->select($fields, ['task_id' => $taskId]))
 					$data = array_merge($data, $data1);
-		$tasks = [];
-		foreach ($data as $data1) {
-			$task = [];
-			foreach (['task_id' => 'id', 'test_id' => 'test_id', 'test_name' => 'test_name', 'type' => 'type',
-					'debug' => 'debug', 'status' => 'status', 'result' => 'result', 'node_id' => 'node_id',
-					'time' => 'time'] as $src => $dst)
-				$task[$dst] = $data1[$src];
-			$tasks[] = $task;
+		foreach ($data as &$data1) {
+			$data1['id'] = $data1['task_id'];
+			unset($data1['task_id']);
 		}
-		return $tasks;
+		return $data;
 	}
 
 	/**
@@ -85,12 +100,12 @@ class Manager {
 		$typeMgr = new Type\Manager($this->db);
 		foreach ($typeMgr->get($typeMgr->getCompatible($type)) as $typeData) {
 			$type1 = $typeData['name'];
-			if ($data = $this->db->select('tasks', ['task_id', 'debug'], ['status' => Status::INITIAL, 'type' => $type1]))
+			if ($data = $this->tasks->select(['task_id', 'debug'], ['status' => Status::INITIAL, 'type' => $type1]))
 				foreach ($data as $data1) {
 					$task = ['type' => $type];
 					foreach (['task_id' => 'id', 'debug' => 'debug'] as $src => $dst)
 						$task[$dst] = $data1[$src];
-					if ($this->db->update('tasks', ['status' => Status::STARTING, 'type' => $type, 'node_id' => $nodeId, 'time' => time()], ['task_id' => $data1['task_id'], 'status' => Status::INITIAL]))
+					if ($this->tasks->update(['status' => Status::STARTING, 'type' => $type, 'node_id' => $nodeId, 'time' => time()], ['task_id' => $data1['task_id'], 'status' => Status::INITIAL]))
 						return $task;
 				}
 		}
@@ -103,7 +118,7 @@ class Manager {
 	 * @return boolean
 	 */
 	public function start($taskId) {
-		return $this->db->update('tasks', ['status' => Status::RUNNING, 'time' => time()], ['task_id' => $taskId, 'status' => Status::STARTING]);
+		return $this->tasks->update(['status' => Status::RUNNING, 'time' => time()], ['task_id' => $taskId, 'status' => Status::STARTING]);
 	}
 
 	/**
@@ -114,7 +129,7 @@ class Manager {
 	 * @return boolean
 	 */
 	public function finish($taskId, $status, $result) {
-		return $this->db->update('tasks', ['status' => $status, 'result' => $result, 'time' => time()], ['task_id' => $taskId, 'status' => Status::RUNNING]);
+		return $this->tasks->update(['status' => $status, 'result' => $result, 'time' => time()], ['task_id' => $taskId, 'status' => Status::RUNNING]);
 	}
 
 	/**
@@ -122,11 +137,20 @@ class Manager {
 	 * @return integer
 	 */
 	public function getUserId($taskId) {
-		if ($this->userId !== null && $this->get([$taskId]))
-			return $this->userId;
-		$data = $this->db->select('tasks', ['user_id'], ['task_id' => $taskId]);
+		$data = $this->tasks->select(['user_id'], ['task_id' => $taskId]);
 		if ($data)
 			return $data[0]['user_id'];
 		return null;
+	}
+
+	/**
+	 * Перевести все задачи старше $time из status = RUNNING|STARTING в status = INITIAL
+	 * @param integer $time Задачи с временем модификации (time) меньше заданного будут перезаущены
+	 * @return integer Количество перезапущенных задач
+	 */
+	public function restart($time) {
+		$cnt = $this->tasks->update(['status' => Status::INITIAL, 'time' => time()], ['time' => $this->tasks->predicate('less_eq', $time), 'status' => Status::RUNNING]);
+		$cnt += $this->tasks->update(['status' => Status::INITIAL, 'time' => time()], ['time' => $this->tasks->predicate('less_eq', $time), 'status' => Status::STARTING]);
+		return $cnt;
 	}
 }

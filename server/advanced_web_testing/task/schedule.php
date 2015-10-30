@@ -90,28 +90,32 @@ class Schedule {
 			$testId = $job['data']['test_id'];
 			$type = $job['data']['type'];
 			$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $userId);
-			if ($tests = $testMgr->get([$testId]))
-				$test = $tests[0];
-			else {
+			$tests = $testMgr->get([$testId]);
+			if (!$tests) {
 				$this->startFailReport($userId, 'bad_test_id', $testId, $test['name'], $type, $job['id'], $job['data']['name']);
 				continue;
 			}
+			$test = $tests[0];
 			if ($test['deleted']) {
 				$this->startFailReport($userId, 'test_is_deleted', $testId, $test['name'], $type, $job['id'], $job['data']['name']);
 				continue;
 			}
 			$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $userId);
-			if ($billMgr->getAvailableActionsCnt() >= \AdvancedWebTesting\Billing\Price::TASK_START || $billMgr->getSubscriptions()) {
-				$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $userId);
-				$taskId = $taskMgr->add($testId, $test['name'], $type);
-				$billMgr->startTask($taskId, $test['name'], $job['id'], $job['data']['name']);
-				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $userId);
-				$histMgr->add('task_sched', ['task_id' => $taskId,
-					'test_id' => $testId, 'test_name' => $test['name'], 'type' => $type,
-					'sched_id' => $job['id'], 'sched_name' => $job['data']['name']]);
-			} else {
+			if ($billMgr->getAvailableActionsCnt() < \AdvancedWebTesting\Billing\Price::TASK_START && !$billMgr->getSubscriptions()) {
 				$this->startFailReport($userId, 'no_funds', $testId, $test['name'], $type, $job['id'], $job['data']['name']);
+				continue;
 			}
+			$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $userId);
+			$taskId = $taskMgr->add($testId, $test['name'], $type);
+			if (!$taskId) {
+				$this->startFailReport($userId, 'task_add_fail', $testId, $test['name'], $type, $job['id'], $job['data']['name']);
+				continue;
+			}
+			$billMgr->startTask($taskId, $test['name'], $job['id'], $job['data']['name']);
+			$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $userId);
+			$histMgr->add('task_sched', ['task_id' => $taskId,
+				'test_id' => $testId, 'test_name' => $test['name'], 'type' => $type,
+				'sched_id' => $job['id'], 'sched_name' => $job['data']['name']]);
 		}
 	}
 

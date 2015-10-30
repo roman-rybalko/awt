@@ -63,6 +63,8 @@ class Cron {
 		} catch (\Exception $e) {
 			error_log($e);
 		}
+		$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, null);
+		$taskMgr->restart(time() - \Config::TASK_TIMEOUT);
 	}
 
 	private function mail() {

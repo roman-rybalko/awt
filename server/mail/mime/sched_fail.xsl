@@ -11,7 +11,10 @@ Content-Transfer-Encoding: 8bit
 
 Schedule Job: "<xsl:value-of select="@sched_name"/>" (<xsl:value-of select="../@root_url"/>?schedule=1#<xsl:value-of select="@sched_id"/>)
 Test: "<xsl:value-of select="@test_name"/>" (<xsl:value-of select="../@root_url"/>?test=<xsl:value-of select="@test_id"/>)
-Failed: <xsl:value-of select="@message"/>
+Failure: <xsl:text/>
+<xsl:call-template name="message">
+	<xsl:with-param name="value" select="@message"/>
+</xsl:call-template>
 
 --
 Advanced Web Testing / Web Automation

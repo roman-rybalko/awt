@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-die "USAGE: $0 <messages.txt> <messages.xsl>" unless @ARGV;
+die "USAGE: $0 <messages.txt> <messages.xml>" unless @ARGV;
 
 my $txt = shift;
 my $T;

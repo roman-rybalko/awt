@@ -32,7 +32,9 @@
 			<div class="alert alert-danger">
 				<span class="text-failure">
 					<b class="space-x">Failure:</b>
-					<xsl:value-of select="@message"/>
+					<xsl:call-template name="message">
+						<xsl:with-param name="value" select="@message"/>
+					</xsl:call-template>
 				</span>
 			</div>
 		</div>

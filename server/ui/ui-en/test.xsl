@@ -39,6 +39,15 @@
 									<xsl:value-of select="@time"/>
 								</span>
 							</div>
+								<div class="col-lg-3">
+									<b>Actions Count</b>:
+									<span>
+										<xsl:if test="count(action) &gt; @max_actions_cnt">
+											<xsl:attribute name="class">text-failure</xsl:attribute>
+										</xsl:if>
+										<xsl:value-of select="count(action)"/>
+									</span>/<xsl:value-of select="@max_actions_cnt"/>
+								</div>
 							<xsl:if test="@deleted">
 								<div class="col-lg-1">
 									<b class="text-failure">Deleted</b>
@@ -55,7 +64,7 @@
 							</xsl:if>
 							<xsl:if test="not(@deleted)">
 								<div class="col-lg-1">
-									<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-test-run">
+									<button type="button" class="btn btn-xs btn-block btn-success" data-toggle="modal" data-target="#modal-test-run">
 										<i class="fa fa-play"></i>
 										Run
 									</button>

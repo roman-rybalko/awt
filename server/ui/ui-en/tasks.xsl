@@ -106,10 +106,10 @@
 						</div>
 					</div>
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cancel">&#215;</button>
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cancel1">&#215;</button>
 						<b>Tip:</b>
-						New task may be canceled.
-						When the task is running it may not be canceled.
+						New Task may be canceled.
+						Running Task may be canceled after timeout (by default 10 seconds per action).
 					</div>
 				</div>
 			</div>
@@ -135,6 +135,7 @@
 										<th>Time</th>
 										<th data-orderable="false"></th>
 										<th data-orderable="false"></th>
+										<th data-orderable="false"></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -155,6 +156,15 @@
 											</td>
 											<td class="time-unix2human">
 												<xsl:value-of select="@time"/>
+											</td>
+											<td>
+												<form role="form" method="post">
+													<input type="hidden" name="task_id" value="{@id}"/>
+													<button type="submit" name="cancel" class="btn btn-xs btn-danger">
+														<i class="glyphicon glyphicon-trash"></i>
+														Cancel
+													</button>
+												</form>
 											</td>
 											<td>
 												<a href="../?task={@id}">

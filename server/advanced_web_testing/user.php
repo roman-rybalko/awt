@@ -689,7 +689,7 @@ class User {
 				}
 			}
 			echo '<test id="', $testId, '" name="', htmlspecialchars($test['name']), '"',
-				' time="', $test['time'], '"';
+				' time="', $test['time'], '" max_actions_cnt="', \Config::TEST_MAX_ACTIONS_CNT, '"';
 			if ($test['deleted'])
 				echo ' deleted="1"';
 			echo '>';
@@ -735,13 +735,15 @@ class User {
 				if (!$test['deleted']) {
 					$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
 					if ($billMgr->getAvailableActionsCnt() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
-						$taskId = $taskMgr->add($testId, $test['name'], $type, $debug);
-						$billMgr->startTask($taskId, $test['name']);
-						echo '<message type="notice" value="task_add_ok"/>';
-						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-						$histMgr->add('task_add', ['task_id' => $taskId,
-							'test_id' => $testId, 'test_name' => $test['name'],
-							'type' => $type]);
+						if ($taskId = $taskMgr->add($testId, $test['name'], $type, $debug)) {
+							$billMgr->startTask($taskId, $test['name']);
+							echo '<message type="notice" value="task_add_ok"/>';
+							$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+							$histMgr->add('task_add', ['task_id' => $taskId,
+								'test_id' => $testId, 'test_name' => $test['name'],
+								'type' => $type]);
+						} else
+							echo '<message type="error" value="task_add_fail"/>';
 					} else
 						echo '<message type="error" value="no_funds"/>';
 				} else

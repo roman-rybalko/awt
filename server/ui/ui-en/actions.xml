@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui>
+<actions>
 	<action id="" type="open" selector=""/> <!-- selector="url" -->
 	<action id="" type="exists" selector=""/> <!-- selector="element xpath" -->
 	<action id="" type="click" selector=""/> <!-- selector="element xpath" -->
@@ -11,4 +11,4 @@
 	<action id="" type="var_xpath" selector="" data=""/> <!-- selector="name" data="xpath expression" -->
 	<action id="" type="var_url" selector=""/> <!-- selector="name" -->
 	<action id="" type="var_title" selector=""/> <!-- selector="name" -->
-</ui>
+</actions>

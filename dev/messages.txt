@@ -25,7 +25,7 @@ email_confirmation_pending
 	E-Mail confirmation message has been sent, please check your mailbox and proceed according to the instructions.
 
 password_reset_fail
-	Reset Password failed (please, try <a href="mailto:support@advancedwebtesting.com">support request</a>).
+	Reset Password failed (please, try again later).
 
 password_change_ok
 	Password has been changed.
@@ -123,8 +123,11 @@ test_import_fail
 task_add_ok
 	New Task has been started.
 
+task_add_fail
+	Task start failed (perhaps the Test contains too many actions).
+
 no_funds
-	Available Actions (Balance) are exhausted, please <a href="../?billing=1">Top Up</a>.
+	Available Actions (Balance) are exhausted, please Top Up.
 
 test_is_deleted
 	The Test is deleted.
@@ -134,7 +137,7 @@ task_cancel_ok
 	The Task has been canceled.
 
 task_cancel_fail
-	Cancel Task failed.
+	Cancel Task failed (perhaps the cancel is not allowed in this state or timeout is not reached).
 
 bad_task_id
 	Invalid Task ID.
@@ -174,7 +177,7 @@ refund_ok
 	Come again!
 
 refund_fail
-	Refund failed (please, try again later or ask <a href="mailto:billing@advancedwebtesting.com">support</a>).
+	Refund failed (please, try again later).
 
 cancel_pending_transaction_ok
 	Pending Transaction has been canceled.

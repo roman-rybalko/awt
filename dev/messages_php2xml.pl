@@ -2,13 +2,19 @@
 use strict;
 use warnings;
 my %msgs;
+print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<messages>
+";
 while (<>) {
 	if (m~<message\s+type\s*=\s*"\w+"\s+value\s*=\s*"(\S+)"\s*/>~ && !$msgs{$1}) {
 		$msgs{$1} = 1;
 		print "
-<xsl:template match=\"message[\@value='$1']\" mode=\"message\">
+<message value=\"$1\">
 	XXX$1ZZZ
-</xsl:template>
+</message>
 ";
 	}
 }
+print "
+</messages>
+";

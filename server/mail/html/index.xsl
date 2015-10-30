@@ -5,6 +5,7 @@
 	<xsl:include href="verification.xsl"/>
 	<xsl:include href="../../ui/ui-en/actions.xsl"/>
 	<xsl:include href="task.xsl"/>
+	<xsl:include href="../../ui/ui-en/messages.xsl"/>
 	<xsl:include href="sched_fail.xsl"/>
 	<xsl:include href="password_reset.xsl"/>
 	<xsl:include href="delete_account.xsl"/>

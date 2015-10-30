@@ -21,6 +21,9 @@ class Config {
 	const PAYPAL_PASSWORD = 'EVZ94D6J4D79666B';
 	const PAYPAL_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31A4mKpRLpIJARBcgYnwfQqUCoZFC3';
 	const PAYPAL_SANDBOX = true;
+	const TASK_TIMEOUT = 120;  // seconds
+	const TASK_ACTION_TIMEOUT = 10;  // seconds
+	const TEST_MAX_ACTIONS_CNT = 10;
 }
 
 \Config::$rootPath = __DIR__ . '/';

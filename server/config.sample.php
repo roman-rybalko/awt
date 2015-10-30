@@ -21,6 +21,9 @@ class Config {
 	const PAYPAL_PASSWORD = 'XXXX';
 	const PAYPAL_SIGNATURE = 'XXXXX';
 	const PAYPAL_SANDBOX = true;
+	const TASK_TIMEOUT = 600;  // seconds
+	const TASK_ACTION_TIMEOUT = 10;  // seconds
+	const TEST_MAX_ACTIONS_CNT = 60;
 }
 
 \Config::$rootPath = __DIR__ . '/';

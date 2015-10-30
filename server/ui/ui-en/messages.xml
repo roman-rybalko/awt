@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+
+<message value="login_ok">
+	Welcome!
+</message>
+
+<message value="set_up_email">
+	Please, set up your E-Mail (you will receive a Signup bonus).
+</message>
+
+<message value="bad_login">
+	Invalid credentials.
+</message>
+
+<message value="register_ok">
+	Registration is successful.
+	Welcome!
+</message>
+
+<message value="login_busy">
+	This Login is not available.
+</message>
+
+<message value="passwords_dont_match">
+	Password do not match Confirm Password.
+</message>
+
+<message value="bad_captcha">
+	CAPTCHA mismatch.
+</message>
+
+<message value="email_confirmation_pending">
+	E-Mail confirmation message has been sent, please check your mailbox and proceed according to the instructions.
+</message>
+
+<message value="password_reset_fail">
+	Reset Password failed (please, try again later).
+</message>
+
+<message value="password_change_ok">
+	Password has been changed.
+</message>
+
+<message value="bad_code">
+	Invalid code (the session may expired).
+</message>
+
+<message value="logout_ok">
+	Goodbye!
+</message>
+
+<message value="password_change_fail">
+	Change Password failed (please, try again later).
+</message>
+
+<message value="bad_current_password">
+	Invalid Current Password.
+</message>
+
+<message value="settings_change_ok">
+	Settings has been changed.
+</message>
+
+<message value="settings_change_fail">
+	Change settings failed.
+</message>
+
+<message value="email_change_fail">
+	Change E-Mail failed.
+</message>
+
+<message value="email_change_ok">
+	E-Mail has been changed.
+</message>
+
+<message value="delete_account_fail">
+	Delete Account failed (please, try again later).
+</message>
+
+<message value="delete_account_ok">
+	Account has been deleted.
+</message>
+
+<message value="test_add_ok">
+	New Test has been created.
+</message>
+
+<message value="test_add_fail">
+	Create Test failed.
+</message>
+
+<message value="test_delete_ok">
+	The Test has been deleted.
+</message>
+
+<message value="test_delete_fail">
+	Delete Test failed.
+</message>
+
+<message value="bad_test_id">
+	Invalid Test ID.
+</message>
+
+<message value="test_restore_ok">
+	The Test has been restored.
+</message>
+
+<message value="test_restore_fail">
+	Restore Test failed.
+</message>
+
+<message value="test_rename_ok">
+	The Test has been renamed.
+</message>
+
+<message value="test_rename_fail">
+	Rename Test failed.
+</message>
+
+<message value="test_copy_ok">
+	The Test has been copied.
+</message>
+
+<message value="test_copy_fail">
+	Copy Test failed.
+</message>
+
+<message value="test_action_add_ok">
+	New Action has been added.
+</message>
+
+<message value="test_action_delete_ok">
+	Action deleted.
+</message>
+
+<message value="test_action_delete_fail">
+	Delete Action failed.
+</message>
+
+<message value="bad_action_id">
+	Invalid Action ID.
+</message>
+
+<message value="test_action_modify_ok">
+	The Action has been modified.
+</message>
+
+<message value="test_action_modify_fail">
+	Modify Action failed (perhaps invalid parameter).
+</message>
+
+<message value="test_action_insert_ok">
+	The Action has been inserted.
+</message>
+
+<message value="test_action_insert_fail">
+	Insert Action failed.
+</message>
+
+<message value="test_import_fail">
+	Import Test failed (please, check the syntax).
+</message>
+
+<message value="task_add_ok">
+	New Task has been started.
+</message>
+
+<message value="task_add_fail">
+	Task start failed (perhaps the Test contains too many actions).
+</message>
+
+<message value="no_funds">
+	Available Actions (Balance) are exhausted, please Top Up.
+</message>
+
+<message value="test_is_deleted">
+	The Test is deleted.
+	Please, restore it first.
+</message>
+
+<message value="task_cancel_ok">
+	The Task has been canceled.
+</message>
+
+<message value="task_cancel_fail">
+	Cancel Task failed (perhaps the cancel is not allowed in this state or timeout is not reached).
+</message>
+
+<message value="bad_task_id">
+	Invalid Task ID.
+</message>
+
+<message value="sched_add_ok">
+	Schedule Job has been created.
+</message>
+
+<message value="sched_add_fail">
+	Add Schedule Job failed (perhaps there is an empty string or null somewhere in parameters).
+</message>
+
+<message value="sched_delete_ok">
+	Schedule Job has been deleted.
+</message>
+
+<message value="sched_delete_fail">
+	Delete Schedule Job failed.
+</message>
+
+<message value="bad_sched_id">
+	Invalid Schedule Job ID.
+</message>
+
+<message value="sched_modify_ok">
+	Schedule Job has been modified.
+</message>
+
+<message value="sched_modify_fail">
+	Modify Schedule Job failed.
+</message>
+
+<message value="payment_pending">
+	The payment has been staged, please proceed to payment system.
+</message>
+
+<message value="top_up_fail">
+	Top Up failed (please, try again later or try another payment method).
+</message>
+
+<message value="bad_params">
+	Invalid parameters (perhaps there is a null or empty string which is forbidden).
+</message>
+
+<message value="refund_ok">
+	Refunded.
+	Come again!
+</message>
+
+<message value="refund_fail">
+	Refund failed (please, try again later).
+</message>
+
+<message value="cancel_pending_transaction_ok">
+	Pending Transaction has been canceled.
+</message>
+
+<message value="cancel_pending_transaction_fail">
+	Cancel Pending Transaction failed.
+</message>
+
+<message value="cancel_subscription_ok">
+	Subscription has been canceled.
+</message>
+
+<message value="cancel_subscription_fail">
+	Cancel Subscription failed (perhaps it has already been canceled or cancel of this subscription is forbidden).
+</message>
+
+<message value="top_up_subscription_ok">
+	Top Up by Subscription complete.
+	Thanks!
+</message>
+
+<message value="top_up_subscription_fail">
+	Top Up by Subscription failed (please, check the Transactions log).
+</message>
+
+<message value="modify_subscription_ok">
+	Subscription has been modified.
+</message>
+
+<message value="modify_subscription_fail">
+	Modification of Subscription failed (perhaps the subscription is canceled by the payment system, invalid or modification is forbidden).
+</message>
+
+<message value="paypal_ok">
+	PayPal has been processed successfully (the transaction may be declined though, see the Transactions log).
+</message>
+
+<message value="paypal_fail">
+	PayPal processing failed (please, try again later or try another payment method).
+</message>
+
+<message value="bad_paypal_token">
+	Invalid PayPal Token (perhaps it has already been processed).
+</message>
+
+</messages>
