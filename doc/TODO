@@ -1,6 +1,6 @@
 * добавить subject во все mailto
 * при смене email отправлять уведомление по старому адресу тоже, только уведомление
-* записывать в лог адрес изменившего e-mail и другие настройки
+* записывать в лог IP изменившего e-mail и другие настройки
 * sign up: create zero stats for past 42 days for fancy graphs
 * refund при закрытии аккаунта перенести в billing, т.к. refund не изменяет баланс мгновенно (может генерировать транзакцию)
 * проверять node_id в task/update (теперь задачи отменяются пользователем - возможен повторный update) - ??
@@ -14,5 +14,10 @@
 * cron: clear history
 * XPATH Browser в iframe/отдельном окне, с/без прокси (пользователь сам подгружает скрипт, Tip: Browser plugin)
 * XPATH -> jQuery/CSS3 selector translator
+* php xsltprocessor recursion bug report & fix
 * XMPP Reports
-* php xsltprocessor recursion bug report
+* SMS Reports
+* Отдельный раздел и таблица notifications, каждая notification содержит параметры: email/телефон/jid. Каждый Schedule Job содержит
+ набор нотификаций для успеха и сбоя. Каждый Task содержит sched_id и sched_name или null если запущен вручную. Settings как-то
+ переработать - убрать галки отправки отчетов. Дефолтный набор нотификаций не делать. Возможность скопировать Schedule Job.
+ Восстановление пароля и платежная информация только на E-Mail из Settings.
