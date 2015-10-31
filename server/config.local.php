@@ -23,7 +23,7 @@ class Config {
 	const PAYPAL_SANDBOX = true;
 	const TASK_TIMEOUT = 120;  // seconds
 	const TASK_ACTION_TIMEOUT = 10;  // seconds
-	const TEST_MAX_ACTIONS_CNT = 10;
+	const TEST_MAX_ACTIONS_CNT = 100;
 }
 
 \Config::$rootPath = __DIR__ . '/';
