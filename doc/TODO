@@ -1,4 +1,5 @@
 * добавить subject во все mailto
+* рефакторинг wcs
 * при смене email отправлять уведомление по старому адресу тоже, только уведомление
 * записывать в лог IP изменившего e-mail и другие настройки
 * sign up: create zero stats for past 42 days for fancy graphs
