@@ -104,9 +104,9 @@
 									<th>Actions</th>
 									<th>Amount</th>
 									<th data-orderable="false">Data</th>
-									<th data-orderable="false">Modify</th>
-									<th data-orderable="false">Top Up</th>
-									<th data-orderable="false">Cancel</th>
+									<th data-orderable="false"></th>
+									<th data-orderable="false"></th>
+									<th data-orderable="false"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -179,7 +179,7 @@
 									<th>Actions</th>
 									<th>Amount</th>
 									<th data-orderable="false">Data</th>
-									<th data-orderable="false">Cancel</th>
+									<th data-orderable="false"></th>
 								</tr>
 							</thead>
 							<tbody>
