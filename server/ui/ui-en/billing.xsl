@@ -51,7 +51,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<i class="fa fa-tags"></i>
-						Prices
+						Pricing
 					</div>
 					<div class="panel-body">
 						1 Test Action = 1 RUB
