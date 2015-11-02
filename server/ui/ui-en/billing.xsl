@@ -335,12 +335,26 @@
 								</tr>
 								<tr>
 									<td style="text-align:center;">
-										<input type="radio" id="modal-top_up-payment_type-rbkmoney" name="payment_type" value="3"/>
+										<input type="radio" id="modal-top_up-payment_type-assist" name="payment_type" value="3"/>
 									</td>
 									<td style="text-align:center;">
-										<label for="modal-top_up-payment_type-rbkmoney">
-											<img src="https://www.rbkmoney.com/sites/default/files/image/logos/logo_1_big.png" border="0" height="150" alt="RBK Money" style="display:inline;"/>
-											<img src="https://www.rbkmoney.com/sites/default/themes/rbkm/rbkm-internals/images/uploaded/visalogo1.gif" border="0" alt="RBK Money" style="display:inline;"/>
+										<label for="modal-top_up-payment_type-assist">
+											<img src="billing/assist.png" height="50" alt="ASSIST: Visa, MasterCard, JCB" style="display: inline; margin-right: 10px;"/>
+											<img src="billing/visa.gif" height="50" style="display: inline; margin-right: 10px;"/>
+											<img src="billing/mastercard.gif" height="50" style="display: inline; margin-right: 10px;"/>
+											<img src="billing/jcb.jpg" height="50" style="display: inline; margin-right: 10px;"/>
+										</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center;">
+										<input type="radio" id="modal-top_up-payment_type-tinkoff" name="payment_type" value="4"/>
+									</td>
+									<td style="text-align:center;">
+										<label for="modal-top_up-payment_type-tinkoff">
+											<img src="https://static.tinkoff.ru/dist/images/content-images/brand/tinkoffbank_simple_logo/TinkoffBank_simple_logo_1.png" height="50" alt="Tinkoff Bank: Visa, MasterCard" style="display: inline; margin-right: 10px;"/>
+											<img src="billing/visa.gif" height="50" style="display: inline; margin-right: 10px;"/>
+											<img src="billing/mastercard.gif" height="50" style="display: inline; margin-right: 10px;"/>
 										</label>
 									</td>
 								</tr>
