@@ -1,55 +1,55 @@
 Terms of Service ("Terms")
-Last updated: October 10, 2015
+Last updated: November 3, 2015
+
 Please read these Terms of Service ("Terms", "Terms of Service") carefully 
 before using the advancedwebtesting.com website (the "Service") operated by 
 Individual Entrepreneur Rybalko R.V. tax/org# 502480148682/312502433100033 
 located at the Russian Federation ("us", "we", "our", the "Operator"). These 
 Terms of Service are covered by the article 437/2 of the Civil Code of the 
-Russian Federation.
+Russian Federation. Your access to and use of the Service is conditioned on 
+your acceptance of and compliance with these Terms. These Terms apply to all 
+visitors, users and others who access or use the Service. By accessing or using 
+the Service you agree to be bound by these Terms. If you disagree with any part 
+of the terms then you may not access the Service.
 
-Your access to and use of the Service is conditioned on your acceptance of and 
-compliance with these Terms. These Terms apply to all visitors, users and 
-others who access or use the Service.
-
-By accessing or using the Service you agree to be bound by these Terms. If you 
-disagree with any part of the terms then you may not access the Service.
+Terminology
+Action - a test operation that may be executed.
+Test - a group of Actions, a template for a Task.
+Task - a group of Actions that's being actually executed.
+Schedule Job - a Schedule entry, periodically starts a Task at a specified time.
+Available Actions, Balance - number of Actions that is permitted for execution 
+at a particular time.
+Top Up - to refill the Balance, add Actions.
+Transaction - a billing operation that changes the account Balance.
+Pending Transaction - a Transaction that's in progress, may be canceled.
+Subscription - user's permission for Service to automatically refill the account 
+on certain conditions.
+Refund - a return of a payment.
 
 Accounts
-When you create an account with us, you must provide us information that is 
-accurate, complete, and current at all times. Failure to do so constitutes a 
-breach of the Terms, which may result in immediate termination of your account 
-on our Service.
-
 You are responsible for safeguarding the password that you use to access the 
 Service and for any activities or actions under your password, whether your 
-password is with our Service or a third-party service.
+password is with our Service or a third-party service. You agree not to 
+disclose your password to any third party. You may close your account
+("Delete Account") at any time.
 
-You agree not to disclose your password to any third party. You must notify us 
-immediately upon becoming aware of any breach of security or unauthorized use 
-of your account.
-
-Links To Other Web Sites
-Our Service may contain links to third-party web sites or services that are not 
-owned or controlled by the Operator.
-
-The Operator has no control over, and assumes no 
-responsibility for, the content, privacy policies, or practices of any third 
-party web sites or services. You further acknowledge and agree that the 
-Operator shall not be responsible or liable, directly or indirectly, for any 
-damage or loss caused or alleged to be caused by or in connection with use of 
-or 
-reliance on any such content, goods or services available on or through any 
-such 
-web sites or services.
+Billing
+Payment is charged for the number of Actions that's executed by the Task. 
+Starting the Task is considered to be a single Action and must be paid 
+separately. The cost of the Action is described in the Billing section and may 
+be changed over time. You can execute Actions within your account Balance 
+("Available Actions"). To automatically recharge your account you may set up a 
+Subscription. You may make a Refund of any payment within past 42 days. If the 
+number of Actions credited by the payment exceeds the Balance the Refund will 
+be partial.
 
 Governing Law
 These Terms shall be governed and construed in accordance with the laws of 
-Russian Federation, without regard to its conflict of law provisions.
-
-Our failure to enforce any right or provision of these Terms will not be 
-considered a waiver of those rights. If any provision of these Terms is held to 
-be invalid or unenforceable by a court, the remaining provisions of these Terms 
-will remain in effect. These Terms constitute the entire agreement between us 
+Russian Federation, without regard to its conflict of law provisions. Our 
+failure to enforce any right or provision of these Terms will not be considered 
+a waiver of those rights. If any provision of these Terms is held to be invalid 
+or unenforceable by a court, the remaining provisions of these Terms will 
+remain in effect. These Terms constitute the entire agreement between us 
 regarding our Service, and supersede and replace any prior agreements we might 
 have between us regarding the Service.
 
@@ -57,47 +57,40 @@ Changes
 We reserve the right, at our sole discretion, to modify or replace these Terms 
 at any time. If a revision is material we will try to provide at least 30 days 
 notice prior to any new terms taking effect. What constitutes a material change 
-will be determined at our sole discretion.
-
-By continuing to access or use our Service after those revisions become 
-effective, you agree to be bound by the revised terms. If you do not agree to 
-the new terms, please stop using the Service.
+will be determined at our sole discretion. By continuing to access or use our 
+Service after those revisions become effective, you agree to be bound by the 
+revised terms. If you do not agree to the new terms, please stop using the 
+Service and close your account.
 
 No Warranties; Exclusion of Liability; Indemnification
 OUR WEBSITE IS OPERATED BY the Operator ON AN "AS IS," "AS AVAILABLE" BASIS, 
 WITHOUT REPRESENTATIONS OR WARRANTIES OF ANY KIND. TO THE FULLEST EXTENT 
 PERMITTED BY LAW, the Operator SPECIFICALLY DISCLAIMS ALL WARRANTIES AND 
 CONDITIONS OF ANY KIND, INCLUDING ALL IMPLIED WARRANTIES AND CONDITIONS OF 
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NONINFRINGEMENT 
-FOR OUR WEBSITE AND ANY CONTRACTS AND SERVICES YOU PURCHASE THROUGH IT. the 
-Operator SHALL NOT HAVE ANY LIABILITY OR RESPONSIBILITY FOR ANY ERRORS OR 
-OMISSIONS IN THE CONTENT OF OUR WEBSITE, FOR CONTRACTS OR SERVICES SOLD THROUGH 
-OUR WEBSITE, FOR YOUR ACTION OR INACTION IN CONNECTION WITH OUR WEBSITE OR FOR 
-ANY DAMAGE TO YOUR COMPUTER OR DATA OR ANY OTHER DAMAGE YOU MAY INCUR IN 
-CONNECTION WITH OUR WEBSITE. YOUR USE OF OUR WEBSITE AND ANY CONTRACTS OR 
-SERVICES ARE AT YOUR OWN RISK. IN NO EVENT SHALL EITHER the Operator OR THEIR 
-AGENTS BE LIABLE FOR ANY DIRECT, INDIRECT, PUNITIVE, INCIDENTAL, SPECIAL OR 
-CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY CONNECTED WITH THE USE OF 
-OUR WEBSITE, CONTRACTS AND SERVICES PURCHASED THROUGH OUR WEBSITE, THE DELAY OR 
-INABILITY TO USE OUR WEBSITE OR OTHERWISE ARISING IN CONNECTION WITH OUR 
-WEBSITE, CONTRACTS OR RELATED SERVICES, WHETHER BASED ON CONTRACT, TORT, STRICT 
-LIABILITY OR OTHERWISE, EVEN IF ADVISED OF THE POSSIBILITY OF ANY SUCH DAMAGES. 
-IN NO EVENT SHALL the Operator’ LIABILITY FOR ANY DAMAGE CLAIM EXCEED THE 
-AMOUNT PAID BY YOU TO the Operator FOR THE TRANSACTION GIVING RISE TO SUCH 
-DAMAGE CLAIM.
-
-WITHOUT LIMITING THE FOREGOING, the Operator DO NOT REPRESENT OR WARRANT THAT 
-THE INFORMATION ON THE WEBITE IS ACCURATE, COMPLETE, RELIABLE, USEFUL, TIMELY 
-OR CURRENT OR THAT OUR WEBSITE WILL OPERATE WITHOUT INTERRUPTION OR ERROR.
-
-YOU AGREE THAT ALL TIMES, YOU WILL LOOK TO ATTORNEYS FROM WHOM YOU PURCHASE 
-SERVICES FOR ANY CLAIMS OF ANY NATURE, INCLUDING LOSS, DAMAGE, OR WARRANTY, the 
-Operator AND THEIR RESPECTIVE AFFILIATES MAKE NO REPRESENTATION OR GUARANTEES 
-ABOUT ANY CONTRACTS AND SERVICES OFFERED THROUGH OUR WEBSITE.
-
-The Operator MAKES NO REPRESENTATION THAT CONTENT PROVIDED ON OUR WEBSITE, 
-CONTRACTS, OR RELATED SERVICES ARE APPLICABLE OR APPROPRIATE FOR USE IN ALL 
-JURISDICTIONS.
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT 
+FOR OUR WEBSITE AND ANY SERVICES YOU PURCHASE THROUGH IT. The Operator SHALL NOT 
+HAVE ANY LIABILITY OR RESPONSIBILITY FOR ANY ERRORS OR OMISSIONS IN THE CONTENT 
+OF OUR WEBSITE, FOR SERVICES SOLD THROUGH OUR WEBSITE, FOR YOUR ACTION OR 
+INACTION IN CONNECTION WITH OUR WEBSITE OR FOR ANY DAMAGE TO YOUR COMPUTER OR 
+DATA OR ANY OTHER DAMAGE YOU MAY INCUR IN CONNECTION WITH OUR WEBSITE. YOUR USE 
+OF OUR WEBSITE AND ANY SERVICES ARE AT YOUR OWN RISK. IN NO EVENT SHALL EITHER 
+the Operator OR THEIR AGENTS BE LIABLE FOR ANY DIRECT, INDIRECT, PUNITIVE, 
+INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY 
+CONNECTED WITH THE USE OF OUR WEBSITE AND SERVICES PURCHASED THROUGH OUR 
+WEBSITE, THE DELAY OR INABILITY TO USE OUR WEBSITE OR OTHERWISE ARISING IN 
+CONNECTION WITH OUR WEBSITE OR RELATED SERVICES, WHETHER BASED ON CONTRACT, 
+TORT, STRICT LIABILITY OR OTHERWISE, EVEN IF ADVISED OF THE POSSIBILITY OF ANY 
+SUCH DAMAGES. IN NO EVENT SHALL the Operator’ LIABILITY FOR ANY DAMAGE CLAIM 
+EXCEED THE AMOUNT PAID BY YOU TO the Operator FOR THE TRANSACTION GIVING RISE TO 
+SUCH DAMAGE CLAIM. WITHOUT LIMITING THE FOREGOING, the Operator DO NOT REPRESENT 
+OR WARRANT THAT THE INFORMATION ON THE WEBSITE IS ACCURATE, COMPLETE, RELIABLE, 
+USEFUL, TIMELY OR CURRENT OR THAT OUR WEBSITE WILL OPERATE WITHOUT INTERRUPTION 
+OR ERROR. YOU AGREE THAT ALL TIMES, YOU WILL LOOK TO ATTORNEYS FROM WHOM YOU 
+PURCHASE SERVICES FOR ANY CLAIMS OF ANY NATURE, INCLUDING LOSS, DAMAGE, OR 
+WARRANTY, the Operator AND THEIR RESPECTIVE AFFILIATES MAKE NO REPRESENTATION OR 
+GUARANTEES ABOUT ANY SERVICES OFFERED THROUGH OUR WEBSITE. The Operator MAKES NO 
+REPRESENTATION THAT CONTENT PROVIDED ON OUR WEBSITE OR RELATED SERVICES ARE 
+APPLICABLE OR APPROPRIATE FOR USE IN ALL JURISDICTIONS.
 
 Contact Us
 If you have any questions about these Terms, please contact us at 
