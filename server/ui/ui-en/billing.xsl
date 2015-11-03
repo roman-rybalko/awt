@@ -42,10 +42,12 @@
 						</a>
 					</div>
 				</div>
-				<a href="#" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal-top_up">
-					<i class="glyphicon glyphicon-credit-card"></i>
-					Top Up
-				</a>
+				<div class="form-group">
+					<a href="#" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal-top_up">
+						<i class="glyphicon glyphicon-credit-card"></i>
+						Top Up
+					</a>
+				</div>
 			</div>
 			<div class="col-lg-4">
 				<div class="panel panel-default">

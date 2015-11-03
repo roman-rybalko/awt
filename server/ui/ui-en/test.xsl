@@ -81,30 +81,28 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-lg-4">
-								<a href="../file.php?test={@id}" class="btn btn-block btn-primary">
-									<i class="glyphicon glyphicon-export"></i>
-									Export
-								</a>
-							</div>
-							<div class="col-lg-4">
-								<a href="#" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-import">
-									<i class="glyphicon glyphicon-import"></i>
-									Import
-								</a>
-							</div>
-							<div class="col-lg-4">
-								<a href="#" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal-clear">
-									<i class="glyphicon glyphicon-trash"></i>
-									Clear
-								</a>
-							</div>
-						</div>
-					</div>
+			<div class="col-lg-4">
+				<div class="form-group">
+					<a href="../file.php?test={@id}" class="btn btn-block btn-primary">
+						<i class="glyphicon glyphicon-export"></i>
+						Export
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="form-group">
+					<a href="#" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-import">
+						<i class="glyphicon glyphicon-import"></i>
+						Import
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="form-group">
+					<a href="#" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal-clear">
+						<i class="glyphicon glyphicon-trash"></i>
+						Clear
+					</a>
 				</div>
 			</div>
 		</div>
@@ -146,7 +144,9 @@
 					<div class="panel-body">
 						<form role="form" method="post">
 							<p>
-								Delete All Test Actions ?
+								<b>
+									Delete All Test Actions ?
+								</b>
 							</p>
 							<button type="submit" name="clear" class="btn btn-block btn-danger">
 								<i class="glyphicon glyphicon-trash"></i>
