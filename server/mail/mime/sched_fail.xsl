@@ -17,7 +17,7 @@ Failure: <xsl:text/>
 </xsl:call-template>
 
 --
-Advanced Web Testing / Web Automation
+Advanced Web Testing
 </xsl:template>
 
 <xsl:template match="sched_fail" mode="html">

@@ -336,27 +336,40 @@ class User {
 				echo '<message type="error" value="settings_change_fail"/>';
 		}
 		if (isset($_POST['email']) && $_POST['email']) {
-			$_SESSION['settings_email'] = $_POST['email'];
-			$_SESSION['settings_email_code'] = rand();
-			$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $this->userId);
-			if ($mailMgr->emailVerification($_POST['email'], $login,
-				\WebConstructionSet\Url\Tools::addParams(
-					\WebConstructionSet\Url\Tools::getMyUrl(), ['email_code' => $_SESSION['settings_email_code']])))
-			{
-				echo '<message type="notice" value="email_confirmation_pending"/>';
+			$oldEmail = $settMgr->get()['email'];
+			$newEmail = $_POST['email'];
+			if ($oldEmail != $newEmail) {
+				$_SESSION['settings_email'] = $newEmail;
+				$_SESSION['settings_email_code'] = rand();
+				$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $this->userId);
+				if ($mailMgr->emailVerification($newEmail, $login,
+					\WebConstructionSet\Url\Tools::addParams(
+						\WebConstructionSet\Url\Tools::getMyUrl(), ['email_code' => $_SESSION['settings_email_code']])))
+				{
+					echo '<message type="notice" value="email_confirmation_pending"/>';
+				} else
+					echo '<message type="error" value="email_change_fail"/>';
 			} else
 				echo '<message type="error" value="email_change_fail"/>';
 		} else if (isset($_GET['email_code'])) {
 			if (isset($_SESSION['settings_email_code']) && $_SESSION['settings_email_code'] == $_GET['email_code']) {
 				$oldEmail = $settMgr->get()['email'];
-				if (!$oldEmail) {
-					$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
-					$billMgr->service(\Config::SIGNUP_BONUS, 'Sign Up bonus');
-				}
-				if ($settMgr->set($_SESSION['settings_email'])) {
-					echo '<message type="notice" value="email_change_ok"/>';
-					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-					$histMgr->add('email_change', ['email' => $_SESSION['settings_email'], 'old_email' => $oldEmail]);
+				$newEmail = $_SESSION['settings_email'];
+				if ($oldEmail != $newEmail) {
+					if ($oldEmail) {
+						$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $this->userId);
+						if (!$mailMgr->emailChangeNotification($oldEmail, $login, $newEmail))
+							error_log('E-Mail change notification failed, user_id: ' . $this->userId . ', login: ' . $login . ', new_email: ' . $newEmail . ', old_email: ' . $oldEmail);
+					} else {
+						$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
+						$billMgr->service(\Config::SIGNUP_BONUS, 'Sign Up bonus');
+					}
+					if ($settMgr->set($newEmail)) {
+						echo '<message type="notice" value="email_change_ok"/>';
+						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+						$histMgr->add('email_change', ['email' => $newEmail, 'old_email' => $oldEmail]);
+					} else
+						echo '<message type="error" value="email_change_fail"/>';
 				} else
 					echo '<message type="error" value="email_change_fail"/>';
 				unset($_SESSION['settings_email_code']);

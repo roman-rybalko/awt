@@ -27,7 +27,7 @@ If you cannot click the URL above, please copy and paste it into your web browse
 If you do not want to delete your account or this message was reached you by mistake, please ignore it.
 
 --
-Advanced Web Testing / Web Automation
+Advanced Web Testing
 </xsl:template>
 
 <xsl:template match="delete_account" mode="html">

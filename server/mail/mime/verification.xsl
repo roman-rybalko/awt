@@ -21,7 +21,7 @@ If you cannot click the URL above, please copy and paste it into your web browse
 If you do not want to confirm or this message was reached you by mistake, please ignore it.
 
 --
-Advanced Web Testing / Web Automation
+Advanced Web Testing
 </xsl:template>
 
 <xsl:template match="verification" mode="html">

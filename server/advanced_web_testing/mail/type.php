@@ -11,4 +11,5 @@ class Type {
 	const SCHED_FAIL_REPORT = 3;
 	const PASSWORD_RESET = 4;
 	const DELETE_ACCOUNT = 5;
+	const EMAIL_CHANGE = 6;
 }

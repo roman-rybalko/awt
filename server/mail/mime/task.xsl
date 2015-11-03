@@ -54,7 +54,7 @@ Debug: <xsl:choose>
 </xsl:text>
 </xsl:for-each>
 --
-Advanced Web Testing / Web Automation
+Advanced Web Testing
 </xsl:template>
 
 <xsl:template match="task" mode="html">
