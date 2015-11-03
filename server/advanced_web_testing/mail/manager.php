@@ -7,13 +7,12 @@ namespace AdvancedWebTesting\Mail;
  * Model (MVC)
  */
 class Manager {
-	private $anacron, $db, $userId;
+	private $anacron, $db;
 	const RETRY_TIMEOUT = 3600;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
-		$this->anacron = new \WebConstructionSet\Database\Relational\Anacron($db, 'mail_schedule');
+		$this->anacron = new \WebConstructionSet\Database\Relational\Anacron($db, $userId, 'mail_schedule');
 		$this->db = $db;
-		$this->userId = $userId;
 	}
 
 	/**
@@ -23,11 +22,11 @@ class Manager {
 	 * @return integer reportId
 	 */
 	public function emailVerification($email, $login, $url) {
-		return $this->anacron->create(['start' => time(), 'period' => Manager::RETRY_TIMEOUT, 'data' => [
+		return $this->anacron->create(time(), Manager::RETRY_TIMEOUT, [
 			'type' => Type::EMAIL_VERIFICATION, 'email' => $email,
 			'login' => $login, 'url' => $url,
 			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::UI_URL
-		]], $this->userId);
+		]);
 	}
 
 	/**
@@ -36,46 +35,48 @@ class Manager {
 	 * @return integer reportId
 	 */
 	public function taskReport($email, $taskId) {
-		return $this->anacron->create(['start' => time(), 'period' => Manager::RETRY_TIMEOUT, 'data' => [
+		return $this->anacron->create(time(), Manager::RETRY_TIMEOUT, [
 			'type' => Type::TASK_REPORT, 'email' => $email,
 			'task_id' => $taskId,
 			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::UI_URL
-		]], $this->userId);
+		]);
 	}
 
 	public function schedFailReport($email, $testId, $testName, $schedId, $schedName, $message) {
-		return $this->anacron->create(['start' => time(), 'period' => Manager::RETRY_TIMEOUT, 'data' => [
+		return $this->anacron->create(time(), Manager::RETRY_TIMEOUT, [
 			'type' => Type::SCHED_FAIL_REPORT, 'email' => $email,
 			'test_id' => $testId, 'test_name' => $testName, 'sched_id' => $schedId, 'sched_name' => $schedName, 'message' => $message,
 			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::UI_URL
-		]], $this->userId);
+		]);
 	}
 
 	public function passwordReset($email, $login, $url) {
-		return $this->anacron->create(['start' => time(), 'period' => Manager::RETRY_TIMEOUT, 'data' => [
+		return $this->anacron->create(time(), Manager::RETRY_TIMEOUT, [
 			'type' => Type::PASSWORD_RESET, 'email' => $email,
 			'login' => $login, 'url' => $url,
 			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::UI_URL
-		]], $this->userId);
+		]);
 	}
 
 	public function deleteAccount($email, $login, $url) {
-		return $this->anacron->create(['start' => time(), 'period' => Manager::RETRY_TIMEOUT, 'data' => [
+		return $this->anacron->create(time(), Manager::RETRY_TIMEOUT, [
 			'type' => Type::DELETE_ACCOUNT, 'email' => $email,
 			'login' => $login, 'url' => $url,
 			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::UI_URL
-		]], $this->userId);
+		]);
 	}
 
 	public function send() {
-		if ($jobs = $this->anacron->ready($this->userId)) {
+		$jobs = $this->anacron->ready();
+		$jobs = $this->anacron->get($jobs);
+		if ($jobs) {
 			$sender = new \AdvancedWebTesting\Mail\Sender(\Config::MAIL_HOST, \Config::MAIL_PORT, \Config::MAIL_USER, \Config::MAIL_PASSWORD);
 			$composer = new \AdvancedWebTesting\Mail\Composer(\Config::$rootPath . \Config::MAIL_TEMPLATE_PATH . 'index.xsl');
 			foreach ($jobs as $job) {
 				$data = $job['data'];
 				$userId = $job['key'];
 				if (!$data['email']) {
-					$this->anacron->delete($job['id'], $job['key']);
+					$this->anacron->delete($job['id']);
 					error_log('Mail Manager: empty rcpt, job:' . json_encode($job));
 					continue;
 				}
@@ -105,7 +106,7 @@ class Manager {
 						$mailData .= '<delete_account login="' . htmlspecialchars($data['login']) . '" url="' . htmlspecialchars($data['url']) . '"/>';
 						break;
 					default:
-						$this->anacron->delete($job['id'], $job['key']);
+						$this->anacron->delete($job['id']);
 						error_log('Bad mail task type: ' . $data['type'] . ', job:' . json_encode($job));
 						continue;
 				}
@@ -136,7 +137,7 @@ class Manager {
 								$histMgr->add('mail_delete_account', ['rcpt' => $data['email'] , 'message_id' => $data['message_id'], 'smtp_response' => $reply]);
 								break;
 						}
-						$this->anacron->delete($job['id'], $job['key']);
+						$this->anacron->delete($job['id']);
 					}
 			}
 		}

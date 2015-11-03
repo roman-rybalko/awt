@@ -7,12 +7,11 @@ namespace AdvancedWebTesting\Task;
  * Model (MVC)
  */
 class Schedule {
-	private $anacron, $db, $userId;
+	private $anacron, $db;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
-		$this->anacron = new \WebConstructionSet\Database\Relational\Anacron($db, 'task_schedule');
+		$this->anacron = new \WebConstructionSet\Database\Relational\Anacron($db, $userId, 'task_schedule');
 		$this->db = $db;
-		$this->userId = $userId;
 	}
 
 	/**
@@ -24,9 +23,9 @@ class Schedule {
 	 * @return integer schedId
 	 */
 	public function add($start, $period, $testId, $type, $name) {
-		return $this->anacron->create(['start' => $start, 'period' => $period, 'data' => [
+		return $this->anacron->create($start, $period, [
 			'test_id' => $testId, 'type' => $type, 'name' => $name
-		]], $this->userId);
+		]);
 	}
 
 	/**
@@ -37,13 +36,9 @@ class Schedule {
 	 * @return boolean
 	 */
 	public function modify($schedId, $start = null, $period = null, $testId = null, $type = null, $name = null) {
-		$fields = [];
-		if ($start !== null)
-			$fields['start'] = $start;
-		if ($period !== null)
-			$fields['period'] = $period;
+		$data = null;
 		if ($testId !== null || $type !== null || $name !== null)
-			if ($data = $this->anacron->get([$schedId], $this->userId)) {
+			if ($data = $this->anacron->get([$schedId])) {
 				$data = $data[0]['data'];
 				if ($testId !== null)
 					$data['test_id'] = $testId;
@@ -51,9 +46,8 @@ class Schedule {
 					$data['type'] = $type;
 				if ($name !== null)
 					$data['name'] = $name;
-				$fields['data'] = $data;
 			}
-		return $this->anacron->update($schedId, $fields, $this->userId);
+		return $this->anacron->update($schedId, $start, $period, $data);
 	}
 
 	/**
@@ -61,7 +55,7 @@ class Schedule {
 	 * @return boolean
 	 */
 	public function delete($schedId) {
-		return $this->anacron->delete($schedId, $this->userId);
+		return $this->anacron->delete($schedId);
 	}
 
 	/**
@@ -70,7 +64,7 @@ class Schedule {
 	 */
 	public function get($schedIds = null) {
 		$scheds = [];
-		if ($data = $this->anacron->get($schedIds, $this->userId))
+		if ($data = $this->anacron->get($schedIds))
 			foreach ($data as $data1) {
 				$sched = ['id' => $data1['id'], 'start' => $data1['start'], 'period' => $data1['period']];
 				foreach ($data1['data'] as $name => $value)
@@ -84,7 +78,8 @@ class Schedule {
 	 * Проверить расписание и запустить задачи
 	 */
 	public function start() {
-		$jobs = $this->anacron->ready($this->userId);
+		$jobs = $this->anacron->ready();
+		$jobs = $this->anacron->get($jobs);
 		foreach ($jobs as $job) {
 			$userId = $job['key'];
 			$testId = $job['data']['test_id'];
@@ -92,7 +87,7 @@ class Schedule {
 			$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $userId);
 			$tests = $testMgr->get([$testId]);
 			if (!$tests) {
-				$this->startFailReport($userId, 'bad_test_id', $testId, $test['name'], $type, $job['id'], $job['data']['name']);
+				$this->startFailReport($userId, 'bad_test_id', $testId, '_unknown_', $type, $job['id'], $job['data']['name']);
 				continue;
 			}
 			$test = $tests[0];
@@ -122,8 +117,8 @@ class Schedule {
 	private function startFailReport($userId, $message, $testId, $testName, $type, $schedId, $schedName) {
 		$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $userId);
 		$histMgr->add('sched_fail', ['message' => $message,
-				'test_id' => $testId, 'test_name' => $testName, 'type' => $type,
-				'sched_id' => $schedId, 'sched_name' => $schedName]);
+			'test_id' => $testId, 'test_name' => $testName, 'type' => $type,
+			'sched_id' => $schedId, 'sched_name' => $schedName]);
 		$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);
 		$settings = $settMgr->get();
 		if ($settings['email'] && $settings['task_fail_email_report']) {

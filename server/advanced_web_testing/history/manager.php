@@ -7,11 +7,10 @@ namespace AdvancedWebTesting\History;
  * Model (MVC)
  */
 class Manager {
-	private $history, $userId;
+	private $history;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
-		$this->history = new \WebConstructionSet\Database\Relational\History($db);
-		$this->userId = $userId;
+		$this->history = new \WebConstructionSet\Database\Relational\History($db, $userId);
 	}
 
 	/**
@@ -20,7 +19,7 @@ class Manager {
 	 * @return boolean
 	 */
 	public function add($name, $data) {
-		return $this->history->add($name, $data, $this->userId);
+		return $this->history->add($name, $data);
 	}
 
 	/**
@@ -28,7 +27,7 @@ class Manager {
 	 */
 	public function get() {
 		$events = [];
-		$data = $this->history->get($this->userId);
+		$data = $this->history->get();
 		foreach ($data as $data1) {
 			$event = [];
 			foreach (['key' => 'user_id', 'time' => 'time', 'name' => 'name', 'data' => 'data'] as $src => $dst)
