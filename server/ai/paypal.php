@@ -28,7 +28,13 @@ function dump($table) {
 				$data[$keys[$key]] = $value;
 			for($i = 0; $i < $keysCnt; ++ $i)
 				if (isset($data[$i]))
-					echo '<td>', is_scalar($data[$i]) ? $data[$i] : var_dump($data[$i]), '</td>';
+					if (is_scalar($data[$i]))
+						echo '<td>', $data[$i], '</td>';
+					else {
+						echo '<td><pre>';
+						print_r($data[$i]);
+						echo '</pre></td>';
+					}
 				else
 					echo '<td></td>';
 			echo '</tr>';
