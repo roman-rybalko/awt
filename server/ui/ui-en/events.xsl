@@ -5,7 +5,11 @@
 	Sign in
 </xsl:template>
 
-<xsl:template match="event[@name='login']" mode="data">
+<xsl:template match="event[@name='logout']" mode="title">
+	Sign out
+</xsl:template>
+
+<xsl:template match="event[@name='login' or @name='logout']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">
@@ -18,10 +22,6 @@
 			</div>
 		</div>
 	</div>
-</xsl:template>
-
-<xsl:template match="event[@name='logout']" mode="title">
-	Sign out
 </xsl:template>
 
 <xsl:template match="event[@name='password_change']" mode="title">
@@ -55,6 +55,57 @@
 				<xsl:value-of select="@old_email"/>
 				-&gt;
 				<xsl:value-of select="@email"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">IP:</b>
+				<xsl:value-of select="@ip"/>
+			</div>
+			<div class="col-lg-9">
+				<b class="space-x">User-Agent:</b>
+				<i><xsl:value-of select="@ua"/></i>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='settings_change']" mode="title">
+	Change Settings
+</xsl:template>
+
+<xsl:template match="event[@name='settings_change']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<xsl:if test="@task_fail_email_report">
+				<div class="col-lg-6">
+					<b class="space-x">Task Fail E-Mail Report:</b>
+					<xsl:if test="@old_task_fail_email_report">
+						<xsl:value-of select="@old_task_fail_email_report"/>
+						-&gt;
+					</xsl:if>
+					<xsl:value-of select="@task_fail_email_report"/>
+				</div>
+			</xsl:if>
+			<xsl:if test="@task_success_email_report">
+				<div class="col-lg-6">
+					<b class="space-x">Task Success E-Mail Report:</b>
+					<xsl:if test="@old_task_success_email_report">
+						<xsl:value-of select="@old_task_success_email_report"/>
+						-&gt;
+					</xsl:if>
+					<xsl:value-of select="@task_success_email_report"/>
+				</div>
+			</xsl:if>
+		</div>
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">IP:</b>
+				<xsl:value-of select="@ip"/>
+			</div>
+			<div class="col-lg-9">
+				<b class="space-x">User-Agent:</b>
+				<i><xsl:value-of select="@ua"/></i>
 			</div>
 		</div>
 	</div>

@@ -136,7 +136,7 @@ class User {
 				$this->userId = $user->getId();
 				echo '<message type="notice" value="login_ok"/>';
 				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-				$histMgr->add('login', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => $_SERVER['HTTP_USER_AGENT']]);
+				$histMgr->add('login', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
 				$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $this->userId);
 				if ($settMgr->get()['email'])
 					$this->redirect('');
@@ -246,7 +246,7 @@ class User {
 				if ($userDb->password($_SESSION['password_reset_user_id'], $_SESSION['password_reset_password'])) {
 					echo '<message type="notice" value="password_change_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $_SESSION['password_reset_user_id']);
-					$histMgr->add('password_change', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => $_SERVER['HTTP_USER_AGENT']]);
+					$histMgr->add('password_change', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
 				} else {
 					error_log('Password Reset: userDb error');
 					echo '<message type="error" value="password_reset_fail"/>';
@@ -269,7 +269,7 @@ class User {
 -->
 <?php
 		$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-		$histMgr->add('logout', []);
+		$histMgr->add('logout', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
 		$user->logout();
 		unset($this->userId);
 		echo '<message type="notice" value="logout_ok"/>';
@@ -317,7 +317,7 @@ class User {
 					if ($userDb->password($this->userId, $_POST['password1'])) {
 						echo '<message type="notice" value="password_change_ok"/>';
 						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-						$histMgr->add('password_change', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => $_SERVER['HTTP_USER_AGENT']]);
+						$histMgr->add('password_change', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
 					} else
 						echo '<message type="error" value="password_change_fail"/>';
 				} else
@@ -326,13 +326,23 @@ class User {
 				echo '<message type="error" value="bad_current_password"/>';
 		}
 		if (isset($_POST['task_fail_email_report']) || isset($_POST['task_success_email_report'])) {
+			$settings = $settMgr->get();
 			if ($settMgr->set(
 				null,
 				isset($_POST['task_fail_email_report']) ? $_POST['task_fail_email_report'] : null,
 				isset($_POST['task_success_email_report']) ? $_POST['task_success_email_report'] : null
-			))
+			)) {
 				echo '<message type="notice" value="settings_change_ok"/>';
-			else
+				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+				$event = ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)];
+				foreach (['task_fail_email_report', 'task_success_email_report'] as $param)
+					if (isset($_POST[$param])) {
+						$event[$param] = $_POST[$param];
+						if ($_POST[$param] != $settings[$param])
+							$event['old_' . $param] = $settings[$param] ? $settings[$param] : 0;
+					}
+				$histMgr->add('settings_change', $event);
+			} else
 				echo '<message type="error" value="settings_change_fail"/>';
 		}
 		if (isset($_POST['email']) && $_POST['email']) {
@@ -367,7 +377,7 @@ class User {
 					if ($settMgr->set($newEmail)) {
 						echo '<message type="notice" value="email_change_ok"/>';
 						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-						$histMgr->add('email_change', ['email' => $newEmail, 'old_email' => $oldEmail]);
+						$histMgr->add('email_change', ['email' => $newEmail, 'old_email' => $oldEmail, 'ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
 					} else
 						echo '<message type="error" value="email_change_fail"/>';
 				} else
