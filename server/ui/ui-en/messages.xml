@@ -220,7 +220,7 @@
 </message>
 
 <message value="payment_pending">
-	The payment has been staged, please proceed to payment system.
+	The payment has been staged, please proceed to the payment system.
 </message>
 
 <message value="top_up_fail">
@@ -274,11 +274,11 @@
 </message>
 
 <message value="paypal_ok">
-	PayPal has been processed successfully (the transaction may be declined though, see the Transactions log).
+	PayPal has been processed successfully.
 </message>
 
 <message value="paypal_fail">
-	PayPal processing failed (please, try again later or try another payment method).
+	PayPal processing failed.
 </message>
 
 <message value="bad_paypal_token">

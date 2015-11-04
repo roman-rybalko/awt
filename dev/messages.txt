@@ -164,7 +164,7 @@ sched_modify_fail
 	Modify Schedule Job failed.
 
 payment_pending
-	The payment has been staged, please proceed to payment system.
+	The payment has been staged, please proceed to the payment system.
 
 top_up_fail
 	Top Up failed (please, try again later or try another payment method).
@@ -205,10 +205,10 @@ modify_subscription_fail
 	Modification of Subscription failed (perhaps the subscription is canceled by the payment system, invalid or modification is forbidden).
 
 paypal_ok
-	PayPal has been processed successfully (the transaction may be declined though, see the Transactions log).
+	PayPal has been processed successfully.
 
 paypal_fail
-	PayPal processing failed (please, try again later or try another payment method).
+	PayPal processing failed.
 
 bad_paypal_token
 	Invalid PayPal Token (perhaps it has already been processed).

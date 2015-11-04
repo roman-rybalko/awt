@@ -48,9 +48,11 @@ class Account {
 			$transactions = $billMgr->getTransactions();
 			usort($transactions, function ($a, $b) {return $b['time']-$a['time'];});
 			foreach ($transactions as $transaction)
-				if (isset($transaction['refundable']) && $transaction['refundable'])
-					if (!$billMgr->refund($transaction['id']))
-						break;  // баланс нулевой
+				if (isset($transaction['refundable']) && $transaction['refundable']) {
+					$billMgr->refund($transaction['id']);
+					if ($billMgr->getAvailableActionsCnt() <= 0)
+						break;
+				}
 		}
 
 		// отменить все задачи в очереди на выполнение

@@ -70,8 +70,8 @@ class Demo implements \AdvancedWebTesting\Billing\PaymentBackend {
 	/**
 	 * @param integer $subsctiptionId
 	 * @return [payment_data => string, transaction_data => mixed|null ] | null
-	 * может создать транзакцию
-	 * null или transaction_data != null - подписка еще действует
+	 *  null - ошибка связи
+	 *  transaction_data = null - пополнение не прошло, подписка битая
 	 */
 	public function processSubscription($subsctiptionId, $externalId) {
 		$data = $this->subscriptions->select(['actions_cnt'], ['id' => $subsctiptionId]);
@@ -105,6 +105,8 @@ class Demo implements \AdvancedWebTesting\Billing\PaymentBackend {
 	 * @param integer|null $actionsCnt
 	 * @param string|null $note
 	 * @return [payment_amount => string, payment_data => string, transaction_data => mixed|null ] | null
+	 *  null - ошибка связи
+	 *  transaction_data = null - ошибка операции
 	 */
 	public function refund($transactionData, $externalId, $actionsCnt = null, $note = null) {
 		$actionsCnt = $actionsCnt + 0;

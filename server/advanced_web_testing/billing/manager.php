@@ -160,7 +160,7 @@ class Manager {
 	/**
 	 * @param integer $paymentType
 	 * @param integer $pendingTransactionId
-	 * @return boolean
+	 * @return boolean true - проведено
 	 */
 	public function processPendingTransaction($paymentType, $pendingTransactionId) {
 		if (isset($this->paymentBackends[$paymentType]))
@@ -177,13 +177,13 @@ class Manager {
 			return false;
 		$result = $paymentBackend->processTransaction($pendingTransactionId);
 		if (!$result)
-			return true;  // временный сбой
+			return false;
 		foreach (['payment_data', 'transaction_data'] as $field)
 			$transaction['data'][$field] = $result[$field];
 		if (!$this->billing->update($transaction['id'], $transaction['data']))
 			error_log(new \ErrorException('Transaction update failed, transaction:' . json_encode($transaction), null, null, __FILE__, __LINE__));
 		if (!$result['transaction_data'])
-			return true;  // обработали, но без пополнения
+			return false;
 		if (!$this->billing->commit($transaction['id'])) {
 			error_log(new \ErrorException('Transaction commit failed, transaction:' . json_encode($transaction), null, null, __FILE__, __LINE__));
 			if (!$paymentBackend->refund($result['transaction_data']))
@@ -229,7 +229,7 @@ class Manager {
 	/**
 	 * @param integer $paymentType
 	 * @param integer $subscriptionId
-	 * @return boolean
+	 * @return boolean true - проведено
 	 */
 	public function processSubscription($paymentType, $subscriptionId) {
 		if (isset($this->paymentBackends[$paymentType]))
@@ -248,18 +248,21 @@ class Manager {
 			return false;
 		$result = $paymentBackend->processSubscription($subscriptionId, $transactionId);
 		if (!$result)
-			return true;  // временный сбой или создана транзакция
+			return false;
 		foreach (['payment_data', 'transaction_data'] as $field)
 			$fields[$field] = $result[$field];
 		if (!$this->billing->update($transactionId, $fields))
 			error_log(new \ErrorException('Transaction update failed, id:' . $transactionId . ', data:' . json_encode($fields), null, null, __FILE__, __LINE__));
-		if (!$result['transaction_data'])
-			return false;  // подписка не действует (сломалась или отменена пользователем в интефейсе платежной системы или карта протухла)
+		if (!$result['transaction_data']) {
+			// подписка не действует (сломалась или отменена пользователем в интефейсе платежной системы или карта протухла)
+			$this->cancelSubscription($paymentType, $subscriptionId);
+			return false;
+		}
 		if (!$this->billing->commit($transactionId)) {
 			error_log(new \ErrorException('Transaction commit failed, id:' . $transactionId . ', data:' . json_encode($fields), null, null, __FILE__, __LINE__));
 			if (!$paymentBackend->refund($result['transaction_data']))
 				error_log(new \ErrorException('Refund failed, data:' . json_encode($result), null, null, __FILE__, __LINE__));
-			return true;  // подписка работает, временный сбой
+			return false;
 		}
 		return true;
 	}
@@ -293,7 +296,7 @@ class Manager {
 
 	/**
 	 * @param integer $transactionId
-	 * @return boolean
+	 * @return boolean true - проведено
 	 */
 	public function refund($transactionId) {
 		if ($result = $this->billing->getTransactions([$transactionId]))

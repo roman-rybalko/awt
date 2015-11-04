@@ -24,9 +24,7 @@ class Cron {
 			foreach ($billMgr->getPendingTransactions() as $pendingTransaction) {
 				if ($pendingTransaction['payment_type'] == \AdvancedWebTesting\Billing\PaymentType::PAYPAL)
 					continue;  // PayPal hack: транзакции PayPal обрабатываются на странице ?billing=1
-				if (!$billMgr->processPendingTransaction($pendingTransaction['payment_type'], $pendingTransaction['id']))
-					if (isset($pendingTransaction['subscription_id']))
-						$billMgr->cancelSubscription($pendingTransaction['payment_type'], $pendingTransaction['subscription_id']);
+				$billMgr->processPendingTransaction($pendingTransaction['payment_type'], $pendingTransaction['id']);
 			}
 			/**
 			 * Пользователь может за период тратить больше, чем пополняет подписка.
@@ -35,23 +33,13 @@ class Cron {
 			 * и реализация подписки может не поддерживать изменение суммы.
 			 * По этому будем пополнять из подписки несколько раз подряд.
 			 *
-			 * processSubscription может генерировать транзакцию.
-			 * В этом случае пополнение не зачислится сразу после вызова processSubscription.
-			 * Вызывать processPendingTransaction нет смысла,
-			 * т.к. транзакция может обрабатываться через callback, который моментально не приходит.
-			 * Определяем количество вызовов processSubscription заранее.
-			 *
 			 * Выбираем подписку с максимальной суммой для уменьшения количества запросов.
 			 */
-			$actionsCnt = $billMgr->getAvailableActionsCnt();
-			while ($actionsCnt <= 0 && $subscriptions = $billMgr->getSubscriptions()) {
+			while ($billMgr->getAvailableActionsCnt() <= 0 && $subscriptions = $billMgr->getSubscriptions()) {
 				usort($subscriptions, function ($a, $b) {return $b['actions_cnt']-$a['actions_cnt'];});
 				foreach ($subscriptions as $subscription)
-					if ($billMgr->processSubscription($subscription['payment_type'], $subscription['id'])) {
-						$actionsCnt += $subscription['actions_cnt'];
+					if ($billMgr->processSubscription($subscription['payment_type'], $subscription['id']))
 						break;
-					} else
-						$billMgr->cancelSubscription($subscription['payment_type'], $subscription['id']);
 			}
 		}
 	}
