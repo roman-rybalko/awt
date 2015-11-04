@@ -64,7 +64,8 @@ class User {
 -->
 <?php
 			if (isset($_GET['register'])) {
-				$this->logout($user, '?register=1');
+				$user->logout();
+				$this->redirect('?register=1', 0);
 			} else if (isset($_GET['logout'])) {
 				$this->logout($user);
 			} else if (isset($_GET['settings'])) {
@@ -262,7 +263,7 @@ class User {
 		echo '<password_reset/>';
 	}
 
-	private function logout(\WebConstructionSet\Accounting\User $user, $redirect = '') {
+	private function logout(\WebConstructionSet\Accounting\User $user) {
 ?>
 <!--
 	Logout
@@ -273,7 +274,7 @@ class User {
 		$user->logout();
 		unset($this->userId);
 		echo '<message type="notice" value="logout_ok"/>';
-		$this->redirect($redirect, 0);
+		$this->redirect('', 0);
 	}
 
 	private function settings(\WebConstructionSet\Database\Relational\User $userDb, $login) {
