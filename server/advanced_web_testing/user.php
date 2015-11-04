@@ -367,11 +367,7 @@ class User {
 				$oldEmail = $settMgr->get()['email'];
 				$newEmail = $_SESSION['settings_email'];
 				if ($oldEmail != $newEmail) {
-					if ($oldEmail) {
-						$mailMgr = new \AdvancedWebTesting\Mail\Manager($this->db, $this->userId);
-						if (!$mailMgr->emailChangeNotification($oldEmail, $login, $newEmail))
-							error_log('E-Mail change notification failed, user_id: ' . $this->userId . ', login: ' . $login . ', new_email: ' . $newEmail . ', old_email: ' . $oldEmail);
-					} else {
+					if (!$oldEmail) {
 						$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
 						$billMgr->service(\Config::SIGNUP_BONUS, 'Sign Up bonus');
 					}

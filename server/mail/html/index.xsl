@@ -9,5 +9,4 @@
 	<xsl:include href="sched_fail.xsl"/>
 	<xsl:include href="password_reset.xsl"/>
 	<xsl:include href="delete_account.xsl"/>
-	<xsl:include href="email_change.xsl"/>
 </xsl:stylesheet>

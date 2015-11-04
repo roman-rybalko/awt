@@ -66,14 +66,6 @@ class Manager {
 		]);
 	}
 
-	public function emailChangeNotification($email, $login, $newEmail) {
-		return $this->anacron->create(time(), Manager::RETRY_TIMEOUT, [
-			'type' => Type::EMAIL_CHANGE, 'email' => $email,
-			'login' => $login, 'new_email' => $newEmail,
-			'message_id' => $this->makeMessageId(), 'time' => time(), 'root_url' => \Config::UI_URL
-		]);
-	}
-
 	public function send() {
 		$jobs = $this->anacron->ready();
 		$jobs = $this->anacron->get($jobs);
@@ -113,9 +105,6 @@ class Manager {
 					case Type::DELETE_ACCOUNT:
 						$mailData .= '<delete_account login="' . htmlspecialchars($data['login']) . '" url="' . htmlspecialchars($data['url']) . '"/>';
 						break;
-					case Type::EMAIL_CHANGE:
-						$mailData .= '<email_change login="' . htmlspecialchars($data['login']) . '" new_email="' . htmlspecialchars($data['new_email']) . '"/>';
-						break;
 					default:
 						$this->anacron->delete($job['id']);
 						error_log('Bad mail task type: ' . $data['type'] . ', job:' . json_encode($job));
@@ -146,9 +135,6 @@ class Manager {
 								break;
 							case Type::DELETE_ACCOUNT:
 								$histMgr->add('mail_delete_account', ['rcpt' => $data['email'] , 'message_id' => $data['message_id'], 'smtp_response' => $reply]);
-								break;
-							case Type::EMAIL_CHANGE:
-								$histMgr->add('mail_email_change', ['rcpt' => $data['email'] , 'message_id' => $data['message_id'], 'smtp_response' => $reply]);
 								break;
 						}
 						$this->anacron->delete($job['id']);
