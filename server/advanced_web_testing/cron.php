@@ -13,7 +13,7 @@ class Cron {
 		$this->task();
 		$this->mail();
 		$this->billing();
-		$this->clear();
+		$this->purge();
 	}
 
 	private function billing() {
@@ -76,7 +76,7 @@ class Cron {
 		}
 	}
 
-	private function clear() {
+	private function purge() {
 
 	}
 }
