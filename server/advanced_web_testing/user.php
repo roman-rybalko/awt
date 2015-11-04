@@ -1137,9 +1137,15 @@ class User {
 			' actions_available="', $billMgr->getAvailableActionsCnt(), '">';
 		$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $this->userId);
 		$stats = $statMgr->get();
-		foreach ($stats as $stat)
+		$maxTime = time();
+		foreach ($stats as $stat) {
 			echo '<stat time="', $stat['time'], '" tasks_finished="', $stat['tasks_finished'], '"',
 				' tasks_failed="', $stat['tasks_failed'], '" task_actions_executed="', $stat['task_actions_executed'], '"/>';
+			if ($stat['time'] < $maxTime)
+				$maxTime = $stat['time'];
+		}
+		for ($time = time() - 86400 * \Config::PURGE_PERIOD; $time < $maxTime; $time += 86400)
+			echo '<stat time="', $time, '" tasks_finished="0" tasks_failed="0" task_actions_executed="0"/>';
 		echo '</stats>';
 	}
 }
