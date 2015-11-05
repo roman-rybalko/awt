@@ -1,3 +1,4 @@
+* cross-browser testing on lp
 * административный интерфейс - статистика, мониторинг
 * increment, decrement, cas для db - статические функции в классе Database\Relational\Tools
 * cleanup (stats, tasks, billing, accounts - see concept)
