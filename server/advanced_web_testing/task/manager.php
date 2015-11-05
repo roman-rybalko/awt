@@ -115,21 +115,23 @@ class Manager {
 	/**
 	 * Перевести задачу из status = STARTING в status = RUNNING
 	 * @param integer $taskId
+	 * @param string $nodeId
 	 * @return boolean
 	 */
-	public function start($taskId) {
-		return $this->tasks->update(['status' => Status::RUNNING, 'time' => time()], ['task_id' => $taskId, 'status' => Status::STARTING]);
+	public function start($taskId, $nodeId) {
+		return $this->tasks->update(['status' => Status::RUNNING, 'time' => time()], ['task_id' => $taskId, 'status' => Status::STARTING, 'node_id' => $nodeId]);
 	}
 
 	/**
 	 * Перевести задачу из status = RUNNING в $status
 	 * @param integer $taskId
+	 * @param string $nodeId
 	 * @param integer $status
 	 * @param string $result
 	 * @return boolean
 	 */
-	public function finish($taskId, $status, $result) {
-		return $this->tasks->update(['status' => $status, 'result' => $result, 'time' => time()], ['task_id' => $taskId, 'status' => Status::RUNNING]);
+	public function finish($taskId, $nodeId, $status, $result) {
+		return $this->tasks->update(['status' => $status, 'result' => $result, 'time' => time()], ['task_id' => $taskId, 'status' => Status::RUNNING, 'node_id' => $nodeId]);
 	}
 
 	/**

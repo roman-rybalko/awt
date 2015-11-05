@@ -68,13 +68,14 @@ class Task {
 
 	private function update() {
 		$taskId = $_POST['task_id'];
+		$nodeId = $_POST['node_id'];
 		$status = $_POST['status'];
 		$db = $this->db;
 		if ($this->checkAuth()) {
 			$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, null);
 			switch ($status) {
 				case 'running':
-					if ($taskMgr->start($taskId))
+					if ($taskMgr->start($taskId, $nodeId))
 						$result['ok'] = 1;
 					else
 						$result['fail'] = 'task update failed';
@@ -83,7 +84,7 @@ class Task {
 				case 'failed':
 					$taskDataDir = $taskId . '-' . rand();
 					$statusId = $status == 'succeeded' ? \AdvancedWebTesting\Task\Status::SUCCEEDED : \AdvancedWebTesting\Task\Status::FAILED;
-					if ($taskMgr->finish($taskId, $statusId, $taskDataDir)) {
+					if ($taskMgr->finish($taskId, $nodeId, $statusId, $taskDataDir)) {
 						$taskDataPath = \Config::$rootPath . \Config::RESULTS_PATH . $taskDataDir . '/';
 						$this->prepareTaskDataPath($taskDataPath);
 						$result['ok'] = 1;
