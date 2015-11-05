@@ -106,13 +106,13 @@ bad_action_id
 	Invalid Action ID.
 
 test_action_modify_ok
-	The Action has been modified.
+	Action has been modified.
 
 test_action_modify_fail
 	Modify Action failed (perhaps invalid parameter).
 
 test_action_insert_ok
-	The Action has been inserted.
+	Action has been inserted.
 
 test_action_insert_fail
 	Insert Action failed.
