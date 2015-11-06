@@ -1,6 +1,6 @@
+* ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 * cross-browser testing on lp
 * административный интерфейс - статистика, мониторинг
-* increment, decrement, cas для db - статические функции в классе Database\Relational\Tools
 * cleanup (stats, tasks, billing, accounts - see concept)
 * cron: clear canceled tasks
 * cron: clear deleted tests
@@ -9,10 +9,11 @@
 * cron: clear history
 * XPATH Browser в iframe/отдельном окне, с/без прокси (пользователь сам подгружает скрипт, Tip: Browser plugin)
 * XPATH -> jQuery/CSS3 selector translator
-* php xsltprocessor recursion bug report & fix
 * XMPP Reports
 * SMS Reports
 * Отдельный раздел и таблица notifications, каждая notification содержит параметры: email/телефон/jid. Каждый Schedule Job содержит
  набор нотификаций для успеха и сбоя. Каждый Task содержит sched_id и sched_name или null если запущен вручную. Settings как-то
  переработать - убрать галки отправки отчетов. Дефолтный набор нотификаций не делать. Возможность скопировать Schedule Job.
  Восстановление пароля и платежная информация только на E-Mail из Settings.
+* php xsltprocessor recursion bug report & fix
+* доработать wine для запуска Selenium IEDriverServer
