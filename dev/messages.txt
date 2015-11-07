@@ -97,7 +97,7 @@ test_action_add_ok
 	New Action has been added.
 
 test_action_delete_ok
-	Action deleted.
+	Action has been deleted.
 
 test_action_delete_fail
 	Delete Action failed.
