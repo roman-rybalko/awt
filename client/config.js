@@ -1,20 +1,34 @@
+"use strict";
+
 var spawncb = require('./lib/spawncb');
+var scrn = require('./lib/scrot').get_scrn;
+//var scrn = require('./lib/selutil').get_scrn;
 
 module.exports = {
 	server_url: 'http://www/awt/server/si/task.php',
 	server_token: 'EtZGlOGWMGtEOptUcaQN98KTnPrXpvXgpY1orOue04',
-	task_type: 'gc_1920x1080_test',
+	task_type: 'test',
 	node_id: 'test1',
-	selenium_browser: 'chrome',
-	selenium_server: 'http://localhost:4410/wd/hub',
-	selenium_port: 4410,
-	selenium_timeout: 10000,  // msec
+	selenium_start_cb: spawncb('printf', ['selenium_start_cb called\n']),  /// fn(task) | null
+	//selenium_finish_cb: spawncb('true'),  /// fn(task, fails, scrns) | null
+	selenium_finish_cb: spawncb('printf', ['selenium_finish_cb called\n']),  /// fn(task, fails, scrns) | null
+	//selenium_capabilities: {'phantomjs.cli.args': ['--webdriver-logfile=../selenium.log']},  /// {name: value} | null
+	selenium_browser: 'chrome',  /// string | null
+	//selenium_browser: 'firefox',  /// string | null
+	//selenium_browser: 'phantomjs',  /// string | null
+	//selenium_browser: 'internet explorer',  /// string | null
+	//selenium_server: 'http://localhost:4410/wd/hub',  /// url | null
+	//selenium_server: 'http://localhost:5510/',  /// url | null
+	//selenium_port: 4410,  /// integer 1024-65535 | null
+	selenium_timeout: 10000,  /// msec
 	selenium_fullscreen: false,
-	batch_count: 1,  // a starving bug somewhere prevents efficient parallel run
-	batch_timeout: 5000,  // msec
-	batch_start_cb: null,
-	batch_finish_cb: spawncb('true'),
-	xdisplay: 10,
-	xauth: "/tmp/xauth10",
-	xscrsize: "1920x1080x24"
+	selenium_scrn: scrn,  /// fn(selenium)
+	batch_count: 1,  /// a starving bug somewhere prevents efficient parallel run
+	batch_timeout: 5000,  /// msec
+	//batch_start_cb: spawncb('printf', ['batch_start_cb called\n']),  /// fn() | null
+	//batch_finish_cb: spawncb('true'),  /// fn(err, val) | null
+	//batch_finish_cb: spawncb('printf', ['batch_finish_cb called\n']),  /// fn(err, val) | null
+	x_display: 10,  /// integer | null
+	x_auth: "/tmp/xauth10",  /// integer | null
+	x_scrsize: "1920x1080x24",  /// integer | null
 };

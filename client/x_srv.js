@@ -6,7 +6,7 @@ var config = require('./config');
 
 process.title = config.node_id + '-x';
 
-var args = ['--server-args=-screen 0 ' + config.xscrsize, '--server-num=' + config.xdisplay, '--auth-file=' + config.xauth, 'dwm'];
+var args = ['--server-args=-screen 0 ' + config.x_scrsize, '--server-num=' + config.x_display, '--auth-file=' + config.x_auth, 'dwm'];
 var options = {stdio: 'inherit'};
 var child = spawn('xvfb-run', args, options);
 child.on('error', function(err){

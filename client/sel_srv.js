@@ -4,9 +4,10 @@ var selenium = require('selenium-standalone');
 var config = require('./config');
 
 process.title = config.node_id + '-selenium';
-process.env['DISPLAY'] = ':' + config.xdisplay;
-process.env['XAUTHORITY'] = config.xauth;
-
+if (config.x_display)
+	process.env['DISPLAY'] = ':' + config.x_display;
+if (config.x_auth)
+	process.env['XAUTHORITY'] = config.x_auth;
 console.log('HOME=' + process.env['HOME']);
 
 selenium.start({

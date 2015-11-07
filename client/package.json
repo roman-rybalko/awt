@@ -1,6 +1,6 @@
 {
   "name": "awt-task",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "AWT task execution node",
   "main": "lib/index.js",
   "scripts": {
@@ -18,6 +18,7 @@
     "wait.for": "~0.6.6",
     "selenium-standalone": "~4.5.3",
     "ps-tree": "~1.0.0",
-    "create-temp-file": "~1.0.0"
+    "create-temp-file": "~1.0.0",
+    "phantomjs": "~1.9.18"
   }
 }

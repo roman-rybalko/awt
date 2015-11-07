@@ -1,6 +1,6 @@
 "use strict";
 
-var task = require('./lib/index');
+var task = require('./lib/task');
 var wait = require('wait.for');
 var config = require('./config');
 var count = 0;
@@ -8,8 +8,11 @@ var timer;
 var stop = false;
 
 process.title = config.node_id + '-batch';
-process.env['DISPLAY'] = ':' + config.xdisplay;
-process.env['XAUTHORITY'] = config.xauth;
+if (config.x_display)
+	process.env['DISPLAY'] = ':' + config.x_display;
+if (config.x_auth)
+	process.env['XAUTHORITY'] = config.x_auth;
+console.log('HOME=' + process.env['HOME']);
 
 function cb(err, val) {
 	console.info('task done, err:', err, 'val:', val);

@@ -2,10 +2,21 @@ var webdriver = require('selenium-webdriver');
 var selutil = require('./selutil');
 var srv = require('./srv');
 var xputil = require('./xputil');
-var scrot = require('./scrot');
 var config = require('../config');
 
-function process() {
+function get_selenium() {
+	if (config.selenium_browser)
+		process.env['SELENIUM_BROWSER'] = config.selenium_browser;
+	if (config.selenium_server)
+		process.env['SELENIUM_REMOTE_URL'] = config.selenium_server;
+	var builder = new webdriver.Builder();
+	if (config.selenium_capabilities)
+		builder.withCapabilities(config.selenium_capabilities);
+	var selenium = builder.build();
+	return selenium;
+}
+
+function handle_task() {
 	var resp = srv.req({
 		task_type: config.task_type,
 		node_id: config.node_id
@@ -28,7 +39,9 @@ function process() {
 		throw new Error('response[2] parsing failed, resp:' + JSON.stringify(resp));
 	var fails = {}, scrns = {};
 	if (task.actions.length) {
-		var selenium = new webdriver.Builder().forBrowser(config.selenium_browser).usingServer(config.selenium_server).build();
+		if (config.selenium_start_cb)
+			config.selenium_start_cb(task);
+		var selenium = get_selenium();
 		selutil.wait(selenium.manage().timeouts().pageLoadTimeout(config.selenium_timeout));  // throws
 		selutil.wait(selenium.manage().timeouts().setScriptTimeout(config.selenium_timeout));  // throws
 		if (config.selenium_fullscreen)
@@ -62,7 +75,7 @@ function process() {
 					if (!url.match(/^\w+:\/\//i))
 						url = 'http://' + url;
 					selutil.wait(selenium.get(url));
-					scrns[action.id] = scrot.get_scrn();
+					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
 				case 'exists':
 					var xpath = action.selector;
@@ -70,10 +83,10 @@ function process() {
 						return selutil.select_window(selenium, function() {
 							return selutil.wait(selenium.isElementPresent({xpath: xpath}));
 						});
-					}))
+					}, config.selenium_timeout))
 						throw new Error('Element XPATH "' + xpath + '" is not found');
 					selutil.select_element(selenium, selutil.wait(selenium.findElement({xpath: xpath})));
-					scrns[action.id] = scrot.get_scrn();
+					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
 				case 'click':
 					var xpath = action.selector;
@@ -81,11 +94,11 @@ function process() {
 						return selutil.select_window(selenium, function() {
 							return selutil.wait(selenium.isElementPresent({xpath: xpath}));
 						});
-					}))
+					}, config.selenium_timeout))
 						throw new Error('Element XPATH "' + xpath + '" is not found');
 					var el = selutil.wait(selenium.findElement({xpath: xpath}));
 					selutil.select_element(selenium, el);
-					scrns[action.id] = scrot.get_scrn();
+					scrns[action.id] = config.selenium_scrn(selenium);
 					selutil.hide_selection(selenium);
 					selutil.wait(el.click());
 					break;
@@ -95,13 +108,13 @@ function process() {
 						return selutil.select_window(selenium, function() {
 							return selutil.wait(selenium.isElementPresent({xpath: xpath}));
 						});
-					}))
+					}, config.selenium_timeout))
 						throw new Error('Element XPATH "' + xpath + '" is not found');
 					var el = selutil.wait(selenium.findElement({xpath: xpath}));
 					selutil.wait(el.clear());
 					selutil.wait(el.sendKeys(action.data));
 					selutil.select_element(selenium, el);
-					scrns[action.id] = scrot.get_scrn();
+					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
 				case 'modify':
 					var xpath = xputil.el(action.selector);
@@ -109,7 +122,7 @@ function process() {
 						return selutil.select_window(selenium, function() {
 							return selutil.wait(selenium.isElementPresent({xpath: xpath}));
 						});
-					}))
+					}, config.selenium_timeout))
 						throw new Error('Element XPATH "' + xpath + '" is not found');
 					var el = selutil.wait(selenium.findElement({xpath: xpath}));
 					var attr = xputil.attr(action.selector);
@@ -126,7 +139,7 @@ function process() {
 							el.innerHTML = data;
 					}, el, attr, action.data));
 					selutil.select_element(selenium, el);
-					scrns[action.id] = scrot.get_scrn();
+					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
 				case 'url':
 					if (!selutil.wait(function() {
@@ -136,9 +149,9 @@ function process() {
 								data = '';
 							return data.match(new RegExp(action.selector, 'i'));
 						});
-					}))
+					}, config.selenium_timeout))
 						throw new Error('RegExp "' + action.selector + '" for URL is not matched');
-					scrns[action.id] = scrot.get_scrn();
+					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
 				case 'title':
 					if (!selutil.wait(function() {
@@ -148,9 +161,9 @@ function process() {
 								data = '';
 							return data.match(new RegExp(action.selector, 'i'));
 						});
-					}))
+					}, config.selenium_timeout))
 						throw new Error('RegExp "' + action.selector + '" for Title is not matched');
-					scrns[action.id] = scrot.get_scrn();
+					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
 				case 'var_regexp':
 					var name = action.selector.replace(/\s+/g, '');
@@ -167,7 +180,7 @@ function process() {
 						return selutil.select_window(selenium, function() {
 							return selutil.wait(selenium.isElementPresent({xpath: xpath}));
 						});
-					}))
+					}, config.selenium_timeout))
 						throw new Error('Element XPATH "' + xpath + '" is not found');
 					var el = selutil.wait(selenium.findElement({xpath: xpath}));
 					var attr = xputil.attr(action.data);
@@ -182,26 +195,26 @@ function process() {
 					var name = action.selector.replace(/\s+/g, '');
 					vars[name] = data;
 					selutil.select_element(selenium, el);
-					scrns[action.id] = scrot.get_scrn();
+					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
 				case 'var_url':
 					var data = selutil.wait(selenium.getCurrentUrl());
 					var name = action.selector.replace(/\s+/g, '');
 					vars[name] = data;
-					scrns[action.id] = scrot.get_scrn();
+					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
 				case 'var_title':
 					var data = selutil.wait(selenium.getTitle());
 					var name = action.selector.replace(/\s+/g, '');
 					vars[name] = data;
-					scrns[action.id] = scrot.get_scrn();
+					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
 				default:
 					throw new Error('unsupported action type');
 					break;
 				}
 			} catch (e) {
-				scrns[action.id] = scrot.get_scrn();
+				scrns[action.id] = config.selenium_scrn(selenium);
 				fails[action.id] = e.message;
 				if (!task.debug)
 					break;
@@ -209,6 +222,9 @@ function process() {
 		}
 		selutil.wait(selenium.quit());  // throws
 	}
+	if (task.actions.length)  // let selenium var die
+		if (config.selenium_finish_cb)
+			config.selenium_finish_cb(task, fails, scrns);
 	var params = {
 		task_id: task.id,
 		status: Object.keys(fails).length ? 'failed' : 'succeeded',
@@ -233,7 +249,7 @@ function process() {
 
 module.exports = function(cb) {
 	try {
-		cb(undefined, process());
+		cb(undefined, handle_task());
 	} catch (e) {
 		cb(e);
 	}

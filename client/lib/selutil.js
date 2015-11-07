@@ -1,7 +1,6 @@
 "use strict";
 
 var wait = require('wait.for');
-var config = require('../config');
 
 var selection_html_id = 'selection' + Math.random();
 
@@ -25,9 +24,9 @@ function sleep(ms) {
 	});
 }
 
-function wait_condition(condition) {
+function wait_condition(condition, timeout) {
 	var start_time = new Date().getTime();
-	while (new Date().getTime() < start_time + config.selenium_timeout)
+	while (new Date().getTime() < start_time + timeout)
 		if (condition())
 			return true;
 		else
@@ -132,9 +131,9 @@ function select_element(selenium, el) {
 }
 
 module.exports = {
-	wait: function(arg) {
+	wait: function(arg, timeout) {
 		if (typeof(arg) == 'function')
-			return wait_condition(arg);
+			return wait_condition(arg, timeout);
 		else
 			return wait_promise(arg);
 	},
