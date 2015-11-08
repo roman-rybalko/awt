@@ -52,19 +52,26 @@ $(function() {
 		for (var tt in task_types)
 			if (index[task_types[tt].parent_id])
 				index[task_types[tt].parent_id].children.push(task_types[tt]);
+		var cache = {};
 		$('.task-type').each(function() {
 			var name = $(this).html().replace(/\s+/g, '');
-			var type = index[name];
-			if (type) {
-				var names = [];
-				function walk(type) {
-					names.push(type.name);
-					for (var c in type.children)
-						walk(type.children[c]);
+			if (!cache[name]) {
+				var type = index[name];
+				if (type) {
+					var names = [];
+					function walk(type) {
+						if (names.indexOf(type.name) == -1)
+							names.push(type.name);
+						for (var c in type.children)
+							walk(type.children[c]);
+					}
+					walk(type);
+					cache[name] = names.join(', ');
+				} else {
+					cache[name] = name;
 				}
-				walk(type);
-				$(this).attr('title', names.join(', '));
 			}
+			$(this).attr('title', cache[name]);
 		});
 	}
 	$('#xpath-composer-ok').click(function() {

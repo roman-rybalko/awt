@@ -232,7 +232,7 @@
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
-											<td class="task-type">
+											<td>
 												<xsl:value-of select="@type"/>
 											</td>
 											<td>

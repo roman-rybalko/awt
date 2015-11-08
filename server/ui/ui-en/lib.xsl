@@ -29,7 +29,7 @@
 								Debug
 							</label>
 						</div>
-						<xsl:for-each select="//task_types//type">
+						<xsl:for-each select="//task_types//type[not(@name = preceding::type/@name)]">
 							<button type="submit" name="type" value="{@name}" class="btn btn-success btn-outline space-x space-y task-type">
 								<xsl:value-of select="@name"/>
 							</button>
