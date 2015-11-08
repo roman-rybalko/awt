@@ -55,17 +55,18 @@ class Manager {
 	public function getCompatible($type) {
 		$typeIds = [];
 		$typeId = null;
-		if ($data = $this->table->select(['type_id', 'parent_type_id'], ['name' => $type])) {
-			$typeIds[] = $data[0]['type_id'];
-			$typeId = $data[0]['parent_type_id'];
+		$types = $this->table->select(['type_id', 'parent_type_id'], ['name' => $type]);
+		foreach ($types as $type) {
+			$typeIds[$type['type_id']] = 1;
+			$typeId = $type['parent_type_id'];
+			while ($typeId) {
+				if ($data = $this->table->select(['parent_type_id'], ['type_id' => $typeId])) {
+					$typeIds[$typeId] = 1;
+					$typeId = $data[0]['parent_type_id'];
+				} else
+					$typeId = null;
+			}
 		}
-		while ($typeId) {
-			if ($data = $this->table->select(['parent_type_id'], ['type_id' => $typeId])) {
-				$typeIds[] = $typeId;
-				$typeId = $data[0]['parent_type_id'];
-			} else
-				$typeId = null;
-		}
-		return $typeIds;
+		return array_keys($typeIds);
 	}
 }
