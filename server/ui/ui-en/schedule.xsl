@@ -288,7 +288,7 @@
 
 <xsl:template name="opts_task_types">
 	<xsl:param name="value"></xsl:param>
-	<xsl:for-each select="//task_types/type">
+	<xsl:for-each select="//task_types/type[not(@name = preceding::type/@name)]">
 		<option value="{@name}" class="task-type">
 			<xsl:if test="@name = $value">
 				<xsl:attribute name="selected"/>
