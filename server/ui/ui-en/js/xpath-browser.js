@@ -1,10 +1,9 @@
 $(function() {
 
 	var debug = true;
-	var storage_expire = 42;  // days
 
 	if ($('.xpath-browser-wnd').length) {
-		var storage = new Storage('xpath-browser-', storage_expire);
+		var storage = new Storage('xpath-browser-');
 		$('.xpath-browser-wnd').resizable({
 			handles: 's',
 			disabled: true,

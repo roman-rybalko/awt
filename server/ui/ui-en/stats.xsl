@@ -39,13 +39,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Stats</h1>
-				<xsl:if test="//message">
-					<div class="row">
-						<div class="col-lg-12">
-							<xsl:apply-templates select="//message"/>
-						</div>
-					</div>
-				</xsl:if>
+				<xsl:apply-templates select="//message"/>
 			</div>
 		</div>
 		<div class="row">
@@ -90,7 +84,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="../?tasks=1">
+					<a href="../?tasks=1" class="apply-data-display-period">
 						<div class="panel-footer">
 							<span class="pull-left">Details</span>
 							<span class="pull-right">
@@ -142,7 +136,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="../?billing=1">
+					<a href="../?billing=1" class="apply-data-display-period">
 						<div class="panel-footer">
 							<span class="pull-left">Details</span>
 							<span class="pull-right">

@@ -10,13 +10,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Settings</h1>
-				<xsl:if test="//message">
-					<div class="row">
-						<div class="col-lg-12">
-							<xsl:apply-templates select="//message"/>
-						</div>
-					</div>
-				</xsl:if>
+				<xsl:apply-templates select="//message"/>
 			</div>
 		</div>
 		<div class="row">
@@ -63,6 +57,22 @@
 								Set E-Mail
 							</button>
 						</form>
+					</div>
+				</div>
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						Data Display Period
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<select class="form-control" id="setting-data-display-period">
+								<option value="3600">1 hour</option>
+								<option value="86400">1 day</option>
+								<option value="604800">1 week</option>
+								<option value="2419200">4 weeks</option>
+								<option value="0" selected="">all</option>
+							</select>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -136,7 +146,6 @@
 							<i class="glyphicon glyphicon-trash"></i>
 							Delete Account
 						</a>
-
 					</div>
 				</div>
 			</div>

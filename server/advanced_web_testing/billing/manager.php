@@ -104,7 +104,7 @@ class Manager {
 	/**
 	 * Получить список транзакций
 	 * @param [integer]|null $transactionIds
-	 * @param integer|null $time Unix Time, с какого времени вернутьданные, по-умолчанию 42 дня (time() - 42 * 86400)
+	 * @param integer $time Unix Time, с какого времени вернуть данные, по-умолчанию 0 т.е. все данные
 	 * @return [][id => integer, time => integer, actions_before => integer, actions_after => integer, actions_cnt => integer, type => integer,
 	 *  data (optional) => string,
 	 *  task_id (optional) => integer, test_name => string,
@@ -112,9 +112,7 @@ class Manager {
 	 *  payment_type (optional) => integer, payment_amount => string, payment_data => string,
 	 *  refundable (optional) => boolean]
 	 */
-	public function getTransactions($transactionIds = null, $time = null) {
-		if ($time === null)
-			$time = time() - 42 * 86400;
+	public function getTransactions($transactionIds = null, $time = 0) {
 		$transactions = [];
 		$data = $this->billing->getTransactions($transactionIds, $time);
 		foreach ($data as $data1) {

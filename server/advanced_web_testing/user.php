@@ -730,6 +730,8 @@ class User {
 ?>
 <!--
 	Tasks
+	method: get
+	params: tasks [time]
 
 	Add
 	method: post
@@ -784,8 +786,11 @@ class User {
 			} else
 				echo '<message type="error" value="bad_task_id"/>';
 		}
-		echo '<tasks>';
-		foreach ($taskMgr->get() as $task)
+		$time = 0;
+		if (isset($_GET['time']) && $_GET['time'])
+			$time = $_GET['time'];
+		echo '<tasks', $time ? ' time="' . $time . '"' : '', '>';
+		foreach ($taskMgr->get(null, $time) as $task)
 			echo '<task id="', $task['id'], '" test_id="', $task['test_id'], '"',
 				' test_name="', htmlspecialchars($task['test_name']), '"',
 				' type="', htmlspecialchars($task['type']), '"',
@@ -920,11 +925,16 @@ class User {
 ?>
 <!--
 	History
+	method: get
+	params: history [time]
 -->
 <?php
-		echo '<history>';
+		$time = 0;
+		if (isset($_GET['time']) && $_GET['time'])
+			$time = $_GET['time'];
+		echo '<history', $time ? ' time="' . $time . '"' : '', '>';
 		$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-		foreach ($histMgr->get() as $event) {
+		foreach ($histMgr->get($time) as $event) {
 			echo '<event name="', htmlspecialchars($event['name']), '" time="', $event['time'], '"';
 			foreach ($event['data'] as $param => $value)
 				echo ' ', $param, '="', htmlspecialchars($value), '"';
@@ -938,6 +948,8 @@ class User {
 ?>
 <!--
 	Billing
+	method: get
+	params: biling [time]
 
 	Top Up
 	method: post
@@ -1049,8 +1061,11 @@ class User {
 			$this->redirect('?billing=1', 3);
 			return;
 		}
-		echo '<billing actions_available="', $billMgr->getAvailableActionsCnt(), '">';
-		foreach ($billMgr->getTransactions() as $transaction) {
+		$time = time() - 42 * 86400;
+		if (isset($_GET['time']) && $_GET['time'])
+			$time = $_GET['time'];
+		echo '<billing actions_available="', $billMgr->getAvailableActionsCnt(), '"', $time ? ' time="' . $time . '"' : '', '>';
+		foreach ($billMgr->getTransactions(null, $time) as $transaction) {
 			unset($transaction['user_id']);
 			echo '<transaction';
 			foreach ($transaction as $name => $value) {

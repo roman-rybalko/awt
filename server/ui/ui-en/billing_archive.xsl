@@ -10,13 +10,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Billing Archive</h1>
-				<xsl:if test="//message">
-					<div class="row">
-						<div class="col-lg-12">
-							<xsl:apply-templates select="//message"/>
-						</div>
-					</div>
-				</xsl:if>
+				<xsl:apply-templates select="//message"/>
 				<div class="alert alert-info alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-clear">&#215;</button>
 					<b>Tip:</b>

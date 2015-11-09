@@ -71,17 +71,18 @@ class Manager {
 	/**
 	 * Получить
 	 * @param [integer]|null $taskIds null - все
+	 * @param integer $time Unix Time, с какого времени вернуть данные, по-умолчанию 0 т.е. все данные
 	 * @return [][id => integer, test_id => integer, test_name => string, type => string, debug => boolean,
 	 *  status => integer, result => string|null, node_id => string|null, time => integer, user_id => integer]
 	 */
-	public function get($taskIds = null) {
+	public function get($taskIds = null, $time = 0) {
 		$fields = ['task_id', 'test_id', 'test_name', 'type', 'debug', 'status', 'result', 'node_id', 'time', 'user_id'];
 		$data = [];
 		if ($taskIds === null)
-			$data = $this->tasks->select($fields);
+			$data = $this->tasks->select($fields, ['time' => $this->tasks->predicate('ge', $time)]);
 		else
 			foreach ($taskIds as $taskId)
-				if ($data1 = $this->tasks->select($fields, ['task_id' => $taskId]))
+				if ($data1 = $this->tasks->select($fields, ['task_id' => $taskId, 'time' => $this->tasks->predicate('ge', $time)]))
 					$data = array_merge($data, $data1);
 		foreach ($data as &$data1) {
 			$data1['id'] = $data1['task_id'];

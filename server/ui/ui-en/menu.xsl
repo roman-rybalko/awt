@@ -7,6 +7,11 @@
 	<script src="js/jquery.storageapi.min.js"></script>
 	<script src="js/storage.js"></script>
 	<script src="js/moment.min.js"></script>
+	<xsl:if test="@time">
+		<script type="text/javascript">
+			var awt_time = "<xsl:value-of select="@time"/>";
+		</script>
+	</xsl:if>
 	<div id="wrapper">
 		<nav class="navbar navbar-default navbar-static-top" role="navigation"
 			style="margin-bottom: 0">
@@ -62,7 +67,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="../?tasks=1">
+							<a href="../?tasks=1" class="apply-data-display-period">
 								<i class="fa fa-play fa-fw"></i>
 								Tasks
 							</a>
@@ -74,13 +79,13 @@
 							</a>
 						</li>
 						<li>
-							<a href="../?billing=1">
+							<a href="../?billing=1" class="apply-data-display-period">
 								<i class="fa fa-money fa-fw"></i>
 								Billing
 							</a>
 						</li>
 						<li>
-							<a href="../?history=1">
+							<a href="../?history=1" class="apply-data-display-period">
 								<i class="fa fa-calendar fa-fw"></i>
 								History
 							</a>

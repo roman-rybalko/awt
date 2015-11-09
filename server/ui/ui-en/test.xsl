@@ -15,13 +15,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Test</h1>
-				<xsl:if test="//message">
-					<div class="row">
-						<div class="col-lg-12">
-							<xsl:apply-templates select="//message"/>
-						</div>
-					</div>
-				</xsl:if>
+				<xsl:apply-templates select="//message"/>
 			</div>
 		</div>
 		<div class="row">

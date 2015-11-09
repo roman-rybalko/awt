@@ -23,11 +23,12 @@ class Manager {
 	}
 
 	/**
+	 * @param integer $time Unix Time, с какого времени вернуть данные, по-умолчанию 0 т.е. все данные
 	 * @return [][time => integer, name => string, data => mixed, user_id => integer]
 	 */
-	public function get() {
+	public function get($time = 0) {
 		$events = [];
-		$data = $this->history->get();
+		$data = $this->history->get($time);
 		foreach ($data as $data1) {
 			$event = [];
 			foreach (['key' => 'user_id', 'time' => 'time', 'name' => 'name', 'data' => 'data'] as $src => $dst)

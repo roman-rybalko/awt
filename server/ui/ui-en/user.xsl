@@ -44,6 +44,9 @@
 		<script src="js/bootstrap.min.js"></script>
 	</head>
 	<body>
+		<script type="text/javascript">
+			var awt_login = "<xsl:value-of select="@login"/>";
+		</script>
 		<xsl:apply-templates select="*[not(self::message)]"/>
 		<link href="css/awt.css" rel="stylesheet"/>
 		<script src="js/awt.js"></script>

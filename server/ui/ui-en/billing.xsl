@@ -13,13 +13,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Billing</h1>
-				<xsl:if test="//message">
-					<div class="row">
-						<div class="col-lg-12">
-							<xsl:apply-templates select="//message"/>
-						</div>
-					</div>
-				</xsl:if>
+				<xsl:apply-templates select="//message"/>
 				<div class="alert alert-info alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-email">&#215;</button>
 					<b>Tip:</b>
@@ -245,6 +239,7 @@
 					<div class="panel-heading">
 						<i class="fa fa-credit-card"></i>
 						Transactions
+						<span class="apply-data-display-period"></span>
 					</div>
 					<div class="panel-body">
 						<table class="table table-striped table-hover table-dataTable" data-order='[[1, "desc"]]'>

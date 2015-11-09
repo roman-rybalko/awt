@@ -14,17 +14,22 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Tasks</h1>
-				<xsl:if test="//message">
-					<div class="row">
-						<div class="col-lg-12">
-							<xsl:apply-templates select="//message"/>
-						</div>
+				<xsl:apply-templates select="//message"/>
+				<xsl:if test="not(task)">
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-create-test1">&#215;</button>
+						<b>Tip:</b>
+						Create a <a href="../?tests=1">test</a> to run a task.
 					</div>
 				</xsl:if>
-				<div class="alert alert-info alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-create-test">&#215;</button>
-					<b>Tip:</b>
-					Create a <a href="../?tests=1">test</a> to run a task.
+				<div class="apply-data-display-period">
+					<xsl:if test="count(task) &gt; 500">
+						<div class="alert alert-info alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="display-period">&#215;</button>
+							<b>Tip:</b>
+							Use <b>Data Display Period</b> option in <a href="../?settings=1">Settings</a> to reduce displayed data.
+						</div>
+					</xsl:if>
 				</div>
 			</div>
 		</div>
