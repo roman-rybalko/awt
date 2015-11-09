@@ -22,5 +22,7 @@ INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(53, 'gc_ip
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(54, 'gc_android_landscape', 21);
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(55, 'gc_1920x1080', 14);
 
+INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(61, 'phantomjs', 1);
+
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(100, 'test', NULL);
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(101, 'phantomjs', 100);
