@@ -27,7 +27,7 @@ module.exports = {
 	selenium_timeout: 10000,  /// msec
 	selenium_fullscreen: false,
 	selenium_scrn: scrn,  /// fn(selenium)
-	batch_count: 3,  /// a starving bug somewhere prevents efficient parallel run
+	batch_count: 1,  /// a starving bug somewhere prevents efficient parallel run
 	batch_timeout: 5000,  /// msec
 	//batch_start_cb: spawncb('printf', ['batch_start_cb called\n']),  /// fn() | null
 	//batch_finish_cb: spawncb('true'),  /// fn(err, val) | null
