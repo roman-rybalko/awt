@@ -1,3 +1,4 @@
+* параметр &time для ?tasks ?billing ?history
 * ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 * административный интерфейс - статистика, мониторинг
 * cleanup (stats, tasks, billing, accounts - see concept)
