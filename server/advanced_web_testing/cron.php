@@ -22,6 +22,10 @@ class Cron {
 			$userId = $user['id'];
 			$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $userId);
 			foreach ($billMgr->getPendingTransactions() as $pendingTransaction) {
+				if ($pendingTransaction['time'] + \Config::BILLING_PENDING_PURGE_PERIOD * 86400 < time()) {
+					$billMgr->cancelPendingTransaction($pendingTransaction['payment_type'], $pendingTransaction['id']);
+					continue;
+				}
 				if ($pendingTransaction['payment_type'] == \AdvancedWebTesting\Billing\PaymentType::PAYPAL)
 					continue;  // PayPal hack: транзакции PayPal обрабатываются на странице ?billing=1
 				$billMgr->processPendingTransaction($pendingTransaction['payment_type'], $pendingTransaction['id']);
