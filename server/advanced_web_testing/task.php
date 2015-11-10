@@ -93,7 +93,12 @@ class Task {
 							$scrnX = 'scrn' . $action['id'];
 							if (isset($_FILES[$scrnX])) {
 								$scrnFilename = basename($_FILES[$scrnX]['name']);
-								$result['ok'] += move_uploaded_file($_FILES[$scrnX]['tmp_name'], $taskDataPath . $scrnFilename);
+								if (move_uploaded_file($_FILES[$scrnX]['tmp_name'], $taskDataPath . $scrnFilename)) {
+									$result['ok'] += 1;
+								} else {
+									error_log('Bad screenshot, task_id: ' . $taskId . ', name: ' . $_FILES[$scrnX]['name'] . ', tmp_name: ' . $_FILES[$scrnX]['tmp_name'] . ', size: ' . $_FILES[$scrnX]['size']);
+									unset($_FILES[$scrnX]);
+								}
 							}
 							$failX = 'fail' . $action['id'];
 							$result['ok'] += $taskActMgr->update($action['id'],
