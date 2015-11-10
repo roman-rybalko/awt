@@ -124,7 +124,7 @@ $(function() {
 			data.unshift(units + (units == 1 ? ' hour' : ' hours'));
 		period = (period - units) / 24;
 		if (units = period % 7)
-			data.unshift(period + (period == 1 ? ' day' :' days'));
+			data.unshift(units + (units == 1 ? ' day' : ' days'));
 		period = (period - units) / 7;
 		if (period)
 			data.unshift(period + (period == 1 ? ' week' :' weeks'));
