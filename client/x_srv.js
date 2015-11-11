@@ -1,7 +1,8 @@
 "use strict";
 
 var spawn = require('child_process').spawn;
-var pstree = require('ps-tree');
+var killchtreecb = require('./lib/killchtreecb');
+var wait = require('wait.for');
 var config = require('./config');
 
 process.title = config.node_id + '-x';
@@ -17,24 +18,14 @@ child.on('error', function(err){
 child.on('exit', function(){
 	console.log('Server exited');
 });
+
 console.log('Server started');
-['SIGTERM', 'SIGINT'].forEach(function(signal){
-	process.on(signal, function(){
-		console.log('Exiting...');
-		pstree(child.pid, function(err, children){
-			if (err)
-				console.log('pstree error:', err);
-			else
-				children.forEach(function(ch){
-					var pid = ch.PID;
-					console.log('Terminating pid ' + pid);
-					try {
-						process.kill(pid, 'SIGTERM');
-					} catch (e) {
-						console.error('pid ' + pid + ' does not exist');
-					}					
-				});
-			child.kill('SIGTERM');
+
+
+['SIGTERM', 'SIGINT'].forEach(function(sig) {
+	process.on(sig, function() {
+		wait.launchFiber(function() {
+			killchtreecb(process.pid, sig)();
 		});
 	});
 });

@@ -20,7 +20,7 @@ module.exports = function(path, args) {
 		try {
 			return -wait.for(launch, path, args);
 		} catch (e) {
-			console.log('spawncb for path=' + path + ' failed: ' + e);
+			console.log('spawncb failed, path:', path, ', e:', e);
 			return -255;
 		}
 	};

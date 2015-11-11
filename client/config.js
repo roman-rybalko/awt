@@ -1,6 +1,7 @@
 "use strict";
 
 var spawncb = require('./lib/spawncb');
+var killchtreecb = require('./lib/killchtreecb');
 //var scrn = require('./lib/scrot').get_scrn;
 var scrn = require('./lib/selutil').get_scrn;
 
@@ -10,7 +11,6 @@ module.exports = {
 	task_type: 'phantomjs',
 	node_id: 'test1',
 	selenium_start_cb: spawncb('printf', ['selenium_start_cb called\n']),  /// fn(task) | null
-	//selenium_finish_cb: spawncb('true'),  /// fn(task, fails, scrns) | null
 	selenium_finish_cb: spawncb('printf', ['selenium_finish_cb called\n']),  /// fn(task, fails, scrns) | null
 	selenium_capabilities: {'phantomjs.cli.args': ['--webdriver-logfile=/tmp/selenium.log']},  /// {name: value} | null
 	//selenium_capabilities: {chromeOptions: {mobileEmulation: {deviceName: 'Apple iPhone 6'}}},  /// {name: value} | null
@@ -30,8 +30,10 @@ module.exports = {
 	batch_count: 1,  /// a starving bug somewhere prevents efficient parallel run
 	batch_timeout: 5000,  /// msec
 	//batch_start_cb: spawncb('printf', ['batch_start_cb called\n']),  /// fn() | null
-	//batch_finish_cb: spawncb('true'),  /// fn(err, val) | null
+	//batch_start_cb: spawncb('../init.sh'),  /// fn() | null
 	//batch_finish_cb: spawncb('printf', ['batch_finish_cb called\n']),  /// fn(err, val) | null
+	//batch_finish_cb: spawncb('../cleanup.sh'),  /// fn(err, val) | null
+	//batch_finish_cb: function() { killchtreecb(process.pid, 'SIGKILL')(); spawncb('../cleanup.sh')(); },  /// fn(err, val) | null
 	//x_display: 10,  /// integer | null
 	//x_auth: "/tmp/xauth10",  /// integer | null
 	//x_scrsize: "1200x1024x24",  /// integer | null
