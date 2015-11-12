@@ -324,9 +324,7 @@
 									</td>
 									<td style="text-align:center;">
 										<label for="modal-top_up-payment_type-paypal">
-											<!-- PayPal Logo -->
 											<img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" border="0" alt="PayPal Acceptance Mark"/>
-											<!-- PayPal Logo -->
 										</label>
 									</td>
 								</tr>
@@ -336,22 +334,8 @@
 									</td>
 									<td style="text-align:center;">
 										<label for="modal-top_up-payment_type-assist">
-											<img src="billing/assist.png" height="50" alt="ASSIST: Visa, MasterCard, JCB" style="display: inline; margin-right: 10px;"/>
-											<img src="billing/visa.gif" height="50" style="display: inline; margin-right: 10px;"/>
-											<img src="billing/mastercard.gif" height="50" style="display: inline; margin-right: 10px;"/>
-											<img src="billing/jcb.jpg" height="50" style="display: inline; margin-right: 10px;"/>
-										</label>
-									</td>
-								</tr>
-								<tr>
-									<td style="text-align:center;">
-										<input type="radio" id="modal-top_up-payment_type-tinkoff" name="payment_type" value="4"/>
-									</td>
-									<td style="text-align:center;">
-										<label for="modal-top_up-payment_type-tinkoff">
-											<img src="https://static.tinkoff.ru/dist/images/content-images/brand/tinkoffbank_simple_logo/TinkoffBank_simple_logo_1.png" height="50" alt="Tinkoff Bank: Visa, MasterCard" style="display: inline; margin-right: 10px;"/>
-											<img src="billing/visa.gif" height="50" style="display: inline; margin-right: 10px;"/>
-											<img src="billing/mastercard.gif" height="50" style="display: inline; margin-right: 10px;"/>
+											<img src="assist/assist.png" alt="ASSIST Electronic Payment System" style="height:50px;"/>
+											<img src="assist/logos.png" style="height:50px;"/>
 										</label>
 									</td>
 								</tr>
