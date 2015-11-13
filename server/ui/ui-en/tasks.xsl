@@ -23,7 +23,7 @@
 					</div>
 				</xsl:if>
 				<div class="apply-data-display-period">
-					<xsl:if test="count(task) &gt; 500 and not(@time)">
+					<xsl:if test="count(task) &gt; 500">
 						<div class="alert alert-info alert-dismissable">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-display-period">&#215;</button>
 							<b>Tip:</b>
