@@ -235,6 +235,13 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
+				<xsl:if test="count(transaction) &gt; 500">
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-display-period">&#215;</button>
+						<b>Tip:</b>
+						Use <b>Data Display Period</b> option in <a href="../?settings=1">Settings</a> to reduce displayed data and speed up the UI.
+					</div>
+				</xsl:if>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<i class="fa fa-credit-card"></i>

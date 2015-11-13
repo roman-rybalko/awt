@@ -16,11 +16,11 @@
 				<h1 class="page-header">History</h1>
 				<xsl:apply-templates select="//message"/>
 				<div class="apply-data-display-period">
-					<xsl:if test="count(event) &gt; 500">
+					<xsl:if test="count(event) &gt; 500 and not(@time)">
 						<div class="alert alert-info alert-dismissable">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="display-period">&#215;</button>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-display-period">&#215;</button>
 							<b>Tip:</b>
-							Use <b>Data Display Period</b> option in <a href="../?settings=1">Settings</a> to reduce displayed data.
+							Use <b>Data Display Period</b> option in <a href="../?settings=1">Settings</a> to reduce displayed data and speed up the UI.
 						</div>
 					</xsl:if>
 				</div>
