@@ -37,8 +37,10 @@ class Task {
 					$xml .= '/>';
 			}
 			$xml .= '</task>';
-		} else
+		} else {
+			$xml .= '<message type="error" value="bad_task_id"/>';
 			$xml .= '<task/>';
+		}
 		return $xml;
 	}
 }
