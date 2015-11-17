@@ -14,5 +14,6 @@
  набор нотификаций для успеха и сбоя. Каждый Task содержит sched_id и sched_name или null если запущен вручную. Settings как-то
  переработать - убрать галки отправки отчетов. Дефолтный набор нотификаций не делать. Возможность скопировать Schedule Job.
  Восстановление пароля и платежная информация только на E-Mail из Settings.
-* php xsltprocessor recursion bug report & fix
+* php openssl_sign bug report
+* php xsltprocessor recursion bug report
 * доработать wine для запуска Selenium IEDriverServer
