@@ -101,20 +101,7 @@
 									</xsl:for-each>
 								</tbody>
 							</table>
-							<xsl:for-each select="task[@status = 'initial']">
-								<xsl:call-template name="modal_new_task">
-									<xsl:with-param name="modal_id">modal-task-restart-<xsl:value-of select="@id"/></xsl:with-param>
-									<xsl:with-param name="test_name"><xsl:value-of select="@test_name"/></xsl:with-param>
-									<xsl:with-param name="test_id"><xsl:value-of select="@test_id"/></xsl:with-param>
-								</xsl:call-template>
-							</xsl:for-each>
 						</div>
-					</div>
-					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cancel1">&#215;</button>
-						<b>Tip:</b>
-						New Task may be canceled.
-						Running Task may be canceled after timeout (by default 10 seconds per action).
 					</div>
 				</div>
 			</div>
@@ -187,14 +174,12 @@
 									</xsl:for-each>
 								</tbody>
 							</table>
-							<xsl:for-each select="task[@status = 'starting' or @status = 'running']">
-								<xsl:call-template name="modal_new_task">
-									<xsl:with-param name="modal_id">modal-task-restart-<xsl:value-of select="@id"/></xsl:with-param>
-									<xsl:with-param name="test_name"><xsl:value-of select="@test_name"/></xsl:with-param>
-									<xsl:with-param name="test_id"><xsl:value-of select="@test_id"/></xsl:with-param>
-								</xsl:call-template>
-							</xsl:for-each>
 						</div>
+					</div>
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cancel">&#215;</button>
+						<b>Tip:</b>
+						Running Task may be canceled after timeout (by default 10 seconds per action).
 					</div>
 				</div>
 			</div>
@@ -274,13 +259,6 @@
 									</xsl:for-each>
 								</tbody>
 							</table>
-							<xsl:for-each select="task[@status = 'succeeded' or @status = 'failed']">
-								<xsl:call-template name="modal_new_task">
-									<xsl:with-param name="modal_id">modal-task-restart-<xsl:value-of select="@id"/></xsl:with-param>
-									<xsl:with-param name="test_name"><xsl:value-of select="@test_name"/></xsl:with-param>
-									<xsl:with-param name="test_id"><xsl:value-of select="@test_id"/></xsl:with-param>
-								</xsl:call-template>
-							</xsl:for-each>
 						</div>
 					</div>
 				</div>
@@ -344,18 +322,18 @@
 									</xsl:for-each>
 								</tbody>
 							</table>
-							<xsl:for-each select="task[@status = 'canceled']">
-								<xsl:call-template name="modal_new_task">
-									<xsl:with-param name="modal_id">modal-task-restart-<xsl:value-of select="@id"/></xsl:with-param>
-									<xsl:with-param name="test_name"><xsl:value-of select="@test_name"/></xsl:with-param>
-									<xsl:with-param name="test_id"><xsl:value-of select="@test_id"/></xsl:with-param>
-								</xsl:call-template>
-							</xsl:for-each>
 						</div>
 					</div>
 				</div>
 			</div>
 		</xsl:if>
+		<xsl:for-each select="task">
+			<xsl:call-template name="modal_new_task">
+				<xsl:with-param name="modal_id">modal-task-restart-<xsl:value-of select="@id"/></xsl:with-param>
+				<xsl:with-param name="test_name"><xsl:value-of select="@test_name"/></xsl:with-param>
+				<xsl:with-param name="test_id"><xsl:value-of select="@test_id"/></xsl:with-param>
+			</xsl:call-template>
+		</xsl:for-each>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="alert alert-info alert-dismissable">
