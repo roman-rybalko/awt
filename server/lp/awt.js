@@ -1,4 +1,4 @@
-var menuBarPoss = [0, 0, 0, 0];
+var menuBarPoss = [0, 0, 0, 0, 0, 0];
 
 function reformat() {
 	$(".awt-image-floated").each(function() {
@@ -15,13 +15,14 @@ function reformat() {
 	});
 	$('#menubar').width($('.container').width());
 	$('#menubar-placeholder').height($('#menubar').height());
-	menuBarPoss = [$('#description').offset().top, $('#use-cases').offset().top, $('#features').offset().top, $(document).height()];
+	menuBarPoss = [$('#description').offset().top, $('#use-cases').offset().top, $('#features').offset().top,
+	               $('#pricing').offset().top, $('#contacts').offset().top, $(document).height()];
 }
 $(window).resize(reformat);
 
 var menuBarPinUp = false;
 var menuBarActive = 0;
-var menuBarItems = ['#menubar-item-description', '#menubar-item-use-cases', '#menubar-item-features'];
+var menuBarItems = ['#menubar-item-description', '#menubar-item-use-cases', '#menubar-item-features', '#menubar-item-pricing', '#menubar-item-contacts'];
 function updateMenuBar() {
 	if (menuBarPinUp) {
 		if ($(window).scrollTop() < 110) {
