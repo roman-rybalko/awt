@@ -1058,7 +1058,7 @@ class User {
 			}
 			if (!$tokenFound)
 				echo '<message type="error" value="bad_paypal_token"/>';
-			$this->redirect('?billing=1', 3);
+			$this->redirect('?billing=1' . (isset($_GET['time']) ? '&time=' . $_GET['time'] : ''), 3);
 			return;
 		}
 		$time = time() - 42 * 86400;
