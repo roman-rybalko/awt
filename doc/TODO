@@ -1,3 +1,5 @@
+* исправить redirect после оплаты - потерялся time
+* заблокировать отправку формы с пустым именем в tests и schedule
 * ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 * административный интерфейс - статистика, мониторинг
 * cleanup (stats, tasks, billing, accounts - see concept)
