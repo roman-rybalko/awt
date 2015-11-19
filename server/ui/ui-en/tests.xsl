@@ -173,6 +173,12 @@
 				<div class="panel panel-success">
 					<div class="panel-body">
 						<form role="form" method="post" class="form-inline">
+							<xsl:attribute name="onsubmit"><![CDATA[
+								if (! $(this).find('input[name="name"]').val().match(/\S/)) {
+									$(this).find('input[name="name"]').focus();
+									return false;
+								}
+							]]></xsl:attribute>
 							<div class="form-group space-x">
 								<input class="form-control" placeholder="Name" name="name" type="text" autofocus="1"/>
 							</div>

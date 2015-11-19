@@ -93,6 +93,10 @@ $(function() {
 			format: datetime_format
 		});
 	$('.form-schedule-task').submit(function() {
+		if (! $(this).find('input[name="name"]').val().match(/\S/)) {
+			$(this).find('input[name="name"]').focus();
+			return false;
+		}
 		$(this).find('.date input').each(function() {
 			$(this).val(moment($(this).val(), datetime_format).unix());
 		});
