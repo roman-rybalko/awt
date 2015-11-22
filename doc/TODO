@@ -1,3 +1,4 @@
+* ui tasks tip: poll every 5 seconds
 * ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 * административный интерфейс - статистика, мониторинг
 * cleanup (stats, tasks, billing, accounts - see concept)
@@ -17,3 +18,8 @@
 * php openssl_sign bug report
 * php xsltprocessor recursion bug report
 * доработать wine для запуска Selenium IEDriverServer
+* action: label, condition (test an expression & skip to the label) - for captcha bypass
+* action: save element image into var - for captcha bypass
+* action: open a new window/tab or change open behavior - for captcha bypass
+* action: set proxy (custom, pre-defined - вбить адреса прокси в ui а на самих прокси настроить acl, либо серые адреса через vpn)
+* action selectors: xpath: & jquery: (by default xpath)
