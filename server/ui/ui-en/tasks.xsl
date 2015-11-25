@@ -103,6 +103,11 @@
 							</table>
 						</div>
 					</div>
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-pending">&#215;</button>
+						<b>Tip:</b>
+						Pending Tasks are processed every 5 seconds (when the processing queue is empty).
+					</div>
 				</div>
 			</div>
 		</xsl:if>
