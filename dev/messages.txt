@@ -127,7 +127,7 @@ task_add_fail
 	Task start failed (perhaps the Test contains too many actions).
 
 no_funds
-	Available Actions (Balance) are exhausted, please Top Up.
+	Available Actions (Account Balance) exhausted, please Top Up.
 
 test_is_deleted
 	The Test is deleted.

@@ -171,7 +171,7 @@
 							all your <a href="../?billing=1">Payment Subscriptions</a> will be canceled,
 						</li>
 						<li>
-							your <a href="../?billing=1">Available Actions (Balance)</a> will be refunded.
+							your <a href="../?billing=1">Available Actions (Account Balance)</a> will be refunded.
 						</li>
 					</ul>
 					During 42 days you may ask to restore your account via support.

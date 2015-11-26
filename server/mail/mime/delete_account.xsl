@@ -18,7 +18,7 @@ If you delete your account,
 all your Pending Tasks will be canceled,
 all your Schedule Jobs will be canceled,
 all your Payment Subscriptions will be canceled,
-your Available Actions (Balance) will be refunded.
+your Available Actions (Account Balance) will be refunded.
 
 Please, confirm your account deletion by visiting the link below.
 <xsl:value-of select="@url"/>

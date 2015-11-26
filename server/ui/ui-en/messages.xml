@@ -171,7 +171,7 @@
 </message>
 
 <message value="no_funds">
-	Available Actions (Balance) are exhausted, please Top Up.
+	Available Actions (Account Balance) exhausted, please Top Up.
 </message>
 
 <message value="test_is_deleted">
