@@ -65,7 +65,7 @@
 								<div class="huge">
 									<xsl:value-of select="@actions_available"/>
 								</div>
-								<div>Available Actions</div>
+								<div>Available Actions (Account Balance)</div>
 							</div>
 						</div>
 					</div>
