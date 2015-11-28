@@ -1,0 +1,12 @@
+{
+    "name": "advancedwebtesting/webmoney",
+    "authors": [
+        {
+            "name": "Roman Rybalko",
+            "email": "devel@romanr.info"
+        }
+    ],
+    "require": {
+        "baibaratsky/php-webmoney": "^0.13.0"
+    }
+}

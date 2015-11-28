@@ -16,7 +16,7 @@ class User {
 	public function run() {
 		header('Content-Type: text/xml');
 		//\WebConstructionSet\OutputBuffer\XsltHtml::init();
-		//\WebConstructionSet\OutputBuffer\XmlFormatter::init();
+		\WebConstructionSet\OutputBuffer\XmlFormatter::init();
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
 		echo '<?xml-stylesheet type="text/xsl" href="ui-en/index.xsl"?>';
 		$userDb = new \WebConstructionSet\Database\Relational\User($this->db);
@@ -961,6 +961,11 @@ class User {
 	params: id
 	submit: refund
 
+	Process Pending Transaction
+	method: post
+	params: payment_type id [code]
+	submit: process_pending_transaction
+
 	Cancel Pending Transaction
 	method: post
 	params: payment_type id
@@ -1006,6 +1011,14 @@ class User {
 				echo '<message type="notice" value="refund_ok"/>';
 			else
 				echo '<message type="error" value="refund_fail"/>';
+		} else if (isset($_POST['process_pending_transaction'])) {
+			if (\AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
+				if ($billMgr->processPendingTransaction($_POST['payment_type'], $_POST['id'], isset($_POST['code']) ? $_POST['code'] : null))
+					echo '<message type="notice" value="process_pending_transaction_ok"/>';
+				else
+					echo '<message type="error" value="process_pending_transaction_fail"/>';
+			else
+				echo '<message type="error" value="bad_params"/>';
 		} else if (isset($_POST['cancel_pending_transaction'])) {
 			if (\AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
 				if ($billMgr->cancelPendingTransaction($_POST['payment_type'], $_POST['id']))
@@ -1044,10 +1057,8 @@ class User {
 			// PayPal hack
 			$token = $_GET['token'];
 			$tokenFound = false;
-			foreach ($billMgr->getPendingTransactions(\AdvancedWebTesting\Billing\PaymentType::PAYPAL) as $pendingTransaction) {
-				$params = [];
-				parse_str(parse_url($pendingTransaction['url'], PHP_URL_QUERY), $params);
-				if (isset($params['token']) && $params['token'] === $token) {
+			foreach ($billMgr->getPendingTransactions(\AdvancedWebTesting\Billing\PaymentType::PAYPAL) as $pendingTransaction)
+				if ($pendingTransaction['payment_data'] == $token) {
 					$tokenFound = true;
 					if ($billMgr->processPendingTransaction(\AdvancedWebTesting\Billing\PaymentType::PAYPAL, $pendingTransaction['id']))
 						echo '<message type="notice" value="paypal_ok"/>';
@@ -1055,9 +1066,26 @@ class User {
 						echo '<message type="error" value="paypal_fail"/>';
 					break;
 				}
-			}
 			if (!$tokenFound)
 				echo '<message type="error" value="bad_paypal_token"/>';
+			$this->redirect('?billing=1' . (isset($_GET['time']) ? '&time=' . $_GET['time'] : ''), 3);
+			return;
+		}
+		if (isset($_GET['LMI_PAYMENT_NO'])) {
+			// WebMoney hack
+			$paymentNumber = $_GET['LMI_PAYMENT_NO'];
+			$paymentNumberFound = false;
+			foreach ($billMgr->getPendingTransactions(\AdvancedWebTesting\Billing\PaymentType::WEBMONEY) as $pendingTransaction)
+				if (isset($pendingTransaction['transaction_id']) && $pendingTransaction['transaction_id'] == $paymentNumber) {
+					$paymentNumberFound = true;
+					if ($billMgr->processPendingTransaction(\AdvancedWebTesting\Billing\PaymentType::WEBMONEY, $pendingTransaction['id']))
+						echo '<message type="notice" value="webmoney_ok"/>';
+					else
+						echo '<message type="error" value="webmoney_fail"/>';
+					break;
+				}
+			if (!$paymentNumberFound)
+				echo '<message type="error" value="bad_webmoney_payment_number"/>';
 			$this->redirect('?billing=1' . (isset($_GET['time']) ? '&time=' . $_GET['time'] : ''), 3);
 			return;
 		}

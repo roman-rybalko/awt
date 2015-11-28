@@ -26,6 +26,8 @@ class Cron {
 					$billMgr->cancelPendingTransaction($pendingTransaction['payment_type'], $pendingTransaction['id']);
 					continue;
 				}
+				if (isset($pendingTransaction['code']))
+					continue;  // authorization code is required - interactive only
 				if ($pendingTransaction['payment_type'] == \AdvancedWebTesting\Billing\PaymentType::PAYPAL)
 					continue;  // PayPal hack: транзакции PayPal обрабатываются на странице ?billing=1
 				$billMgr->processPendingTransaction($pendingTransaction['payment_type'], $pendingTransaction['id']);

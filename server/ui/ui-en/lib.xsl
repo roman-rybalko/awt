@@ -66,7 +66,7 @@
 			PayPal
 		</xsl:when>
 		<xsl:when test="@payment_type = 3">
-			RBK Money
+			WebMoney
 		</xsl:when>
 		<xsl:otherwise>
 			<b class="space-x">Payment Type:</b>

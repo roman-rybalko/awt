@@ -21,10 +21,10 @@ class Paypal implements \AdvancedWebTesting\Billing\PaymentBackend {
 	/**
 	 * @param integer $externalId
 	 * @param integer $actionsCnt
-	 * @param string|null $subscriotion
+	 * @param string|null $subscription
 	 * @return integer|null $transactionId
 	 */
-	public function createTransaction($externalId, $actionsCnt, $subscriotion = null) {
+	public function createTransaction($externalId, $actionsCnt, $subscription = null) {
 		$params = [
 			'L_PAYMENTREQUEST_0_ITEMCATEGORY0' => 'Digital',
 			'L_PAYMENTREQUEST_0_NAME0' => 'Test Action',
@@ -34,7 +34,7 @@ class Paypal implements \AdvancedWebTesting\Billing\PaymentBackend {
 			'NOSHIPPING' => 1,
 			'ALLOWNOTE' => 0,
 		];
-		return $this->paypal->initiateTransaction($externalId, $actionsCnt * $this->actionPrice, $this->currencyCode, $subscriotion, $params);
+		return $this->paypal->initiateTransaction($externalId, $actionsCnt * $this->actionPrice, $this->currencyCode, $subscription, $params);
 	}
 
 	/**
@@ -61,7 +61,7 @@ class Paypal implements \AdvancedWebTesting\Billing\PaymentBackend {
 	 * @param integer $transactionId
 	 * @return [payment_data => string, transaction_data => mixed|null ] | null
 	 */
-	public function processTransaction($transactionId) {
+	public function processTransaction($transactionId, $code = null) {
 		$data = $this->paypal->processTransaction($transactionId);
 		if (!$data)
 			return null;

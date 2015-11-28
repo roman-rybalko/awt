@@ -1,4 +1,7 @@
 
+bad_task_id
+	Invalid Task ID.
+
 login_ok
 	Welcome!
 
@@ -139,9 +142,6 @@ task_cancel_ok
 task_cancel_fail
 	Cancel Task failed (perhaps the cancel is not allowed in this state or timeout is not reached).
 
-bad_task_id
-	Invalid Task ID.
-
 sched_add_ok
 	Schedule Job has been created.
 
@@ -179,6 +179,12 @@ refund_ok
 refund_fail
 	Refund failed (please, try again later).
 
+process_pending_transaction_ok
+	Pending Transaction has been processed successfully.
+
+process_pending_transaction_fail
+	Pending Transaction processing failed.
+
 cancel_pending_transaction_ok
 	Pending Transaction has been canceled.
 
@@ -212,4 +218,13 @@ paypal_fail
 
 bad_paypal_token
 	Invalid PayPal Token (perhaps it has already been processed).
+
+webmoney_ok
+	WebMoney has been processed successfully.
+
+webmoney_fail
+	WebMoney processing failed.
+
+bad_webmoney_payment_number
+	Invalid WebMoney payment number (perhaps it has already been processed).
 

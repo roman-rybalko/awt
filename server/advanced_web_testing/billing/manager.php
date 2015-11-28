@@ -9,10 +9,15 @@ namespace AdvancedWebTesting\Billing;
 class Manager {
 	private $billing, $payments;
 
+	/**
+	 * @param \WebConstructionSet\Database\Relational $db
+	 * @param integer $userId not null (processSubscription() требует userId для привязки транзакции к пользователю)
+	 */
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
 		$this->billing = new \WebConstructionSet\Database\Relational\Billing($db, 0, $userId);
 		$this->paymentBackends[PaymentType::DEMO] = new PaymentBackend\Demo($db, $userId);
 		$this->paymentBackends[PaymentType::PAYPAL] = new PaymentBackend\Paypal($db, $userId);
+		$this->paymentBackends[PaymentType::WEBMONEY] = new PaymentBackend\Webmoney($db, $userId);
 	}
 
 	/**
@@ -88,7 +93,7 @@ class Manager {
 		if (!$transactionId)
 			return null;
 		if ($subscription)
-			$subscription = 'Subscription for auto Top Up when the account balance gets low (' . $_SERVER['SERVER_NAME'] . ')';
+			$subscription = 'Subscription / Recurring payments / Auto Top Up when the account balance gets low (' . $_SERVER['SERVER_NAME'] . ')';
 		if ($pendingTransactionId = $paymentBackend->createTransaction($transactionId, $actionsCnt, $subscription))
 			if ($data = $paymentBackend->getTransactions([$pendingTransactionId])) {
 				$transaction = $data[0];
@@ -124,7 +129,7 @@ class Manager {
 			foreach (['type', 'data', 'task_id', 'test_name', 'sched_id', 'sched_name', 'payment_type', 'payment_amount', 'payment_data', 'ref_id'] as $field)
 				if (isset($data1['data'][$field]))
 					$transaction[$field] = $data1['data'][$field];
-			if (isset($data1['data']['transaction_data']) && $data1['data']['transaction_data'] && !isset($data1['data']['ref_id']))
+			if ($data1['amount'] > 0 && isset($data1['data']['transaction_data']) && $data1['data']['transaction_data'] && !isset($data1['data']['ref_id']))
 				$transaction['refundable'] = true;
 			$transactions[] = $transaction;
 		}
@@ -135,8 +140,10 @@ class Manager {
 	 * @param integer|null $paymentType
 	 * @param [integer]|null $pendingTransactionIds
 	 * @return [][payment_type => integer, id => integer, time => integer,
-	 *  transaction_id => integer, subscription_id (optional) => integer,
-	 *  url => string, actions_cnt => integer, payment_amount => string, payment_data => string]
+	 *  transaction_id (optional) => integer (global transaction id, if user-initiated),
+	 *  url (optional) => string (invoice url),
+	 *  code (optional) => boolean (authorization code required),
+	 *  actions_cnt => integer, payment_amount => string, payment_data => string]
 	 */
 	public function getPendingTransactions($paymentType = null, $pendingTransactionIds = null) {
 		$transactions = [];
@@ -148,8 +155,10 @@ class Manager {
 			if (isset($this->paymentBackends[$paymentType]))
 				foreach ($this->paymentBackends[$paymentType]->getTransactions($pendingTransactionIds) as $transaction) {
 					$transaction['payment_type'] = $paymentType;
-					$transaction['transaction_id'] = $transaction['external_id'];
-					unset($transaction['external_id']);
+					if (isset($transaction['external_id'])) {
+						$transaction['transaction_id'] = $transaction['external_id'];
+						unset($transaction['external_id']);
+					}
 					$transactions[] = $transaction;
 				}
 		return $transactions;
@@ -158,24 +167,43 @@ class Manager {
 	/**
 	 * @param integer $paymentType
 	 * @param integer $pendingTransactionId
+	 * @param string $code
 	 * @return boolean true - проведено
 	 */
-	public function processPendingTransaction($paymentType, $pendingTransactionId) {
+	public function processPendingTransaction($paymentType, $pendingTransactionId, $code = null) {
 		if (isset($this->paymentBackends[$paymentType]))
 			$paymentBackend = $this->paymentBackends[$paymentType];
 		else
 			return false;
 		if ($pendingTransactions = $this->getPendingTransactions($paymentType, [$pendingTransactionId])) {
 			$pendingTransaction = $pendingTransactions[0];
-			if ($transactions = $this->billing->getTransactions([$pendingTransaction['transaction_id']]))
-				$transaction = $transactions[0];
-			else
-				return false;
+			if (isset($pendingTransaction['transaction_id'])) {
+				if ($transactions = $this->billing->getTransactions([$pendingTransaction['transaction_id']]))
+					$transaction = $transactions[0];
+				else {
+					error_log(new \ErrorException('Pending Transaction with unknown transaction_id: ' . json_encode($pendingTransaction), null, null, __FILE__, __LINE__));
+					return false;
+				}
+			} else
+				$transaction = ['actions_cnt' => $pendingTransaction['actions_cnt'],
+					'data' => ['payment_type' => $paymentType, 'payment_amount' => $pendingTransaction['payment_amount'],
+						'payment_data' => $pendingTransaction['payment_data'], 'async' => 1]];
 		} else
 			return false;
-		$result = $paymentBackend->processTransaction($pendingTransactionId);
+		$result = $paymentBackend->processTransaction($pendingTransactionId, $code);
 		if (!$result)
 			return false;
+		if (!isset($pendingTransaction['transaction_id'])) {
+			$transaction['data']['type'] = $pendingTransaction['actions_cnt'] < 0 ? TransactionType::REFUND : TransactionType::TOP_UP;
+			$transaction['id'] = $this->billing->transaction($transaction['actions_cnt'], $transaction['data']);
+			if (!$transaction['id']) {
+				error_log(new \ErrorException('Async Transaction insert failed, pending transaction:' . json_encode($pendingTransaction), null, null, __FILE__, __LINE__));
+				if ($result['transaction_data'] && !$paymentBackend->refund($result['transaction_data']))
+					error_log(new \ErrorException('Refund failed, data:' . json_encode($result), null, null, __FILE__, __LINE__));
+				return false;
+			}
+			$pendingTransaction['transaction_id'] = $transaction['id'];
+		}
 		foreach (['payment_data', 'transaction_data'] as $field)
 			$transaction['data'][$field] = $result[$field];
 		if (!$this->billing->update($transaction['id'], $transaction['data']))
@@ -318,7 +346,7 @@ class Manager {
 		if ($actionsCnt > $transaction['amount'])
 			$actionsCnt = $transaction['amount'];
 		else
-			$note = 'Top Up: ' . $transaction['amount'] . ' Test Actions, Available (Balance): ' . $actionsCnt . ' Test Actions, Partial Refund.';
+			$note = 'Top Up: ' . $transaction['amount'] . ' Test Actions, Available (Balance): ' . $actionsCnt . ' Test Actions, partial refund';
 		$fields = ['type' => TransactionType::REFUND, 'ref_id' => $transactionId,
 			'payment_type' => $paymentType, 'payment_data' => $transaction['data']['payment_data']];
 		$refundTransactionId = $this->billing->transaction(- $actionsCnt, $fields);

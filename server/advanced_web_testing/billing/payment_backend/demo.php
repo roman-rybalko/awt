@@ -12,10 +12,10 @@ class Demo implements \AdvancedWebTesting\Billing\PaymentBackend {
 	/**
 	 * @param integer $externalId
 	 * @param integer $actionsCnt
-	 * @param string|null $subscriotion
+	 * @param string|null $subscription
 	 * @return integer|null $transactionId
 	 */
-	public function createTransaction($externalId, $actionsCnt, $subscriotion = null) {
+	public function createTransaction($externalId, $actionsCnt, $subscription = null) {
 		return null;
 	}
 
@@ -34,7 +34,7 @@ class Demo implements \AdvancedWebTesting\Billing\PaymentBackend {
 	 * @param integer $transactionId
 	 * @return [payment_data => string, transaction_data => mixed|null ] | null
 	 */
-	public function processTransaction($transactionId) {
+	public function processTransaction($transactionId, $code = null) {
 		return ['payment_data' => 'Bad Transaction #' . $transactionId, 'transaction_data' => null];
 	}
 

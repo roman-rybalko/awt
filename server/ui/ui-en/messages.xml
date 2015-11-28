@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
 
+<message value="bad_task_id">
+	Invalid Task ID.
+</message>
+
 <message value="login_ok">
 	Welcome!
 </message>
@@ -187,10 +191,6 @@
 	Cancel Task failed (perhaps the cancel is not allowed in this state or timeout is not reached).
 </message>
 
-<message value="bad_task_id">
-	Invalid Task ID.
-</message>
-
 <message value="sched_add_ok">
 	Schedule Job has been created.
 </message>
@@ -240,6 +240,14 @@
 	Refund failed (please, try again later).
 </message>
 
+<message value="process_pending_transaction_ok">
+	Pending Transaction has been processed successfully.
+</message>
+
+<message value="process_pending_transaction_fail">
+	Pending Transaction processing failed.
+</message>
+
 <message value="cancel_pending_transaction_ok">
 	Pending Transaction has been canceled.
 </message>
@@ -283,6 +291,18 @@
 
 <message value="bad_paypal_token">
 	Invalid PayPal Token (perhaps it has already been processed).
+</message>
+
+<message value="webmoney_ok">
+	WebMoney has been processed successfully.
+</message>
+
+<message value="webmoney_fail">
+	WebMoney processing failed.
+</message>
+
+<message value="bad_webmoney_payment_number">
+	Invalid WebMoney payment number (perhaps it has already been processed).
 </message>
 
 </messages>

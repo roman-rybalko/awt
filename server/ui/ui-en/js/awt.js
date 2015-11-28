@@ -293,6 +293,9 @@ $(function() {
 			});
 		});
 	}
+	if ($('.modal-pending-transaction-code').length) {
+		$('.modal-pending-transaction-code').first().modal('show');
+	}
 });
 
 //Loads the correct sidebar on window load,

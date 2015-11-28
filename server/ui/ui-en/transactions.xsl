@@ -84,7 +84,14 @@
 		</a>
 	</xsl:if>
 	<xsl:if test="@ref_id">
-		<b class="space-x">Refunded:</b>
+		<xsl:choose>
+			<xsl:when test="@type = 'refund'">
+				<b class="space-x">Transaction:</b>
+			</xsl:when>
+			<xsl:otherwise>
+				<b class="space-x">Refund:</b>
+			</xsl:otherwise>
+		</xsl:choose>
 		<a href="../?billing_archive=1#{@ref_id}" class="space-x">
 			#<xsl:value-of select="@ref_id"/>
 		</a>
