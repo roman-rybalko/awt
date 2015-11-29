@@ -91,6 +91,11 @@
 						Top Up
 					</div>
 					<div class="panel-body">
+						<div class="alert alert-warning">
+							<b>Limits:</b><br/>
+							<b>PayPal:</b> MIN = 200 RUB, MAX = 500 RUB<br/>
+							<b>WebMoney:</b> MIN = 1 RUB, MAX = 200 RUB
+						</div>
 						<form role="form" method="post">
 							<div class="form-group">
 								<table style="width:100%;">
