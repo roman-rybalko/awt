@@ -7,7 +7,7 @@ require_once __DIR__ . '/webmoney/vendor/autoload.php';
 class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 	private $transactions, $subscriptions;
 	private $wm, $wmId, $wmPurse, $wmCert, $wmCertKey, $wmSecretKey, $wmValidityPeriodDays, $wmDayLimit, $wmWeekLimit, $wmMonthLimit;
-	private $currency, $actionPrice, $serviceUrl;
+	private $currency, $actionPrice, $serverName;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId, $actionPrice = 1, $lang = 'EN') {
 		$fields = [];
@@ -41,7 +41,7 @@ class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 				$this->currency = 'WM' . $purseType;
 		}
 		$this->actionPrice = $actionPrice;
-		$this->serviceUrl = \Config::UI_URL;
+		$this->serverName = parse_url(\Config::UI_URL, PHP_URL_HOST);
 	}
 
 	/**
@@ -160,8 +160,11 @@ class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 
 			$response = $this->wm->request($request);
 
-			if ($response->getReturnCode())
+			if ($response->getReturnCode()) {
+				// garbage here: payment not found bla bla bla
+				//$this->transactions->update(['payment_data' => 'X18 Code: ' . $response->getReturnCode() . ', X18 Description: ' . $response->getReturnDescription()], ['id' => $transactionId]);
 				return null;
+			}
 
 			if (!$this->transactions->delete(['id' => $transactionId]))
 				return null;
@@ -289,7 +292,7 @@ class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 		$request->setCustomerWmid($subsctiption['wmid']);
 		$request->setPurse($this->wmPurse);
 		$request->setAmount($subsctiption['actions_cnt'] * $this->actionPrice);
-		$request->setDescription('Subscription #' . $subsctiption['id'] . ': ' . $subsctiption['actions_cnt'] . ' Test Actions (' . $this->serviceUrl . ')');
+		$request->setDescription('Subscription #' . $subsctiption['id'] . ': ' . $subsctiption['actions_cnt'] . ' Test Actions (' . $this->serverName . ')');
 		$request->setExpiration($this->wmValidityPeriodDays);
 		$request->setOnlyAuth(false);
 
