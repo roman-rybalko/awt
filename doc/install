@@ -2,6 +2,7 @@ php5-json
 php5-mysql
 php5-xsl
 php5-gd
+php5-curl
 php-pear
 
 xvfb
