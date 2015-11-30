@@ -201,7 +201,7 @@ class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 		switch ($response->getReturnCode()) {
 			case 0:
 				break;
-			case 608:  /// already have the trust
+			case 608:  /// already have a trust
 				return $this->subscriptions->insert(['time' => time(), 'actions_cnt' => $transaction['actions_cnt'], 'wmid' => $payerWmid, 'purse' => $payerPurse]);
 			default:
 				error_log(new \ErrorException('X21R call failed, code: ' . $response->getReturnCode() . ', description: ' . $response->getReturnDescription(), null, null, __FILE__, __LINE__));
@@ -211,7 +211,7 @@ class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 		return $this->transactions->insert(['time' => time(), 'subscription' => $transaction['subscription'],
 			'actions_cnt' => $transaction['actions_cnt'],
 			'payment_data' => $response->getUserDescription(),
-			'wmid' => $payerWmid, 'purse' => $payerPurse, 'purse_id' => $response->getPurseId(),
+			'wmid' => $payerWmid, 'purse' => $payerPurse, 'purse_id' => $response->getRequestId(),
 			'started' => 1
 		]);
 	}
@@ -220,8 +220,8 @@ class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 		$request = new \baibaratsky\WebMoney\Api\X\X21\TrustConfirm\Request(\baibaratsky\WebMoney\Api\X\X21\TrustConfirm\Request::AUTH_LIGHT);
 		$request->cert($this->wmCert, $this->wmCertKey);
 		$request->setSignerWmid($this->wmId);
-		$request->setPurseId($transaction['purse_id']);
-		$request->setClientNumberCode($code);
+		$request->setRequestId($transaction['purse_id']);
+		$request->setConfirmationCode($code);
 		$request->setLanguage(\baibaratsky\WebMoney\Api\X\X21\TrustConfirm\Request::LANGUAGE_EN);
 
 		if (!$request->validate()) {
