@@ -393,7 +393,7 @@
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="form-group">
 		<label for="action-type-{$id}">Type</label>
-		<select class="form-control" name="type" id="action-type-{$id}" data-action-type-id="{$id}">
+		<select class="form-control action-type" name="type" id="action-type-{$id}" data-id="{$id}">
 			<xsl:for-each select="document('actions.xml')//action">
 				<option value="{@type}">
 					<xsl:value-of select="@type"/>
@@ -402,7 +402,7 @@
 		</select>
 	</div>
 	<xsl:for-each select="document('actions.xml')//action">
-		<div class="row" data-action-type="{@type}" data-action-id="{$id}">
+		<div class="row" id="action-wrap-type-{@type}-{$id}">
 			<xsl:apply-templates select="." mode="form">
 				<xsl:with-param name="id" select="$id"/>
 			</xsl:apply-templates>

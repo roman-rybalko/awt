@@ -19,28 +19,31 @@ $(function() {
 			loop: false
 		});
 	}
-	$('[data-action-type-id]').each(function() {
-		var id = $(this).attr('data-action-type-id');
-		$('[data-action-type-id="' + id + '"] option').each(function() {
+	$('.action-type').each(function() {
+		var select = $(this);
+		var id = select.attr('data-id');
+		var options = select.find('option');
+		options.each(function() {
 			var type = $(this).attr('value');
 			var descr = $('#action-type-' + type + '-' + id).html();
 			if (descr)
 				$(this).html(descr);
 		});
 		var action_form_update = function() {
-			$('[data-action-type-id="' + id + '"] option').each(function() {
+			options.each(function() {
 				var type = $(this).attr('value');
+				var wrap = $('#action-wrap-type-' + type + '-' + id);
 				if ($(this).prop('selected')) {
-					$('[data-action-id="' + id + '"][data-action-type="' + type + '"] input').prop('disabled', false);
-					$('[data-action-id="' + id + '"][data-action-type="' + type + '"]').show();
+					wrap.find('input').prop('disabled', false);
+					wrap.show();
 				} else {
-					$('[data-action-id="' + id + '"][data-action-type="' + type + '"] input').prop('disabled', true);
-					$('[data-action-id="' + id + '"][data-action-type="' + type + '"]').hide();
+					wrap.find('input').prop('disabled', true);
+					wrap.hide();
 				}
 			});
 		}
 		action_form_update();
-		$('[data-action-type-id="' + id + '"]').on('change', action_form_update);
+		select.on('change', action_form_update);
 	});
 	$('.action-wrap-data-proxy').each(function() {
 		var wrap = $(this);
