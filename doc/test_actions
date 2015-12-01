@@ -49,3 +49,7 @@ selector: имя
 type: var_title
 selector: имя
 Записать Title браузера в переменную
+
+type: proxy
+selector: name (us, fr, cn, ru, default, custom)
+data: host:port | url to file.pac

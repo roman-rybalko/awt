@@ -397,6 +397,101 @@
 	</div>
 </xsl:template>
 
+<xsl:template name="proxy_location_name">
+	<xsl:param name="selected_value"/>
+	<xsl:choose>
+		<xsl:when test="document('proxy.xml')//location[@value = $selected_value]">
+			<xsl:value-of select="document('proxy.xml')//location[@value = $selected_value]/@name"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:value-of select="$selected_value"/>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
+<xsl:template match="action[@type = 'proxy']" mode="html">
+	<div class="col-lg-2">
+		<b>Set Proxy</b>
+	</div>
+	<div class="col-lg-4" title="{@selector}">
+		<b>Location</b>:
+		<xsl:call-template name="proxy_location_name">
+			<xsl:with-param name="selected_value">
+				<xsl:value-of select="@selector"/>
+			</xsl:with-param>
+		</xsl:call-template>
+	</div>
+	<xsl:if test="@selector = 'custom'">
+		<div class="col-lg-6" title="{@data}">
+			<b>Address</b>: <xsl:value-of select="@data"/>
+		</div>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template match="action[@type = 'proxy']" mode="text">
+	<xsl:text/>Set Proxy, Location: <xsl:text/>
+	<xsl:call-template name="proxy_location_name">
+		<xsl:with-param name="selected_value">
+			<xsl:value-of select="@selector"/>
+		</xsl:with-param>
+	</xsl:call-template>
+	<xsl:if test="@selector = 'custom'">
+		<xsl:text/>, Address: <xsl:value-of select="@data"/>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template name="proxy_select_options">
+	<xsl:param name="selected_value"/>
+	<xsl:for-each select="document('proxy.xml')//location">
+		<option value="{@value}">
+			<xsl:if test="@value = $selected_value">
+				<xsl:attribute name="selected"/>
+			</xsl:if>
+			<xsl:value-of select="@name"/>
+		</option>
+	</xsl:for-each>
+</xsl:template>
+
+<xsl:template match="action[@type = 'proxy']" mode="form">
+	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="alert alert-info alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="action-proxy-thefirst">&#215;</button>
+			<b>Tip:</b>
+			Set Proxy action should be the first one in the test.
+		</div>
+	</div>
+	<div class="col-lg-2">
+		<div class="form-group">
+			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
+				Set Proxy
+			</label>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="form-group">
+			<label for="action-selector-{@type}-{$id}">
+				Location
+			</label>
+			<select class="form-control" name="selector" id="action-selector-{@type}-{$id}">
+				<xsl:call-template name="proxy_select_options">
+					<xsl:with-param name="selected_value">
+						<xsl:value-of select="@selector"/>
+					</xsl:with-param>
+				</xsl:call-template>
+			</select>
+		</div>
+	</div>
+	<div class="col-lg-6 action-wrap-data-{@type}" data-id="{$id}">
+		<div class="form-group">
+			<label for="action-data-{@type}-{$id}">
+				Address
+			</label>
+			<input class="form-control" type="text" name="data" value="{@data}" id="action-data-{@type}-{$id}" placeholder="host:port | http://url/to/file.pac"/>
+		</div>
+	</div>
+</xsl:template>
+
 <xsl:template match="action" mode="html">
 	<div class="col-lg-2">
 		<b><xsl:value-of select="@type"/></b>
@@ -417,7 +512,7 @@
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-2">
 		<div class="form-group">
-			<label for="action-selector-{@type}-{$id}" id="action-type-{$id}">
+			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
 				<xsl:value-of select="@type"/>
 			</label>
 		</div>

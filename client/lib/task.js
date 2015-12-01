@@ -1,10 +1,11 @@
 var webdriver = require('selenium-webdriver');
+var proxy = require('selenium-webdriver/proxy');
 var selutil = require('./selutil');
 var srv = require('./srv');
 var xputil = require('./xputil');
 var config = require('../config');
 
-function get_selenium() {
+function get_selenium(actions) {
 	if (config.selenium_browser)
 		process.env['SELENIUM_BROWSER'] = config.selenium_browser;
 	if (config.selenium_server)
@@ -12,6 +13,14 @@ function get_selenium() {
 	var builder = new webdriver.Builder();
 	if (config.selenium_capabilities)
 		builder.withCapabilities(config.selenium_capabilities);
+	if (actions && actions[0] && actions[0].type == 'proxy') {
+		console.log('proxy:', actions[0]);
+		var data = actions[0].data;
+		if (data.match(/:\/\//))
+			builder.setProxy(proxy.pac(data));
+		else
+			builder.setProxy(proxy.manual({http: data, https: data, ftp: data}));
+	}
 	var selenium = builder.build();
 	return selenium;
 }
@@ -39,13 +48,6 @@ function handle_task() {
 		throw new Error('response[2] parsing failed, resp:' + JSON.stringify(resp));
 	var fails = {}, scrns = {};
 	if (task.actions.length) {
-		if (config.selenium_start_cb)
-			config.selenium_start_cb(task);
-		var selenium = get_selenium();
-		selutil.wait(selenium.manage().timeouts().pageLoadTimeout(config.selenium_timeout));  // throws
-		selutil.wait(selenium.manage().timeouts().setScriptTimeout(config.selenium_timeout));  // throws
-		if (config.selenium_fullscreen)
-			selutil.wait(selenium.manage().window().maximize());  // throws
 		var vars = {};
 		function apply_vars(data) {
 			var v;
@@ -57,6 +59,18 @@ function handle_task() {
 			return data;
 		}
 		task.actions.sort(function(a, b){return a.id - b.id;});
+		if (config.selenium_start_cb)
+			config.selenium_start_cb(task);
+		var selenium;
+		var init = function() {
+			if (!selenium)
+				selenium = get_selenium(task.actions);
+			selutil.set_timeout(config.selenium_timeout);
+			selutil.wait(selenium.manage().timeouts().pageLoadTimeout(config.selenium_timeout));  // throws
+			selutil.wait(selenium.manage().timeouts().setScriptTimeout(config.selenium_timeout));  // throws
+			if (config.selenium_fullscreen)
+				selutil.wait(selenium.manage().window().maximize());  // throws
+		}
 		for (var i = 0; i < task.actions.length; ++i) {
 			var action = task.actions[i];
 			if (action.data)
@@ -68,8 +82,16 @@ function handle_task() {
 			else
 				action.selector = '';
 			try {
+				if (init) {
+					init();
+					init = null;
+				}
 				selutil.hide_selection(selenium);
 				switch (action.type) {
+				case 'proxy':
+					if (i)
+						throw new Error('proxy action should be the first');
+					break;
 				case 'open':
 					var url = action.selector;
 					if (!url.match(/^\w+:\/\//i))
@@ -83,7 +105,7 @@ function handle_task() {
 						return selutil.select_window(selenium, function() {
 							return selutil.wait(selenium.isElementPresent({xpath: xpath}));
 						});
-					}, config.selenium_timeout))
+					}))
 						throw new Error('Element XPATH "' + xpath + '" is not found');
 					selutil.select_element(selenium, selutil.wait(selenium.findElement({xpath: xpath})));
 					scrns[action.id] = config.selenium_scrn(selenium);
@@ -94,7 +116,7 @@ function handle_task() {
 						return selutil.select_window(selenium, function() {
 							return selutil.wait(selenium.isElementPresent({xpath: xpath}));
 						});
-					}, config.selenium_timeout))
+					}))
 						throw new Error('Element XPATH "' + xpath + '" is not found');
 					var el = selutil.wait(selenium.findElement({xpath: xpath}));
 					selutil.select_element(selenium, el);
@@ -108,7 +130,7 @@ function handle_task() {
 						return selutil.select_window(selenium, function() {
 							return selutil.wait(selenium.isElementPresent({xpath: xpath}));
 						});
-					}, config.selenium_timeout))
+					}))
 						throw new Error('Element XPATH "' + xpath + '" is not found');
 					var el = selutil.wait(selenium.findElement({xpath: xpath}));
 					selutil.wait(el.clear());
@@ -122,7 +144,7 @@ function handle_task() {
 						return selutil.select_window(selenium, function() {
 							return selutil.wait(selenium.isElementPresent({xpath: xpath}));
 						});
-					}, config.selenium_timeout))
+					}))
 						throw new Error('Element XPATH "' + xpath + '" is not found');
 					var el = selutil.wait(selenium.findElement({xpath: xpath}));
 					var attr = xputil.attr(action.selector);
@@ -149,7 +171,7 @@ function handle_task() {
 								data = '';
 							return data.match(new RegExp(action.selector, 'i'));
 						});
-					}, config.selenium_timeout))
+					}))
 						throw new Error('RegExp "' + action.selector + '" for URL is not matched');
 					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
@@ -161,7 +183,7 @@ function handle_task() {
 								data = '';
 							return data.match(new RegExp(action.selector, 'i'));
 						});
-					}, config.selenium_timeout))
+					}))
 						throw new Error('RegExp "' + action.selector + '" for Title is not matched');
 					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
@@ -180,7 +202,7 @@ function handle_task() {
 						return selutil.select_window(selenium, function() {
 							return selutil.wait(selenium.isElementPresent({xpath: xpath}));
 						});
-					}, config.selenium_timeout))
+					}))
 						throw new Error('Element XPATH "' + xpath + '" is not found');
 					var el = selutil.wait(selenium.findElement({xpath: xpath}));
 					var attr = xputil.attr(action.data);
@@ -220,7 +242,12 @@ function handle_task() {
 					break;
 			}
 		}
-		selutil.wait(selenium.quit());  // throws
+		if (selenium)
+			try {
+				selutil.wait(selenium.quit());  // throws
+			} catch (e) {
+				console.error('selenium quit error:', e);
+			}
 	}
 	if (task.actions.length)  // let selenium var die
 		if (config.selenium_finish_cb)
@@ -232,14 +259,14 @@ function handle_task() {
 	};
 	for (var id in fails)
 		params['fail' + id] = fails[id];
-	for (var id in scrns) {
-		params['scrn' + id] = {
-			value: scrns[id].data,
-			options: {
-				filename: id + scrns[id].ext
-			}
-		};
-	}
+	for (var id in scrns)
+		if (scrns[id].data)
+			params['scrn' + id] = {
+				value: scrns[id].data,
+				options: {
+					filename: id + scrns[id].ext
+				}
+			};
 	var resp = srv.req(params);
 	if (resp.fail)
 		return resp.fail;

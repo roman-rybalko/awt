@@ -11,4 +11,5 @@
 	<action id="" type="var_xpath" selector="" data=""/> <!-- selector="name" data="xpath expression" -->
 	<action id="" type="var_url" selector=""/> <!-- selector="name" -->
 	<action id="" type="var_title" selector=""/> <!-- selector="name" -->
+	<action id="" type="proxy" selector="" data=""/> <!-- selector="type" data="host:port|url" -->
 </actions>

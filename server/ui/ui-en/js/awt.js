@@ -42,6 +42,21 @@ $(function() {
 		action_form_update();
 		$('[data-action-type-id="' + id + '"]').on('change', action_form_update);
 	});
+	$('.action-wrap-data-proxy').each(function() {
+		var wrap = $(this);
+		var id = wrap.attr('data-id');
+		var action_data_update = function() {
+			if ($('#action-selector-proxy-' + id + ' option:selected').attr('value') == 'custom') {
+				$('#action-data-proxy-' + id).prop('disabled', false);
+				wrap.show();
+			} else {
+				$('#action-data-proxy-' + id).prop('disabled', true);
+				wrap.hide();
+			}
+		}
+		action_data_update();
+		$('#action-selector-proxy-' + id).on('change', action_data_update);
+	});
 	if (typeof task_types !== 'undefined') {
 		var index = [];
 		for (var tt in task_types) {

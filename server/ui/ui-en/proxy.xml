@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy>
+	<location name="Default" value="default"/>
+	<location name="USA" value="us"/>
+	<location name="Europe" value="eu"/>
+	<location name="Russia" value="ru"/>
+	<location name="China" value="cn"/>
+	<location name="Custom" value="custom"/>
+</proxy>

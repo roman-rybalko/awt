@@ -50,6 +50,8 @@ class Task {
 					$action = [];
 					foreach (['id', 'type', 'selector', 'data'] as $param)
 						$action[$param] = $data1[$param];
+					if ($action['type'] == 'proxy')
+						$this->setProxy($action);
 					$actions[] = $action;
 				}
 				$result['task']['actions'] = $actions;
@@ -148,5 +150,15 @@ class Task {
 	private function prepareTaskDataPath($path) {
 		exec('rm -Rf ' . $path);
 		mkdir($path);
+	}
+
+	private function setProxy(&$action) {
+		if ($action['type'] == 'proxy') {
+			if (isset(\Config::$proxy[$action['selector']])) {
+				if (\Config::$proxy[$action['selector']])
+					$action['data'] = \Config::$proxy[$action['selector']];
+			} else
+				$action['data'] = \Config::$proxy['default'];
+		}
 	}
 }

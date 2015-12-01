@@ -3,11 +3,17 @@
 var wait = require('wait.for');
 
 var selection_html_id = 'selection' + Math.random();
+var wait_timeout = 30000; // msec
 
 function promise2nodecb(promise, cb) {
+	var t = setTimeout(function(){
+		promise.cancel('Timeout');
+	}, wait_timeout);
 	promise.then(function(val) {
+		clearTimeout(t);
 		cb(undefined, val);
 	}, function(err) {
+		clearTimeout(t);
 		cb(err);
 	});
 }
@@ -24,9 +30,9 @@ function sleep(ms) {
 	});
 }
 
-function wait_condition(condition, timeout) {
+function wait_condition(condition) {
 	var start_time = new Date().getTime();
-	while (new Date().getTime() < start_time + timeout)
+	while (new Date().getTime() < start_time + wait_timeout)
 		if (condition())
 			return true;
 		else
@@ -35,11 +41,14 @@ function wait_condition(condition, timeout) {
 }
 
 function get_scrn(selenium) {
-	var scrn = wait_promise(selenium.takeScreenshot());
-	return {
-		data: new Buffer(scrn, 'base64'),
-		ext: '.png'
-	};
+	if (selenium) {
+		var scrn = wait_promise(selenium.takeScreenshot());
+		return {
+			data: new Buffer(scrn, 'base64'),
+			ext: '.png'
+		};
+	}
+	return {};
 }
 
 function show_selection(selenium, area) {
@@ -131,9 +140,12 @@ function select_element(selenium, el) {
 }
 
 module.exports = {
-	wait: function(arg, timeout) {
+	set_timeout: function(timeout) {
+		wait_timeout = timeout;
+	},
+	wait: function(arg) {
 		if (typeof(arg) == 'function')
-			return wait_condition(arg, timeout);
+			return wait_condition(arg);
 		else
 			return wait_promise(arg);
 	},
