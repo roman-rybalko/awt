@@ -122,6 +122,8 @@ class Manager {
 			$fields['selector'] = $selector;
 		if ($data !== null)
 			$fields['data'] = $data;
+		if (!$fields)
+			return false;
 		if ($result = $this->actions->update($fields, ['action_id' => $actionId]))
 			$this->tests->update(['time' => time()], []);
 		return $result;
