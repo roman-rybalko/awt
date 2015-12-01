@@ -22,3 +22,4 @@
 * action: open a new window/tab or change open behavior - for captcha bypass
 * action: set proxy (custom, pre-defined - вбить адреса прокси в ui а на самих прокси настроить acl, либо серые адреса через vpn)
 * action selectors: xpath: & jquery: (by default xpath)
+* Валидация добавляемых actions
