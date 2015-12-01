@@ -425,7 +425,7 @@
 			<div id="xpath-browser-body-{$id}" class="panel-collapse collapse">
 				<div class="panel-body">
 					<div class="row">
-						<form role="form" method="post" data-xpath-browser-form-id="{$id}">
+						<form role="form" method="post" class="xpath-browser-form" data-id="{$id}">
 							<div class="col-lg-1">
 								<div class="form-group">
 									<button type="button" class="btn btn-block btn-primary xpath-browser-back" title="Back">

@@ -60,9 +60,9 @@ $(function() {
 			var url = url_history(+1);
 			browser_url(url);
 		});
-		$('[data-xpath-browser-form-id]').submit(function(ev) {
+		$('.xpath-browser-form').submit(function(ev) {
 			ev.preventDefault();
-			var id = $(this).attr('data-xpath-browser-form-id');
+			var id = $(this).attr('data-id');
 			var url = $('#xpath-browser-url-' + id).val();
 			if (!url) return;
 			browser_url(url);
