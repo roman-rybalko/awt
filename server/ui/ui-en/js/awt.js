@@ -167,15 +167,15 @@ $(function() {
 		if (hash)
 			table.search(hash).draw();
 	}
-	if ($('[data-dismiss="alert"][data-dismiss-state]').length) {
+	if ($('.close[data-dismiss="alert"][data-dismiss-state]').length) {
 		var storage1 = new Storage('dismiss-state-', 42 /* expire days */);  // var storage is busy
-		$('[data-dismiss="alert"][data-dismiss-state]').each(function() {
+		$('.close[data-dismiss="alert"][data-dismiss-state]').each(function() {
 			var name = $(this).attr('data-dismiss-state');
 			var value = storage1.get(name);
 			if (value)
 				$(this).closest('.alert').alert('close');
 		});
-		$('[data-dismiss="alert"][data-dismiss-state]').click(function() {
+		$('.close[data-dismiss="alert"][data-dismiss-state]').click(function() {
 			var name = $(this).attr('data-dismiss-state');
 			storage1.set(name, true);
 		});
