@@ -1,3 +1,0 @@
-Проверять лог веб-сервера (/var/log/nginx/error.log) на ошибки php.
-Проверять почту от www-data (ошибки из cron).
-Проверять bounce для Task Report и удалять адреса.
