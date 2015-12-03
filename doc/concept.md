@@ -24,6 +24,11 @@
 * Таймаут для теста и test action. Если тест выполняется более таймаута то он перезапускается. Тест в состоянии выполнения
  можно отменить после суммы таймаутов для test action. Отдельный таймаут для каждого теста не эффективно (нужно будет регулярно перебирать
  все тесты). По этому возникает максимальное количество test action.
+* Именование хостов:  
+sX.hosts.advancedwebtesting.com - сеовер (веб-интерфейс)  
+cX.hosts.advancedwebtesting.com - клиент (task executor)  
+pX.hosts.advancedwebtesting.com - прокси  
+nX.hosts.advancedwebtesting.com - general-purpose node  
 
 [Task Types](task_types.md)  
 [Action Types](action_types.md)  
