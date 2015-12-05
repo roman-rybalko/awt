@@ -1,6 +1,6 @@
 {
   "name": "awt-task",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "AWT task execution node",
   "main": "lib/index.js",
   "scripts": {

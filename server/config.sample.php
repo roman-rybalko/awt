@@ -37,7 +37,7 @@ class Config {
 	const BILLING_PENDING_PURGE_PERIOD = 1; // days
 	public static $proxy = [
 		'us' => 'http://www.dev/proxy-us.js',
-		'eu' => 'http://www.dev/proxy-eu.js',
+		'eu' => 'localhost:3128',
 		'ru' => 'http://www.dev/proxy-ru.js',
 		'cn' => 'proxy-cn.hosts.advancedwebtesting.net:64312',
 		'default' => 'http://www.dev/proxy-default.js',

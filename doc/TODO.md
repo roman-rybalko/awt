@@ -1,6 +1,5 @@
 План
 ====
-1. Set Proxy перезапускает браузер, пустой selector для запуска без прокси. Tip: Set Proxy will restart the browser. All windows will be closed. Cookies, local storage, history, etc. will be lost.
 2. В ui снизу сделать область аналогично как сверху, со ссылкой на support. Сейчас нет ссылок на support.
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг

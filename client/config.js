@@ -8,7 +8,7 @@ var scrn = require('./lib/selutil').get_scrn;
 module.exports = {
 	server_url: 'http://www/awt/server/si/task.php',
 	server_token: 'EtZGlOGWMGtEOptUcaQN98KTnPrXpvXgpY1orOue04',
-	task_type: 'phantomjs',
+	task_type: 'test',
 	node_id: 'test1',
 	selenium_start_cb: spawncb('printf', ['selenium_start_cb called\n']),  /// fn(task) | null
 	selenium_finish_cb: spawncb('printf', ['selenium_finish_cb called\n']),  /// fn(task, fails, scrns) | null
@@ -34,7 +34,7 @@ module.exports = {
 	//batch_finish_cb: spawncb('printf', ['batch_finish_cb called\n']),  /// fn(err, val) | null
 	//batch_finish_cb: spawncb('../cleanup.sh'),  /// fn(err, val) | null
 	//batch_finish_cb: function() { killchtreecb(process.pid, 'SIGKILL')(); spawncb('../cleanup.sh')(); },  /// fn(err, val) | null
-	batch_finish_cb: killchtreecb(process.pid, 'SIGKILL'),  /// fn(err, val) | null
+	//batch_finish_cb: killchtreecb(process.pid, 'SIGKILL'),  /// fn(err, val) | null
 	//x_display: 10,  /// integer | null
 	//x_auth: "/tmp/xauth10",  /// integer | null
 	//x_scrsize: "1200x1024x24",  /// integer | null

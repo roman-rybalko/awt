@@ -1,11 +1,11 @@
 var webdriver = require('selenium-webdriver');
-var proxy = require('selenium-webdriver/proxy');
+var selproxy = require('selenium-webdriver/proxy');
 var selutil = require('./selutil');
 var srv = require('./srv');
 var xputil = require('./xputil');
 var config = require('../config');
 
-function get_selenium(actions) {
+function get_selenium(proxy) {
 	if (config.selenium_browser)
 		process.env['SELENIUM_BROWSER'] = config.selenium_browser;
 	if (config.selenium_server)
@@ -13,13 +13,11 @@ function get_selenium(actions) {
 	var builder = new webdriver.Builder();
 	if (config.selenium_capabilities)
 		builder.withCapabilities(config.selenium_capabilities);
-	if (actions && actions[0] && actions[0].type == 'proxy') {
-		console.log('proxy:', actions[0]);
-		var data = actions[0].data;
-		if (data.match(/:\/\//))
-			builder.setProxy(proxy.pac(data));
+	if (proxy) {
+		if (proxy.match(/:\/\//))
+			builder.setProxy(selproxy.pac(proxy));
 		else
-			builder.setProxy(proxy.manual({http: data, https: data, ftp: data}));
+			builder.setProxy(selproxy.manual({http: proxy, https: proxy, ftp: proxy}));
 	}
 	var selenium = builder.build();
 	return selenium;
@@ -62,15 +60,14 @@ function handle_task() {
 		if (config.selenium_start_cb)
 			config.selenium_start_cb(task);
 		var selenium;
-		var init = function() {
-			if (!selenium)
-				selenium = get_selenium(task.actions);
-			selutil.set_timeout(config.selenium_timeout);
+		selutil.set_timeout(config.selenium_timeout);
+		var init = function(selenium) {
 			selutil.wait(selenium.manage().timeouts().pageLoadTimeout(config.selenium_timeout));  // throws
 			selutil.wait(selenium.manage().timeouts().setScriptTimeout(config.selenium_timeout));  // throws
 			if (config.selenium_fullscreen)
 				selutil.wait(selenium.manage().window().maximize());  // throws
 		}
+		var reinit = init;
 		for (var i = 0; i < task.actions.length; ++i) {
 			var action = task.actions[i];
 			if (action.data)
@@ -81,17 +78,16 @@ function handle_task() {
 				action.selector = apply_vars(action.selector);
 			else
 				action.selector = '';
+			console.log('action:', action);
 			try {
+				if (!selenium)
+					selenium = get_selenium();
 				if (init) {
-					init();
+					init(selenium);
 					init = null;
 				}
 				selutil.hide_selection(selenium);
 				switch (action.type) {
-				case 'proxy':
-					if (i)
-						throw new Error('proxy action should be the first');
-					break;
 				case 'open':
 					var url = action.selector;
 					if (!url.match(/^\w+:\/\//i))
@@ -231,11 +227,41 @@ function handle_task() {
 					vars[name] = data;
 					scrns[action.id] = config.selenium_scrn(selenium);
 					break;
+				case 'proxy':
+					var selenium_new;
+					var selenium_old;
+					try {
+						selenium_new = get_selenium(action.data);  // throws
+						reinit(selenium_new);  // throws
+						selenium_old = selenium;
+						selenium = selenium_new;
+						selenium_new = null;
+						selutil.wait(selenium_old.quit());  // throws
+						selenium_old = null;
+					} catch (e) {
+						while (selenium_new)
+							try {
+								selutil.wait(selenium_new.quit());  // throws
+								selenium_new = null;
+							} catch (e) {
+								console.error('proxy "new" cleanup error:', e);
+							}
+						while (selenium_old)
+							try {
+								selutil.wait(selenium_old.quit());  // throws
+								selenium_old = null;
+							} catch (e) {
+								console.error('proxy "old" cleanup error:', e);
+							}
+						throw e;
+					}
+					break;
 				default:
 					throw new Error('unsupported action type');
 					break;
 				}
 			} catch (e) {
+				console.log('error:', e);
 				scrns[action.id] = config.selenium_scrn(selenium);
 				fails[action.id] = e.message;
 				if (!task.debug)
@@ -245,6 +271,7 @@ function handle_task() {
 		if (selenium)
 			try {
 				selutil.wait(selenium.quit());  // throws
+				selenium = null;
 			} catch (e) {
 				console.error('selenium quit error:', e);
 			}

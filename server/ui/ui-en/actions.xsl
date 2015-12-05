@@ -456,9 +456,9 @@
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-12">
 		<div class="alert alert-info alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="action-proxy-thefirst">&#215;</button>
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="action-proxy-restart">&#215;</button>
 			<b>Tip:</b>
-			Set Proxy action should be the first one in the test.
+			Set Proxy will restart the browser. All windows will be closed. Cookies, local storage, history, etc. will be lost.
 		</div>
 	</div>
 	<div class="col-lg-2">
@@ -487,7 +487,7 @@
 			<label for="action-data-{@type}-{$id}">
 				Address
 			</label>
-			<input class="form-control" type="text" name="data" value="{@data}" id="action-data-{@type}-{$id}" placeholder="host:port | http://url/to/file.pac"/>
+			<input class="form-control" type="text" name="data" value="{@data}" id="action-data-{@type}-{$id}" placeholder="host:port | http://url/to/file.pac | empty (disable)"/>
 		</div>
 	</div>
 </xsl:template>
