@@ -10,7 +10,7 @@ body {
 	padding: 0 15px;
 	background-color: white;
 	/* viewport - header - footer (with borders) */
-	min-height: calc(100vh - 50px - 50px);
+	min-height: calc(100vh - 51px - 51px);
 }
 
 #page-wrapper {
