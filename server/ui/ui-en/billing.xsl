@@ -30,7 +30,7 @@
 							Billing Archive
 						</a>
 						<br/>
-						<a href="mailto:billing@advancedwebtesting.com?subject=Billing%20Support%20Request:&amp;body=Login:%20{../@login}%0aTransaction ID:%0a%20Pending Transaction ID:%0a%20Subscription ID:%0a%20">
+						<a href="mailto:billing@advancedwebtesting.com?subject=Billing%20Support%20Request:%20&amp;body=Login:%20{../@login}%0aTransaction ID:%20%0aPending Transaction ID:%20%0aSubscription ID:%20%0a">
 							<i class="fa fa-support"></i>
 							Billing Support
 						</a>
