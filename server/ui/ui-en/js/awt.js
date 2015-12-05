@@ -320,28 +320,28 @@ $(function() {
 //collapses the sidebar on window resize.
 var sidebarCollapsed = null;
 $(function() {
-    $(window).bind("load resize", function() {
-        var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
-        if (width < 768) {
-        	if (sidebarCollapsed === null || sidebarCollapsed === false) {
-                $('div.navbar-collapse').addClass('collapse');
-                $("#page-wrapper").css("min-height", "0");
-                sidebarCollapsed = true;
-        	}
-        } else {
-        	if (sidebarCollapsed === null || sidebarCollapsed === true) {
-        		$('div.navbar-collapse').removeClass('collapse');
-                $("#page-wrapper").css("min-height", "calc(100vh - 51px - 51px)");  // viewport - header - footer (with borders)
-                sidebarCollapsed = false;
-        	}
-        }
-    });
+	$(window).bind("load resize", function() {
+		var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
+		if (width < 768) {
+			if (sidebarCollapsed === null || sidebarCollapsed === false) {
+				$('div.navbar-collapse').addClass('collapse');
+				$("#page-wrapper").css("min-height", "0");
+				sidebarCollapsed = true;
+			}
+		} else {
+			if (sidebarCollapsed === null || sidebarCollapsed === true) {
+				$('div.navbar-collapse').removeClass('collapse');
+				$("#page-wrapper").css("min-height", "calc(100vh - 51px - 51px)");  // viewport - header - footer (with borders)
+				sidebarCollapsed = false;
+			}
+		}
+	});
 
-    var url = window.location;
-    var element = $('ul.nav a').filter(function() {
-        return this.href == url || url.href.indexOf(this.href) == 0;
-    }).addClass('active').parent().parent().addClass('in').parent();
-    if (element.is('li')) {
-        element.addClass('active');
-    }
+	var url = window.location;
+	var element = $('ul.nav a').filter(function() {
+		return this.href == url || url.href.indexOf(this.href) == 0;
+	}).addClass('active').parent().parent().addClass('in').parent();
+	if (element.is('li')) {
+		element.addClass('active');
+	}
 });
