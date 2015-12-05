@@ -23,6 +23,18 @@
 			</div>
 		</div>
 	</div>
+	<div id="footer">
+		<div class="container-fluid">
+			<p class="footer-line-1">
+				© 2015 Advanced Web Testing
+			</p>
+			<p class="footer-line-2">
+				<a href="mailto:support@advancedwebtesting.com?subject=Mail%20Support%20Request:%20&amp;body=Login:%20{*/@login}%0a">
+					Support
+				</a>
+			</p>
+		</div>
+	</div>
 </body>
 </html>
 </xsl:template>

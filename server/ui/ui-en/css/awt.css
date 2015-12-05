@@ -6,12 +6,11 @@ body {
 }
 #mail-page-wrapper {
   padding: 0 15px;
-  min-height: 568px;
   background-color: white;
+  min-height: calc(100vh - 50px - 50px);  /* viewport - header - footer (with borders) */
 }
 #page-wrapper {
   padding: 0 15px;
-  min-height: 568px;
   background-color: white;
 }
 @media (min-width: 768px) {
@@ -304,4 +303,21 @@ table.dataTable thead .sorting:after {
 }
 .xpath-browser-wnd {
 	height: 15px;
+}
+#footer {
+	height: 50px;
+	background-color: #f8f8f8;
+	border-top: 1px solid #e7e7e7;
+}
+.footer-line-1 {
+	margin: 5px 0px 0px 0px;
+	height: 20px;
+	text-align: center;
+	color: #777777;
+}
+.footer-line-2 {
+	margin: 0px 0px 5px 0px;
+	height: 20px;
+	text-align: center;
+	color: #777777;
 }

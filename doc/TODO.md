@@ -1,6 +1,5 @@
 План
 ====
-2. В ui снизу сделать область аналогично как сверху, со ссылкой на support. Сейчас нет ссылок на support.
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг
 5. cleanup (stats, tasks, billing, accounts - see concept)
