@@ -1,3 +1,5 @@
 "use strict";
 var config = require('./config');
-console.log(config[process.argv[2]]);
+var value = config[process.argv[2]];
+if (typeof(value) != 'undefined')
+	console.log(value);
