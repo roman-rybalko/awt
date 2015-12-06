@@ -5,10 +5,15 @@ set -x
 
 cd "`dirname "$0"`"
 . ./config.sh
-#for s in batch selenium x; do
-for s in batch x; do
-#for s in batch; do
+stop()
+{
+	s=$1
 	pgrep ${NODE_ID}-$s | xargs kill
 	while pgrep ${NODE_ID}-$s; do sleep 1; done
-done
-rm -Rf "$X_FILE"
+}
+stop batch
+[ -z "$SEL_ADDR" ] || stop selenium
+if [ -n "$X_FILE" ]; then
+	stop x
+	rm -Rf "$X_FILE"
+fi
