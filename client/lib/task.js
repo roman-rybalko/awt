@@ -239,20 +239,20 @@ function handle_task() {
 						selutil.wait(selenium_old.quit());  // throws
 						selenium_old = null;
 					} catch (e) {
-						while (selenium_new)
+						if (selenium_new)
 							try {
 								selutil.wait(selenium_new.quit());  // throws
-								selenium_new = null;
 							} catch (e) {
 								console.error('proxy "new" cleanup error:', e);
 							}
-						while (selenium_old)
+						selenium_new = null;
+						if (selenium_old)
 							try {
 								selutil.wait(selenium_old.quit());  // throws
-								selenium_old = null;
 							} catch (e) {
 								console.error('proxy "old" cleanup error:', e);
 							}
+						selenium_old = null;
 						throw e;
 					}
 					break;
@@ -271,10 +271,10 @@ function handle_task() {
 		if (selenium)
 			try {
 				selutil.wait(selenium.quit());  // throws
-				selenium = null;
 			} catch (e) {
 				console.error('selenium quit error:', e);
 			}
+		selenium = null;
 	}
 	if (task.actions.length)  // let selenium var die
 		if (config.selenium_finish_cb)
