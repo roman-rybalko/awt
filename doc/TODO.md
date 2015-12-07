@@ -24,3 +24,4 @@
 21. action: open a new window/tab or change open behavior - for captcha bypass
 22. action selectors: xpath: & jquery: (by default xpath)
 23. Валидация добавляемых actions
+24. В Tasks сделать status числовым (ускорить xslt)
