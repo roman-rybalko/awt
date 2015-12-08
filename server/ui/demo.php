@@ -6,4 +6,4 @@ $user = new \WebConstructionSet\Accounting\User($userDb);
 if ($user->getId())
 	$user->logout();
 $user->login('', null);
-header('Location: ./');
+header('Location: ./' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
