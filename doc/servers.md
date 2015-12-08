@@ -7,6 +7,21 @@
 2. Исполняющий сервер (cX.hosts). Требования: диск 5-10Gb (быстрый), память 1Gb и более, Debian 8.
 3. Прокси (pX.hosts). Требования: диск 3-5Gb (медленный), память 128-256Mb, Debian 7-8.
 
+Хостинг
+-------
+n1 - firstvds  
+n3 - hostwinds  
+n5 - domainhost  
+n6 - host1plus  
+n7 - ramnode  
+p1 - berihoster (Tomsk)  
+p2 - simplecloud  
+p3 - horttel/htc/hosting-point  
+p4 - mne.ru  
+c1 - simplecloud  
+c2 - mne.ru  
+c3 - hcli (ovh)  
+
 К 26 декабря
 ------------
 n3, n5, n7, p3 - отказаться  
