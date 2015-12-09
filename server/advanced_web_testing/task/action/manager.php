@@ -90,4 +90,20 @@ class Manager {
 		}
 		return $actions;
 	}
+
+
+	/**
+	 * Получить данные для удаления но не удаляет их
+	 * @return [scrn => string]
+	 */
+	public function clear1() {
+		return $this->actions->select(['scrn'], []);
+	}
+
+	/**
+	 * Очищает БД
+	 */
+	public function clear2() {
+		return $this->actions->delete([]);
+	}
 }

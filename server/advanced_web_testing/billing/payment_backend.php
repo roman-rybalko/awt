@@ -91,4 +91,10 @@ interface PaymentBackend {
 	 *  transaction_data = null - ошибка операции
 	 */
 	public function refund($transactionData, $externalId, $actionsCnt = null, $note = null);
+
+	/**
+	 * Удалить лог и др. служебные данные
+	 * @param integer $time UnixTime старше которого удалить
+	 */
+	public function clear($time);
 }

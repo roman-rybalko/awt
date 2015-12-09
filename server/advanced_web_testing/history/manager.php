@@ -37,4 +37,12 @@ class Manager {
 		}
 		return $events;
 	}
+
+	/**
+	 * Удаляет старые записи из БД
+	 * @param integer $time UnixTime старше которого удалить
+	 */
+	public function clear($time = 0) {
+		return $this->history->clear($time);
+	}
 }

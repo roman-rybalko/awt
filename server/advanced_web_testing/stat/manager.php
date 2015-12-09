@@ -10,7 +10,10 @@ class Manager {
 	private $table;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
-		$this->table = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'stats', ['user_id' => $userId]);
+		$fields = [];
+		if ($userId !== null)
+			$fields['user_id'] = $userId;
+		$this->table = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'stats', $fields);
 	}
 
 	public function add($tasks_finished = 0,  $tasks_failed = 0, $task_actions_executed = 0, $time = null) {
@@ -38,6 +41,10 @@ class Manager {
 		return $data;
 	}
 
+	/**
+	 * Удаляет старые записи из БД
+	 * @param integer $time UnixTime старше которого удалить
+	 */
 	public function clear($time = 0) {
 		return $this->table->delete(['time' => $this->table->predicate('less', $time)]);
 	}

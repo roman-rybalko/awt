@@ -414,6 +414,14 @@ class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 		];
 	}
 
+	/**
+	 * Удалить лог и др. служебные данные
+	 * @param integer $time UnixTime старше которого удалить
+	 */
+	public function clear($time) {
+		return 0;
+	}
+
 	public function handleResultUrl() {
 		header('Content-Type: text/plain');
 		if (isset($_POST['LMI_PREREQUEST'])) {

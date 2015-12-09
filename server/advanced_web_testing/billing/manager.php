@@ -7,7 +7,7 @@ namespace AdvancedWebTesting\Billing;
  * Model (MVC)
  */
 class Manager {
-	private $billing, $payments;
+	private $billing, $paymentBackends;
 
 	/**
 	 * @param \WebConstructionSet\Database\Relational $db
@@ -368,5 +368,15 @@ class Manager {
 		if (!$this->billing->commit($refundTransactionId))
 			error_log(new \ErrorException('Transaction commit failed, id:' . $refundTransactionId . ', data:' . json_encode($fields), null, null, __FILE__, __LINE__));
 		return true;
+	}
+
+	/**
+	 * Удаляет старые записи из БД
+	 * @param integer $time UnixTime старше которого удалить
+	 */
+	public function clear($time = 0) {
+		foreach ($this->paymentBackends as $paymentBackend)
+			$paymentBackend->clear($time);
+		return $this->billing->clear($time);
 	}
 }

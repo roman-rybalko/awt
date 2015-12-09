@@ -55,11 +55,20 @@ class Account {
 				}
 		}
 
+		// списать остаток баланса (после полного refund остаток содержит только бонусы)
+		if ($billMgr->getAvailableActionsCnt() > 0)
+			$billMgr->service(-$billMgr->getAvailableActionsCnt(), 'Close account, bonus withdraw');
+
 		// отменить все задачи в очереди на выполнение
 		$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $this->userId);
 		foreach ($taskMgr->get() as $task)
 			if ($task['status'] == \AdvancedWebTesting\Task\Status::INITIAL)
 				$taskMgr->cancel($task['id']);  // не проверяем - может начать выполняться
+
+		// удалить тесты
+		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
+		foreach ($testMgr->get() as $test)
+			$testMgr->delete($test['id']);
 
 		return $errors;
 	}

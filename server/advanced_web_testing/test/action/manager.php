@@ -152,4 +152,14 @@ class Manager {
 		}
 		return $actions;
 	}
+
+	/**
+	 * Удалить все Action
+	 */
+	public function clear() {
+		$cnt = $this->actions->delete([]);
+		if ($cnt)
+			$this->tests->update(['time' => time()], []);
+		return $cnt;
+	}
 }

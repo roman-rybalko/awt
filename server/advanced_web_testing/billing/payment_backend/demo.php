@@ -114,4 +114,12 @@ class Demo implements \AdvancedWebTesting\Billing\PaymentBackend {
 			$actionsCnt = 'ZZz';
 		return ['payment_amount' => $actionsCnt . ' Test Actions', 'payment_data' => 'Demo Refund #' . $externalId, 'transaction_data' => $externalId];
 	}
+
+	/**
+	 * Удалить лог и др. служебные данные
+	 * @param integer $time UnixTime старше которого удалить
+	 */
+	public function clear($time) {
+		return 0;
+	}
 }

@@ -10,7 +10,10 @@ class Manager {
 	private $table;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $userId) {
-		$this->table = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'tests', ['user_id' => $userId]);
+		$fields = [];
+		if ($userId !== null)
+			$fields['user_id'] = $userId;
+		$this->table = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'tests', $fields);
 	}
 
 	/**
@@ -70,5 +73,27 @@ class Manager {
 			$tests[] = $test;
 		}
 		return $tests;
+	}
+
+	/**
+	 * Получить идентификаторы для удаления но не удаляет их
+	 * @param integer $time UnixTime старше которого очистить
+	 * @return [integer] идентификаторы тестов
+	 */
+	public function clear1($time = 0) {
+		$tests = $this->table->select(['test_id'], ['deleted' => 1, 'time' => $this->table->predicate('less', $time)]);
+		$testIds = [];
+		foreach ($tests as $test)
+			$testIds[] = $test['test_id'];
+		return $testIds;
+	}
+
+	/**
+	 * Очищает БД
+	 * @param [integer] $testIds идентификаторы тестов
+	 */
+	public function clear2($testIds) {
+		foreach ($testIds as $testId)
+			$this->table->delete(['test_id' => $testId]);
 	}
 }

@@ -154,6 +154,29 @@ class Manager {
 		foreach ([Status::RUNNING, Status::STARTING] as $status)
 			foreach ($this->tasks->select(['node_id', 'task_id', 'user_id', 'time'], ['time' => $this->tasks->predicate('less_eq', $time), 'status' => $status]) as $task)
 				if ($this->tasks->update(['status' => Status::INITIAL, 'time' => time()], ['task_id' => $task['task_id'], 'status' => $status]))
-					error_log('Task restarted, node_id: ' . $task['node_id'] . ', status: ' . $status . ', user_id: ' . $task['user_id'] . ', task_id: ' . $task['task_id'] . ', time: ' . $task['time'] . ', time now: ' . time());
+					error_log('Task restarted, task: ' . json_encode($task) . ', status: ' . $status . ', time now: ' . time());
+	}
+
+	/**
+	 * Получить данные для удаления но не удаляет их
+	 * @param integer $time UnixTime старше которого очистить
+	 * @return [id => integer, result => string|null]
+	 */
+	public function clear1($time = 0) {
+		$tasks = $this->tasks->select(['task_id', 'result'], ['time' => $this->tasks->predicate('less', $time)]);
+		foreach ($tasks as &$task) {
+			$task['id'] = $task['task_id'];
+			unset($task['task_id']);
+		}
+		return $tasks;
+	}
+
+	/**
+	 * Очищает БД
+	 * @param [id => integer] $tasks
+	 */
+	public function clear2($tasks) {
+		foreach ($tasks as $task)
+			$this->tasks->delete(['task_id' => $task['id']]);
 	}
 }

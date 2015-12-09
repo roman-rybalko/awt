@@ -165,4 +165,12 @@ class Paypal implements \AdvancedWebTesting\Billing\PaymentBackend {
 		return ['payment_amount' => $data['amt'] . ' ' . $data['currencycode'],
 			'payment_data' => $data['data'], 'transaction_data' => $data['transactionid']];
 	}
+
+	/**
+	 * Удалить лог и др. служебные данные
+	 * @param integer $time UnixTime старше которого удалить
+	 */
+	public function clear($time) {
+		return $this->paypal->clearLog($time);
+	}
 }

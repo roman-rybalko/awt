@@ -162,6 +162,9 @@
 					When you delete your account,
 					<ul>
 						<li>
+							all your <a href="../?tests=1">Tests</a> will be deleted,
+						</li>
+						<li>
 							all your <a href="../?tasks=1">Pending Tasks</a> will be canceled,
 						</li>
 						<li>
