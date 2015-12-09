@@ -57,7 +57,7 @@ class Account {
 
 		// списать остаток баланса (после полного refund остаток содержит только бонусы)
 		if ($billMgr->getAvailableActionsCnt() > 0)
-			$billMgr->service(-$billMgr->getAvailableActionsCnt(), 'Close account, bonus withdraw');
+			$billMgr->service(- $billMgr->getAvailableActionsCnt(), 'Close account, bonus withdraw');
 
 		// отменить все задачи в очереди на выполнение
 		$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $this->userId);
