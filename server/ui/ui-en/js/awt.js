@@ -286,7 +286,7 @@ $(function() {
 		}
 	}
 	if ($('span.apply-data-display-period, div.apply-data-display-period').length) {
-		if (awt_time > 0) {
+		if (typeof(awt_time) != 'undefined' && awt_time > 0) {
 			var period = Math.round(new Date().getTime() / 1000) - awt_time;
 			period = period_unix2human(period);
 			$('span.apply-data-display-period, div.apply-data-display-period').each(function() {
