@@ -12,3 +12,5 @@ mysqldump --single-transaction --quick \
 	--compact --complete-insert --extended-insert --no-create-db --no-create-info \
 	--result-file=$B \
 	--user=`$GC DB_USER` --password=`$GC DB_PASSWORD` --host=$H $DB
+
+chmod og-rwx $B
