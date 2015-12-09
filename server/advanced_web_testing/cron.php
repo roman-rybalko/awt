@@ -28,12 +28,12 @@ class Cron {
 	private function tests() {
 		// Purge
 		$testMsg = new \AdvancedWebTesting\Test\Manager($this->db, null);
-		$testIds = $testMsg->clear1(time() - \Config::PURGE_PERIOD * 86400);
-		foreach ($testIds as $testId) {
-			$testActMgr = new \AdvancedWebTesting\Test\Action\Manager($this->db, $testId);
+		$tests = $testMsg->clear1(time() - \Config::PURGE_PERIOD * 86400);
+		foreach ($tests as $test) {
+			$testActMgr = new \AdvancedWebTesting\Test\Action\Manager($this->db, $test['id']);
 			$testActMgr->clear();
 		}
-		$testMsg->clear2($testIds);
+		$testMsg->clear2($tests);
 	}
 
 	private function tasks() {
@@ -52,13 +52,13 @@ class Cron {
 		foreach ($tasks as $task) {
 			$taskActMgr = new \AdvancedWebTesting\Task\Action\Manager($this->db, $task['id']);
 			if ($task['result']) {
-				$actions = $taskActMgr->clear1();
+				$actions = $taskActMgr->get();
 				foreach ($actions as $action)
 					if ($action['scrn'])
 						unlink(\Config::$rootPath . \Config::RESULTS_PATH . $task['result'] . '/' . $action['scrn']);  // E_WARNING
 				rmdir(\Config::$rootPath . \Config::RESULTS_PATH . $task['result']);  // E_WARNING
 			}
-			$taskActMgr->clear2();
+			$taskActMgr->clear();
 		}
 		$taskMgr->clear2($tasks);
 	}
@@ -117,6 +117,7 @@ class Cron {
 	}
 
 	private function accounts() {
+		// Purge
 		$userDb = new \WebConstructionSet\Database\Relational\User($this->db);
 		foreach ($userDb->get() as $user) {
 			$userId = $user['id'];
@@ -147,6 +148,10 @@ class Cron {
 				continue;
 			if ($userDb->delete($userId))
 				error_log('Stale user deleted: ' . json_encode($user));
+
+			// Purge Settings
+			$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);
+			$settMgr->clear();
 		}
 	}
 }

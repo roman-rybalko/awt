@@ -40,4 +40,11 @@ class Manager {
 		}
 		return $settings;
 	}
+
+	/**
+	 * Очистить БД
+	 */
+	public function clear() {
+		return $this->table->delete([]);
+	}
 }

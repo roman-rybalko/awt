@@ -78,22 +78,23 @@ class Manager {
 	/**
 	 * Получить идентификаторы для удаления но не удаляет их
 	 * @param integer $time UnixTime старше которого очистить
-	 * @return [integer] идентификаторы тестов
+	 * @return [id => integer]
 	 */
 	public function clear1($time = 0) {
 		$tests = $this->table->select(['test_id'], ['deleted' => 1, 'time' => $this->table->predicate('less', $time)]);
-		$testIds = [];
-		foreach ($tests as $test)
-			$testIds[] = $test['test_id'];
-		return $testIds;
+		foreach ($tests as &$test) {
+			$test['id'] = $test['test_id'];
+			unset($test['test_id']);
+		}
+		return $tests;
 	}
 
 	/**
 	 * Очищает БД
-	 * @param [integer] $testIds идентификаторы тестов
+	 * @param [id => integer] $tests
 	 */
-	public function clear2($testIds) {
-		foreach ($testIds as $testId)
-			$this->table->delete(['test_id' => $testId]);
+	public function clear2($tests) {
+		foreach ($tests as $test)
+			$this->table->delete(['test_id' => $test['id']]);
 	}
 }
