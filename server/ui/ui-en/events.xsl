@@ -590,7 +590,7 @@
 </xsl:template>
 
 <xsl:template match="event[@name='task_sched']" mode="title">
-	Start Scheduled Task
+	Scheduled Task
 </xsl:template>
 
 <xsl:template match="event[@name='task_sched']" mode="data">
