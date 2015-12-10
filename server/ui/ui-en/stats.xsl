@@ -108,7 +108,7 @@
 								<div class="huge">
 									<xsl:value-of select="@spendings_monthly"/>
 								</div>
-								<div>Monthly Spendings (Tasks)</div>
+								<div>Monthly Spendings</div>
 							</div>
 						</div>
 					</div>
