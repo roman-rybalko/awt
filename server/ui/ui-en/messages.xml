@@ -167,11 +167,11 @@
 </message>
 
 <message value="task_add_ok">
-	New Task has been started.
+	New Task has been queued.
 </message>
 
 <message value="task_add_fail">
-	Task start failed (perhaps the Test contains too many actions).
+	Task queue failed (perhaps the Test contains too many actions).
 </message>
 
 <message value="no_funds">
