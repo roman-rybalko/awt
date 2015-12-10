@@ -225,17 +225,17 @@ $(function() {
 		};
 		var data1 = {
 			label: 'Started',
-			color: '#5cb85c',
+			color: '#679dc6',
 			bars: {
-				fillColor: '#5cb85c'
+				fillColor: '#679dc6'
 			},
 			data: aggregate_day(tasks_added),
 		};
 		var data2 = {
 			label: 'Finished',
-			color: '#679dc6',
+			color: '#5cb85c',
 			bars: {
-				fillColor: '#679dc6'
+				fillColor: '#5cb85c'
 			},
 			data: aggregate_day(tasks_finished)
 		};
