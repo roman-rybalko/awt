@@ -34,10 +34,10 @@ $(function() {
 				var type = $(this).attr('value');
 				var wrap = $('#action-wrap-type-' + type + '-' + id);
 				if ($(this).prop('selected')) {
-					wrap.find('input').prop('disabled', false);
+					wrap.find('input, select').prop('disabled', false);
 					wrap.show();
 				} else {
-					wrap.find('input').prop('disabled', true);
+					wrap.find('input, select').prop('disabled', true);
 					wrap.hide();
 				}
 			});
