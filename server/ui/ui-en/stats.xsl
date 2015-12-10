@@ -108,11 +108,11 @@
 								<div class="huge">
 									<xsl:value-of select="@spendings_monthly"/>
 								</div>
-								<div>Monthly Spendings</div>
+								<div>Monthly Spendings (Actions)</div>
 							</div>
 						</div>
 					</div>
-					<a href="../?tasks=1" class="apply-data-display-period">
+					<a href="../?billing=1" class="apply-data-display-period">
 						<div class="panel-footer">
 							<span class="pull-left">Details</span>
 							<span class="pull-right">
