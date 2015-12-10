@@ -153,7 +153,7 @@
 			<div class="col-lg-12">
 				<div class="panel panel-success">
 					<div class="panel-heading">
-						<i class="fa fa-star"></i>
+						<i class="fa fa-refresh"></i>
 						Subscriptions
 					</div>
 					<div class="panel-body">

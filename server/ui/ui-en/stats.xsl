@@ -28,10 +28,10 @@
 		];
 	</script>
 	<script type="text/javascript">
-		task_actions_executed = [  // global
+		actions_executed = [  // global
 			<xsl:for-each select="stat">
 				<xsl:sort select="@time" data-type="number" order="ascending"/>
-				[<xsl:value-of select="@time"/>000, <xsl:value-of select="@task_actions_executed"/>],
+				[<xsl:value-of select="@time"/>000, <xsl:value-of select="@actions_executed"/>],
 			</xsl:for-each>
 		];
 	</script>
@@ -74,17 +74,17 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
-								<i class="fa fa-play fa-5x"></i>
+								<i class="fa fa-clock-o fa-5x"></i>
 							</div>
 							<div class="col-xs-9 text-right">
 								<div class="huge">
-									<xsl:value-of select="@tasks_finished"/>
+									<xsl:value-of select="@scheds"/>
 								</div>
-								<div>Finished Tasks</div>
+								<div>Schedule Jobs</div>
 							</div>
 						</div>
 					</div>
-					<a href="../?tasks=1" class="apply-data-display-period">
+					<a href="../?schedule=1">
 						<div class="panel-footer">
 							<span class="pull-left">Details</span>
 							<span class="pull-right">
@@ -100,17 +100,17 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
-								<i class="fa fa-clock-o fa-5x"></i>
+								<i class="fa fa-refresh fa-5x"></i>
 							</div>
 							<div class="col-xs-9 text-right">
 								<div class="huge">
-									<xsl:value-of select="@scheds"/>
+									<xsl:value-of select="@spendings_monthly"/>
 								</div>
-								<div>Schedule Jobs</div>
+								<div>Monthly Spendings (Tasks)</div>
 							</div>
 						</div>
 					</div>
-					<a href="../?schedule=1">
+					<a href="../?tasks=1" class="apply-data-display-period">
 						<div class="panel-footer">
 							<span class="pull-left">Details</span>
 							<span class="pull-right">

@@ -70,6 +70,7 @@
 								<option value="86400">1 day</option>
 								<option value="604800">1 week</option>
 								<option value="2419200">4 weeks</option>
+								<option value="2678400">1 month (31 days)</option>
 								<option value="0" selected="">all</option>
 							</select>
 						</div>

@@ -1153,39 +1153,40 @@ class User {
 	Stats
 -->
 <?php
-		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
 		$testsCnt = 0;
 		$testIds = [];
+		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
 		foreach ($testMgr->get() as $test)
 			if (!$test['deleted']) {
 				++$testsCnt;
 				$testIds[$test['id']] = true;
 			}
-		$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $this->userId);
-		$tasksCnt = 0;
-		foreach ($taskMgr->get() as $task)
-			if ($task['status'] == \AdvancedWebTesting\Task\Status::FAILED || $task['status'] == \AdvancedWebTesting\Task\Status::SUCCEEDED)
-				++$tasksCnt;
-		$schedMgr = new \AdvancedWebTesting\Task\Schedule($this->db, $this->userId);
 		$schedsCnt = 0;
+		$schedMgr = new \AdvancedWebTesting\Task\Schedule($this->db, $this->userId);
 		foreach ($schedMgr->get() as $sched)
 			if (isset($testIds[$sched['test_id']]))
 				++$schedsCnt;
+		$spendingsMonthly = 0;
 		$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
-		echo '<stats tests="', $testsCnt, '" tasks_finished="', $tasksCnt, '" scheds="', $schedsCnt, '"',
-			' actions_available="', $billMgr->getAvailableActionsCnt(), '">';
-		$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $this->userId);
-		$stats = $statMgr->get();
+		foreach ($billMgr->getTransactions(null, time() - 86400 * 31) as $transaction)
+			switch ($transaction['type']) {
+				case \AdvancedWebTesting\Billing\TransactionType::TASK_START:
+				case \AdvancedWebTesting\Billing\TransactionType::TASK_FINISH:
+					$spendingsMonthly += - $transaction['actions_cnt'];
+			}
+		echo '<stats tests="', $testsCnt, '" scheds="', $schedsCnt, '"',
+			' spendings_monthly="', $spendingsMonthly, '" actions_available="', $billMgr->getAvailableActionsCnt(), '">';
 		$maxTime = time();
-		foreach ($stats as $stat) {
+		$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $this->userId);
+		foreach ($statMgr->get() as $stat) {
 			echo '<stat time="', $stat['time'], '" tasks_finished="', $stat['tasks_finished'], '"',
-				' tasks_failed="', $stat['tasks_failed'], '" task_actions_executed="', $stat['task_actions_executed'], '"/>';
+				' tasks_failed="', $stat['tasks_failed'], '" actions_executed="', $stat['actions_executed'], '"/>';
 			if ($stat['time'] < $maxTime)
 				$maxTime = $stat['time'];
 		}
 		$time = time();
 		for ($time = $time - 86400 * \Config::PURGE_PERIOD - $time % 86400; $time < $maxTime; $time += 86400)
-			echo '<stat time="', $time, '" tasks_finished="0" tasks_failed="0" task_actions_executed="0"/>';
+			echo '<stat time="', $time, '" tasks_finished="0" tasks_failed="0" actions_executed="0"/>';
 		echo '</stats>';
 	}
 }

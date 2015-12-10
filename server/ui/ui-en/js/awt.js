@@ -268,7 +268,7 @@ $(function() {
 		var data1 = {
 			label: 'Executed',
 			color: '#edc240',
-			data: aggregate_day(task_actions_executed)
+			data: aggregate_day(actions_executed)
 		};
 		$('#task-actions-chart').plot([data1], options);
 	}
