@@ -77,7 +77,7 @@ class Task {
 			$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, null);
 			switch ($status) {
 				case 'running':
-					if ($taskMgr->start($taskId, $nodeId))
+					if ($taskMgr->run($taskId, $nodeId))
 						$result['ok'] = 1;
 					else
 						$result['fail'] = 'task update failed';
@@ -122,7 +122,7 @@ class Task {
 						if ($action['failed'] || $action['succeeded'])
 							++$actExecCnt;
 						$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $userId);
-						$statMgr->add(1, $statusId == \AdvancedWebTesting\Task\Status::FAILED ? 1 : 0, $actExecCnt);
+						$statMgr->add(0, 1, $statusId == \AdvancedWebTesting\Task\Status::FAILED ? 1 : 0, $actExecCnt);
 						$taskMgr1 = new \AdvancedWebTesting\Task\Manager($this->db, $userId);
 						if ($tasks = $taskMgr1->get([$taskId]))
 							$task = $tasks[0];

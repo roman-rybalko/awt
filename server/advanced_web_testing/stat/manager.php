@@ -16,11 +16,13 @@ class Manager {
 		$this->table = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'stats', $fields);
 	}
 
-	public function add($tasks_finished = 0,  $tasks_failed = 0, $actions_executed = 0, $time = null) {
+	public function add($tasks_added = 0, $tasks_finished = 0,  $tasks_failed = 0, $actions_executed = 0, $time = null) {
 		if ($time === null)
 			$time = time();
 		$time -= $time % 3600;
-		foreach (['tasks_finished' => $tasks_finished, 'tasks_failed' => $tasks_failed, 'actions_executed' => $actions_executed] as $field => $count)
+		foreach (['tasks_added' => $tasks_added, 'tasks_finished' => $tasks_finished, 'tasks_failed' => $tasks_failed,
+			'actions_executed' => $actions_executed] as $field => $count)
+		{
 			while ($count)
 				if ($data = $this->table->select([$field], ['time' => $time])) {
 					if ($this->table->update([$field => $data[0][$field] + $count], ['time' => $time, $field => $data[0][$field]]))
@@ -29,6 +31,7 @@ class Manager {
 					if ($this->table->insert([$field => $count, 'time' => $time]))
 						break;
 				}
+		}
 	}
 
 	/**

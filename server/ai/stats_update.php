@@ -18,7 +18,7 @@ foreach ($users as $user) {
 		foreach ($actions as $action)
 			if ($action['failed'] || $action['succeeded'])
 				++$actExecCnt;
-		$statMgr->add($task['status'] == \AdvancedWebTesting\Task\Status::FAILED ? 1 : $task['status'] == \AdvancedWebTesting\Task\Status::SUCCEEDED ? 1 : 0,
+		$statMgr->add(1, $task['status'] == \AdvancedWebTesting\Task\Status::FAILED ? 1 : $task['status'] == \AdvancedWebTesting\Task\Status::SUCCEEDED ? 1 : 0,
 			$task['status'] == \AdvancedWebTesting\Task\Status::FAILED ? 1 : 0,
 			$actExecCnt,
 			$task['time']);

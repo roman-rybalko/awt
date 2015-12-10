@@ -12,22 +12,24 @@
     <script src="js/jquery.flot.time.min.js"></script>
     <script src="js/jquery.flot.tooltip.min.js"></script>
 	<script type="text/javascript">
+		tasks_added = [  // global
+			<xsl:for-each select="stat">
+				<xsl:sort select="@time" data-type="number" order="ascending"/>
+				[<xsl:value-of select="@time"/>000, <xsl:value-of select="@tasks_added"/>],
+			</xsl:for-each>
+		];
 		tasks_finished = [  // global
 			<xsl:for-each select="stat">
 				<xsl:sort select="@time" data-type="number" order="ascending"/>
 				[<xsl:value-of select="@time"/>000, <xsl:value-of select="@tasks_finished"/>],
 			</xsl:for-each>
 		];
-	</script>
-	<script type="text/javascript">
 		tasks_failed = [  // global
 			<xsl:for-each select="stat">
 				<xsl:sort select="@time" data-type="number" order="ascending"/>
 				[<xsl:value-of select="@time"/>000, <xsl:value-of select="@tasks_failed"/>],
 			</xsl:for-each>
 		];
-	</script>
-	<script type="text/javascript">
 		actions_executed = [  // global
 			<xsl:for-each select="stat">
 				<xsl:sort select="@time" data-type="number" order="ascending"/>

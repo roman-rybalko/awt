@@ -107,6 +107,8 @@ class Schedule {
 				continue;
 			}
 			$billMgr->startTask($taskId, $test['name'], $job['id'], $job['data']['name']);
+			$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $userId);
+			$statMgr->add(1);
 			$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $userId);
 			$histMgr->add('task_sched', ['task_id' => $taskId,
 				'test_id' => $testId, 'test_name' => $test['name'], 'type' => $type,

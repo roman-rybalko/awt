@@ -224,6 +224,14 @@ $(function() {
 			}
 		};
 		var data1 = {
+			label: 'Started',
+			color: '#5cb85c',
+			bars: {
+				fillColor: '#5cb85c'
+			},
+			data: aggregate_day(tasks_added),
+		};
+		var data2 = {
 			label: 'Finished',
 			color: '#679dc6',
 			bars: {
@@ -231,7 +239,7 @@ $(function() {
 			},
 			data: aggregate_day(tasks_finished)
 		};
-		var data2 = {
+		var data3 = {
 			label: 'Failed',
 			color: '#cb4b4b',
 			bars: {
@@ -239,7 +247,7 @@ $(function() {
 			},
 			data: aggregate_day(tasks_failed),
 		};
-		$('#tasks-chart').plot([data1, data2], options);
+		$('#tasks-chart').plot([data1, data2, data3], options);
 	}
 	if ($('#task-actions-chart').length) {
 		var options = {

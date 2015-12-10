@@ -18,7 +18,7 @@ class Manager {
 	}
 
 	/**
-	 * Создать новую задачу
+	 * Добавить задачу в очередь
 	 * @param integer $testId
 	 * @param string $testName
 	 * @param string $type
@@ -119,7 +119,7 @@ class Manager {
 	 * @param string $nodeId
 	 * @return boolean
 	 */
-	public function start($taskId, $nodeId) {
+	public function run($taskId, $nodeId) {
 		return $this->tasks->update(['status' => Status::RUNNING, 'time' => time()], ['task_id' => $taskId, 'status' => Status::STARTING, 'node_id' => $nodeId]);
 	}
 
