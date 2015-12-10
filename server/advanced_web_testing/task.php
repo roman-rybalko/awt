@@ -121,7 +121,7 @@ class Task {
 						foreach ($taskActMgr->get() as $action)
 						if ($action['failed'] || $action['succeeded'])
 							++$actExecCnt;
-						$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $userId);
+						$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $userId);
 						$statMgr->add(0, 1, $statusId == \AdvancedWebTesting\Task\Status::FAILED ? 1 : 0, $actExecCnt);
 						$taskMgr1 = new \AdvancedWebTesting\Task\Manager($this->db, $userId);
 						if ($tasks = $taskMgr1->get([$taskId]))

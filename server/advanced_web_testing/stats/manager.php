@@ -1,6 +1,6 @@
 <?php
 
-namespace AdvancedWebTesting\Stat;
+namespace AdvancedWebTesting\Stats;
 
 /**
  * Статистика

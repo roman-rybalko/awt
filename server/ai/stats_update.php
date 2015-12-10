@@ -5,7 +5,7 @@ $userDb = new \WebConstructionSet\Database\Relational\User($db);
 $users = $userDb->get();
 foreach ($users as $user) {
 	$userId = $user['id'];
-	$statMgr = new \AdvancedWebTesting\Stat\Manager($db, $userId);
+	$statMgr = new \AdvancedWebTesting\Stats\Manager($db, $userId);
 	$statMgr->clear(time());
 	$taskMgr = new \AdvancedWebTesting\Task\Manager($db, $userId);
 	$tasks = $taskMgr->get();

@@ -760,7 +760,7 @@ class User {
 						if ($taskId = $taskMgr->add($testId, $test['name'], $type, $debug)) {
 							$billMgr->startTask($taskId, $test['name']);
 							echo '<message type="notice" value="task_add_ok"/>';
-							$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $this->userId);
+							$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $this->userId);
 							$statMgr->add(1);
 							$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 							$histMgr->add('task_add', ['task_id' => $taskId,
@@ -1179,7 +1179,7 @@ class User {
 		echo '<stats tests="', $testsCnt, '" scheds="', $schedsCnt, '"',
 			' spendings_monthly="', $spendingsMonthly, '" actions_available="', $billMgr->getAvailableActionsCnt(), '">';
 		$maxTime = time();
-		$statMgr = new \AdvancedWebTesting\Stat\Manager($this->db, $this->userId);
+		$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $this->userId);
 		foreach ($statMgr->get() as $stat) {
 			echo '<stat time="', $stat['time'], '" tasks_added="', $stat['tasks_added'], '" tasks_finished="', $stat['tasks_finished'], '"',
 				' tasks_failed="', $stat['tasks_failed'], '" actions_executed="', $stat['actions_executed'], '"/>';
