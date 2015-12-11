@@ -20,3 +20,4 @@
 23. Валидация добавляемых actions
 24. В Tasks сделать status числовым (ускорить xslt)
 25. Рефакторинг Task\Manager - перенести Type\Manager в поле класса
+26. Client selenium_open_timeout - отдельный таймаут для "open" Action
