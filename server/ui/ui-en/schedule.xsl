@@ -31,11 +31,13 @@
 						Create a <a href="../?tests=1">test</a> to make schedule available.
 					</div>
 				</xsl:if>
-				<div class="alert alert-info alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="schedule-set-email">&#215;</button>
-					<b>Tip:</b>
-					Set E-Mail in <a href="../?settings=1">Settings</a> to receive regular Task Reports.
-				</div>
+				<xsl:if test="task">
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="schedule-set-email">&#215;</button>
+						<b>Tip:</b>
+						Set E-Mail in <a href="../?settings=1">Settings</a> to receive regular Task Reports.
+					</div>
+				</xsl:if>
 			</div>
 		</div>
 		<div class="row">

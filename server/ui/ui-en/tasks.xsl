@@ -339,15 +339,17 @@
 				<xsl:with-param name="test_id"><xsl:value-of select="@test_id"/></xsl:with-param>
 			</xsl:call-template>
 		</xsl:for-each>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="alert alert-info alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cleanup">&#215;</button>
-					<b>Tip:</b>
-					Tasks are purged after 42 days.
+		<xsl:if test="task">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cleanup">&#215;</button>
+						<b>Tip:</b>
+						Tasks are purged after 42 days.
+					</div>
 				</div>
 			</div>
-		</div>
+		</xsl:if>
 	</div>
 </xsl:template>
 

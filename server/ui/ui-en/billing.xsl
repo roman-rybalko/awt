@@ -216,11 +216,13 @@
 						</table>
 					</div>
 				</div>
-				<div class="alert alert-info alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-subscription-order">&#215;</button>
-					<b>Tip:</b>
-					Firstly is processed the subscription with a higher amount.
-				</div>
+				<xsl:if test="count(subscription) &gt; 1">
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-subscription-order">&#215;</button>
+						<b>Tip:</b>
+						Firstly is processed the subscription with a higher amount.
+					</div>
+				</xsl:if>
 			</div>
 		</div>
 		<xsl:for-each select="subscription">
@@ -482,11 +484,13 @@
 						</table>
 					</div>
 				</div>
-				<div class="alert alert-info alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-pending-transactions-process">&#215;</button>
-					<b>Tip:</b>
-					Pending Transactions are also processed every minute automatically.
-				</div>
+				<xsl:if test="pending_transaction">
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-pending-transactions-process">&#215;</button>
+						<b>Tip:</b>
+						Pending Transactions are also processed every minute automatically.
+					</div>
+				</xsl:if>
 			</div>
 		</div>
 		<xsl:for-each select="pending_transaction">
@@ -606,11 +610,13 @@
 						</table>
 					</div>
 				</div>
-				<div class="alert alert-info alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-transactions">&#215;</button>
-					<b>Tip:</b>
-					Transactions are displayed for 42 days only. See <a href="../?billing_archive=1">Billing Archive</a> for a full list.
-				</div>
+				<xsl:if test="transaction">
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-transactions">&#215;</button>
+						<b>Tip:</b>
+						Transactions are displayed for 42 days only. See <a href="../?billing_archive=1">Billing Archive</a> for a full list.
+					</div>
+				</xsl:if>
 			</div>
 		</div>
 	</div>
