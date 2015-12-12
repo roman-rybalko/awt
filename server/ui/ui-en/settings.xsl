@@ -160,7 +160,7 @@
 					Delete Account: <xsl:value-of select="../@login"/>
 				</div>
 				<div class="panel-body">
-					When you delete your account,
+					If you delete your account,
 					<ul>
 						<li>
 							all your <a href="../?tests=1">Tests</a> will be deleted,
