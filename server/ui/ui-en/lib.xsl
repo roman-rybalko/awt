@@ -15,6 +15,15 @@
 				</div>
 				<div class="panel-body">
 					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="modal-new-task-legend">&#215;</button>
+						<b>Legend:</b><br/>
+						gc_xxx - Google Chrome / Chromium<br/>
+						ff_xxx - Firefox<br/>
+						o_xxx - Opera<br/>
+						ie_xxx - Internet Explorer<br/>
+						test - new functionality testing
+					</div>
+					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="modal-new-task-debug">&#215;</button>
 						<b>Tip:</b>
 						When Debug is ON all actions will be executed regardless of error.
