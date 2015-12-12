@@ -193,6 +193,11 @@
 											<xsl:value-of select="@name"/>
 										</div>
 										<div class="panel-body">
+											<p>
+												<b>
+													Delete ?
+												</b>
+											</p>
 											<form role="form" method="post">
 												<input type="hidden" name="id" value="{@id}"/>
 												<button type="submit" name="delete" class="btn btn-block btn-danger">
