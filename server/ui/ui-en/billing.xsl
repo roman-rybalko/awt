@@ -50,7 +50,7 @@
 						Pricing
 					</div>
 					<div class="panel-body">
-						1 Test Action = 1 RUB
+						1 Browser Action = 1 RUB
 					</div>
 				</div>
 			</div>

@@ -223,7 +223,7 @@
 </xsl:template>
 
 <xsl:template match="event[@name='test_action_add']" mode="title">
-	Add Test Action
+	Add Browser Action
 </xsl:template>
 
 <xsl:template match="event[@name='test_action_add']" mode="data">
@@ -258,7 +258,7 @@
 </xsl:template>
 
 <xsl:template match="event[@name='test_action_delete']" mode="title">
-	Delete Test Action
+	Delete Browser Action
 </xsl:template>
 
 <xsl:template match="event[@name='test_action_delete']" mode="data">
@@ -293,7 +293,7 @@
 </xsl:template>
 
 <xsl:template match="event[@name='test_action_modify']" mode="title">
-	Modify Test Action
+	Modify Browser Action
 </xsl:template>
 
 <xsl:template match="event[@name='test_action_modify']" mode="data">
@@ -340,7 +340,7 @@
 </xsl:template>
 
 <xsl:template match="event[@name='test_action_insert']" mode="title">
-	Insert Test Action
+	Insert Browser Action
 </xsl:template>
 
 <xsl:template match="event[@name='test_action_insert']" mode="data">

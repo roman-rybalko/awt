@@ -139,7 +139,7 @@
 						<form role="form" method="post">
 							<p>
 								<b>
-									Delete All Test Actions ?
+									Delete All Actions ?
 								</b>
 							</p>
 							<button type="submit" name="clear" class="btn btn-block btn-danger">
