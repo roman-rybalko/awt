@@ -130,7 +130,7 @@ task_add_fail
 	Task queue failed (perhaps the Test contains too many actions).
 
 no_funds
-	Available Actions (Account Balance) exhausted, please Top Up.
+	Available Actions (Account Balance) depleted, please Top Up.
 
 test_is_deleted
 	The Test is deleted.
