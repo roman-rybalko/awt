@@ -6,7 +6,7 @@
 			<div class="col-md-4 col-md-offset-4">
 				<div class="panel panel-default panel-login">
 					<div class="panel-heading">
-						<h3 class="panel-title">Sign Up</h3>
+						<h3 class="panel-title">Register</h3>
 					</div>
 					<div class="panel-body">
 						<xsl:apply-templates select="//message"/>
@@ -41,7 +41,7 @@
 								<input type="submit" name="register" value="Register"
 									class="btn btn-lg btn-success btn-block"/>
 								<div class="form-group">
-									<a href="../">Sign In</a>
+									<a href="../">Login</a>
 								</div>
 							</fieldset>
 						</form>

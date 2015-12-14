@@ -2,11 +2,11 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="event[@name='login']" mode="title">
-	Sign in
+	Login
 </xsl:template>
 
 <xsl:template match="event[@name='logout']" mode="title">
-	Sign out
+	Logout
 </xsl:template>
 
 <xsl:template match="event[@name='login' or @name='logout']" mode="data">

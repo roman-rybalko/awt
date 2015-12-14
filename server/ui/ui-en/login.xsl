@@ -6,7 +6,7 @@
 			<div class="col-md-4 col-md-offset-4">
 				<div class="panel panel-default panel-login">
 					<div class="panel-heading">
-						<h3 class="panel-title">Please Sign In</h3>
+						<h3 class="panel-title">Please Login</h3>
 					</div>
 					<div class="panel-body">
 						<xsl:apply-templates select="//message"/>
@@ -21,7 +21,7 @@
 								<input type="submit" name="login" value="Login"
 									class="btn btn-lg btn-success btn-block"/>
 								<div class="form-group">
-									<a href="../?register=1" class="space-x">Sign Up</a>
+									<a href="../?register=1" class="space-x">Register</a>
 									<a href="../?password_reset=1" class="space-x">Password Reset</a>
 									<a href="../demo.php" class="space-x">Demo</a>
 								</div>

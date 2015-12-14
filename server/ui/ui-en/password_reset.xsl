@@ -41,7 +41,7 @@
 								<input type="submit" name="reset" value="Reset"
 									class="btn btn-lg btn-success btn-block"/>
 								<div class="form-group">
-									<a href="../">Sign In</a>
+									<a href="../">Login</a>
 								</div>
 							</fieldset>
 						</form>
