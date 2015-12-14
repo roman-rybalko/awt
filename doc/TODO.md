@@ -1,5 +1,8 @@
 План
 ====
+1. AD idea: XPATH-driven browser actions
+2. Sign Up -> Register, Sign In -> Login
+3. Login (?logout=1) & Register (?register=1) buttons in demo acount
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг
 11. XPATH Browser в iframe/отдельном окне, с/без прокси (пользователь сам подгружает скрипт, Tip: Browser plugin)
