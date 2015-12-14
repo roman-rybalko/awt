@@ -26,6 +26,24 @@
 				<a class="navbar-brand" href="../../">Advanced Web Testing</a>
 			</div>
 			<ul class="nav navbar-top-links navbar-right">
+				<xsl:if test="../@login = ''">
+					<li>
+						<div class="space-x">
+							<form action="../" method="get">
+								<input type="hidden" name="logout" value="1"/>
+								<button type="submit" class="btn btn-success">Login</button>
+							</form>
+						</div>
+					</li>
+					<li>
+						<div class="space-x">
+							<form action="../" method="get">
+								<input type="hidden" name="register" value="1"/>
+								<button class="btn btn-success">Register</button>
+							</form>
+						</div>
+					</li>
+				</xsl:if>
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 						<i class="fa fa-user fa-fw"></i>

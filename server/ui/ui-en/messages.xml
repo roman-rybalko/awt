@@ -50,10 +50,6 @@
 	Invalid code (the session may expired).
 </message>
 
-<message value="logout_ok">
-	Goodbye!
-</message>
-
 <message value="password_change_fail">
 	Change Password failed (please, try again later).
 </message>

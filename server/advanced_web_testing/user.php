@@ -273,7 +273,6 @@ class User {
 		$histMgr->add('logout', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
 		$user->logout();
 		unset($this->userId);
-		echo '<message type="notice" value="logout_ok"/>';
 		$this->redirect('', 0);
 	}
 

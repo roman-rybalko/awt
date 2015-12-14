@@ -36,9 +36,6 @@ password_change_ok
 bad_code
 	Invalid code (the session may expired).
 
-logout_ok
-	Goodbye!
-
 password_change_fail
 	Change Password failed (please, try again later).
 
