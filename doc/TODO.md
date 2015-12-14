@@ -1,6 +1,5 @@
 План
 ====
-1. AD idea: XPATH-driven browser actions
 2. Sign Up -> Register, Sign In -> Login
 3. Login (?logout=1) & Register (?register=1) buttons in demo acount
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
