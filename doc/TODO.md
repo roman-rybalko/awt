@@ -1,5 +1,9 @@
 План
 ====
+1. ad idea: перетаскивать людей ищущих web monitoring software
+1. ad idea: free site monitoring - и завести в демо-аккаунт
+1. ad idea: c# perl python for web automation - не надо программировать, есть готовый сервис
+1. ad idea: we crawler - software/free/php-python-perl
 1. исправить таблицы в ui - сделать их mobile-friendly
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг
