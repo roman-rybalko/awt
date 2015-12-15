@@ -1,5 +1,6 @@
 План
 ====
+1. исправить таблицы в ui - сделать их mobile-friendly
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг
 11. XPATH Browser в iframe/отдельном окне, с/без прокси (пользователь сам подгружает скрипт, Tip: Browser plugin)
