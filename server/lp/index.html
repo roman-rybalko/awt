@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf8">
-<meta charset="utf8">
-<title>Advanced Web Testing</title>
-<link href="favicon.ico" type="image/x-icon" rel="icon">
-<link href="favicon.ico" type="image/x-icon" rel="shortcut icon">
-<link href="bootstrap.min.css" rel="stylesheet">
-<link href="bootstrap-responsive.min.css" rel="stylesheet">
-<link href="awt.css" rel="stylesheet">
+	<meta http-equiv="content-type" content="text/html; charset=utf8">
+	<meta charset="utf8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="description" content="Advanced Web Testing, Web Automation, Web Monitoring"/>
+	<title>Advanced Web Testing</title>
+	<link href="favicon.ico" type="image/x-icon" rel="icon">
+	<link href="favicon.ico" type="image/x-icon" rel="shortcut icon">
+	<link href="bootstrap.min.css" rel="stylesheet">
+	<link href="bootstrap-responsive.min.css" rel="stylesheet">
+	<link href="awt.css" rel="stylesheet">
 </head>
 <body>
 	<div id="awt-page" itemscope itemtype="http://schema.org/WebApplication">
@@ -24,7 +26,7 @@
 			</div>
 		</div>
 		<div class="container">
-			<div class="navbar" id="menubar">
+			<div class="navbar" id="menubar" style="display:none">
 				<div class="navbar-inner">
 					<ul class="nav">
 						<li id="menubar-item-description" class="active"><a href="#description"><i class="icon-info-sign"></i>Description</a></li>
@@ -41,44 +43,49 @@
 			</div>
 			<div class="navbar" id="menubar-placeholder" style="display:none">
 			</div>
-			<div>
-				<div class="row">
-					<div class="span12">
-						<p class="awt-section" itemprop="description">
-							<b itemprop="name">AWT</b> is a <span itemprop="applicationSubCategory">Service</span> (<span itemprop="applicationSubCategory">SaaS</span>) for
-							<span itemprop="applicationSubCategory"><span itemprop="applicationCategory">Web</span> site <span itemprop="applicationCategory">Testing</span></span>,
-							<span itemprop="applicationCategory">Automation</span> and <span itemprop="applicationCategory">Monitoring</span>
-							by user-defined <span itemprop="applicationSubCategory">Web Browser</span> actions.
-						</p>
-						<img src="descr4.png" class="awt-image-floated" itemprop="image">
-					</div>
+			<div class="row">
+				<div class="span12">
+					<p class="pull-right" id="menubar-mobile">
+						<a href="../ui/" class="btn btn-success">Login</a>
+					</p>
 				</div>
-				<div class="row">
-					<div class="span12">
-						<p class="awt-section" itemprop="description">
-							Create Test. Test comprises of Browser Actions.
-							The Browser Action may be as "open site", "click the link", "enter the value into the input", etc.
-						</p>
-						<img src="descr1.png" class="awt-image-floated">
-					</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section" itemprop="description">
+						<b itemprop="name">AWT</b> is a <span itemprop="applicationSubCategory">Service</span> (<span itemprop="applicationSubCategory">SaaS</span>) for
+						<span itemprop="applicationSubCategory"><span itemprop="applicationCategory">Web</span> site <span itemprop="applicationCategory">Testing</span></span>,
+						<span itemprop="applicationCategory">Automation</span> and <span itemprop="applicationCategory">Monitoring</span>
+						by user-defined <span itemprop="applicationSubCategory">Web Browser</span> actions.
+					</p>
+					<img src="descr4.png" class="awt-image-floated" itemprop="image">
 				</div>
-				<div class="row">
-					<div class="span12">
-						<p class="awt-section" itemprop="description">
-							Run the Test. The Test will be executed server-side on a chosen Web Browser.
-							For visual Browser Actions Screenshots will be taken.
-						</p>
-						<img src="descr2.png" class="awt-image-floated">
-					</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section" itemprop="description">
+						Create Test. Test comprises of Browser Actions.
+						The Browser Action may be as "open site", "click the link", "enter the value into the input", etc.
+					</p>
+					<img src="descr1.png" class="awt-image-floated">
 				</div>
-				<div class="row">
-					<div class="span12">
-						<p class="awt-section" itemprop="description">
-							Set up a Schedule and E-Mail reports.
-							The Test will be periodically executed on a Schedule, results will be sent by E-Mail.
-						</p>
-						<img src="descr3.png" class="awt-image-floated" id="use-cases">
-					</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section" itemprop="description">
+						Run the Test. The Test will be executed server-side on a chosen Web Browser.
+						For visual Browser Actions Screenshots will be taken.
+					</p>
+					<img src="descr2.png" class="awt-image-floated">
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section" itemprop="description">
+						Set up a Schedule and E-Mail reports.
+						The Test will be periodically executed on a Schedule, results will be sent by E-Mail.
+					</p>
+					<img src="descr3.png" class="awt-image-floated" id="use-cases">
 				</div>
 			</div>
 			<div class="row">
@@ -104,7 +111,7 @@
 						<span itemprop="keywords">Cross-browser validation</span>.
 						<span itemprop="keywords">Mobile &amp; Desktop</span>.
 					</p>
-					<img src="case4.png" class="awt-image-floated" style="height:70px;">
+					<img src="case4.png" class="awt-image-floated">
 				</div>
 			</div>
 			<div class="row">
@@ -253,16 +260,14 @@
 							<img src="https://www.paypalobjects.com/webstatic/mktg/logo/bdg_now_accepting_pp_2line_w.png" border="0" alt="Now accepting PayPal" style="height:50px;">
 						</a>
 					</p>
-					<!-- 
 					<p style="text-align:center;">
-<!-- begin WebMoney Transfer : accept label -- >
+<!-- begin WebMoney Transfer : accept label -->
 <a href="http://www.megastock.com/" target="_blank"><img src="acc_blue_on_transp_en.png" alt="We accept WebMoney" border="0" title="We accept WebMoney"/></a>
-<!-- end WebMoney Transfer : accept label -- >
-<!-- begin WebMoney Transfer : attestation label -- >
+<!-- end WebMoney Transfer : accept label -->
+<!-- begin WebMoney Transfer : attestation label -->
 <a href="https://passport.wmtransfer.com/asp/certview.asp?wmid=952332683666" target="_blank"><img src="v_blue_on_transp_en.png" alt="Verify passport" border="0" title="Verify passport"/></a>
-<!-- end WebMoney Transfer : attestation label -- >
+<!-- end WebMoney Transfer : attestation label -->
 					</p>
-					 -->
 				</div>
 			</div>
 		</div>

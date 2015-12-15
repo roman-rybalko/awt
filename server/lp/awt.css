@@ -43,6 +43,13 @@
 	text-align: center;
 }
 
+@media (max-width: 767px) {
+	#awt-header, #awt-footer {
+		margin-right: -20px;
+		margin-left: -20px;
+	}
+}
+
 html, body {
 	height: 100%;
 }
