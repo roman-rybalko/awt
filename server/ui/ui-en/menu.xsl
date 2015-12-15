@@ -30,7 +30,7 @@
 					<li>
 						<div class="space-x">
 							<form action="../" method="get">
-								<input type="hidden" name="logout" value="1"/>
+								<input type="hidden" name="login" value="1"/>
 								<button type="submit" class="btn btn-success">Login</button>
 							</form>
 						</div>

@@ -29,6 +29,9 @@ class User {
 	Register
 	action: ?register=1
 
+	Login
+	action: ?login=1
+
 	Logout
 	action: ?logout=1
 
@@ -66,6 +69,9 @@ class User {
 			if (isset($_GET['register'])) {
 				$user->logout();
 				$this->redirect('?register=1', 0);
+			} else if (isset($_GET['login'])) {
+				$user->logout();
+				$this->redirect('?login=1', 0);
 			} else if (isset($_GET['logout'])) {
 				$this->logout($user);
 			} else if (isset($_GET['settings'])) {
