@@ -1,0 +1,14 @@
+{
+  "name": "photobox-dep",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "photobox": "~1.9.9"
+  }
+}
