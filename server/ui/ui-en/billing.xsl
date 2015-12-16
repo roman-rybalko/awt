@@ -196,19 +196,19 @@
 											<xsl:value-of select="@payment_data"/>
 										</td>
 										<td>
-											<a href="#" data-toggle="modal" data-target="#modal-subscription-modify-{@payment_type}-{@id}" class="btn btn-xs btn-block btn-primary">
+											<a href="#" data-toggle="modal" data-target="#modal-subscription-modify-{@payment_type}-{@id}" class="btn btn-xs btn-primary">
 												<i class="fa fa-edit"></i>
 												Modify
 											</a>
 										</td>
 										<td>
-											<a href="#" data-toggle="modal" data-target="#modal-subscription-top_up-{@payment_type}-{@id}" class="btn btn-xs btn-block btn-success">
+											<a href="#" data-toggle="modal" data-target="#modal-subscription-top_up-{@payment_type}-{@id}" class="btn btn-xs btn-success">
 												<i class="glyphicon glyphicon-credit-card"></i>
 												Top Up
 											</a>
 										</td>
 										<td>
-											<a href="#" data-toggle="modal" data-target="#modal-subscription-cancel-{@payment_type}-{@id}" class="btn btn-xs btn-block btn-danger">
+											<a href="#" data-toggle="modal" data-target="#modal-subscription-cancel-{@payment_type}-{@id}" class="btn btn-xs btn-danger">
 												<i class="glyphicon glyphicon-trash"></i>
 												Cancel
 											</a>
@@ -454,16 +454,16 @@
 										<td>
 											<xsl:choose>
 												<xsl:when test="@code">
-													<a href="#" data-toggle="modal" data-target="#modal-pending-transaction-code-{@payment_type}-{@id}" class="btn btn-xs btn-block btn-primary">
+													<a href="#" data-toggle="modal" data-target="#modal-pending-transaction-code-{@payment_type}-{@id}" class="btn btn-xs btn-primary">
 														<i class="fa fa-gear"></i>
 														Process
 													</a>
 												</xsl:when>
 												<xsl:otherwise>
-													<form method="post">
+													<form method="post" style="display: inline;">
 														<input type="hidden" name="payment_type" value="{@payment_type}"/>
 														<input type="hidden" name="id" value="{@id}"/>
-														<button type="submit" name="process_pending_transaction" class="btn btn-xs btn-block btn-primary">
+														<button type="submit" name="process_pending_transaction" class="btn btn-xs btn-primary">
 															<i class="fa fa-gear"></i>
 															Process
 														</button>
@@ -472,10 +472,10 @@
 											</xsl:choose>
 										</td>
 										<td>
-											<form method="post">
+											<form method="post" style="display: inline;">
 												<input type="hidden" name="payment_type" value="{@payment_type}"/>
 												<input type="hidden" name="id" value="{@id}"/>
-												<button type="submit" name="cancel_pending_transaction" class="btn btn-xs btn-block btn-danger">
+												<button type="submit" name="cancel_pending_transaction" class="btn btn-xs btn-danger">
 													<i class="glyphicon glyphicon-trash"></i>
 													Cancel
 												</button>
@@ -569,7 +569,7 @@
 									<th>Credit/Charge</th>
 									<th>After</th>
 									<th data-orderable="false">Data</th>
-									<th data-orderable="false">Refund</th>
+									<th data-orderable="false"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -601,7 +601,7 @@
 										</td>
 										<td>
 											<xsl:if test="@refundable">
-												<a href="#" data-toggle="modal" data-target="#modal-transaction-refund-{@id}" class="btn btn-xs btn-block btn-danger">
+												<a href="#" data-toggle="modal" data-target="#modal-transaction-refund-{@id}" class="btn btn-xs btn-danger">
 													<i class="fa fa-reply"></i>
 													Refund
 												</a>

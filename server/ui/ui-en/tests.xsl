@@ -237,7 +237,7 @@
 														<xsl:value-of select="@time"/>
 													</td>
 													<td>
-														<form role="form" method="post">
+														<form role="form" method="post" style="display: inline;">
 															<input type="hidden" name="id" value="{@id}"/>
 															<button type="submit" name="restore" class="btn btn-xs btn-success">
 																<i class="fa fa-recycle"></i>
