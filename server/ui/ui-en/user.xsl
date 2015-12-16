@@ -10,30 +10,6 @@
 		<meta name="description" content="Advanced Web Testing, Web Automation, Web Monitoring"/>
 		<base href="ui-en/"/>
 		<title>Advanced Web Testing</title>
-		<xsl:if test="redirect">
-			<xsl:choose>
-				<xsl:when test="redirect/@timeout">
-					<xsl:choose>
-						<xsl:when test="contains(redirect/@url, '://')">
-							<meta http-equiv="refresh" content="{redirect/@timeout};url={redirect/@url}"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<meta http-equiv="refresh" content="{redirect/@timeout};url=../{redirect/@url}"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:choose>
-						<xsl:when test="contains(redirect/@url, '://')">
-							<meta http-equiv="refresh" content="0;url={redirect/@url}"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<meta http-equiv="refresh" content="0;url=../{redirect/@url}"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:if>
 		<link href="css/bootstrap.min.css" rel="stylesheet"/>
 		<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<!--[if lt IE 9]>

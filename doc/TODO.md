@@ -1,6 +1,5 @@
 План
 ====
-1. убрать тег base из ui - он не работает в IE
 1. доработать photobox - убрать начальную анимацию, mobile
 1. ad idea: перетаскивать людей ищущих web monitoring software
 1. ad idea: free site monitoring - и завести в демо-аккаунт
