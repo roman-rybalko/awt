@@ -51,11 +51,11 @@
 								</xsl:if>
 								<thead>
 									<tr>
-										<th>Test</th>
+										<th>Task</th>
 										<th>Type</th>
 										<th>Debug</th>
 										<th>Time</th>
-										<th data-orderable="false"></th>
+										<th>Test</th>
 										<th data-orderable="false"></th>
 										<th data-orderable="false"></th>
 									</tr>
@@ -64,7 +64,7 @@
 									<xsl:for-each select="task[@status = 'initial']">
 										<tr>
 											<td>
-												<a href="../?test={@test_id}">
+												<a href="../?task={@id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -80,19 +80,18 @@
 												<xsl:value-of select="@time"/>
 											</td>
 											<td>
-												<form role="form" method="post">
+												<a href="../?test={@test_id}">
+													<xsl:value-of select="@test_name"/>
+												</a>
+											</td>
+											<td>
+												<form role="form" method="post" style="display: inline;">
 													<input type="hidden" name="task_id" value="{@id}"/>
 													<button type="submit" name="cancel" class="btn btn-xs btn-danger">
 														<i class="glyphicon glyphicon-trash"></i>
 														Cancel
 													</button>
 												</form>
-											</td>
-											<td>
-												<a href="../?task={@id}">
-													<i class="fa fa-list"></i>
-													Actions
-												</a>
 											</td>
 											<td>
 												<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-task-restart-{@id}">
@@ -129,11 +128,11 @@
 								</xsl:if>
 								<thead>
 									<tr>
-										<th>Test</th>
+										<th>Task</th>
 										<th>Type</th>
 										<th>Debug</th>
 										<th>Time</th>
-										<th data-orderable="false"></th>
+										<th>Test</th>
 										<th data-orderable="false"></th>
 										<th data-orderable="false"></th>
 									</tr>
@@ -142,7 +141,7 @@
 									<xsl:for-each select="task[@status = 'starting' or @status = 'running']">
 										<tr>
 											<td>
-												<a href="../?test={@test_id}">
+												<a href="../?task={@id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -158,19 +157,18 @@
 												<xsl:value-of select="@time"/>
 											</td>
 											<td>
-												<form role="form" method="post">
+												<a href="../?test={@test_id}">
+													<xsl:value-of select="@test_name"/>
+												</a>
+											</td>
+											<td>
+												<form role="form" method="post" style="display: inline;">
 													<input type="hidden" name="task_id" value="{@id}"/>
 													<button type="submit" name="cancel" class="btn btn-xs btn-danger">
 														<i class="glyphicon glyphicon-trash"></i>
 														Cancel
 													</button>
 												</form>
-											</td>
-											<td>
-												<a href="../?task={@id}">
-													<i class="fa fa-list"></i>
-													Actions
-												</a>
 											</td>
 											<td>
 												<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-task-restart-{@id}">
@@ -207,12 +205,12 @@
 								</xsl:if>
 								<thead>
 									<tr>
-										<th>Test</th>
+										<th>Task</th>
 										<th>Type</th>
 										<th>Debug</th>
 										<th>Time</th>
 										<th>Status</th>
-										<th data-orderable="false"></th>
+										<th>Test</th>
 										<th data-orderable="false"></th>
 									</tr>
 								</thead>
@@ -226,7 +224,7 @@
 												<xsl:attribute name="class">danger</xsl:attribute>
 											</xsl:if>
 											<td>
-												<a href="../?test={@test_id}">
+												<a href="../?task={@id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -252,9 +250,8 @@
 												</xsl:if>
 											</td>
 											<td>
-												<a href="../?task={@id}">
-													<i class="fa fa-th-list"></i>
-													Results
+												<a href="../?test={@test_id}">
+													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
 											<td>
@@ -287,11 +284,11 @@
 								</xsl:if>
 								<thead>
 									<tr>
-										<th>Test</th>
+										<th>Task</th>
 										<th>Type</th>
 										<th>Debug</th>
 										<th>Time</th>
-										<th data-orderable="false"></th>
+										<th>Test</th>
 										<th data-orderable="false"></th>
 									</tr>
 								</thead>
@@ -299,7 +296,7 @@
 									<xsl:for-each select="task[@status = 'canceled']">
 										<tr>
 											<td>
-												<a href="../?test={@test_id}">
+												<a href="../?task={@id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -315,9 +312,8 @@
 												<xsl:value-of select="@time"/>
 											</td>
 											<td>
-												<a href="../?task={@id}">
-													<i class="fa fa-list"></i>
-													Actions
+												<a href="../?test={@test_id}">
+													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
 											<td>
