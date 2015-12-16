@@ -103,23 +103,22 @@
 							<div class="form-group">
 								<table style="width:100%;">
 									<tr>
-										<td style="text-align:center;">
+										<td>
 											<input type="radio" id="modal-top_up-payment_type-paypal" name="payment_type" value="2" checked=""/>
 										</td>
-										<td style="text-align:center;">
+										<td>
 											<label for="modal-top_up-payment_type-paypal">
-												<img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" border="0" alt="PayPal"/>
+												<img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_200x51.png" alt="PayPal"/>
 											</label>
 										</td>
 									</tr>
 									<tr>
-										<td style="text-align:center;">
+										<td>
 											<input type="radio" id="modal-top_up-payment_type-webmoney" name="payment_type" value="3"/>
 										</td>
-										<td style="text-align:center;">
+										<td>
 											<label for="modal-top_up-payment_type-webmoney">
-												<img src="webmoney/wmlogo_vector_blue.png" alt="WebMoney" style="height:60px;"/>
-												<img src="webmoney/ccard_logos.png" style="height:60px;"/>
+												<img src="webmoney/wmlogo.png" alt="WebMoney"/>
 											</label>
 										</td>
 									</tr>
