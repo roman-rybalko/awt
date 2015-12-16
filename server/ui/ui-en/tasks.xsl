@@ -6,9 +6,12 @@
 </xsl:template>
 
 <xsl:template match="tasks" mode="menu">
-	<link href="css/dataTables.bootstrap.css" rel="stylesheet"/>
-	<script src="js/jquery.dataTables.min.js"></script>
-	<script src="js/dataTables.bootstrap.min.js"></script>
+	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"/>
+	<script src="js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/dataTables.responsive.min.js" type="text/javascript"></script>
+	<link href="css/responsive.bootstrap.min.css" rel="stylesheet"/>
+	<script src="js/responsive.bootstrap.min.js" type="text/javascript"></script>
 	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">

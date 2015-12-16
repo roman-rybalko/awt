@@ -162,7 +162,9 @@ $(function() {
 		$(this).html(moment.unix(time).format(datetime_format));
 	});
 	if ($('.table-dataTable').length) {  // after .time-unix2human .period-unix2human
-		var table = $('.table-dataTable').DataTable();
+		var table = $('.table-dataTable').DataTable({
+			responsive: true			
+		});
 		var hash = window.location.hash;
 		if (hash)
 			table.search(hash).draw();
