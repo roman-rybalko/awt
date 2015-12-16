@@ -11,6 +11,17 @@ var campaignConfigs = [
 	},
 ];
 
+var logMail = 'root@advancedwebtesting.com';
+var logBuf = [];
+function log(str) {
+	logBuf.push(str);
+	Logger.log(str);
+}
+function mailLog(subject) {
+	MailApp.sendEmail(logMail, subject, logBuf.join("\n"));
+	logBuf = [];
+}
+
 function fatal(str) {
 	throw str;
 }
@@ -35,7 +46,7 @@ function removePlacements(adGroup, criteria) {
 		criteria.managed = true;
 	if (typeof(criteria.excluded) == 'undefined')
 		criteria.excluded = true;
-	Logger.log('Placements: criteria: ' + JSON.stringify(criteria) + ', AdGroup: ' + adGroup.getName() + ', Campaign: ' + adGroup.getCampaign().getName());
+	log('Placements: criteria: ' + JSON.stringify(criteria) + ', AdGroup: ' + adGroup.getName() + ', Campaign: ' + adGroup.getCampaign().getName());
 	var placements;
 	if (criteria.excluded)
 		placements = adGroup.display().excludedPlacements().get();
@@ -49,7 +60,7 @@ function removePlacements(adGroup, criteria) {
 			if (!criteria.managed && placement.isManaged())
 				continue;
 		}
-		Logger.log('Remove Placement: id: ' + placement.getId() + ', url: ' + placement.getUrl()
+		log('Remove Placement: id: ' + placement.getId() + ', url: ' + placement.getUrl()
 			+ (placement.isManaged ? ', managed: ' + placement.isManaged() : '')
 			+ ', AdGroup: ' + placement.getAdGroup().getName() + ', Campaign: ' + placement.getCampaign().getName());
 		placement.remove();
@@ -60,7 +71,7 @@ function main() {
 	for (var i in campaignConfigs) {
 		campaignConfigs[i].campaign = getCampaignByName(campaignConfigs[i].name);
 		var config = campaignConfigs[i];
-		Logger.log('Campaign: ' + config.campaign.getName() + ', id: ' + config.campaign.getId() + ', excluded: ' + config.excluded + ', managed: ' + config.managed);
+		log('Campaign: ' + config.campaign.getName() + ', id: ' + config.campaign.getId() + ', excluded: ' + config.excluded + ', managed: ' + config.managed);
 	}
 	for (var i in campaignConfigs) {
 		var campaign = campaignConfigs[i].campaign;
@@ -70,4 +81,5 @@ function main() {
 			removePlacements(adGroup, {excluded: campaignConfigs[i].excluded, managed: campaignConfigs[i].managed});
 		}
 	}
+	mailLog('Remove Placements');
 }

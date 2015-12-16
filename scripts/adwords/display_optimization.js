@@ -5,6 +5,17 @@ var minImpressions = 1;
 var filterRegexp = /^mobileapp::/;
 var range = 'YESTERDAY';  // TODAY | YESTERDAY | LAST_7_DAYS | THIS_WEEK_SUN_TODAY | THIS_WEEK_MON_TODAY | LAST_WEEK | LAST_14_DAYS | LAST_30_DAYS | LAST_BUSINESS_WEEK | LAST_WEEK_SUN_SAT | THIS_MONTH*
 
+var logMail = 'root@advancedwebtesting.com';
+var logBuf = [];
+function log(str) {
+	logBuf.push(str);
+	Logger.log(str);
+}
+function mailLog(subject) {
+	MailApp.sendEmail(logMail, subject, logBuf.join("\n"));
+	logBuf = [];
+}
+
 function fatal(str) {
 	throw str;
 }
@@ -71,7 +82,7 @@ function getPlacements(campaign, criteria) {
 		criteria.range = 'YESTERDAY';
 	if (!criteria.reportName)
 		criteria.reportName = 'AUTOMATIC_PLACEMENTS_PERFORMANCE_REPORT';
-	Logger.log('getPlacements: criteria: ' + JSON.stringify(criteria));
+	log('getPlacements: criteria: ' + JSON.stringify(criteria));
 	var report = AdWordsApp.report(
 		'SELECT Domain, Clicks, Impressions, AdGroupId, AdGroupName'
 		+ ' FROM ' + criteria.reportName
@@ -118,7 +129,7 @@ function addPlacement(adGroup, placement) {
 		result = builder.exclude();
 	else
 		result = builder.build();
-	Logger.log('addPlacement: new' + (placement.banned ? ' excluded' : '') + ' placement: ' + JSON.stringify(placement) + ', status: ' + result.isSuccessful() + ', errors: ' + JSON.stringify(result.getErrors()));
+	log('addPlacement: new' + (placement.banned ? ' excluded' : '') + ' placement: ' + JSON.stringify(placement) + ', status: ' + result.isSuccessful() + ', errors: ' + JSON.stringify(result.getErrors()));
 }
 
 function main() {
@@ -128,8 +139,9 @@ function main() {
 	var placements = getPlacements(srcCampaign, {minCtr: minCtr, minImpressions: minImpressions, filterRegexp: filterRegexp, range: range});
 	for (var i in placements) {
 		var placement = placements[i];
-		Logger.log('placement: ' + JSON.stringify(placement));
+		log('placement: ' + JSON.stringify(placement));
 		addPlacement(adGroupsMap._src._dst[placement.adGroupId], {url: placement.domain});
 		addPlacement(adGroupsMap._src[placement.adGroupId], {url: placement.domain, banned: true});
 	}
+	mailLog('Display Optimization');
 }
