@@ -44,6 +44,10 @@ body {
 	min-height: 50px;
 }
 
+.navbar-top-links li .navbar-button-wrap {
+	padding: 0 15px 0 15px;
+}
+
 .navbar-top-links .dropdown-menu li {
 	display: block;
 }

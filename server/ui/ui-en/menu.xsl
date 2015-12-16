@@ -28,7 +28,7 @@
 			<ul class="nav navbar-top-links navbar-right">
 				<xsl:if test="../@login = ''">
 					<li>
-						<div class="space-x">
+						<div class="navbar-button-wrap">
 							<form action="../" method="get">
 								<input type="hidden" name="login" value="1"/>
 								<button type="submit" class="btn btn-success">Login</button>
@@ -36,7 +36,7 @@
 						</div>
 					</li>
 					<li>
-						<div class="space-x">
+						<div class="navbar-button-wrap">
 							<form action="../" method="get">
 								<input type="hidden" name="register" value="1"/>
 								<button class="btn btn-success">Register</button>
