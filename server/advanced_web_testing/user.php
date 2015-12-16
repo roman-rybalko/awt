@@ -14,8 +14,11 @@ class User {
 	}
 
 	public function run() {
-		header('Content-Type: text/xml');
-		//\WebConstructionSet\OutputBuffer\XsltHtml::init();
+		if (preg_match('/Mobile|Phone|Android/', $_SERVER['HTTP_USER_AGENT'])) {
+			\WebConstructionSet\OutputBuffer\XsltHtml::init();
+		} else {
+			header('Content-Type: text/xml');
+		}
 		//\WebConstructionSet\OutputBuffer\XmlFormatter::init();
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
 		echo '<?xml-stylesheet type="text/xsl" href="ui-en/index.xsl"?>';
