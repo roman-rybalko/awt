@@ -45,16 +45,16 @@
 							Pending
 						</div>
 						<div class="panel-body">
-							<table class="table table-striped table-hover table-dataTable" data-order='[[3, "desc"]]'>
+							<table class="table table-striped table-hover table-dataTable" data-order='[[0, "desc"]]'>
 								<xsl:if test="count(task[@status = 'initial']) &lt;= 10">
 									<xsl:attribute name="data-paging">false</xsl:attribute>
 								</xsl:if>
 								<thead>
 									<tr>
+										<th>Time</th>
 										<th>Task</th>
 										<th>Type</th>
 										<th>Debug</th>
-										<th>Time</th>
 										<th>Test</th>
 										<th data-orderable="false"></th>
 										<th data-orderable="false"></th>
@@ -63,6 +63,9 @@
 								<tbody>
 									<xsl:for-each select="task[@status = 'initial']">
 										<tr>
+											<td class="time-unix2human">
+												<xsl:value-of select="@time"/>
+											</td>
 											<td>
 												<a href="./?task={@id}">
 													<xsl:value-of select="@test_name"/>
@@ -75,9 +78,6 @@
 												<xsl:if test="@debug">
 													<i class="fa fa-check-square"></i>
 												</xsl:if>
-											</td>
-											<td class="time-unix2human">
-												<xsl:value-of select="@time"/>
 											</td>
 											<td>
 												<a href="./?test={@test_id}">
@@ -122,16 +122,16 @@
 							Running
 						</div>
 						<div class="panel-body">
-							<table class="table table-striped table-hover table-dataTable" data-order='[[3, "desc"]]'>
+							<table class="table table-striped table-hover table-dataTable" data-order='[[0, "desc"]]'>
 								<xsl:if test="count(task[@status = 'starting' or @status = 'running']) &lt;= 10">
 									<xsl:attribute name="data-paging">false</xsl:attribute>
 								</xsl:if>
 								<thead>
 									<tr>
+										<th>Time</th>
 										<th>Task</th>
 										<th>Type</th>
 										<th>Debug</th>
-										<th>Time</th>
 										<th>Test</th>
 										<th data-orderable="false"></th>
 										<th data-orderable="false"></th>
@@ -140,6 +140,9 @@
 								<tbody>
 									<xsl:for-each select="task[@status = 'starting' or @status = 'running']">
 										<tr>
+											<td class="time-unix2human">
+												<xsl:value-of select="@time"/>
+											</td>
 											<td>
 												<a href="./?task={@id}">
 													<xsl:value-of select="@test_name"/>
@@ -152,9 +155,6 @@
 												<xsl:if test="@debug">
 													<i class="fa fa-check-square"></i>
 												</xsl:if>
-											</td>
-											<td class="time-unix2human">
-												<xsl:value-of select="@time"/>
 											</td>
 											<td>
 												<a href="./?test={@test_id}">
@@ -199,16 +199,16 @@
 							Finished
 						</div>
 						<div class="panel-body">
-							<table class="table table-striped table-hover table-dataTable" data-order='[[3, "desc"]]'>
+							<table class="table table-striped table-hover table-dataTable" data-order='[[0, "desc"]]'>
 								<xsl:if test="count(task[@status = 'succeeded' or @status = 'failed']) &lt;= 10">
 									<xsl:attribute name="data-paging">false</xsl:attribute>
 								</xsl:if>
 								<thead>
 									<tr>
+										<th>Time</th>
 										<th>Task</th>
 										<th>Type</th>
 										<th>Debug</th>
-										<th>Time</th>
 										<th>Status</th>
 										<th>Test</th>
 										<th data-orderable="false"></th>
@@ -223,6 +223,9 @@
 											<xsl:if test="@status = 'failed'">
 												<xsl:attribute name="class">danger</xsl:attribute>
 											</xsl:if>
+											<td class="time-unix2human">
+												<xsl:value-of select="@time"/>
+											</td>
 											<td>
 												<a href="./?task={@id}">
 													<xsl:value-of select="@test_name"/>
@@ -235,9 +238,6 @@
 												<xsl:if test="@debug">
 													<i class="fa fa-check-square"></i>
 												</xsl:if>
-											</td>
-											<td class="time-unix2human">
-												<xsl:value-of select="@time"/>
 											</td>
 											<td>
 												<xsl:if test="@status = 'succeeded'">
@@ -278,16 +278,16 @@
 							Canceled
 						</div>
 						<div class="panel-body">
-							<table class="table table-striped table-hover table-dataTable" data-order='[[3, "desc"]]'>
+							<table class="table table-striped table-hover table-dataTable" data-order='[[0, "desc"]]'>
 								<xsl:if test="count(task[@status = 'canceled']) &lt;= 10">
 									<xsl:attribute name="data-paging">false</xsl:attribute>
 								</xsl:if>
 								<thead>
 									<tr>
+										<th>Time</th>
 										<th>Task</th>
 										<th>Type</th>
 										<th>Debug</th>
-										<th>Time</th>
 										<th>Test</th>
 										<th data-orderable="false"></th>
 									</tr>
@@ -295,6 +295,9 @@
 								<tbody>
 									<xsl:for-each select="task[@status = 'canceled']">
 										<tr>
+											<td class="time-unix2human">
+												<xsl:value-of select="@time"/>
+											</td>
 											<td>
 												<a href="./?task={@id}">
 													<xsl:value-of select="@test_name"/>
@@ -307,9 +310,6 @@
 												<xsl:if test="@debug">
 													<i class="fa fa-check-square"></i>
 												</xsl:if>
-											</td>
-											<td class="time-unix2human">
-												<xsl:value-of select="@time"/>
 											</td>
 											<td>
 												<a href="./?test={@test_id}">

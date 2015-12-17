@@ -25,14 +25,14 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<table class="table table-striped table-hover table-dataTable" data-order='[[1, "desc"]]'>
+							<table class="table table-striped table-hover table-dataTable" data-order='[[0, "desc"]]'>
 								<xsl:if test="count(test[not(@deleted)]) &lt;= 10">
 									<xsl:attribute name="data-paging">false</xsl:attribute>
 								</xsl:if>
 								<thead>
 									<tr>
-										<th>Name</th>
 										<th>Time</th>
+										<th>Name</th>
 										<th data-orderable="false"></th>
 										<th data-orderable="false"></th>
 										<th data-orderable="false"></th>
@@ -42,13 +42,13 @@
 								<tbody>
 									<xsl:for-each select="test[not(@deleted)]">
 										<tr>
+											<td class="time-unix2human">
+												<xsl:value-of select="@time"/>
+											</td>
 											<td>
 												<a href="./?test={@id}">
 													<xsl:value-of select="@name"/>
 												</a>
-											</td>
-											<td class="time-unix2human">
-												<xsl:value-of select="@time"/>
 											</td>
 											<td>
 												<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-test-rename-{@id}">
@@ -214,27 +214,27 @@
 							</div>
 							<div id="trash-body" class="panel-collapse collapse">
 								<div class="panel-body">
-									<table class="table table-striped table-hover table-dataTable" data-order='[[1, "desc"]]'>
+									<table class="table table-striped table-hover table-dataTable" data-order='[[0, "desc"]]'>
 										<xsl:if test="count(test[@deleted]) &lt;= 10">
 											<xsl:attribute name="data-paging">false</xsl:attribute>
 										</xsl:if>
 										<thead>
 											<tr>
-												<th>Name</th>
 												<th>Time</th>
+												<th>Name</th>
 												<th data-orderable="false"></th>
 											</tr>
 										</thead>
 										<tbody>
 											<xsl:for-each select="test[@deleted]">
 												<tr>
+													<td class="time-unix2human">
+														<xsl:value-of select="@time"/>
+													</td>
 													<td>
 														<a href="./?test={@id}">
 															<xsl:value-of select="@name"/>
 														</a>
-													</td>
-													<td class="time-unix2human">
-														<xsl:value-of select="@time"/>
 													</td>
 													<td>
 														<form role="form" method="post" style="display: inline;">
