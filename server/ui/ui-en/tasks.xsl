@@ -342,7 +342,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cleanup">&#215;</button>
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-purge-period">&#215;</button>
 						<b>Tip:</b>
 						Tasks are purged after 42 days.
 					</div>

@@ -28,7 +28,7 @@ email_confirmation_pending
 	E-Mail confirmation message has been sent, please check your mailbox and proceed according to the instructions.
 
 password_reset_fail
-	Reset Password failed (please, try again later).
+	Reset Password failed (please, request the support).
 
 password_change_ok
 	Password has been changed.

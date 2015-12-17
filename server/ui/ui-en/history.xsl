@@ -67,7 +67,7 @@
 				</div>
 				<xsl:if test="event">
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="history-clear">&#215;</button>
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-purge-period">&#215;</button>
 						<b>Tip:</b>
 						History data is purged after 42 days.
 					</div>
