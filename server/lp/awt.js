@@ -15,7 +15,7 @@ function reformat() {
 	});
 	$('#menubar').width($('.container').width());
 	$('#menubar-placeholder').height($('#menubar').height());
-	menuBarPoss = [$('#description').offset().top, $('#use-cases').offset().top, $('#features').offset().top,
+	menuBarPoss = [$('#descr').offset().top, $('#use-cases').offset().top, $('#features').offset().top,
 	               $('#pricing').offset().top, $(document).height()];
 }
 $(window).resize(reformat);
