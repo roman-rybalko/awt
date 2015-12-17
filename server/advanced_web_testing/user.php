@@ -234,15 +234,15 @@ class User {
 								$this->redirect('', 3);
 								return;
 							} else {
-								error_log('Password Reset: user:' . $_POST['user'] . ' - Mail Manager error');
+								error_log('Password Reset: user: ' . $_POST['user'] . ' - Mail Manager error');
 								echo '<message type="error" value="password_reset_fail"/>';
 							}
 						} else {
-							error_log('Password Reset: user:' . $_POST['user'] . ' - no E-Mail');
+							error_log('Password Reset: user: ' . $_POST['user'] . ' - no E-Mail');
 							echo '<message type="error" value="password_reset_fail"/>';
 						}
 					} else {
-						error_log('Password Reset: user:' . $_POST['user'] . ' - no such login');
+						error_log('Password Reset: user: ' . $_POST['user'] . ' - the login is not found');
 						echo '<message type="error" value="password_reset_fail"/>';
 					}
 				} else {
