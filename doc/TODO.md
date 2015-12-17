@@ -1,6 +1,9 @@
 План
 ====
-1. доработать photobox - убрать начальную анимацию, mobile
+27. доработать photobox - убрать начальную анимацию, mobile
+28. Написать мануал для каждого типа action
+29. Все set/check email tips обозначить одним идентификатором
+30. рефакторинг ссылок в ui, рефакторинг redirect
 1. ad idea: перетаскивать людей ищущих web monitoring software
 1. ad idea: free site monitoring - и завести в демо-аккаунт
 1. ad idea: c# perl python for web automation - не надо программировать, есть готовый сервис
