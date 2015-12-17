@@ -39,7 +39,7 @@
 </message>
 
 <message value="password_reset_fail">
-	Reset Password failed (please, request the support).
+	Password reset failed (please, contact the support).
 </message>
 
 <message value="password_change_ok">
