@@ -6,12 +6,12 @@
 </xsl:template>
 
 <xsl:template match="tests" mode="menu">
-	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
-	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"/>
-	<script src="js/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="js/dataTables.responsive.min.js" type="text/javascript"></script>
-	<link href="css/responsive.bootstrap.min.css" rel="stylesheet"/>
-	<script src="js/responsive.bootstrap.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/jquery.dataTables.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/dataTables.responsive.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/responsive.bootstrap.min.js" type="text/javascript"></script>
 	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
@@ -43,7 +43,7 @@
 									<xsl:for-each select="test[not(@deleted)]">
 										<tr>
 											<td>
-												<a href="../?test={@id}">
+												<a href="./?test={@id}">
 													<xsl:value-of select="@name"/>
 												</a>
 											</td>
@@ -229,7 +229,7 @@
 											<xsl:for-each select="test[@deleted]">
 												<tr>
 													<td>
-														<a href="../?test={@id}">
+														<a href="./?test={@id}">
 															<xsl:value-of select="@name"/>
 														</a>
 													</td>

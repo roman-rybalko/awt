@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template name="menu">
-	<link href="css/metisMenu.min.css" rel="stylesheet"/>
-	<script src="js/metisMenu.min.js"></script>
-	<script src="js/jquery.cookie.min.js"></script>
-	<script src="js/jquery.storageapi.min.js"></script>
-	<script src="js/storage.js"></script>
-	<script src="js/moment.min.js"></script>
+	<link href="ui-en/css/metisMenu.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/metisMenu.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/jquery.cookie.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/jquery.storageapi.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/storage.js" type="text/javascript"></script>
+	<script src="ui-en/js/moment.min.js" type="text/javascript"></script>
 	<xsl:if test="@time">
 		<script type="text/javascript">
 			var awt_time = "<xsl:value-of select="@time"/>";
@@ -23,13 +23,13 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="../../">Advanced Web Testing</a>
+				<a class="navbar-brand" href="./../">Advanced Web Testing</a>
 			</div>
 			<ul class="nav navbar-top-links navbar-right">
 				<xsl:if test="../@login = ''">
 					<li>
 						<div class="navbar-button-wrap">
-							<form action="../" method="get">
+							<form action="./" method="get">
 								<input type="hidden" name="login" value="1"/>
 								<button type="submit" class="btn btn-success">Login</button>
 							</form>
@@ -37,7 +37,7 @@
 					</li>
 					<li>
 						<div class="navbar-button-wrap">
-							<form action="../" method="get">
+							<form action="./" method="get">
 								<input type="hidden" name="register" value="1"/>
 								<button class="btn btn-success">Register</button>
 							</form>
@@ -54,14 +54,14 @@
 					</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li>
-							<a href="../?settings=1">
+							<a href="./?settings=1">
 								<i class="fa fa-gear fa-fw"></i>
 								Settings
 							</a>
 						</li>
 						<li class="divider"></li>
 						<li>
-							<a href="../?logout=1">
+							<a href="./?logout=1">
 								<i class="fa fa-sign-out fa-fw"></i>
 								Logout
 							</a>
@@ -73,37 +73,37 @@
 				<div class="sidebar-nav navbar-collapse">
 					<ul class="nav" id="side-menu">
 						<li>
-							<a href="../?stats=1">
+							<a href="./?stats=1">
 								<i class="fa fa-bar-chart-o fa-fw"></i>
 								Stats
 							</a>
 						</li>
 						<li>
-							<a href="../?tests=1">
+							<a href="./?tests=1">
 								<i class="fa fa-code fa-fw"></i>
 								Tests
 							</a>
 						</li>
 						<li>
-							<a href="../?tasks=1" class="apply-data-display-period">
+							<a href="./?tasks=1" class="apply-data-display-period">
 								<i class="fa fa-play fa-fw"></i>
 								Tasks
 							</a>
 						</li>
 						<li>
-							<a href="../?schedule=1">
+							<a href="./?schedule=1">
 								<i class="fa fa-clock-o fa-fw"></i>
 								Schedule
 							</a>
 						</li>
 						<li>
-							<a href="../?billing=1" class="apply-data-display-period">
+							<a href="./?billing=1" class="apply-data-display-period">
 								<i class="fa fa-money fa-fw"></i>
 								Billing
 							</a>
 						</li>
 						<li>
-							<a href="../?history=1" class="apply-data-display-period">
+							<a href="./?history=1" class="apply-data-display-period">
 								<i class="fa fa-calendar fa-fw"></i>
 								History
 							</a>

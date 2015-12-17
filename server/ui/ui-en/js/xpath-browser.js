@@ -22,7 +22,7 @@ $(function() {
 		}
 		function browser_go(id, url) {
 			if (url) {
-				$('#xpath-browser-iframe-' + id).attr('src', 'php/proxy.php?' + url);
+				$('#xpath-browser-iframe-' + id).attr('src', 'ui-en/php/proxy.php?' + url);
 				$('#xpath-browser-wnd-' + id).resizable('option', 'disabled', false);
 				$('#xpath-browser-wnd-' + id).height(storage.get('height') || 400);
 			} else {

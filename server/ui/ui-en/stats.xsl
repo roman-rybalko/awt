@@ -6,11 +6,13 @@
 </xsl:template>
 
 <xsl:template match="stats" mode="menu">
-	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/excanvas.min.js"></script><![endif]-->
-    <script src="js/jquery.flot.min.js"></script>
-    <script src="js/jquery.flot.resize.min.js"></script>
-    <script src="js/jquery.flot.time.min.js"></script>
-    <script src="js/jquery.flot.tooltip.min.js"></script>
+	<!--[if lte IE 8]>
+		<script src="ui-en/js/excanvas.min.js" type="text/javascript"></script>
+	<![endif]-->
+	<script src="ui-en/js/jquery.flot.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/jquery.flot.resize.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/jquery.flot.time.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/jquery.flot.tooltip.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		tasks_added = [  // global
 			<xsl:for-each select="stat">
@@ -60,7 +62,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="../?tests=1">
+					<a href="./?tests=1">
 						<div class="panel-footer">
 							<span class="pull-left">Details</span>
 							<span class="pull-right">
@@ -86,7 +88,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="../?schedule=1">
+					<a href="./?schedule=1">
 						<div class="panel-footer">
 							<span class="pull-left">Details</span>
 							<span class="pull-right">
@@ -112,7 +114,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="../?billing=1" class="apply-data-display-period">
+					<a href="./?billing=1" class="apply-data-display-period">
 						<div class="panel-footer">
 							<span class="pull-left">Details</span>
 							<span class="pull-right">
@@ -138,7 +140,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="../?billing=1" class="apply-data-display-period">
+					<a href="./?billing=1" class="apply-data-display-period">
 						<div class="panel-footer">
 							<span class="pull-left">Details</span>
 							<span class="pull-right">

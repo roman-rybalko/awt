@@ -73,13 +73,13 @@
 	</xsl:if>
 	<xsl:if test="@task_id and @test_name">
 		<b class="space-x">Task:</b>
-		<a href="../?task={@task_id}" class="space-x">
+		<a href="./?task={@task_id}" class="space-x">
 			<xsl:value-of select="@test_name"/>
 		</a>
 	</xsl:if>
 	<xsl:if test="@sched_id and @sched_name">
 		<b class="space-x">Schedule Job:</b>
-		<a href="../?schedule=1#{@sched_id}" class="space-x">
+		<a href="./?schedule=1#{@sched_id}" class="space-x">
 			<xsl:value-of select="@sched_name"/>
 		</a>
 	</xsl:if>
@@ -92,7 +92,7 @@
 				<b class="space-x">Refund:</b>
 			</xsl:otherwise>
 		</xsl:choose>
-		<a href="../?billing_archive=1#{@ref_id}" class="space-x">
+		<a href="./?billing_archive=1#{@ref_id}" class="space-x">
 			#<xsl:value-of select="@ref_id"/>
 		</a>
 	</xsl:if>

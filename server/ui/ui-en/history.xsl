@@ -6,12 +6,12 @@
 </xsl:template>
 
 <xsl:template match="history" mode="menu">
-	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
-	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"/>
-	<script src="js/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="js/dataTables.responsive.min.js" type="text/javascript"></script>
-	<link href="css/responsive.bootstrap.min.css" rel="stylesheet"/>
-	<script src="js/responsive.bootstrap.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/jquery.dataTables.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/dataTables.responsive.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/responsive.bootstrap.min.js" type="text/javascript"></script>
 	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
@@ -23,7 +23,7 @@
 						<div class="alert alert-info alert-dismissable">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-display-period">&#215;</button>
 							<b>Tip:</b>
-							Use <b>Data Display Period</b> option in <a href="../?settings=1">Settings</a> to reduce displayed data and speed up the UI.
+							Use <b>Data Display Period</b> option in <a href="./?settings=1">Settings</a> to reduce displayed data and speed up the UI.
 						</div>
 					</xsl:if>
 				</div>

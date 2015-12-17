@@ -124,7 +124,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 		</div>
 	</div>
@@ -143,7 +143,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 		</div>
 	</div>
@@ -162,7 +162,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 		</div>
 	</div>
@@ -181,11 +181,11 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}">
+				<a href="./?test={@test_id}">
 					<xsl:value-of select="@old_test_name"/>
 				</a>
 				-&gt;
-				<a href="../?test={@test_id}">
+				<a href="./?test={@test_id}">
 					<xsl:value-of select="@test_name"/>
 				</a>
 			</div>
@@ -206,11 +206,11 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@orig_test_id}">
+				<a href="./?test={@orig_test_id}">
 					<xsl:value-of select="@orig_test_name"/>
 				</a>
 				-&gt;
-				<a href="../?test={@test_id}">
+				<a href="./?test={@test_id}">
 					<xsl:value-of select="@test_name"/>
 				</a>
 			</div>
@@ -231,7 +231,7 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}#{@action_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}#{@action_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Type:</b>
@@ -266,7 +266,7 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}#{@action_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}#{@action_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Type:</b>
@@ -301,7 +301,7 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}#{@action_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}#{@action_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Type:</b>
@@ -348,7 +348,7 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}#{@action_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}#{@action_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Type:</b>
@@ -383,11 +383,11 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<b class="space-x">Task:</b>
-				<a href="../?task={@task_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?task={@task_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-6">
 				<b class="space-x">Type:</b>
@@ -412,11 +412,11 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<b class="space-x">Task:</b>
-				<a href="../?task={@task_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?task={@task_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-6">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 		</div>
 	</div>
@@ -435,11 +435,11 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<b class="space-x">Schedule Job:</b>
-				<a href="../?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
+				<a href="./?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-6">
 				<b class="space-x">Type:</b>
@@ -478,11 +478,11 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<b class="space-x">Schedule Job:</b>
-				<a href="../?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
+				<a href="./?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-6">
 				<b class="space-x">Type:</b>
@@ -522,24 +522,24 @@
 			<div class="col-lg-3">
 				<b class="space-x">Schedule Job:</b>
 				<xsl:if test="@old_sched_name">
-					<a href="../?schedule=1#{@sched_id}">
+					<a href="./?schedule=1#{@sched_id}">
 						<xsl:value-of select="@old_sched_name"/>
 					</a>
 					-&gt;
 				</xsl:if>
-				<a href="../?schedule=1#{@sched_id}">
+				<a href="./?schedule=1#{@sched_id}">
 					<xsl:value-of select="@sched_name"/>
 				</a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
 				<xsl:if test="@old_test_name">
-					<a href="../?test={@old_test_id}">
+					<a href="./?test={@old_test_id}">
 						<xsl:value-of select="@old_test_name"/>
 					</a>
 					-&gt;
 				</xsl:if>
-				<a href="../?test={@test_id}">
+				<a href="./?test={@test_id}">
 					<xsl:value-of select="@test_name"/>
 				</a>
 			</div>
@@ -598,15 +598,15 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<b class="space-x">Schedule Job:</b>
-				<a href="../?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
+				<a href="./?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Task:</b>
-				<a href="../?task={@task_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?task={@task_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Type:</b>
@@ -631,11 +631,11 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<b class="space-x">Schedule Job:</b>
-				<a href="../?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
+				<a href="./?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 			<div class="col-lg-3">
 				<b class="space-x">Type:</b>
@@ -703,7 +703,7 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<b class="space-x">Task:</b>
-				<a href="../?task={@task_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?task={@task_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 		</div>
 		<div class="row">
@@ -738,11 +738,11 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<b class="space-x">Schedule Job:</b>
-				<a href="../?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
+				<a href="./?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-6">
 				<b class="space-x">Test:</b>
-				<a href="../?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
 		</div>
 		<div class="row">

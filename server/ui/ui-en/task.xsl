@@ -6,9 +6,9 @@
 </xsl:template>
 
 <xsl:template match="task" mode="menu">
-	<link href="css/photobox.css" rel="stylesheet"/>
-	<link href="css/photobox.mod.css" rel="stylesheet"/>
-	<script src="js/jquery.photobox.min.js"></script>
+	<link href="ui-en/css/photobox.css" rel="stylesheet" type="text/css"/>
+	<link href="ui-en/css/photobox.mod.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/jquery.photobox.min.js" type="text/javascript"></script>
 	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid" id="gallery-photobox">
 		<div class="row">
@@ -24,7 +24,7 @@
 						<div class="row">
 							<div class="col-lg-2">
 								<b>Test</b>:
-								<a href="../?test={@test_id}">
+								<a href="./?test={@test_id}">
 									<xsl:value-of select="@test_name"/>
 								</a>
 							</div>
@@ -134,8 +134,8 @@
 							</div>
 							<div class="col-lg-2">
 								<xsl:if test="@scrn">
-									<a href="../results/{@scrn}" class="gallery-photobox-a">
-										<img src="../results/{@scrn}" class="img-thumbnail img-responsive gallery-photobox-img">
+									<a href="results/{@scrn}" class="gallery-photobox-a">
+										<img src="results/{@scrn}" class="img-thumbnail img-responsive gallery-photobox-img">
 											<xsl:attribute name="alt">
 												<xsl:if test="@succeeded">
 													succeeded:

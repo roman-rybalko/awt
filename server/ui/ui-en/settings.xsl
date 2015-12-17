@@ -163,19 +163,19 @@
 					If you delete your account,
 					<ul>
 						<li>
-							all your <a href="../?tests=1">Tests</a> will be deleted,
+							all your <a href="./?tests=1">Tests</a> will be deleted,
 						</li>
 						<li>
-							all your <a href="../?tasks=1">Pending Tasks</a> will be canceled,
+							all your <a href="./?tasks=1">Pending Tasks</a> will be canceled,
 						</li>
 						<li>
-							all your <a href="../?schedule=1">Schedule Jobs</a> will be canceled,
+							all your <a href="./?schedule=1">Schedule Jobs</a> will be canceled,
 						</li>
 						<li>
-							all your <a href="../?billing=1">Payment Subscriptions</a> will be canceled,
+							all your <a href="./?billing=1">Payment Subscriptions</a> will be canceled,
 						</li>
 						<li>
-							your <a href="../?billing=1">Available Actions (Account Balance)</a> will be refunded.
+							your <a href="./?billing=1">Available Actions (Account Balance)</a> will be refunded.
 						</li>
 					</ul>
 					During 42 days you may ask to restore your account via support.

@@ -6,12 +6,12 @@
 </xsl:template>
 
 <xsl:template match="tasks" mode="menu">
-	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
-	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"/>
-	<script src="js/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="js/dataTables.responsive.min.js" type="text/javascript"></script>
-	<link href="css/responsive.bootstrap.min.css" rel="stylesheet"/>
-	<script src="js/responsive.bootstrap.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/jquery.dataTables.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/dataTables.responsive.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/responsive.bootstrap.min.js" type="text/javascript"></script>
 	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
@@ -22,7 +22,7 @@
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-create-test1">&#215;</button>
 						<b>Tip:</b>
-						Create a <a href="../?tests=1">test</a> to run a task.
+						Create a <a href="./?tests=1">test</a> to run a task.
 					</div>
 				</xsl:if>
 				<div class="apply-data-display-period">
@@ -30,7 +30,7 @@
 						<div class="alert alert-info alert-dismissable">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-display-period">&#215;</button>
 							<b>Tip:</b>
-							Use <b>Data Display Period</b> option in <a href="../?settings=1">Settings</a> to reduce displayed data and speed up the UI.
+							Use <b>Data Display Period</b> option in <a href="./?settings=1">Settings</a> to reduce displayed data and speed up the UI.
 						</div>
 					</xsl:if>
 				</div>
@@ -64,7 +64,7 @@
 									<xsl:for-each select="task[@status = 'initial']">
 										<tr>
 											<td>
-												<a href="../?task={@id}">
+												<a href="./?task={@id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -80,7 +80,7 @@
 												<xsl:value-of select="@time"/>
 											</td>
 											<td>
-												<a href="../?test={@test_id}">
+												<a href="./?test={@test_id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -141,7 +141,7 @@
 									<xsl:for-each select="task[@status = 'starting' or @status = 'running']">
 										<tr>
 											<td>
-												<a href="../?task={@id}">
+												<a href="./?task={@id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -157,7 +157,7 @@
 												<xsl:value-of select="@time"/>
 											</td>
 											<td>
-												<a href="../?test={@test_id}">
+												<a href="./?test={@test_id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -224,7 +224,7 @@
 												<xsl:attribute name="class">danger</xsl:attribute>
 											</xsl:if>
 											<td>
-												<a href="../?task={@id}">
+												<a href="./?task={@id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -250,7 +250,7 @@
 												</xsl:if>
 											</td>
 											<td>
-												<a href="../?test={@test_id}">
+												<a href="./?test={@test_id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -296,7 +296,7 @@
 									<xsl:for-each select="task[@status = 'canceled']">
 										<tr>
 											<td>
-												<a href="../?task={@id}">
+												<a href="./?task={@id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>
@@ -312,7 +312,7 @@
 												<xsl:value-of select="@time"/>
 											</td>
 											<td>
-												<a href="../?test={@test_id}">
+												<a href="./?test={@test_id}">
 													<xsl:value-of select="@test_name"/>
 												</a>
 											</td>

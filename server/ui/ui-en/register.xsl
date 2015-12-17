@@ -27,10 +27,10 @@
 								<div class="form-group">
 									<a href="#">
 										<xsl:attribute name="onclick">
-											$('#captcha').attr('src','../captcha.php?id=' + Math.random());
+											$('#captcha').attr('src','./captcha.php?id=' + Math.random());
 											return false;
 										</xsl:attribute>
-										<img src="../captcha.php" alt="Captcha" id="captcha"/>
+										<img src="./captcha.php" alt="Captcha" id="captcha"/>
 										Change
 									</a>
 								</div>
@@ -41,7 +41,7 @@
 								<input type="submit" name="register" value="Register"
 									class="btn btn-lg btn-success btn-block"/>
 								<div class="form-group">
-									<a href="../">Login</a>
+									<a href="./">Login</a>
 								</div>
 							</fieldset>
 						</form>

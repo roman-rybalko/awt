@@ -16,7 +16,7 @@
 								<a href="{@url}" id="redirect">Continue</a>
 							</xsl:when>
 							<xsl:otherwise>
-								<a href="../{@url}" id="redirect">Continue</a>
+								<a href="./{@url}" id="redirect">Continue</a>
 							</xsl:otherwise>
 						</xsl:choose>
 						<script type="text/javascript">

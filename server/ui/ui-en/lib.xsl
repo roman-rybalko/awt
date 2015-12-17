@@ -28,7 +28,7 @@
 						<b>Tip:</b>
 						When Debug is ON all actions will be executed regardless of error.
 					</div>
-					<form role="form" method="post" action="../?tasks=1" class="apply-data-display-period">
+					<form role="form" method="post" action="./?tasks=1" class="apply-data-display-period">
 						<input type="hidden" name="test_id" value="{$test_id}"/>
 						<input type="hidden" name="add" value="1"/>
 						<div class="checkbox">

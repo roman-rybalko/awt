@@ -6,12 +6,12 @@
 </xsl:template>
 
 <xsl:template match="billing" mode="menu">
-	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
-	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"/>
-	<script src="js/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="js/dataTables.responsive.min.js" type="text/javascript"></script>
-	<link href="css/responsive.bootstrap.min.css" rel="stylesheet"/>
-	<script src="js/responsive.bootstrap.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/jquery.dataTables.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/dataTables.responsive.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/responsive.bootstrap.min.js" type="text/javascript"></script>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
@@ -20,7 +20,7 @@
 				<div class="alert alert-info alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-email">&#215;</button>
 					<b>Tip:</b>
-					Please, check your E-Mail in <a href="../?settings=1">Settings</a>.
+					Please, check your E-Mail in <a href="./?settings=1">Settings</a>.
 				</div>
 			</div>
 		</div>
@@ -28,7 +28,7 @@
 			<div class="col-lg-4">
 				<div class="panel panel-default">
 					<div class="panel-body">
-						<a href="../?billing_archive=1">
+						<a href="./?billing_archive=1">
 							<i class="fa fa-archive"></i>
 							Billing Archive
 						</a>
@@ -118,7 +118,7 @@
 										</td>
 										<td>
 											<label for="modal-top_up-payment_type-webmoney">
-												<img src="webmoney/wmlogo.png" alt="WebMoney"/>
+												<img src="ui-en/webmoney/wmlogo.png" alt="WebMoney"/>
 											</label>
 										</td>
 									</tr>
@@ -394,7 +394,7 @@
 										</td>
 										<td>
 											<xsl:if test="@transaction_id">
-												<a href="../?billing_archive=1#{@transaction_id}">
+												<a href="./?billing_archive=1#{@transaction_id}">
 													#<xsl:value-of select="@transaction_id"/>
 												</a>
 											</xsl:if>
@@ -545,7 +545,7 @@
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-display-period">&#215;</button>
 						<b>Tip:</b>
-						Use <b>Data Display Period</b> option in <a href="../?settings=1">Settings</a> to reduce displayed data and speed up the UI.
+						Use <b>Data Display Period</b> option in <a href="./?settings=1">Settings</a> to reduce displayed data and speed up the UI.
 					</div>
 				</xsl:if>
 				<div class="panel panel-default">
@@ -616,7 +616,7 @@
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-transactions">&#215;</button>
 						<b>Tip:</b>
-						Transactions are displayed for 42 days only. See <a href="../?billing_archive=1">Billing Archive</a> for a full list.
+						Transactions are displayed for 42 days only. See <a href="./?billing_archive=1">Billing Archive</a> for a full list.
 					</div>
 				</xsl:if>
 			</div>

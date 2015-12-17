@@ -6,14 +6,14 @@
 </xsl:template>
 
 <xsl:template match="schedule" mode="menu">
-	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
-	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"/>
-	<script src="js/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="js/dataTables.responsive.min.js" type="text/javascript"></script>
-	<link href="css/responsive.bootstrap.min.css" rel="stylesheet"/>
-	<script src="js/responsive.bootstrap.min.js" type="text/javascript"></script>
-	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"/>
-	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script src="ui-en/js/jquery.dataTables.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/dataTables.responsive.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/responsive.bootstrap.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 	<xsl:call-template name="js_task_types"/>
 	<script type="text/javascript">
 		sched_tests = [  // global
@@ -31,14 +31,14 @@
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="schedule-create-test">&#215;</button>
 						<b>Tip:</b>
-						Create a <a href="../?tests=1">test</a> to make schedule available.
+						Create a <a href="./?tests=1">test</a> to make schedule available.
 					</div>
 				</xsl:if>
 				<xsl:if test="task">
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="schedule-set-email">&#215;</button>
 						<b>Tip:</b>
-						Set E-Mail in <a href="../?settings=1">Settings</a> to receive regular Task Reports.
+						Set E-Mail in <a href="./?settings=1">Settings</a> to receive regular Task Reports.
 					</div>
 				</xsl:if>
 			</div>
@@ -74,7 +74,7 @@
 											<xsl:value-of select="@name"/>
 										</td>
 										<td>
-											<a href="../?test={@test_id}" class="test-id2name">
+											<a href="./?test={@test_id}" class="test-id2name">
 												<xsl:value-of select="@test_id"/>
 											</a>
 										</td>

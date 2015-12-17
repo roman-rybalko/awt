@@ -6,10 +6,10 @@
 </xsl:template>
 
 <xsl:template match="test" mode="menu">
-	<link href="css/jquery-ui.min.css" rel="stylesheet"/>
-	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/xpath-browser.js"></script>
-	<script src="js/xpath-composer.js"></script>
+	<link href="ui-en/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/xpath-browser.js" type="text/javascript"></script>
+	<script src="ui-en/js/xpath-composer.js" type="text/javascript"></script>
 	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
@@ -47,7 +47,7 @@
 									<b class="text-failure">Deleted</b>
 								</div>
 								<div class="col-lg-1">
-									<form role="form" method="post" action="../?tests=1">
+									<form role="form" method="post" action="./?tests=1">
 										<input type="hidden" name="id" value="{@id}"/>
 										<button type="submit" name="restore" class="btn btn-xs btn-success">
 											<i class="fa fa-recycle"></i>
@@ -77,7 +77,7 @@
 		<div class="row">
 			<div class="col-lg-4">
 				<div class="form-group">
-					<a href="../file.php?test={@id}" class="btn btn-block btn-primary">
+					<a href="./file.php?test={@id}" class="btn btn-block btn-primary">
 						<i class="glyphicon glyphicon-export"></i>
 						Export
 					</a>
