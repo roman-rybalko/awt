@@ -61,7 +61,7 @@ class Demo implements \AdvancedWebTesting\Billing\PaymentBackend {
 				if ($data1 = $this->subscriptions->select($fields, ['id' => $subsctiptionId]))
 					$data = array_merge($data, $data1);
 		foreach ($data as &$data1) {
-			$data1['payment_amount'] = $data1['actions_cnt'] . ' Test Actions';
+			$data1['payment_amount'] = $data1['actions_cnt'] . ' Browser Actions';
 			$data1['payment_data'] = 'Demo Subscription #' . $data1['id'];
 		}
 		return $data;
@@ -112,7 +112,7 @@ class Demo implements \AdvancedWebTesting\Billing\PaymentBackend {
 		$actionsCnt = $actionsCnt + 0;
 		if (!$actionsCnt)
 			$actionsCnt = 'ZZz';
-		return ['payment_amount' => $actionsCnt . ' Test Actions', 'payment_data' => 'Demo Refund #' . $externalId, 'transaction_data' => $externalId];
+		return ['payment_amount' => $actionsCnt . ' Browser Actions', 'payment_data' => 'Demo Refund #' . $externalId, 'transaction_data' => $externalId];
 	}
 
 	/**

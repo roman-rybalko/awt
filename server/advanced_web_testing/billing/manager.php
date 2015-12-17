@@ -41,7 +41,7 @@ class Manager {
 	}
 
 	/**
-	 * Списывает средства за Test Actions
+	 * Списывает средства за Actions
 	 * @param integer $taskId
 	 * @param string $taskName
 	 * @param integer $actionsCnt
@@ -346,7 +346,7 @@ class Manager {
 		if ($actionsCnt > $transaction['amount'])
 			$actionsCnt = $transaction['amount'];
 		else
-			$note = 'Top Up: ' . $transaction['amount'] . ' Test Actions, Available (Balance): ' . $actionsCnt . ' Test Actions, partial refund';
+			$note = 'Top Up: ' . $transaction['amount'] . ' Actions, Available (Balance): ' . $actionsCnt . ' Actions, partial refund';
 		$fields = ['type' => TransactionType::REFUND, 'ref_id' => $transactionId,
 			'payment_type' => $paymentType, 'payment_data' => $transaction['data']['payment_data']];
 		$refundTransactionId = $this->billing->transaction(- $actionsCnt, $fields);

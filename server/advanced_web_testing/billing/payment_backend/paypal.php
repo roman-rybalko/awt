@@ -27,7 +27,7 @@ class Paypal implements \AdvancedWebTesting\Billing\PaymentBackend {
 	public function createTransaction($externalId, $actionsCnt, $subscription = null) {
 		$params = [
 			'L_PAYMENTREQUEST_0_ITEMCATEGORY0' => 'Digital',
-			'L_PAYMENTREQUEST_0_NAME0' => 'Test Action',
+			'L_PAYMENTREQUEST_0_NAME0' => 'Browser Action',
 			'L_PAYMENTREQUEST_0_AMT0' => $this->actionPrice,
 			'L_PAYMENTREQUEST_0_QTY0' => $actionsCnt,
 			'PAYMENTREQUEST_0_ITEMAMT' => $actionsCnt * $this->actionPrice,
@@ -109,7 +109,7 @@ class Paypal implements \AdvancedWebTesting\Billing\PaymentBackend {
 			return ['payment_data' => 'Bad TopUp Amount', 'transaction_data' => null];
 		$params = [
 			'L_ITEMCATEGORY0' => 'Digital',
-			'L_NAME0' => 'Test Action',
+			'L_NAME0' => 'Browser Action',
 			'L_AMT0' => $this->actionPrice,
 			'L_QTY0' => $actionsCnt,
 			'ITEMAMT' => $actionsCnt * $this->actionPrice,

@@ -3,7 +3,7 @@
 namespace AdvancedWebTesting\Billing;
 
 /**
- * Стоимость операций в Test Actions
+ * Стоимость операций в Actions
  */
 class Price {
 	const TASK_START = 1;

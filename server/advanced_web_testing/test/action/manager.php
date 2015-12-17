@@ -33,7 +33,7 @@ class Manager {
 		if ($data !== null)
 			$fields['data'] = $data;
 		if (!$this->actions->insert($fields))
-			throw new \ErrorException('Test action insert failed', null, null, __FILE__, __LINE__);
+			throw new \ErrorException('Action insert failed', null, null, __FILE__, __LINE__);
 		$this->tests->update(['time' => time()], []);  // no check - may be the same time
 		return $actionId;
 	}
@@ -75,7 +75,7 @@ class Manager {
 		if ($data !== null)
 			$fields['data'] = $data;
 		if (!$this->actions->insert($fields))
-			throw new \ErrorException('Test action insert failed', null, null, __FILE__, __LINE__);
+			throw new \ErrorException('Action insert failed', null, null, __FILE__, __LINE__);
 		$this->tests->update(['time' => time()], []);  // no check - may be the same time
 		return $actionId;
 	}
@@ -104,7 +104,7 @@ class Manager {
 			foreach (['type', 'selector', 'data'] as $param)
 				$fields[$param] = $action[$param];
 			if (!$this->actions->insert($fields))
-				throw new \ErrorException('Test action insert failed', null, null, __FILE__, __LINE__);
+				throw new \ErrorException('Action insert failed', null, null, __FILE__, __LINE__);
 		}
 		return $actionId;
 	}

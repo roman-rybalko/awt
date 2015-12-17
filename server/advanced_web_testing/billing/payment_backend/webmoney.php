@@ -57,7 +57,7 @@ class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 		$request->setValidityPeriodInHours($this->wmValidityPeriodDays * 24);
 		$request->setPaymentAmount($this->actionPrice * $actionsCnt);
 		$request->setPaymentNumber($externalId);
-		$request->setPaymentDescription($actionsCnt . ' Test Actions (' . $_SERVER['SERVER_NAME'] . ')');
+		$request->setPaymentDescription($actionsCnt . ' Browser Actions (' . $_SERVER['SERVER_NAME'] . ')');
 		$request->setSuccessUrl(\WebConstructionSet\Url\Tools::getMyUrl());
 		$request->setSuccessMethod(\baibaratsky\WebMoney\Api\X\X22\Request::URL_METHOD_GET);
 		$request->setFailUrl(\WebConstructionSet\Url\Tools::getMyUrl());
@@ -292,7 +292,7 @@ class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 		$request->setCustomerWmid($subsctiption['wmid']);
 		$request->setPurse($this->wmPurse);
 		$request->setAmount($subsctiption['actions_cnt'] * $this->actionPrice);
-		$request->setDescription('Subscription #' . $subsctiption['id'] . ': ' . $subsctiption['actions_cnt'] . ' Test Actions (' . $this->serverName . ')');
+		$request->setDescription('Subscription #' . $subsctiption['id'] . ': ' . $subsctiption['actions_cnt'] . ' Browser Actions (' . $this->serverName . ')');
 		$request->setExpiration($this->wmValidityPeriodDays);
 		$request->setOnlyAuth(false);
 
