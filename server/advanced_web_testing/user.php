@@ -154,13 +154,11 @@ class User {
 					echo '<message type="info" value="set_up_email"/>';
 					$this->redirect('?settings=1', 3);
 				}
-			} else {
+				return;
+			} else
 				echo '<message type="error" value="bad_login"/>';
-				$this->redirect('', 3);
-			}
-		} else {
-			echo '<login/>';
 		}
+		echo '<login/>';
 	}
 
 	private function register(\WebConstructionSet\Accounting\User $user) {
@@ -180,21 +178,15 @@ class User {
 						echo '<message type="notice" value="register_ok"/>';
 						echo '<message type="info" value="set_up_email"/>';
 						$this->redirect('?settings=1', 3);
-					} else {
+						return;
+					} else
 						echo '<message type="error" value="login_busy"/>';
-						$this->redirect('?' . $_SERVER['QUERY_STRING'], 3);
-					}
-				} else {
+				} else
 					echo '<message type="error" value="passwords_dont_match"/>';
-					$this->redirect('?' . $_SERVER['QUERY_STRING'], 3);
-				}
-			} else {
+			} else
 				echo '<message type="error" value="bad_captcha"/>';
-				$this->redirect('?' . $_SERVER['QUERY_STRING'], 3);
-			}
-		} else {
-			echo '<register/>';
 		}
+		echo '<register/>';
 	}
 
 	private function passwordReset(\WebConstructionSet\Database\Relational\User $userDb) {
@@ -242,15 +234,13 @@ class User {
 							echo '<message type="error" value="password_reset_fail"/>';
 						}
 					} else {
-						error_log('Password Reset: user: ' . $_POST['user'] . ' - the login is not found');
+						error_log('Password Reset: user: ' . $_POST['user'] . ' - bad login');
 						echo '<message type="error" value="password_reset_fail"/>';
 					}
-				} else {
+				} else
 					echo '<message type="error" value="passwords_dont_match"/>';
-				}
-			} else {
+			} else
 				echo '<message type="error" value="bad_captcha"/>';
-			}
 		} else if (isset($_GET['reset_code'])) {
 			if (isset($_SESSION['password_reset_code']) && $_SESSION['password_reset_code'] == $_GET['reset_code']) {
 				if ($userDb->password($_SESSION['password_reset_user_id'], $_SESSION['password_reset_password'])) {
