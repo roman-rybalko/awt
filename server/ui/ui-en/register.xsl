@@ -13,16 +13,16 @@
 						<form role="form" method="post">
 							<fieldset>
 								<div class="form-group">
-									<input class="form-control" placeholder="Login" name="user"
-										type="text" autofocus="1"/>
+									<label for="register-login">Login</label>
+									<input id="register-login" class="form-control" placeholder="Login" name="user" type="text" autofocus="1"/>
 								</div>
 								<div class="form-group">
-									<input class="form-control" placeholder="Password" name="password1"
-										type="password" value=""/>
+									<label for="register-password1">Password</label>
+									<input id="register-password1" class="form-control" placeholder="Password" name="password1" type="password" value=""/>
 								</div>
 								<div class="form-group">
-									<input class="form-control" placeholder="Password (confirm)"
-										name="password2" type="password" value=""/>
+									<label for="register-password2">Password (confirm)</label>
+									<input id="register-password2" class="form-control" placeholder="Password (confirm)" name="password2" type="password" value=""/>
 								</div>
 								<div class="form-group">
 									<a href="#">
@@ -35,8 +35,8 @@
 									</a>
 								</div>
 								<div class="form-group">
-									<input class="form-control" placeholder="Captcha"
-										name="captcha" type="text" value=""/>
+									<label for="register-captcha">Captcha</label>
+									<input id="register-captcha" class="form-control" placeholder="Captcha" name="captcha" type="text" value=""/>
 								</div>
 								<input type="submit" name="register" value="Register"
 									class="btn btn-lg btn-success btn-block"/>

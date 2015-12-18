@@ -13,16 +13,16 @@
 						<form role="form" method="post">
 							<fieldset>
 								<div class="form-group">
-									<input class="form-control" placeholder="Login" name="user"
-										type="text" autofocus="1"/>
+									<label for="pwreset-login">Login</label>
+									<input id="pwreset-login" class="form-control" placeholder="Login" name="user" type="text" autofocus="1"/>
 								</div>
 								<div class="form-group">
-									<input class="form-control" placeholder="New Password" name="password1"
-										type="password" value=""/>
+									<label for="pwreset-password1">New Password</label>
+									<input id="pwreset-password1" class="form-control" placeholder="New Password" name="password1" type="password" value=""/>
 								</div>
 								<div class="form-group">
-									<input class="form-control" placeholder="New Password (confirm)"
-										name="password2" type="password" value=""/>
+									<label for="pwreset-password2">New Password (confirm)</label>
+									<input id="pwreset-password2" class="form-control" placeholder="New Password (confirm)" name="password2" type="password" value=""/>
 								</div>
 								<div class="form-group">
 									<a href="#">
@@ -35,11 +35,10 @@
 									</a>
 								</div>
 								<div class="form-group">
-									<input class="form-control" placeholder="Captcha"
-										name="captcha" type="text" value=""/>
+									<label for="pwreset-captcha">Captcha</label>
+									<input id="pwreset-captcha" class="form-control" placeholder="Captcha" name="captcha" type="text" value=""/>
 								</div>
-								<input type="submit" name="reset" value="Reset"
-									class="btn btn-lg btn-success btn-block"/>
+								<input type="submit" name="reset" value="Reset" class="btn btn-lg btn-success btn-block"/>
 								<div class="form-group">
 									<a href="./">Login</a>
 								</div>
