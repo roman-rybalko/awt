@@ -117,57 +117,7 @@
 										<div class="panel-body">
 											<form role="form" method="post" class="form-schedule-task">
 												<input type="hidden" name="id" value="{@id}"/>
-												<div class="row">
-													<div class="col-lg-2">
-														<div class="form-group">
-															<label>Name</label>
-															<input class="form-control" placeholder="Name" name="name"
-																type="text" value="{@name}"/>
-														</div>
-													</div>
-													<div class="col-lg-2">
-														<div class="form-group">
-															<label>Test</label>
-															<select class="form-control" name="test_id">
-																<xsl:call-template name="opts_task_tests">
-																	<xsl:with-param name="value" select="@test_id"/>
-																</xsl:call-template>
-															</select>
-														</div>
-													</div>
-													<div class="col-lg-2">
-														<div class="form-group">
-															<label>Type</label>
-															<select class="form-control" name="type">
-																<xsl:call-template name="opts_task_types">
-																	<xsl:with-param name="value" select="@type"/>
-																</xsl:call-template>
-															</select>
-														</div>
-													</div>
-													<div class="col-lg-4">
-														<div class="form-group">
-															<label>Start time</label>
-															<div class="input-group date">
-																<input class="form-control" placeholder="Start time"
-																	name="start" type="text" value="{@start}"/>
-																<span class="input-group-addon">
-																	<span class="glyphicon glyphicon-time"></span>
-																</span>
-															</div>
-														</div>
-													</div>
-													<div class="col-lg-2">
-														<div class="form-group">
-															<label>Execution period</label>
-															<select class="form-control" name="period">
-																<xsl:call-template name="opts_periods">
-																	<xsl:with-param name="value" select="@period"/>
-																</xsl:call-template>
-															</select>
-														</div>
-													</div>
-												</div>
+												<xsl:call-template name="sched_job_form"/>
 												<div class="row">
 													<div class="col-lg-12">
 														<button type="submit" name="modify"
@@ -232,49 +182,9 @@
 					<div class="panel panel-success">
 						<div class="panel-body">
 							<form role="form" method="post" class="form-schedule-task">
-								<div class="row">
-									<div class="col-lg-2">
-										<div class="form-group">
-											<label>Name</label>
-											<input class="form-control" placeholder="Name" name="name" type="text" autofocus="1"/>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="form-group">
-											<label>Test</label>
-											<select class="form-control" name="test_id">
-												<xsl:call-template name="opts_task_tests"/>
-											</select>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="form-group">
-											<label>Type</label>
-											<select class="form-control" name="type">
-												<xsl:call-template name="opts_task_types"/>
-											</select>
-										</div>
-									</div>
-									<div class="col-lg-4">
-										<div class="form-group">
-											<label>Start time</label>
-											<div class="input-group date">
-												<input class="form-control" placeholder="Start time" name="start" type="text"/>
-												<span class="input-group-addon">
-													<span class="glyphicon glyphicon-time"></span>
-												</span>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="form-group">
-											<label>Execution period</label>
-											<select class="form-control" name="period">
-												<xsl:call-template name="opts_periods"/>
-											</select>
-										</div>
-									</div>
-								</div>
+								<xsl:call-template name="sched_job_form">
+									<xsl:with-param name="period">3600</xsl:with-param>
+								</xsl:call-template>
 								<div class="row">
 									<div class="col-lg-12">
 										<button type="submit" name="add" class="btn btn-block btn-success">
@@ -289,6 +199,63 @@
 				</div>
 			</div>
 		</xsl:if>
+	</div>
+</xsl:template>
+
+<xsl:template name="sched_job_form">
+	<xsl:param name="name"><xsl:value-of select="@name"></xsl:value-of></xsl:param>
+	<xsl:param name="test_id"><xsl:value-of select="@test_id"></xsl:value-of></xsl:param>
+	<xsl:param name="type"><xsl:value-of select="@type"></xsl:value-of></xsl:param>
+	<xsl:param name="start"><xsl:value-of select="@start"></xsl:value-of></xsl:param>
+	<xsl:param name="period"><xsl:value-of select="@period"></xsl:value-of></xsl:param>
+	<div class="row">
+		<div class="col-lg-2">
+			<div class="form-group">
+				<label>Name</label>
+				<input class="form-control" placeholder="Name" name="name" type="text" value="{$name}" autofocus="1"/>
+			</div>
+		</div>
+		<div class="col-lg-2">
+			<div class="form-group">
+				<label>Test</label>
+				<select class="form-control" name="test_id">
+					<xsl:call-template name="opts_task_tests">
+						<xsl:with-param name="value" select="$test_id"/>
+					</xsl:call-template>
+				</select>
+			</div>
+		</div>
+		<div class="col-lg-2">
+			<div class="form-group">
+				<label>Type</label>
+				<select class="form-control" name="type">
+					<xsl:call-template name="opts_task_types">
+						<xsl:with-param name="value" select="$type"/>
+					</xsl:call-template>
+				</select>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="form-group">
+				<label>Start time</label>
+				<div class="input-group date">
+					<input class="form-control" placeholder="Start time" name="start" type="text" value="{$start}"/>
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-time"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-2">
+			<div class="form-group">
+				<label>Execution period</label>
+				<select class="form-control" name="period">
+					<xsl:call-template name="opts_periods">
+						<xsl:with-param name="value" select="$period"/>
+					</xsl:call-template>
+				</select>
+			</div>
+		</div>
 	</div>
 </xsl:template>
 
