@@ -6,11 +6,12 @@
 </xsl:template>
 
 <xsl:template match="task" mode="menu">
-	<link href="ui-en/css/photobox.css" rel="stylesheet" type="text/css"/>
-	<link href="ui-en/css/photobox.mod.css" rel="stylesheet" type="text/css"/>
-	<script src="ui-en/js/jquery.photobox.min.js" type="text/javascript"></script>
+	<link href="ui-en/css/photoswipe.min.css" rel="stylesheet" type="text/css"/>
+	<link href="ui-en/css/photoswipe-default-skin/default-skin.min.css" rel="stylesheet" type="text/css"/>
+	<script src="ui-en/js/photoswipe.min.js" type="text/javascript"></script>
+	<script src="ui-en/js/photoswipe-ui-default.min.js" type="text/javascript"></script>
 	<xsl:call-template name="js_task_types"/>
-	<div class="container-fluid" id="gallery-photobox">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Task</h1>
@@ -92,7 +93,7 @@
 				<div class="alert alert-info alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="task-scrn-open">&#215;</button>
 					<b>Tip:</b>
-					Open the screenshot in another browser tab to view without blurring.
+					You may open screenshot in another browser tab.
 				</div>
 			</div>
 		</div>
@@ -134,8 +135,8 @@
 							</div>
 							<div class="col-lg-2">
 								<xsl:if test="@scrn">
-									<a href="results/{@scrn}" class="gallery-photobox-a">
-										<img src="results/{@scrn}" class="img-thumbnail img-responsive gallery-photobox-img">
+									<a href="results/{@scrn}" class="task-scrn">
+										<img src="results/{@scrn}" class="img-thumbnail img-responsive">
 											<xsl:attribute name="alt">
 												<xsl:if test="@succeeded">
 													succeeded:
@@ -158,6 +159,53 @@
 			</div>
 		</xsl:for-each>
 	</div>
+	<!-- Root element of PhotoSwipe. Must have class pswp. -->
+	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+	    <!-- Background of PhotoSwipe. 
+	         It's a separate element as animating opacity is faster than rgba(). -->
+	    <div class="pswp__bg"></div>
+	    <!-- Slides wrapper with overflow:hidden. -->
+	    <div class="pswp__scroll-wrap">
+	        <!-- Container that holds slides. 
+	            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+	            Don't modify these 3 pswp__item elements, data is added later on. -->
+	        <div class="pswp__container">
+	            <div class="pswp__item"></div>
+	            <div class="pswp__item"></div>
+	            <div class="pswp__item"></div>
+	        </div>
+	        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+	        <div class="pswp__ui pswp__ui--hidden">
+	            <div class="pswp__top-bar">
+	                <!--  Controls are self-explanatory. Order can be changed. -->
+	                <div class="pswp__counter"></div>
+	                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+	                <button class="pswp__button pswp__button--share" title="Share"></button>
+	                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+	                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+	                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+	                <!-- element will get class pswp__preloader- (leave space here to prevent "xml malformed" error) -active when preloader is running -->
+	                <div class="pswp__preloader">
+	                    <div class="pswp__preloader__icn">
+	                      <div class="pswp__preloader__cut">
+	                        <div class="pswp__preloader__donut"></div>
+	                      </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+	                <div class="pswp__share-tooltip"></div> 
+	            </div>
+	            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+	            </button>
+	            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+	            </button>
+	            <div class="pswp__caption">
+	                <div class="pswp__caption__center"></div>
+	            </div>
+	        </div>
+	    </div>
+	</div>	
 </xsl:template>
 
 </xsl:stylesheet>
