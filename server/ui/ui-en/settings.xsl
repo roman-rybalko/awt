@@ -178,7 +178,7 @@
 							your <a href="./?billing=1">Available Actions (Account Balance)</a> will be refunded.
 						</li>
 					</ul>
-					During 42 days you may ask to restore your account via support.
+					During 42 days you may restore your account via support.
 					After 42 days all account data will be deleted permanently.
 					<form role="form" method="post">
 						<button type="submit" name="delete_account" class="btn btn-block btn-danger">
