@@ -31,11 +31,11 @@ function updateMenuBar() {
 		$('#menubar-mobile').show();
 		menuBarActive = false;
 	} else if ($(window).width() >= 964 && menuBarActive === false) {
-		$('#menubar').show();
 		$('#menubar-mobile').hide();
 		menuBarActive = null;
 	}
 	if (menuBarActive === null) {
+		$('#menubar').show();
 		if ($(window).scrollTop() < 110) {
 			$('#menubar').removeClass('awt-menubar-pinup');
 			$('#menubar-placeholder').hide();
