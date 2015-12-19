@@ -18,7 +18,7 @@
 				<h1 class="page-header">Billing</h1>
 				<xsl:apply-templates select="//message"/>
 				<div class="alert alert-info alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-email">&#215;</button>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="set-email">&#215;</button>
 					<b>Tip:</b>
 					Please, check your E-Mail in <a href="./?settings=1">Settings</a>.
 				</div>
