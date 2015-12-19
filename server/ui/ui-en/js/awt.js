@@ -304,6 +304,11 @@ $(function() {
 	if ($('a.apply-data-display-period, form.apply-data-display-period').length) {
 		var storage = new Storage('setting-' + awt_login + '-');
 		var time = storage.get('data-display-period');
+		if (time === null && awt_login == '') {  /// set default for demo login
+			time = 86400;
+			console.log('set data display period default to:', time);
+			storage.set('data-display-period', time);
+		}
 		if (time > 0) {
 			time = Math.round(new Date().getTime() / 1000) - time;
 			$('a.apply-data-display-period, form.apply-data-display-period').each(function() {
