@@ -38,34 +38,6 @@ $(function() {
 		$('.modal').on('shown.bs.modal', function() {
 			$(this).find('.form-control').first().focus();
 		});
-	if ($('.task-scrn').length) {
-		var items = [];
-		var wnd_width = $(window).width();
-		var wnd_height = $(window).height();
-		$('.task-scrn').each(function(i, obj) {
-			var img = $(obj).find('img');
-			var img_width = img.width();
-			var img_height = img.height();
-			var scale = img_width < img_height ? wnd_width / img_width : wnd_height / img_height;
-			items.push({
-				src: img.attr('src'),
-				w: Math.round(img.width() * scale),
-				h: Math.round(img.height() * scale),
-				title: img.attr('alt')
-			});
-			var options = {
-				index: i,
-				fullscreenEl: false,
-				shareEl: false,
-				history: false  // bug in IE9
-			};
-			$(obj).click(i, function(i) {
-				var gallery = new PhotoSwipe($('.pswp').get(0), PhotoSwipeUI_Default, items, options);
-				gallery.init();
-				return false;
-			});
-		});
-	}
 	$('.action-type').each(function() {
 		var select = $(this);
 		var id = select.attr('data-id');
