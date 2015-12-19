@@ -86,11 +86,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="alert alert-info alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="task-scrn-open">&#215;</button>
-					<b>Tip:</b>
-					You may open screenshot in another browser tab.
-				</div>
 			</div>
 		</div>
 		<xsl:for-each select="action">
