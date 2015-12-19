@@ -26,3 +26,5 @@
 24. В Tasks сделать status числовым (ускорить xslt)
 25. Рефакторинг Task\Manager - перенести Type\Manager в поле класса
 26. Client selenium_open_timeout - отдельный таймаут для "open" Action
+29. Решить проблему перерасхода памяти в billing_archive (PHP Fatal error: Allowed memory size of 134217728 bytes exhausted
+ (tried to allocate 72 bytes) in /var/www/awt/web_construction_set/database/relational/billing.php on line 128)
