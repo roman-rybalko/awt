@@ -614,9 +614,9 @@
 				</div>
 				<xsl:if test="transaction">
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-transactions">&#215;</button>
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-transactions-display-period">&#215;</button>
 						<b>Tip:</b>
-						Transactions are displayed for 42 days only. See <a href="./?billing_archive=1">Billing Archive</a> for a full list.
+						Transactions here are displayed for 42 days max. See <a href="./?billing_archive=1">Billing Archive</a> for a full list.
 					</div>
 				</xsl:if>
 			</div>
