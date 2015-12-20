@@ -106,7 +106,7 @@ class Schedule {
 				$this->startFailReport($userId, 'task_add_fail', $testId, $test['name'], $type, $job['id'], $job['data']['name']);
 				continue;
 			}
-			$billMgr->startTask($taskId, $test['name'], $job['id'], $job['data']['name']);
+			$billMgr->startTask($taskId, $test['id'], $test['name'], $job['id'], $job['data']['name']);
 			$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $userId);
 			$statMgr->add(1);
 			$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $userId);

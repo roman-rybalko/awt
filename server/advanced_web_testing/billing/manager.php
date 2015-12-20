@@ -23,13 +23,14 @@ class Manager {
 	/**
 	 * Списывает средства за запуск
 	 * @param integer $taskId
+	 * @param integer $testId
 	 * @param string $testName
 	 * @param $schedId
 	 * @param $schedName
 	 * @return integer|null transactionId
 	 */
-	public function startTask($taskId, $testName, $schedId = null, $schedName = null) {
-		$fields = ['type' => TransactionType::TASK_START, 'task_id' => $taskId, 'test_name' => $testName];
+	public function startTask($taskId, $testId, $testName, $schedId = null, $schedName = null) {
+		$fields = ['type' => TransactionType::TASK_START, 'task_id' => $taskId, 'test_id' => $testId, 'test_name' => $testName];
 		if ($schedId !== null) {
 			$fields['sched_id'] = $schedId;
 			$fields['sched_name'] = $schedName;
@@ -43,13 +44,14 @@ class Manager {
 	/**
 	 * Списывает средства за Actions
 	 * @param integer $taskId
+	 * @param integer $testId
 	 * @param string $taskName
 	 * @param integer $actionsCnt
 	 * @return integer|null transactionId
 	 */
-	public function finishTask($taskId, $testName, $actionsCnt) {
+	public function finishTask($taskId, $testId, $testName, $actionsCnt) {
 		$transactionId = $this->billing->transaction(- Price::TASK_ACTION * $actionsCnt,
-			['type' => TransactionType::TASK_FINISH, 'task_id' => $taskId, 'test_name' => $testName]);
+			['type' => TransactionType::TASK_FINISH, 'task_id' => $taskId, 'test_id' => $testId, 'test_name' => $testName]);
 		if ($transactionId && $this->billing->commit($transactionId))
 			return $transactionId;
 		return null;
@@ -114,7 +116,7 @@ class Manager {
 	 *  если задана то возвращаемое значение getTransactions() будет пусто.
 	 * @return [][id => integer, time => integer, actions_before => integer, actions_after => integer, actions_cnt => integer, type => integer,
 	 *  data (optional) => string,
-	 *  task_id (optional) => integer, test_name => string,
+	 *  task_id (optional) => integer, test_id => integer, test_name => string,
 	 *  sched_id (optional) => integer, sched_name => string,
 	 *  payment_type (optional) => integer, payment_amount => string, payment_data => string,
 	 *  refundable (optional) => boolean]
@@ -127,7 +129,7 @@ class Manager {
 				$transaction[$field] = $data1[$field];
 			foreach (['amount_before' => 'actions_before', 'amount_after' => 'actions_after', 'amount' => 'actions_cnt', 'key' => 'user_id'] as $src => $dst)
 				$transaction[$dst] = $data1[$src];
-			foreach (['type', 'data', 'task_id', 'test_name', 'sched_id', 'sched_name', 'payment_type', 'payment_amount', 'payment_data', 'ref_id'] as $field)
+			foreach (['type', 'data', 'task_id', 'test_id', 'test_name', 'sched_id', 'sched_name', 'payment_type', 'payment_amount', 'payment_data', 'ref_id'] as $field)
 				if (isset($data1['data'][$field]))
 					$transaction[$field] = $data1['data'][$field];
 			if ($data1['amount'] > 0 && isset($data1['data']['transaction_data']) && $data1['data']['transaction_data'] && !isset($data1['data']['ref_id']))

@@ -77,6 +77,12 @@
 			<xsl:value-of select="@test_name"/>
 		</a>
 	</xsl:if>
+	<xsl:if test="@test_id and @test_name">
+		<b class="space-x">Test:</b>
+		<a href="./?test={@test_id}" class="space-x">
+			<xsl:value-of select="@test_name"/>
+		</a>
+	</xsl:if>
 	<xsl:if test="@sched_id and @sched_name">
 		<b class="space-x">Schedule Job:</b>
 		<a href="./?schedule=1#{@sched_id}" class="space-x">

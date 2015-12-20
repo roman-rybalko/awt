@@ -1,6 +1,5 @@
 План
 ====
-29. добавить test_id в БД биллинга
 28. Написать мануал для каждого типа action
 1. ad idea: перетаскивать людей ищущих web monitoring software
 1. ad idea: free site monitoring - и завести в демо-аккаунт

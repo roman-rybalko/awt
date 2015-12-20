@@ -751,7 +751,7 @@ class User {
 					$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
 					if ($billMgr->getAvailableActionsCnt() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
 						if ($taskId = $taskMgr->add($testId, $test['name'], $type, $debug)) {
-							$billMgr->startTask($taskId, $test['name']);
+							$billMgr->startTask($taskId, $test['id'], $test['name']);
 							echo '<message type="notice" value="task_add_ok"/>';
 							$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $this->userId);
 							$statMgr->add(1);

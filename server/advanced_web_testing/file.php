@@ -61,11 +61,11 @@ params: billing [time]
 		$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
 		header('Content-Type: text/csv');
 		header('Content-Disposition: attachment; filename="billing.csv"');
-		echo 'ID;Time;Unix Timestamp;Balance Before;Balance After;Charge/Credit;Transaction Type;Transaction Data;Task URL;Task ID;Test Name;',
+		echo 'ID;Time;Unix Timestamp;Balance Before;Balance After;Charge/Credit;Transaction Type;Transaction Data;Task URL;Task ID;Test ID;Test URL;Test Name;',
 			'Schedule Job URL;Schedule Job ID;Schedule Job Name;Payment Type;Payment Amount;Payment Data;Refundable;',
 			"\n";
 		$billMgr->getTransactions(null, $time, function($transaction) {
-			foreach (['id', 'time', 'actions_before', 'actions_after', 'actions_cnt', 'type', 'data', 'task_id', 'test_name',
+			foreach (['id', 'time', 'actions_before', 'actions_after', 'actions_cnt', 'type', 'data', 'task_id', 'test_id', 'test_name',
 				'sched_id', 'sched_name', 'payment_type', 'payment_amount', 'payment_data', 'refundable'] as $name)
 			{
 				if (isset($transaction[$name]))
@@ -86,6 +86,12 @@ params: billing [time]
 				} else if ($name == 'task_id') {
 					if ($value !== null) {
 						echo '=HYPERLINK("' . \WebConstructionSet\Url\Tools::getMyUrlPath() . '?task=' . $value . '")', ';';
+						echo $value, ';';
+					} else
+						echo ';;';
+				} else if ($name == 'test_id') {
+					if ($value !== null) {
+						echo '=HYPERLINK("' . \WebConstructionSet\Url\Tools::getMyUrlPath() . '?test=' . $value . '")', ';';
 						echo $value, ';';
 					} else
 						echo ';;';
