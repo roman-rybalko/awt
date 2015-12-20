@@ -20,7 +20,6 @@
 	<xsl:include href="schedule.xsl"/>
 	<xsl:include href="transactions.xsl"/>
 	<xsl:include href="billing.xsl"/>
-	<xsl:include href="billing_archive.xsl"/>
 	<xsl:include href="events.xsl"/>
 	<xsl:include href="history.xsl"/>
 </xsl:stylesheet>

@@ -110,6 +110,8 @@ class Manager {
 	 * Получить список транзакций
 	 * @param [integer]|null $transactionIds
 	 * @param integer $time Unix Time, с какого времени вернуть данные, по-умолчанию 0 т.е. все данные
+	 * @param function $callback Функция, которая будет вызываться для каждой транзакции (для экономии памяти),
+	 *  если задана то возвращаемое значение getTransactions() будет пусто.
 	 * @return [][id => integer, time => integer, actions_before => integer, actions_after => integer, actions_cnt => integer, type => integer,
 	 *  data (optional) => string,
 	 *  task_id (optional) => integer, test_name => string,
@@ -117,10 +119,9 @@ class Manager {
 	 *  payment_type (optional) => integer, payment_amount => string, payment_data => string,
 	 *  refundable (optional) => boolean]
 	 */
-	public function getTransactions($transactionIds = null, $time = 0) {
+	public function getTransactions($transactionIds = null, $time = 0, $callback = null) {
 		$transactions = [];
-		$data = $this->billing->getTransactions($transactionIds, $time);
-		foreach ($data as $data1) {
+		$this->billing->getTransactions($transactionIds, $time, function($data1) use(&$transactions, $callback) {
 			$transaction = [];
 			foreach (['id', 'time'] as $field)
 				$transaction[$field] = $data1[$field];
@@ -131,8 +132,11 @@ class Manager {
 					$transaction[$field] = $data1['data'][$field];
 			if ($data1['amount'] > 0 && isset($data1['data']['transaction_data']) && $data1['data']['transaction_data'] && !isset($data1['data']['ref_id']))
 				$transaction['refundable'] = true;
-			$transactions[] = $transaction;
-		}
+			if ($callback)
+				$callback($transaction);
+			else
+				$transactions[] = $transaction;
+		});
 		return $transactions;
 	}
 

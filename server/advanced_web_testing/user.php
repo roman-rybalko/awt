@@ -62,9 +62,6 @@ class User {
 	Billing
 	action: ?billing=1
 
-	Billing Archive
-	action: ?billing_archive=1
-
 	Stats
 	action: ?stats=1
 -->
@@ -93,8 +90,6 @@ class User {
 				$this->history();
 			} else if (isset($_GET['billing'])) {
 				$this->billing();
-			} else if (isset($_GET['billing_archive'])) {
-				$this->billingArchive();
 			} else if (isset($_GET['stats'])) {
 				$this->stats();
 			} else {
@@ -1121,30 +1116,6 @@ class User {
 			echo '/>';
 		}
 		echo '</billing>';
-	}
-
-	private function billingArchive() {
-?>
-<!--
-	Billing Archive
--->
-<?php
-		$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
-		echo '<billing_archive>';
-		foreach ($billMgr->getTransactions(null, 0) as $transaction) {
-			unset($transaction['user_id']);
-			echo '<transaction';
-			foreach ($transaction as $name => $value) {
-				echo ' ', $name, '="';
-				if ($name == 'type')
-					echo \AdvancedWebTesting\Billing\TransactionType::toString($value);
-				else
-					echo htmlspecialchars($value);
-				echo '"';
-			}
-			echo '/>';
-		}
-		echo '</billing_archive>';
 	}
 
 	private function stats() {
