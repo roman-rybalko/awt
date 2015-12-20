@@ -27,4 +27,8 @@
 25. Рефакторинг Task\Manager - перенести Type\Manager в поле класса
 26. Client selenium_open_timeout - отдельный таймаут для "open" Action
 29. Решить проблему перерасхода памяти в billing_archive (PHP Fatal error: Allowed memory size of 134217728 bytes exhausted
- (tried to allocate 72 bytes) in /var/www/awt/web_construction_set/database/relational/billing.php on line 128)
+ (tried to allocate 72 bytes) in /var/www/awt/web_construction_set/database/relational/billing.php on line 128).
+ Проблема при добавлении элемента в массив. Возможно решить добавиви callback в billing->get() и в нем выдавать данные сразу в буфер вывода.
+ Но что будет делать с этими данными пользователь? Браузер не сможет их обработать, встроенный xslt-процессор тоже превысит лимит памяти.
+ Нужно данные вернуть в виде скачиваемого файла. Формат должен быть удобен для пользователя и потоковый (для минимизации потребления памяти). Например csv.
+ Время в UTC (данные должны быть удобны для пользователя и для генератора - UTC имеет человеческий вид и не требует информации о временной зоне пользователя).
