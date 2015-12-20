@@ -21,16 +21,9 @@
 						</xsl:choose>
 						<script type="text/javascript">
 							$(function() {
-								<xsl:choose>
-									<xsl:when test="@timeout">
-										window.setTimeout(function() {
-											window.location = $('#redirect').attr('href');
-										}, <xsl:value-of select="@timeout"/>000);
-									</xsl:when>
-									<xsl:otherwise>
-										window.location = $('#redirect').attr('href');
-									</xsl:otherwise>
-								</xsl:choose>
+								window.setTimeout(function() {
+									window.location = $('#redirect').attr('href');
+								}, <xsl:value-of select="@timeout"/>000);
 							});
 						</script>
 					</div>
