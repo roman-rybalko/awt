@@ -30,7 +30,7 @@
 					<div class="panel-body">
 						<a href="./file.php?billing=1">
 							<i class="fa fa-archive"></i>
-							Transaction Export (CSV)
+							Export transactions (CSV)
 						</a>
 						<br/>
 						<a href="mailto:billing@advancedwebtesting.com?subject=Billing%20Support%20Request:%20&amp;body=Login:%20{../@login}%0aTransaction ID:%20%0aPending Transaction ID:%20%0aSubscription ID:%20%0a">
@@ -616,7 +616,7 @@
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-transactions-display-period">&#215;</button>
 						<b>Tip:</b>
-						Transactions here are displayed for 42 days max. Use <a href="./file.php?billing=1">Transaction Export (CSV)</a> for a full list.
+						Transactions here are displayed for 42 days max. Please, use <a href="./file.php?billing=1">Export transactions (CSV)</a> for a full list.
 					</div>
 				</xsl:if>
 			</div>
