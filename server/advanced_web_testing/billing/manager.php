@@ -119,6 +119,7 @@ class Manager {
 	 *  task_id (optional) => integer, test_id => integer, test_name => string,
 	 *  sched_id (optional) => integer, sched_name => string,
 	 *  payment_type (optional) => integer, payment_amount => string, payment_data => string,
+	 *  ref_id (optional) => integer,
 	 *  refundable (optional) => boolean]
 	 */
 	public function getTransactions($transactionIds = null, $time = 0, $callback = null) {
