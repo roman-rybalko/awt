@@ -759,6 +759,8 @@ class User {
 							$histMgr->add('task_add', ['task_id' => $taskId,
 								'test_id' => $testId, 'test_name' => $test['name'],
 								'type' => $type]);
+							$this->redirect('?' . $_SERVER['QUERY_STRING'], 1);
+							return;
 						} else
 							echo '<message type="error" value="task_add_fail"/>';
 					} else
