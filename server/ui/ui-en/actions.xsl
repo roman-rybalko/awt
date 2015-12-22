@@ -21,17 +21,17 @@
 			<b>Usage:</b><br/>
 			Open a site.
 			<br/>
-			<i>URL</i> may be with or without the scheme (http/https/ftp).
+			<i>URL</i> may be with or without a scheme (http/https/ftp).
 			If the scheme is not set - "http://" will be used.
-			May contain variables {var}. Variable is initialized in another action.
+			May contain variables {var}. The variable is initialized in another action.
 			<br/>
 			<b>Examples:</b>
 			<br/>
-			<i>URL</i>: <code>http://example.com/{page}</code>
+			<i>URL</i>: <code>http://example.com/</code>
 			<br/>
-			<i>URL</i>: <code>example.com/?param={var}</code>
+			<i>URL</i>: <code>example.com</code>
 			<br/>
-			<i>URL</i>: <code>{scheme}://{user}:{password}@{site}:{port}/{page}</code>
+			<i>URL</i>: <code>{scheme}://{user}:{password}@{site}:{port}/{page}</code> (variable substitution)
 		</div>
 	</div>
 	<div class="col-lg-2">
@@ -71,8 +71,8 @@
 			<b>Usage:</b><br/>
 			Check an element is present on the page.
 			<br/>
-			<i>Element XPATH</i> must specify an xpath to the element(s), not an attribute or text.
-			May contain variables {var}. Variable is initialized in another action.
+			<i>Element XPATH</i> must specify an xpath to the element, not an attribute or a text.
+			May contain variables {var}. The variable is initialized in another action.
 			<br/>
 			<b>Examples:</b>
 			<br/>
@@ -130,10 +130,10 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Click on an element. The element may be any visible element, not only an input or a link. If the element is not visible the error will be raised.
+			Click on an element. The element may be any visible element, not only an input or a link. If the element is not visible an error will be raised.
 			<br/>
-			<i>Element XPATH</i> must specify an xpath to the element(s), not an attribute or text.
-			May contain variables {var}. Variable is initialized in another action.
+			<i>Element XPATH</i> must specify an xpath to the element, not an attribute or a text.
+			May contain variables {var}. The variable is initialized in another action.
 			<br/>
 			<b>Examples:</b>
 			<br/>
@@ -194,10 +194,10 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Enter value into input (via keyboard events).
+			Enter a value into an input (via keyboard events).
 			<br/>
 			<i>Input XPATH</i> must specify an xpath to the input element.
-			May contain variables {var}. Variable is initialized in another action.
+			May contain variables {var}. The variable is initialized in another action.
 			<br/>
 			<i>Value</i> may contain variables {var}.
 			<br/>
@@ -270,19 +270,19 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Change element body (innerHTML) or attribute value.
+			Change an element body (innerHTML) or an attribute value.
 			<br/>
 			This is a pure hack. There is no user interaction that can lead to such page modification.
 			<br/>
 			May be used to fill an input where scripts prevent entering a specific value,
-			to change value of a hidden input,
-			to make element visible,
+			to change the value of a hidden input,
+			to make an element visible,
 			to disable event-triggered script,
 			etc.
 			<br/>
-			<i>XPATH Expression</i> must specify an xpath to the element or attribute.
-			If an xpath to the element is specified, inner content of the element (el.innerHTML) will be replaced.
-			May contain variables {var}. Variable is initialized in another action.
+			<i>XPATH Expression</i> must specify an xpath to an element or an attribute.
+			If an xpath to an element is specified, inner content of the element (el.innerHTML) will be replaced.
+			May contain variables {var}. The variable is initialized in another action.
 			<br/>
 			<i>Value</i> may contain variables {var}.
 			<br/>
@@ -292,7 +292,7 @@
 			<br/>
 			<i>XPATH Expression</i>: <code>//div[@id = "trash-body" and contains(@class, "collapse")]/@style</code>, <i>Value</i>: <code>display: initial</code>
 			<br/>
-			<i>XPATH Expression</i>: <code>//a[contains(@href, "advancedwebtesting.com")]/@onmousedown</code>, <i>Value</i>: <code>return true;</code>
+			<i>XPATH Expression</i>: <code>//a[contains(@href, "advancedwebtesting.com")]/@onmousedown</code>, <i>Value</i>: <code>return true;</code> (disable the script)
 			<br/>
 			<i>XPATH Expression</i>: <code>//div[@id = "{id}"]</code>, <i>Value</i>: <code>{data}</code> (variable substitution)
 			<br/>
@@ -348,13 +348,13 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Check browser URL.
+			Check the browser URL.
 			<br/>
-			<i>RegExp</i> is a <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>
+			<i>RegExp</i> is a <a href="http://wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>
 			without any language-specific wrapper clauses (<code>//</code>, <code>""</code>, <code>''</code>).
 			POSIX &amp; Perl regexps are supported.
 			The regexp is <i>case-insensitive</i> &amp; <i>greedy</i>.
-			May contain variables {var}. Variable is initialized in another action.
+			May contain variables {var}. The variable is initialized in another action.
 			<code>{}</code> regexp clause is not supported due variable substitution.
 			<br/>
 			<b>Examples:</b>
@@ -369,7 +369,7 @@
 			<br/>
 			<b>Reference:</b>
 			<br/>
-			<a href="http://en.wikipedia.org/wiki/Regular_expression#Syntax" target="_blank">RegExp Syntax</a>
+			<a href="http://wikipedia.org/wiki/Regular_expression#Syntax" target="_blank">RegExp Syntax</a>
 			<br/>
 			<a href="http://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp#character-classes" target="_blank">Character Classes</a>
 			<br/>
@@ -411,18 +411,18 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Check page title.
+			Check the page title.
 			<br/>
-			<i>RegExp</i> is a <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>
+			<i>RegExp</i> is a <a href="http://wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>
 			without any language-specific wrapper clauses (<code>//</code>, <code>""</code>, <code>''</code>).
 			POSIX &amp; Perl regexps are supported.
 			The regexp is <i>case-insensitive</i> &amp; <i>greedy</i>.
-			May contain variables {var}. Variable is initialized in another action.
+			May contain variables {var}. The variable is initialized in another action.
 			<code>{}</code> regexp clause is not supported due variable substitution.
 			<br/>
 			<b>Examples:</b>
 			<br/>
-			<i>RegExp</i>: <code>Search</code>
+			<i>RegExp</i>: <code>Search</code> (substring)
 			<br/>
 			<i>RegExp</i>: <code>\d</code>
 			<br/>
@@ -432,7 +432,7 @@
 			<br/>
 			<b>Reference:</b>
 			<br/>
-			<a href="http://en.wikipedia.org/wiki/Regular_expression#Syntax" target="_blank">RegExp Syntax</a>
+			<a href="http://wikipedia.org/wiki/Regular_expression#Syntax" target="_blank">RegExp Syntax</a>
 			<br/>
 			<a href="http://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp#character-classes" target="_blank">Character Classes</a>
 			<br/>
@@ -477,11 +477,11 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Apply <i>RegExp</i> to variable value and place the first match into the variable, replacing the whole variable.
+			Apply <i>RegExp</i> to a variable value and place the first match into the variable, replacing the whole variable.
 			<br/>
 			<i>Variable</i> - variable name. May contain other variables {var}.
 			<br/>
-			<i>RegExp</i> is a <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>
+			<i>RegExp</i> is a <a href="http://wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>
 			without any language-specific wrapper clauses (<code>//</code>, <code>""</code>, <code>''</code>).
 			POSIX &amp; Perl regexps are supported.
 			The regexp is <i>case-insensitive</i> &amp; <i>greedy</i>.
@@ -490,15 +490,15 @@
 			<br/>
 			<b>Examples:</b>
 			<br/>
-			<i>Variable</i>: <code>title</code>, <i>RegExp</i>: <code>.+Search</code>
+			<i>Variable</i>: <code>title</code>, <i>RegExp</i>: <code>.+Search</code> (remove the part of the string after the "Search")
 			<br/>
-			<i>Variable</i>: <code>line</code>, <i>RegExp</i>: <code>\d+</code>
+			<i>Variable</i>: <code>line</code>, <i>RegExp</i>: <code>\d+</code> (find a numbr and remove everything else)
 			<br/>
 			<i>Variable</i>: <code>{varname}</code>, <i>RegExp</i>: <code>(ht|f)tps?://{site}</code> (variable substitution, variables: <i>varname</i> &amp; <i>site</i>)
 			<br/>
 			<b>Reference:</b>
 			<br/>
-			<a href="http://en.wikipedia.org/wiki/Regular_expression#Syntax" target="_blank">RegExp Syntax</a>
+			<a href="http://wikipedia.org/wiki/Regular_expression#Syntax" target="_blank">RegExp Syntax</a>
 			<br/>
 			<a href="http://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp#character-classes" target="_blank">Character Classes</a>
 			<br/>
@@ -551,13 +551,13 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Take a value of element, selected by XPATH, and copy the value into variable.
+			Take a value of the element or attribute, selected by <i>XPATH Expression</i>, and copy the value into a variable.
 			Initializes a new variable if it does not exist.
 			<br/>
 			<i>Variable</i> - variable name. May contain other variables {var}. If the variable exists it will be replaced.
 			<br/>
-			<i>XPATH Expression</i> must specify an xpath to the element or attribute.
-			If an xpath to the element is specified, inner content of the element (el.innerHTML) will be saved.
+			<i>XPATH Expression</i> must specify an xpath to an element or an attribute.
+			If an xpath to an element is specified, inner content of the element (el.innerHTML) will be saved.
 			May contain variables {var}.
 			<br/>
 			<b>Examples:</b>
@@ -566,7 +566,7 @@
 			<br/>
 			<i>Variable</i>: <code>url</code>, <i>XPATH Expression</i>: <code>//a[contains(text(), "Hosting")]/@href</code>
 			<br/>
-			<i>Variable</i>: <code>url2</code>, <i>XPATH Expression</i>: <code>//a[contains(text(), "Hosting") and @href != "{url}"]/@href</code> (<i>url</i> variable substitution)
+			<i>Variable</i>: <code>url2</code>, <i>XPATH Expression</i>: <code>//a[contains(text(), "Hosting") and @href != "{url}"]/@href</code> (variable substitution)
 			<br/>
 			<i>Variable</i>: <code>classes_{id}</code>, <i>XPATH Expression</i>: <code>//div[@id = "{id}"]/@class</code> (variable substitution)
 			<br/>
@@ -622,7 +622,7 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Take browser URL and copy it into variable.
+			Take the browser URL and copy it into a variable.
 			Initializes a new variable if it does not exist.
 			<br/>
 			<i>Variable</i> - variable name. May contain other variables {var}. If the variable exists it will be replaced.
@@ -669,7 +669,7 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Take page title and copy it into variable.
+			Take the page title and copy it into a variable.
 			Initializes a new variable if it does not exist.
 			<br/>
 			<i>Variable</i> - variable name. May contain other variables {var}. If the variable exists it will be replaced.
@@ -758,21 +758,25 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Change proxy-server. All subsequent browser requests will come from the IP address of the proxy. 
+			Change Proxy-server. All subsequent browser requests will come from an IP address of the proxy. 
+			May be used to see how the site is looking in different cuntries, to mimic a firewall.
 			<br/>
-			<i>Set Proxy</i> will restart the browser. All windows will be closed.
+			The action will restart the browser. All windows will be closed.
 			Session cookies (transient), local storage, history, etc. will be lost.
 			Persistent cookies &amp; local storage will be preserved.
 			<br/>
 			<i>Location</i> - territorial location of the proxy server. Country of the source IP address.
 			<br/>
 			<i>Address</i> is activated when <i>Location</i> is set to <code>Custom</code>.
-			Must specify a custom address of the proxy in format <code>host:port</code> or be empty.
-			The proxy must support <i>HTTP</i> protocol (<i>SOCKS</i> protocol is not supported).
-			The proxy must not use <i>HTTP authentication</i>.
-			May contain variables {var}. Variable is initialized in another action.
+			Must specify a custom address of the proxy in the format <code>host:port</code>
+			or an URL to a <a href="http://wikipedia.org/wiki/Proxy_auto-config" target="_blank">PAC-file</a>
+			or set empty.
+			The proxy-server must support <a href="http://wikipedia.org/wiki/Proxy_server#Web_proxy_servers" target="_blank">HTTP</a> protocol
+			(<a href="http://wikipedia.org/wiki/SOCKS" target="_blank">SOCKS</a> protocol is not supported).
+			The proxy-server must NOT use <a href="http://tools.ietf.org/html/rfc2617" target="_blank">HTTP authentication</a>.
+			May contain variables {var}. The variable is initialized in another action.
 			<br/>
-			If <i>Location</i> is set to <code>Custom</code> and <i>Address</i> is set to empty - the proxy will be disabled.
+			If <i>Location</i> is set to <code>Custom</code> and <i>Address</i> is clear - the proxy will be disabled.
 			<br/>
 			<b>Examples:</b>
 			<br/>
@@ -786,13 +790,9 @@
 			<br/>
 			<b>Reference:</b>
 			<br/>
-			<a href="http://en.wikipedia.org/wiki/Proxy_server" target="_blank">Proxy server</a>
+			<a href="http://wikipedia.org/wiki/Proxy_server" target="_blank">Proxy server</a>
 			<br/>
-			<a href="http://en.wikipedia.org/wiki/Basic_access_authentication" target="_blank">HTTP Authentication (Basic)</a>
-			<br/>
-			<a href="http://en.wikipedia.org/wiki/Digest_access_authentication" target="_blank">HTTP Authentication (Digest)</a>
-			<br/>
-			<a href="http://www.google.com/search?q=proxy+list" target="_blank">Proxy list</a>
+			<a href="http://google.com/search?q=proxy+list" target="_blank">Proxy list</a> (please, test the proxy before use)
 		</div>
 	</div>
 	<div class="col-lg-2">
