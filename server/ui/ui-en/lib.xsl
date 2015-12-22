@@ -28,7 +28,7 @@
 						<code>test</code> - new functionality testing
 						<br/>
 						<code>all</code>, <code>ff</code>, <code>gc</code>, etc. contain several underlying browsers which are chosen randomly.
-						What exactly browsers may be started see in a tooltip (hover on item for 1-2 sec).
+						What exactly browsers may be started see in a tooltip (hover on an item for 1-2 sec).
 						<p/>
 						<i>Debug</i> - Execute the test till the end regardless of error. By default the test is stopped on the first error.
 					</div>
