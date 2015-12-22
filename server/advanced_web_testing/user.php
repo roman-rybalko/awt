@@ -1150,15 +1150,21 @@ class User {
 		echo '<stats tests="', $testsCnt, '" scheds="', $schedsCnt, '"',
 			' spendings_monthly="', $spendingsMonthly, '" actions_available="', $billMgr->getAvailableActionsCnt(), '">';
 		$maxTime = time();
+		$minTime = 0;
 		$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $this->userId);
 		foreach ($statMgr->get() as $stat) {
 			echo '<stat time="', $stat['time'], '" tasks_added="', $stat['tasks_added'], '" tasks_finished="', $stat['tasks_finished'], '"',
 				' tasks_failed="', $stat['tasks_failed'], '" actions_executed="', $stat['actions_executed'], '"/>';
 			if ($stat['time'] < $maxTime)
 				$maxTime = $stat['time'];
+			if ($stat['time'] > $minTime)
+				$minTime = $stat['time'];
 		}
 		$time = time();
 		for ($time = $time - 86400 * \Config::PURGE_PERIOD - $time % 86400; $time < $maxTime; $time += 86400)
+			echo '<stat time="', $time, '" tasks_finished="0" tasks_failed="0" actions_executed="0"/>';
+		$time = time();
+		for ($time = $time - $time % 86400; $time > $minTime; $time -= 86400)
 			echo '<stat time="', $time, '" tasks_finished="0" tasks_failed="0" actions_executed="0"/>';
 		echo '</stats>';
 	}
