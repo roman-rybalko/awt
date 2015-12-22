@@ -16,6 +16,24 @@
 
 <xsl:template match="action[@type = 'open']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Open a site.
+			<br/>
+			<i>URL</i> may be with or without the scheme (http/https/ftp).
+			If the scheme is not set - "http://" will be used.
+			May contain variables {var}. Variable is initialized in another action.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>URL</i>: <code>http://example.com/{page}</code>
+			<br/>
+			<i>URL</i>: <code>example.com/?param={var}</code>
+			<br/>
+			<i>URL</i>: <code>{scheme}://{user}:{password}@{site}:{port}/{page}</code>
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -48,6 +66,35 @@
 
 <xsl:template match="action[@type = 'exists']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Check an element is present on the page.
+			<br/>
+			<i>Element XPATH</i> must specify an xpath to the element(s), not an attribute or text.
+			May contain variables {var}. Variable is initialized in another action.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>Element XPATH</i>: <code>//table</code> (find a table in the document)
+			<br/>
+			<i>Element XPATH</i>: <code>//input[@name = "search"]</code> (find an input with attribute name="search")
+			<br/>
+			<i>Element XPATH</i>: <code>//{element}[@id = "{element_id}" and contains(@class, "in")]</code> (variable substitution)
+			<br/>
+			<i>Element XPATH</i>: <code>//input[@name = "search"]/@value</code> - <span class="text-failure">wrong</span>
+			<br/>
+			<i>Element XPATH</i>: <code>//table//text()</code> - <span class="text-failure">wrong</span>
+			<br/>
+			<b>Reference:</b>
+			<br/>
+			<a href="http://www.w3schools.com/xsl/xpath_syntax.asp" target="_blank">XPath Syntax</a>
+			<br/>
+			<a href="http://www.w3schools.com/xsl/xpath_axes.asp" target="_blank">XPath Axes</a>
+			<br/>
+			<a href="http://developer.mozilla.org/en-US/docs/Web/XPath/Functions" target="_blank">XPath Functions</a>
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -80,6 +127,35 @@
 
 <xsl:template match="action[@type = 'click']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Click on an element. The element may be any visible element, not only an input or a link. If the element is not visible the error will be raised.
+			<br/>
+			<i>Element XPATH</i> must specify an xpath to the element(s), not an attribute or text.
+			May contain variables {var}. Variable is initialized in another action.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>Element XPATH</i>: <code>//table//a</code> (click a link in a table)
+			<br/>
+			<i>Element XPATH</i>: <code>//button[@type = "submit" and @name = "search"]</code> (click a button with attributes name="search" and type="submit")
+			<br/>
+			<i>Element XPATH</i>: <code>//{element}[@id = "id123456" and contains(@{element_attr}, "{element_attr_value}")]</code> (variable substitution)
+			<br/>
+			<i>Element XPATH</i>: <code>//input[@name = "search"]/@value</code> - <span class="text-failure">wrong</span>
+			<br/>
+			<i>Element XPATH</i>: <code>//a/text()</code> - <span class="text-failure">wrong</span>
+			<br/>
+			<b>Reference:</b>
+			<br/>
+			<a href="http://www.w3schools.com/xsl/xpath_syntax.asp" target="_blank">XPath Syntax</a>
+			<br/>
+			<a href="http://www.w3schools.com/xsl/xpath_axes.asp" target="_blank">XPath Axes</a>
+			<br/>
+			<a href="http://developer.mozilla.org/en-US/docs/Web/XPath/Functions" target="_blank">XPath Functions</a>
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -115,6 +191,39 @@
 
 <xsl:template match="action[@type = 'enter']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Enter value into input (via keyboard events).
+			<br/>
+			<i>Input XPATH</i> must specify an xpath to the input element.
+			May contain variables {var}. Variable is initialized in another action.
+			<br/>
+			<i>Value</i> may contain variables {var}.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>Input XPATH</i>: <code>//input</code>, <i>Value</i>: <code>test value</code>
+			<br/>
+			<i>Input XPATH</i>: <code>//input[@name = "q" and contains(@class, "search")]</code>, <i>Value</i>: <code>web testing</code>
+			<br/>
+			<i>Input XPATH</i>: <code>//form[ends-with(@action, "submit.cgi")]//input[@name = "data"]</code>, <i>Value</i>: <code>sample data</code>
+			<br/>
+			<i>Input XPATH</i>: <code>//div[@id = "{targetId}"]/input</code>, <i>Value</i>: <code>{targetValue}</code> (variable substitution)
+			<br/>
+			<i>Input XPATH</i>: <code>//input[@name = "search"]/@value</code> - <span class="text-failure">wrong</span>
+			<br/>
+			<i>Input XPATH</i>: <code>//a/text()</code> - <span class="text-failure">wrong</span>
+			<br/>
+			<b>Reference:</b>
+			<br/>
+			<a href="http://www.w3schools.com/xsl/xpath_syntax.asp" target="_blank">XPath Syntax</a>
+			<br/>
+			<a href="http://www.w3schools.com/xsl/xpath_axes.asp" target="_blank">XPath Axes</a>
+			<br/>
+			<a href="http://developer.mozilla.org/en-US/docs/Web/XPath/Functions" target="_blank">XPath Functions</a>
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -158,6 +267,44 @@
 
 <xsl:template match="action[@type = 'modify']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Change element body (innerHTML) or attribute value.
+			<br/>
+			This is a pure hack. There is no user interaction that can lead to such page modification.
+			<br/>
+			May be used to fill an input where scripts prevent entering a specific value,
+			to change value of a hidden input,
+			to make element visible,
+			to disable event-triggered script,
+			etc.
+			<br/>
+			<i>XPATH Expression</i> must specify an xpath to the element or attribute.
+			If an xpath to the element is specified, inner content of the element (el.innerHTML) will be replaced.
+			May contain variables {var}. Variable is initialized in another action.
+			<br/>
+			<i>Value</i> may contain variables {var}.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>XPATH Expression</i>: <code>//input/@value</code>, <i>Value</i>: <code>100.01</code>
+			<br/>
+			<i>XPATH Expression</i>: <code>//div[@id = "trash-body" and contains(@class, "collapse")]/@style</code>, <i>Value</i>: <code>display: initial</code>
+			<br/>
+			<i>XPATH Expression</i>: <code>//a[contains(@href, "advancedwebtesting.com")]/@onmousedown</code>, <i>Value</i>: <code>return true;</code>
+			<br/>
+			<i>XPATH Expression</i>: <code>//div[@id = "{id}"]</code>, <i>Value</i>: <code>{data}</code> (variable substitution)
+			<br/>
+			<b>Reference:</b>
+			<br/>
+			<a href="http://www.w3schools.com/xsl/xpath_syntax.asp" target="_blank">XPath Syntax</a>
+			<br/>
+			<a href="http://www.w3schools.com/xsl/xpath_axes.asp" target="_blank">XPath Axes</a>
+			<br/>
+			<a href="http://developer.mozilla.org/en-US/docs/Web/XPath/Functions" target="_blank">XPath Functions</a>
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -198,6 +345,37 @@
 
 <xsl:template match="action[@type = 'url']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Check browser URL.
+			<br/>
+			<i>RegExp</i> is a <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>
+			without any language-specific wrapper clauses (<code>//</code>, <code>""</code>, <code>''</code>).
+			POSIX &amp; Perl regexps are supported.
+			The regexp is <i>case-insensitive</i> &amp; <i>greedy</i>.
+			May contain variables {var}. Variable is initialized in another action.
+			<code>{}</code> regexp clause is not supported due variable substitution.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>RegExp</i>: <code>example.com</code>
+			<br/>
+			<i>RegExp</i>: <code>https://</code>
+			<br/>
+			<i>RegExp</i>: <code>x\d+\.example\.com</code>
+			<br/>
+			<i>RegExp</i>: <code>h[[:digit:]]+\.{site}</code> (<i>site</i> variable substitution, the variable itself may contain a regexp)
+			<br/>
+			<b>Reference:</b>
+			<br/>
+			<a href="http://en.wikipedia.org/wiki/Regular_expression#Syntax" target="_blank">RegExp Syntax</a>
+			<br/>
+			<a href="http://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp#character-classes" target="_blank">Character Classes</a>
+			<br/>
+			<a href="http://perldoc.perl.org/perlre.html#Extended-Patterns" target="_blank">Perl Extended Patterns</a>
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -230,6 +408,37 @@
 
 <xsl:template match="action[@type = 'title']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Check page title.
+			<br/>
+			<i>RegExp</i> is a <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>
+			without any language-specific wrapper clauses (<code>//</code>, <code>""</code>, <code>''</code>).
+			POSIX &amp; Perl regexps are supported.
+			The regexp is <i>case-insensitive</i> &amp; <i>greedy</i>.
+			May contain variables {var}. Variable is initialized in another action.
+			<code>{}</code> regexp clause is not supported due variable substitution.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>RegExp</i>: <code>Search</code>
+			<br/>
+			<i>RegExp</i>: <code>\d</code>
+			<br/>
+			<i>RegExp</i>: <code>[[:alpha:]][[:digit:]]</code>
+			<br/>
+			<i>RegExp</i>: <code>{site}</code> (<i>site</i> variable substitution, the variable itself may contain a regexp)
+			<br/>
+			<b>Reference:</b>
+			<br/>
+			<a href="http://en.wikipedia.org/wiki/Regular_expression#Syntax" target="_blank">RegExp Syntax</a>
+			<br/>
+			<a href="http://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp#character-classes" target="_blank">Character Classes</a>
+			<br/>
+			<a href="http://perldoc.perl.org/perlre.html#Extended-Patterns" target="_blank">Perl Extended Patterns</a>
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -265,6 +474,37 @@
 
 <xsl:template match="action[@type = 'var_regexp']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Apply <i>RegExp</i> to variable value and place the first match into the variable, replacing the whole variable.
+			<br/>
+			<i>Variable</i> - variable name. May contain other variables {var}.
+			<br/>
+			<i>RegExp</i> is a <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>
+			without any language-specific wrapper clauses (<code>//</code>, <code>""</code>, <code>''</code>).
+			POSIX &amp; Perl regexps are supported.
+			The regexp is <i>case-insensitive</i> &amp; <i>greedy</i>.
+			May contain variables {var}.
+			<code>{}</code> regexp clause is not supported due variable substitution.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>Variable</i>: <code>title</code>, <i>RegExp</i>: <code>.+Search</code>
+			<br/>
+			<i>Variable</i>: <code>line</code>, <i>RegExp</i>: <code>\d+</code>
+			<br/>
+			<i>Variable</i>: <code>{varname}</code>, <i>RegExp</i>: <code>(ht|f)tps?://{site}</code> (variable substitution, variables: <i>varname</i> &amp; <i>site</i>)
+			<br/>
+			<b>Reference:</b>
+			<br/>
+			<a href="http://en.wikipedia.org/wiki/Regular_expression#Syntax" target="_blank">RegExp Syntax</a>
+			<br/>
+			<a href="http://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp#character-classes" target="_blank">Character Classes</a>
+			<br/>
+			<a href="http://perldoc.perl.org/perlre.html#Extended-Patterns" target="_blank">Perl Extended Patterns</a>
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -308,6 +548,37 @@
 
 <xsl:template match="action[@type = 'var_xpath']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Take a value of element, selected by XPATH, and copy the value into variable.
+			Initializes a new variable if it does not exist.
+			<br/>
+			<i>Variable</i> - variable name. May contain other variables {var}. If the variable exists it will be replaced.
+			<br/>
+			<i>XPATH Expression</i> must specify an xpath to the element or attribute.
+			If an xpath to the element is specified, inner content of the element (el.innerHTML) will be saved.
+			May contain variables {var}.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>Variable</i>: <code>price</code>, <i>XPATH Expression</i>: <code>//span[@id = "price"]</code>
+			<br/>
+			<i>Variable</i>: <code>url</code>, <i>XPATH Expression</i>: <code>//a[contains(text(), "Hosting")]/@href</code>
+			<br/>
+			<i>Variable</i>: <code>url2</code>, <i>XPATH Expression</i>: <code>//a[contains(text(), "Hosting") and @href != "{url}"]/@href</code> (<i>url</i> variable substitution)
+			<br/>
+			<i>Variable</i>: <code>classes_{id}</code>, <i>XPATH Expression</i>: <code>//div[@id = "{id}"]/@class</code> (variable substitution)
+			<br/>
+			<b>Reference:</b>
+			<br/>
+			<a href="http://www.w3schools.com/xsl/xpath_syntax.asp" target="_blank">XPath Syntax</a>
+			<br/>
+			<a href="http://www.w3schools.com/xsl/xpath_axes.asp" target="_blank">XPath Axes</a>
+			<br/>
+			<a href="http://developer.mozilla.org/en-US/docs/Web/XPath/Functions" target="_blank">XPath Functions</a>
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -348,6 +619,21 @@
 
 <xsl:template match="action[@type = 'var_url']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Take browser URL and copy it into variable.
+			Initializes a new variable if it does not exist.
+			<br/>
+			<i>Variable</i> - variable name. May contain other variables {var}. If the variable exists it will be replaced.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>Variable</i>: <code>url</code>
+			<br/>
+			<i>Variable</i>: <code>url_{id}</code> (variable substitution)
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -380,6 +666,21 @@
 
 <xsl:template match="action[@type = 'var_title']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
+	<div class="col-lg-12">
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Take page title and copy it into variable.
+			Initializes a new variable if it does not exist.
+			<br/>
+			<i>Variable</i> - variable name. May contain other variables {var}. If the variable exists it will be replaced.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>Variable</i>: <code>title</code>
+			<br/>
+			<i>Variable</i>: <code>title_{id}</code> (variable substitution)
+		</div>
+	</div>
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
@@ -455,10 +756,43 @@
 <xsl:template match="action[@type = 'proxy']" mode="form">
 	<xsl:param name="id" select="generate-id()"/>
 	<div class="col-lg-12">
-		<div class="alert alert-info alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="action-proxy-restart">&#215;</button>
-			<b>Tip:</b>
-			Set Proxy will restart the browser. All windows will be closed. Cookies, local storage, history, etc. will be lost.
+		<div class="well well-sm">
+			<b>Usage:</b><br/>
+			Change proxy-server. All subsequent browser requests will come from the IP address of the proxy. 
+			<br/>
+			<i>Set Proxy</i> will restart the browser. All windows will be closed.
+			Session cookies (transient), local storage, history, etc. will be lost.
+			Persistent cookies &amp; local storage will be preserved.
+			<br/>
+			<i>Location</i> - territorial location of the proxy server. Country of the source IP address.
+			<br/>
+			<i>Address</i> is activated when <i>Location</i> is set to <code>Custom</code>.
+			Must specify a custom address of the proxy in format <code>host:port</code> or be empty.
+			The proxy must support <i>HTTP</i> protocol (<i>SOCKS</i> protocol is not supported).
+			The proxy must not use <i>HTTP authentication</i>.
+			May contain variables {var}. Variable is initialized in another action.
+			<br/>
+			If <i>Location</i> is set to <code>Custom</code> and <i>Address</i> is set to empty - the proxy will be disabled.
+			<br/>
+			<b>Examples:</b>
+			<br/>
+			<i>Address</i>: <code>121.120.80.215:3128</code>
+			<br/>
+			<i>Address</i>: <code>104.155.194.251:8888</code>
+			<br/>
+			<i>Address</i>: <code>{host}:{port}</code> (variable substitution)
+			<br/>
+			<i>Address</i>: <code>{proxy}</code> (variable substitution)
+			<br/>
+			<b>Reference:</b>
+			<br/>
+			<a href="http://en.wikipedia.org/wiki/Proxy_server" target="_blank">Proxy server</a>
+			<br/>
+			<a href="http://en.wikipedia.org/wiki/Basic_access_authentication" target="_blank">HTTP Authentication (Basic)</a>
+			<br/>
+			<a href="http://en.wikipedia.org/wiki/Digest_access_authentication" target="_blank">HTTP Authentication (Digest)</a>
+			<br/>
+			<a href="http://www.google.com/search?q=proxy+list" target="_blank">Proxy list</a>
 		</div>
 	</div>
 	<div class="col-lg-2">

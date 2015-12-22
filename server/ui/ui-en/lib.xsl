@@ -14,19 +14,23 @@
 					<xsl:value-of select="$test_name"/>
 				</div>
 				<div class="panel-body">
-					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="modal-new-task-legend">&#215;</button>
-						<b>Legend:</b><br/>
-						gc_xxx - Google Chrome / Chromium<br/>
-						ff_xxx - Firefox<br/>
-						o_xxx - Opera<br/>
-						ie_xxx - Internet Explorer<br/>
-						test - new functionality testing
-					</div>
-					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="modal-new-task-debug">&#215;</button>
-						<b>Tip:</b>
-						When Debug is ON all actions will be executed regardless of error.
+					<div class="well well-sm">
+						<b>Usage:</b>
+						<br/>
+						<code>gc_xxx</code> - Google Chrome / Chromium
+						<br/>
+						<code>ff_xxx</code> - Firefox
+						<br/>
+						<code>o_xxx</code> - Opera
+						<br/>
+						<code>ie_xxx</code> - Internet Explorer
+						<br/>
+						<code>test</code> - new functionality testing
+						<br/>
+						<code>all</code>, <code>ff</code>, <code>gc</code>, etc. contain several underlying browsers which are chosen randomly.
+						What exactly browsers may be started see in the tooltip (hover on item for 1-2 sec).
+						<p/>
+						<i>Debug</i> - Execute the test till the end regardless of error. By default the test is stopped on the first error.
 					</div>
 					<form role="form" method="post" action="./?tasks=1" class="apply-data-display-period">
 						<input type="hidden" name="test_id" value="{$test_id}"/>

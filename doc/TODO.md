@@ -1,6 +1,5 @@
 План
 ====
-28. Написать мануал для каждого типа action
 1. ad idea: перетаскивать людей ищущих web monitoring software
 1. ad idea: free site monitoring - и завести в демо-аккаунт
 1. ad idea: c# perl python for web automation - не надо программировать, есть готовый сервис

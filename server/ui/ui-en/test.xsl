@@ -296,11 +296,6 @@
 				<div class="col-lg-12">
 					<div class="panel panel-success">
 						<div class="panel-body">
-							<div class="alert alert-info alert-dismissable">
-								<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="test-vars">&#215;</button>
-								<b>Tip:</b>
-								Variable substitution {var} works for all fields.
-							</div>
 							<form role="form" method="post" id="action-form">
 								<xsl:call-template name="new_action_form">
 									<xsl:with-param name="id">add</xsl:with-param>
