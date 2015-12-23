@@ -1,6 +1,5 @@
 План
 ====
-1. ad idea: c# perl python for web automation - не надо программировать, есть готовый сервис
 1. ad idea: we crawler - software/free/php-python-perl
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг
