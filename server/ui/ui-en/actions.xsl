@@ -355,7 +355,7 @@
 			POSIX &amp; Perl regexps are supported.
 			The regexp is <i>case-insensitive</i> &amp; <i>greedy</i>.
 			May contain variables {var}. The variable is initialized in another action.
-			<code>{}</code> regexp clause is not supported due variable substitution.
+			<code>{}</code> regexp clause is not supported due to variable substitution.
 			<br/>
 			<b>Examples:</b>
 			<br/>
@@ -418,7 +418,7 @@
 			POSIX &amp; Perl regexps are supported.
 			The regexp is <i>case-insensitive</i> &amp; <i>greedy</i>.
 			May contain variables {var}. The variable is initialized in another action.
-			<code>{}</code> regexp clause is not supported due variable substitution.
+			<code>{}</code> regexp clause is not supported due to variable substitution.
 			<br/>
 			<b>Examples:</b>
 			<br/>
@@ -486,7 +486,7 @@
 			POSIX &amp; Perl regexps are supported.
 			The regexp is <i>case-insensitive</i> &amp; <i>greedy</i>.
 			May contain variables {var}.
-			<code>{}</code> regexp clause is not supported due variable substitution.
+			<code>{}</code> regexp clause is not supported due to variable substitution.
 			<br/>
 			<b>Examples:</b>
 			<br/>
