@@ -290,7 +290,7 @@
 			<br/>
 			<i>XPATH Expression</i>: <code>//input/@value</code>, <i>Value</i>: <code>100.01</code>
 			<br/>
-			<i>XPATH Expression</i>: <code>//div[@id = "trash-body" and contains(@class, "collapse")]/@style</code>, <i>Value</i>: <code>display: initial</code>
+			<i>XPATH Expression</i>: <code>//div[@id = "trash-body" and contains(@class, "collapse")]/@style</code>, <i>Value</i>: <code>display: initial</code> (show the element)
 			<br/>
 			<i>XPATH Expression</i>: <code>//a[contains(@href, "advancedwebtesting.com")]/@onmousedown</code>, <i>Value</i>: <code>return true;</code> (disable the script)
 			<br/>
