@@ -277,7 +277,7 @@
 			May be used to fill an input where scripts prevent entering a specific value,
 			to change the value of a hidden input,
 			to make an element visible,
-			to disable event-triggered script,
+			to disable an event-triggered script,
 			etc.
 			<br/>
 			<i>XPATH Expression</i> must specify an xpath to an element or an attribute.
