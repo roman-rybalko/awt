@@ -14,7 +14,7 @@ class User {
 	}
 
 	public function run() {
-		if (preg_match('/Mobile|Phone|Android|PhantomJS|AdsBot/', $_SERVER['HTTP_USER_AGENT'])) {
+		if (preg_match('/Mobile|Phone|Android|PhantomJS/', $_SERVER['HTTP_USER_AGENT'])) {
 			\WebConstructionSet\OutputBuffer\XsltHtml::init();
 		} else {
 			header('Content-Type: text/xml');
