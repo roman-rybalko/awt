@@ -71,7 +71,7 @@
 			<b>Usage:</b><br/>
 			Check an element is present on the page.
 			<br/>
-			<i>Element XPATH</i> must specify an xpath to the element, not an attribute or a text.
+			<i>Element XPATH</i> must specify an xpath to an element, not to an attribute or text.
 			May contain variables {var}. The variable is initialized in another action.
 			<br/>
 			<b>Examples:</b>
