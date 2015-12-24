@@ -1,6 +1,7 @@
 
 advanced
 best
-cloud
++cloud
 external
 remote
++xpath
