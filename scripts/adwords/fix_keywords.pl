@@ -4,16 +4,17 @@ use strict;
 use warnings;
 use Getopt::Std;
 
+my %opts;
+getopts('pebh', \%opts);
+
 die "USAGE: $0 [options] file
 USAGE: $0 [options] < file
 Options:
-	-p - phrase match
-	-e - exact match
-	-b - broad match modifiers
-" unless @ARGV;
-
-my %opts;
-getopts('peb', \%opts);
+	-p	phrase match
+	-e	exact match
+	-b	broad match modifiers
+	-h	help
+" if $opts{h};
 
 my $phraseMatch = $opts{p};
 my $exactMath = $opts{e};
