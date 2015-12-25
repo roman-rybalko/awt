@@ -10,11 +10,10 @@ function mailLog(subject) {
 }
 
 function main() {
-	var kk = AdWordsApp.keywords().get();
+	var kk = AdWordsApp.keywords().withCondition('FirstPageCpc > 0').get();
 	while (kk.hasNext()) {
 		var k = kk.next();
-		if (k.getFirstPageCpc() || k.getTopOfPageCpc())
-			log('id: ' + k.getId() + ', text: ' + k.getText() + ', 1st page bid: ' + k.getFirstPageCpc() + ', top of page bid: ' + k.getTopOfPageCpc());
+		log('id: ' + k.getId() + ', text: ' + k.getText() + ', 1st page bid: ' + k.getFirstPageCpc() + ', top of page bid: ' + k.getTopOfPageCpc());
 	}
 	mailLog('Keyword Bids');
 }
