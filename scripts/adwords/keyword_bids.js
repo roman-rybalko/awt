@@ -13,8 +13,8 @@ function main() {
 	var kk = AdWordsApp.keywords().get();
 	while (kk.hasNext()) {
 		var k = kk.next();
-		if (k.getFirstPageCpc() !== null)
-			log('text: ' + k.getText() + ', id: ' + k.getId() + ', bid: ' + k.getFirstPageCpc());
+		if (k.getFirstPageCpc() || k.getTopOfPageCpc())
+			log('id: ' + k.getId() + ', text: ' + k.getText() + ', 1st page bid: ' + k.getFirstPageCpc() + ', top of page bid: ' + k.getTopOfPageCpc());
 	}
 	mailLog('Keyword Bids');
 }
