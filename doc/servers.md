@@ -10,24 +10,12 @@
 Хостинг
 -------
 n1 - firstvds  
-n3 - hostwinds  
-n5 - domainhost  
-n6 - host1plus  
-n7 - ramnode  
+n6 - host1plus (Frankfurt)  
 p1 - berihoster (Tomsk)  
-p2 - simplecloud  
-p3 - horttel/htc/hosting-point  
+p2 - host1plus (Atlanta)  
 p4 - mne.ru  
 c1 - simplecloud  
 c2 - mne.ru  
-c3 - hcli (ovh)  
-
-К 26 декабря
-------------
-n3, n5, n7, p2, p3, c3 - отказаться  
-p5 - us - на host1plus  
-p6 - us - на ramnode  
-p7 - eu/nl - на ramnode  
 
 К 10 января
 -----------
