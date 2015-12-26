@@ -12,7 +12,7 @@
 n1 - firstvds  
 n6 - host1plus (Frankfurt)  
 p1 - berihoster (Tomsk)  
-p2 - host1plus (Atlanta)  
+p2 - host1plus (Chicago)  
 p4 - mne.ru  
 c1 - simplecloud  
 c2 - mne.ru  
