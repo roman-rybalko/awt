@@ -188,7 +188,7 @@
 								}
 							]]></xsl:attribute>
 							<div class="form-group space-x">
-								<input class="form-control" placeholder="Name" name="name" type="text" autofocus="1"/>
+								<input class="form-control" placeholder="Name" name="name" type="text"/>
 							</div>
 							<button type="submit" name="add" class="btn btn-success">
 								<i class="fa fa-plus"></i>

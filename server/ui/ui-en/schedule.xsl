@@ -212,7 +212,7 @@
 		<div class="col-lg-2">
 			<div class="form-group">
 				<label>Name</label>
-				<input class="form-control" placeholder="Name" name="name" type="text" value="{$name}" autofocus="1"/>
+				<input class="form-control" placeholder="Name" name="name" type="text" value="{$name}"/>
 			</div>
 		</div>
 		<div class="col-lg-2">
