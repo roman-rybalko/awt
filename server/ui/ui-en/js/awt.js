@@ -306,7 +306,6 @@ $(function() {
 		var time = storage.get('data-display-period');
 		if (time === null && awt_login == '') {  /// set default for demo login
 			time = 86400;
-			console.log('set data display period default to:', time);
 			storage.set('data-display-period', time);
 		}
 		if (time > 0) {
