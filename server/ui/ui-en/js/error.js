@@ -22,7 +22,7 @@ function error_handler(f, arg1, arg2, arg3) {
 				if (e.stack)
 					data.push('Stack: ' + e.stack);
 				$.post('error.php', {data: data.join(', ')});
-				alert('Fatal error in the application. Please, reload the page or try another browser.');
+				alert('Script error on the page. Some functionality is broken. You may try another browser while we\'re fixing this.');
 			} catch (e) {}
 		}
 	};

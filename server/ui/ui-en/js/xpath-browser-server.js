@@ -1,10 +1,10 @@
 (function($) {
-try {
 
 	var debug = true;
 	var send_msg_key = 'gwLy0GfprNNM';
 
 	$(function() {
+	try {
 		var proxy_url = _proxy_url;
 		var target_url = _target_url;
 		function send_msg(data) {
@@ -129,8 +129,8 @@ try {
 			});
 			send_msg({type: 'url', url: window.location.href.match(/\?(.+)/)[1]});
 		}, 100);
+	} catch (e) {
+		// TODO
+	}
 	});
-} catch (e) {
-	alert('Fatal error in the application. Please, reload the page or try another browser.');
-}
 })(jQuery);
