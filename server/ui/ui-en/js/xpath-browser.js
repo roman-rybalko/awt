@@ -1,4 +1,4 @@
-$(function() {
+$(error_handler(function() {
 
 	var debug = true;
 
@@ -91,4 +91,4 @@ $(function() {
 			}
 		});
 	}
-});
+}));

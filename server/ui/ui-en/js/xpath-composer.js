@@ -1,4 +1,4 @@
-$(function() {
+$(error_handler(function() {
 
 	var debug = true;
 	var send_msg_key = 'sRiLTYpar7EU';
@@ -254,4 +254,4 @@ $(function() {
 			}
 		});
 	}
-});
+}));

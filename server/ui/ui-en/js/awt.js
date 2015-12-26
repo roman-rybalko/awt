@@ -2,7 +2,7 @@
  * Loads the correct sidebar on window load,
  * collapses the sidebar on window resize.
  */
-$(function() {
+$(error_handler(function() {
 	var sidebarCollapsed = null;
 	$(window).bind("load resize", function() {
 		var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
@@ -31,9 +31,9 @@ $(function() {
 
 	if ($('#side-menu').length)
 		$('#side-menu').metisMenu();
-});
+}));
 
-$(function() {
+$(error_handler(function() {
 	if ($('.modal').length)
 		$('.modal').on('shown.bs.modal', function() {
 			$(this).find('.form-control').first().focus();
@@ -347,4 +347,4 @@ $(function() {
 	if ($('.modal-pending-transaction-code').length) {
 		$('.modal-pending-transaction-code').first().modal('show');
 	}
-});
+}));

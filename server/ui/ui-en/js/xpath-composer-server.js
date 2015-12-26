@@ -1,4 +1,5 @@
 (function($) {
+try {
 
 	var debug = true;
 	var send_msg_key = 'gwLy0GfprNNM';
@@ -58,4 +59,7 @@
 				console.log('Unhandled message: ' + JSON.stringify(data));
 		}
 	});
+} catch (e) {
+	alert('Fatal error in the application. Please, reload the page or try another browser.');
+}
 })(jQuery);

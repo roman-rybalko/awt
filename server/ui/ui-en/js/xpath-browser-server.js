@@ -1,4 +1,5 @@
 (function($) {
+try {
 
 	var debug = true;
 	var send_msg_key = 'gwLy0GfprNNM';
@@ -129,4 +130,7 @@
 			send_msg({type: 'url', url: window.location.href.match(/\?(.+)/)[1]});
 		}, 100);
 	});
+} catch (e) {
+	alert('Fatal error in the application. Please, reload the page or try another browser.');
+}
 })(jQuery);
