@@ -2,7 +2,6 @@
 ====
 1. репликация сервера
 2. перехватывать исключения, постить ошибку на сервер ajax-post-запросом в error.php, из error.php отправлять в error_log
-2. убрать код из ui/demo.php в awt/demo.php
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг
 11. XPATH Browser в iframe/отдельном окне, с/без прокси (пользователь сам подгружает скрипт, Tip: Browser plugin)
