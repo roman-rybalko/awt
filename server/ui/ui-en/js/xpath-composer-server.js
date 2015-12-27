@@ -42,8 +42,18 @@
 			send_msg({type: 'validate_result', result: -1});
 		}
 	}
-	$(window).on('message', function(ev) {
-	try {
+
+	function error_handler(f) {
+		return function(arg1, arg2, arg3) {
+			try {
+				return f(arg1, arg2, arg3);
+			} catch (e) {
+				// TODO
+			}
+		};
+	}
+
+	$(window).on('message', error_handler(function(ev) {
 		var data = ev.originalEvent.data;
 		if (data.key != recv_msg_key) {
 			if (debug)
@@ -58,8 +68,5 @@
 			if (debug)
 				console.log('Unhandled message: ' + JSON.stringify(data));
 		}
-	} catch (e) {
-		// TODO
-	}
-	});
+	}));
 })(jQuery);

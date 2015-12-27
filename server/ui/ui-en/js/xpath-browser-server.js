@@ -3,8 +3,17 @@
 	var debug = true;
 	var send_msg_key = 'gwLy0GfprNNM';
 
-	$(function() {
-	try {
+	function error_handler(f) {
+		return function(arg1, arg2, arg3) {
+			try {
+				return f(arg1, arg2, arg3);
+			} catch (e) {
+				// TODO
+			}
+		};
+	}
+
+	$(error_handler(function() {
 		var proxy_url = _proxy_url;
 		var target_url = _target_url;
 		function send_msg(data) {
@@ -129,8 +138,5 @@
 			});
 			send_msg({type: 'url', url: window.location.href.match(/\?(.+)/)[1]});
 		}, 100);
-	} catch (e) {
-		// TODO
-	}
-	});
+	}));
 })(jQuery);

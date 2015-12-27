@@ -66,13 +66,11 @@
 
 		<script  type="text/javascript">
 			/* <![CDATA[ */
-			$(window).load(function() {
-				$(function() {
-					error_handler(function() {
-						loader.hide();
-					})();
-				});
-			});
+			$(window).load(error_handler(function() {
+				$(error_handler(function() {
+					loader.hide();
+				}));
+			}));
 			/* ]]> */
 		</script>
 	</body>
