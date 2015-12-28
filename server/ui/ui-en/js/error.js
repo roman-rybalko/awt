@@ -7,8 +7,6 @@ function error_handler(f) {
 				if (!$)
 					return;
 				var data = [];
-				if ($.browser && $.browser.version)
-					data.push('Browser: ' + $.browser.version);
 				if (e.name)
 					data.push('Name: ' + e.name);
 				if (e.message)
@@ -21,7 +19,7 @@ function error_handler(f) {
 					data.push('ColumnNumber: ' + e.columnNumber);
 				if (e.stack)
 					data.push('Stack: ' + e.stack);
-				$.post('error.php', {data: data.join(', ')});
+				$.post('ui-en/php/error.php', {data: data.join(', ')});
 			} catch (e) {}
 		}
 	};
