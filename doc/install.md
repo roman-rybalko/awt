@@ -9,6 +9,7 @@
 * php5-gd
 * php5-curl (для webmoney)
 * php-pear
+* php5-cli (для cron)
 
 * xvfb
 * dwm
