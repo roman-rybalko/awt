@@ -16,14 +16,28 @@ P=64873
 U=awt-repl
 PW=`dirname $0`/`basename $0 .sh`.pw
 
-L=/tmp/`basename $0 .sh`.lock
-if [ -e $L ] && kill -0 `cat $L` >/dev/null; then
+LOCK=/tmp/`basename $0 .sh`.lock
+LOG=/tmp/`basename $0 .sh`.log
+if [ -e $LOCK ] && kill -0 `cat $LOCK` >/dev/null; then
 	exit 0
 fi
 
-rm -Rf $L
-echo $$ > $L
+rm -Rf $LOCK
+echo $$ > $LOCK
 
-rsync -aHSAXz6 --password-file=$PW --delete rsync://$U@$H:$P/www/* /var/www/
+if rsync -aHSAXz6v --password-file=$PW --delete rsync://$U@$H:$P/www/* /var/www/ >$LOG 2>&1; then
+	true
+else
+	rc=$?
+	case $rc in
+		24)
+			# rsync warning: some files vanished before they could be transferred (code 24) at main.c(1655) [generator=3.1.1]
+		;;
+		*)
+			echo "code: $rc"
+			cat $LOG
+		;;
+	esac
+fi
 
-rm -Rf $L
+rm -Rf $LOCK $LOG
