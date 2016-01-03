@@ -12,7 +12,8 @@ console.log('HOME=' + process.env['HOME']);
 
 selenium.start({
 	spawnOptions: {stdio: 'inherit'},
-	seleniumArgs: ["-port", config.selenium_port]
+	seleniumArgs: ["-port", config.selenium_port],
+	version: config.selenium_version
 }, function(err, child){
 	if (err)
 		throw err;
