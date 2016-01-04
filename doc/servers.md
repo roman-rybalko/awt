@@ -9,17 +9,14 @@
 
 Хостинг
 -------
-n1 - firstvds  
+s1 - firstvds  
 n6 - host1plus (Frankfurt)  
 p1 - berihoster (Tomsk)  
 p2 - host1plus (Chicago)  
 p4 - mne.ru  
 c1 - simplecloud  
 c2 - mne.ru  
-
-К 10 января
------------
-n1 -> s1 - на firstvds 30 Гб диск 512Мб память  
+c3 - hcli (ovh)  
 
 После первой оплаты
 -------------------
@@ -33,8 +30,4 @@ y - количество блокировок
 
 c1 - 7/1  
 c2 - 3/1  
-
-#### Old
-p2, p3, c2 - 3/1  
-c1 - 7/1  
-c3 - 7/3  
+c3 - 9/1  
