@@ -13,6 +13,20 @@
 				console.log('postMessage: ' + e);
 		}
 	}
+	$('body *').mousedown(function(ev) {
+		if (ev.eventPhase != Event.AT_TARGET) return;
+						  var els = [];
+		var el = this;
+		while (el) {
+			var descr = {name: el.nodeName, attrs: {}};
+			for (var a = 0; a < el.attributes.length; ++a)
+				descr.attrs[el.attributes[a].name] = el.attributes[a].value;
+			els.push(descr);
+			el = el.parentElement;
+		}
+		send_msg({type: 'elements', elements: els});
+	});
+	
 	function validate_tags(tags) {
 		if (!tags.length) {
 			send_msg({type: 'validate_result', result: -1});
