@@ -1,9 +1,6 @@
 $(error_handler(function() {
-
-	var debug = true;
-	var send_msg_key = 'sRiLTYpar7EU';
-	var recv_msg_key = 'gwLy0GfprNNM';
-
+	var send_msg_key = 'bAn9lrkEUkN3kme9N4gjZg';
+	var recv_msg_key = 'BGnfQeusFr6W4TsrzJ4FM8';
 	if ($('#modal-xpath-composer').length) {
 		var xpath_browser_wnd;
 		function send_msg(data) {
@@ -11,7 +8,7 @@ $(error_handler(function() {
 			try {
 				xpath_browser_wnd.postMessage(data, '*');
 			} catch (e) {
-				if (debug)
+				if (console)
 					console.log('postMessage: ' + e);
 			}
 		}
@@ -230,8 +227,7 @@ $(error_handler(function() {
 		$(window).on('message', function(ev) {
 			var data = ev.originalEvent.data;
 			if (data.key != recv_msg_key) {
-				if (debug)
-					console.log('Bad message key, message: ' + JSON.stringify(data));
+				console.log('Bad message key, message: ' + JSON.stringify(data));
 				return;
 			}
 			xpath_browser_wnd = ev.originalEvent.source;
@@ -248,8 +244,7 @@ $(error_handler(function() {
 				validate_result(data.result);
 				break;
 			default:
-				if (debug)
-					console.log('Unhandled message: ' + JSON.stringify(data));
+				console.log('Unhandled message: ' + JSON.stringify(data));
 				break;
 			}
 		});

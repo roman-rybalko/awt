@@ -6,8 +6,6 @@
 </xsl:template>
 
 <xsl:template match="test" mode="menu">
-	<link href="ui-en/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
-	<script src="ui-en/js/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="ui-en/js/xpath-browser.js" type="text/javascript"></script>
 	<script src="ui-en/js/xpath-composer.js" type="text/javascript"></script>
 	<xsl:call-template name="js_task_types"/>
@@ -419,50 +417,34 @@
 			</div>
 			<div id="xpath-browser-body-{$id}" class="panel-collapse collapse">
 				<div class="panel-body">
-					<div class="row">
-						<form role="form" method="post" class="xpath-browser-form" data-id="{$id}">
-							<div class="col-lg-1">
-								<div class="form-group">
-									<button type="button" class="btn btn-block btn-primary xpath-browser-back" title="Back">
-										<i class="fa fa-backward"></i>
-									</button>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="well well-sm">
+									<b>Usage:</b><br/>
 								</div>
-							</div>
-							<div class="col-lg-1">
-								<div class="form-group">
-									<button type="button" class="btn btn-block btn-primary xpath-browser-forward" title="Forward">
-										<i class="fa fa-forward"></i>
-									</button>
-								</div>
-							</div>
-							<div class="col-lg-9">
-								<div class="form-group">
-									<input type="text" class="form-control xpath-browser-url" placeholder="URL" id="xpath-browser-url-{$id}"/>
-								</div>
-							</div>
-							<div class="col-lg-1">
-								<div class="form-group">
-									<button type="submit" class="btn btn-block btn-primary" title="Open">
-										<i class="fa fa-play"></i>
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="alert alert-info alert-dismissable">
-								<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="test-xpath-browser-wnd-resizable">&#215;</button>
-								<b>Tip:</b>
-								The bottom of the window is resizable.
-								It will expand when you open the site.
 							</div>
 						</div>
-					</div>
-					<div class="xpath-browser-wnd ui-widget-content" id="xpath-browser-wnd-{$id}">
-						<iframe src="" id="xpath-browser-iframe-{$id}" class="xpath-browser-iframe" sandbox="allow-forms allow-same-origin allow-scripts">
-							XPATH Browser requires iframe support.
-						</iframe>
+						<div class="row">
+							<div class="col-lg-1">
+								<button class="btn btn-block btn-primary xpath-browser-backward" title="Backward" data-id="{$id}">
+									<i class="fa fa-backward"></i>
+								</button>
+							</div>
+							<div class="col-lg-1">
+								<button class="btn btn-block btn-primary xpath-browser-forward" title="Forward" data-id="{$id}">
+									<i class="fa fa-forward"></i>
+								</button>
+							</div>
+							<div class="col-lg-9">
+								<input type="text" class="form-control xpath-browser-url" placeholder="URL" id="xpath-browser-url-{$id}"/>
+							</div>
+							<div class="col-lg-1">
+								<button class="btn btn-block btn-primary xpath-browser-open" title="Open" data-id="{$id}">
+									<i class="fa fa-play"></i>
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

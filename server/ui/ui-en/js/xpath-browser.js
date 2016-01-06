@@ -1,7 +1,6 @@
 $(error_handler(function() {
-
-	var debug = true;
-
+	var send_msg_key = 'MgJu7pUHuQMyan9x2Rof8A';
+	var recv_msg_key = 'zIAQaueFniYDnnoTi8g27l';
 	if ($('.xpath-browser-wnd').length) {
 		var storage = new Storage('xpath-browser-');
 		$('.xpath-browser-wnd').resizable({
@@ -75,8 +74,7 @@ $(error_handler(function() {
 		$(window).on('message', function(ev) {
 			var data = ev.originalEvent.data;
 			if (data.key != 'gwLy0GfprNNM') {
-				if (debug)
-					console.log('Bad message key, message: ' + JSON.stringify(data));
+				console.log('Bad message key, message: ' + JSON.stringify(data));
 				return;
 			}
 			switch (data.type) {
@@ -85,8 +83,7 @@ $(error_handler(function() {
 				url_history_add(data.url);
 				break;
 			default:
-				if (debug)
-					console.log('Unhandled message: ' + JSON.stringify(data));
+				console.log('Unhandled message: ' + JSON.stringify(data));
 				break;
 			}
 		});
