@@ -35,7 +35,7 @@
 		</script>
 
 		<!--[if lt IE 9]>
-			<script src="ui-en/js/html5shiv.js" type="text/javascript"></script>
+			<script src="ui-en/js/html5shiv.min.js" type="text/javascript"></script>
 			<script src="ui-en/js/respond.min.js" type="text/javascript"></script>
 		<![endif] -->
 
