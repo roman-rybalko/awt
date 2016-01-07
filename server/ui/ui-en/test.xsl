@@ -435,24 +435,26 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-1">
-								<button class="btn btn-block btn-primary xpath-browser-backward" title="Backward" data-id="{$id}">
-									<i class="fa fa-backward"></i>
-								</button>
-							</div>
-							<div class="col-lg-1">
-								<button class="btn btn-block btn-primary xpath-browser-forward" title="Forward" data-id="{$id}">
-									<i class="fa fa-forward"></i>
-								</button>
-							</div>
-							<div class="col-lg-9">
-								<input type="text" class="form-control xpath-browser-url" placeholder="URL" id="xpath-browser-url-{$id}"/>
-							</div>
-							<div class="col-lg-1">
-								<button class="btn btn-block btn-primary xpath-browser-open" title="Open" data-id="{$id}">
-									<i class="fa fa-play"></i>
-								</button>
-							</div>
+							<form action="#" onsubmit="$(this).find('button.xpath-browser-open').click(); return false;"> <!-- to make "enter" work -->
+								<div class="col-lg-1">
+									<button type="button" class="btn btn-block btn-primary xpath-browser-backward" title="Backward" data-id="{$id}">
+										<i class="fa fa-backward"></i>
+									</button>
+								</div>
+								<div class="col-lg-1">
+									<button type="button" class="btn btn-block btn-primary xpath-browser-forward" title="Forward" data-id="{$id}">
+										<i class="fa fa-forward"></i>
+									</button>
+								</div>
+								<div class="col-lg-9">
+									<input type="text" class="form-control xpath-browser-url" placeholder="URL" id="xpath-browser-url-{$id}"/>
+								</div>
+								<div class="col-lg-1">
+									<button type="submit" class="btn btn-block btn-primary xpath-browser-open" title="Open" data-id="{$id}">
+										<i class="fa fa-play"></i>
+									</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
