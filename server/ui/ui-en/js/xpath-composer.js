@@ -1,8 +1,29 @@
 $(error_handler(function($) {
+	var old_title = null;
+	function highlight(title_prefix) {
+		if (old_title)
+			return;
+		old_title = document.title;
+		function upd_title() {
+			if (!old_title)
+				return;
+			if (document.title == old_title)
+				document.title = title_prefix + ' ' + old_title;
+			else
+				document.title = old_title;
+			setTimeout(upd_title, 500);
+		}
+		upd_title();
+		$(window).one('focus', function() {
+			if (!old_title)
+				return;
+			document.title = old_title;
+			old_title = null;
+		});
+	}
 	if ($('#modal-xpath-composer').length) {
-		var xpath_composer_tags;
 		function xpath_composer(elements) {
-			xpath_composer_tags = [];
+			var xpath_composer_tags = [];
 			function upd_title(tag_id) {
 				var tag = xpath_composer_tags[tag_id];
 				var title = '//' + tag.name;
@@ -166,6 +187,7 @@ $(error_handler(function($) {
 			}));
 			guess_selection();
 			$('#modal-xpath-composer').modal('show');
+			highlight('[XPATH Composer]');
 		}
 		$('#xpath-composer-result').on('keypress', error_handler(function() {
 			// custom xpath validation is not supported

@@ -43,8 +43,11 @@ $(error_handler(function($) {
 	$('.xpath-browser-open').click(error_handler(function(ev) {
 		var id = $(ev.target).attr('data-id');
 		var url = $('#xpath-browser-url-' + id).val();
-		if (!url) return;
-		messaging.setTarget(window.open(url));
+		if (!url)
+			return;
+		if (!url.match(/:\/\//))
+			url = 'http://' + url;
+		messaging.set_target(window.open(url));
 		if (url_history(0) != url)
 			url_history_add(url);
 	}));

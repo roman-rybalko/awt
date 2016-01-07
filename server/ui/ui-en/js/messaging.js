@@ -9,7 +9,7 @@ var Messaging = function(server) {
 		recv_key = 'MgJu7pUHuQMyan9x2Rof8A';
 	}
 	var target = null;
-	var setTarget = this.setTarget = function(newTarget) {
+	var set_target = this.set_target = function(newTarget) {
 		if (target && target != newTarget)
 			target.close();
 		target = newTarget;
@@ -18,8 +18,8 @@ var Messaging = function(server) {
 		try {
 			if (target)
 				target.postMessage({data: data, key: send_key}, '*');
-			if (data != 'ping' && console)
-				console.log('send:', data);
+			//if (data != 'ping' && console)
+			//	console.log('send:', data);
 		} catch (e) {
 			if (console)
 				console.log('postMessage: ' + e);
@@ -42,9 +42,9 @@ var Messaging = function(server) {
 				return;
 			var source = ev.originalEvent.source;
 			if (source)
-				setTarget(source);
-			if (data.data != 'ping' && console)
-				console.log('recv:', data.data);
+				set_target(source);
+			//if (data.data != 'ping' && console)
+			//	console.log('recv:', data.data);
 			for (i in cbs)
 				cbs[i](data.data);
 		} catch (e) {
