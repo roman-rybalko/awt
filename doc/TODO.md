@@ -2,7 +2,6 @@
 ====
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг
-11. XPATH Browser в iframe/отдельном окне, с/без прокси (пользователь сам подгружает скрипт, Tip: Browser plugin)
 12. XPATH -> jQuery/CSS3 selector translator
 13. XMPP Reports
 14. SMS Reports
