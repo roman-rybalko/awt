@@ -6,6 +6,15 @@
 </xsl:template>
 
 <xsl:template match="test" mode="menu">
+	<script src="ui-en/js/messaging.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		var messaging;
+		error_handler(function() {
+			messaging = new Messaging();
+			messaging.ping();
+		})();
+	</script>
+	<script src="ui-en/js/error-client.js" type="text/javascript"></script>
 	<script src="ui-en/js/xpath-browser.js" type="text/javascript"></script>
 	<script src="ui-en/js/xpath-composer.js" type="text/javascript"></script>
 	<xsl:call-template name="js_task_types"/>

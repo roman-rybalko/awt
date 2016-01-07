@@ -3,6 +3,8 @@ function error_handler(f) {
 		try {
 			return f(arg1, arg2, arg3);
 		} catch (e) {
+			if (console)
+				console.log('exception:', e, e.stack ? e.stack : '');
 			try {
 				if (!$)
 					return;
@@ -20,7 +22,10 @@ function error_handler(f) {
 				if (e.stack)
 					data.push('Stack: ' + e.stack);
 				$.post('ui-en/php/error.php', {data: data.join(', ')});
-			} catch (e) {}
+			} catch (e) {
+				if (console)
+					console.log('exception:', e, e.stack ? e.stack : '');
+			}
 		}
 	};
 }

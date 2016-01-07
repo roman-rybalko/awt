@@ -1,17 +1,5 @@
-$(error_handler(function() {
-	var send_msg_key = 'bAn9lrkEUkN3kme9N4gjZg';
-	var recv_msg_key = 'BGnfQeusFr6W4TsrzJ4FM8';
+$(error_handler(function($) {
 	if ($('#modal-xpath-composer').length) {
-		var xpath_browser_wnd;
-		function send_msg(data) {
-			data.key = send_msg_key;
-			try {
-				xpath_browser_wnd.postMessage(data, '*');
-			} catch (e) {
-				if (console)
-					console.log('postMessage: ' + e);
-			}
-		}
 		var xpath_composer_tags;
 		function xpath_composer(elements) {
 			xpath_composer_tags = [];
@@ -66,7 +54,7 @@ $(error_handler(function() {
 							}
 						tags.push(tag);
 					}
-				send_msg({type: 'validate', tags: tags});
+				messaging.send({type: 'xpath-composer-validate', tags: tags});
 			}
 			function guess_selection() {
 				var tag_cnt = 1;
@@ -156,97 +144,62 @@ $(error_handler(function() {
 				parent: '#xpath-composer-tags',
 				toggle: false
 			});
-			$('#xpath-composer-tags .xpath-composer-tag-link').click(function() {
-				var tag_id = $(this).attr('data-tag-id');
+			$('#xpath-composer-tags .xpath-composer-tag-link').click(error_handler(function(ev) {
+				var tag_id = $(ev.target).attr('data-tag-id');
 				$('#xpath-composer-tags .xpath-composer-tag-hidden[data-tag-id=' + tag_id +']').collapse('toggle');
-			});
+			}));
 			//$('#xpath-composer-tags .xpath-composer-tag-hidden').last().collapse('show');
-			$('#xpath-composer-tags .xpath-composer-tag-control').change(function() {
-				var tag_id = $(this).attr('data-tag-id');
-				xpath_composer_tags[tag_id].enabled = $(this).prop('checked');
+			$('#xpath-composer-tags .xpath-composer-tag-control').change(error_handler(function(ev) {
+				var tag_id = $(ev.target).attr('data-tag-id');
+				xpath_composer_tags[tag_id].enabled = $(ev.target).prop('checked');
 				upd_title(tag_id);
 				upd_xpath();
 				validate_selection();
-			});
-			$('#xpath-composer-tags .xpath-composer-attr-control').change(function() {
-				var tag_id = $(this).attr('data-tag-id');
-				var attr_id = $(this).attr('data-attr-id');
-				xpath_composer_tags[tag_id].attrs[attr_id].enabled = $(this).prop('checked');
+			}));
+			$('#xpath-composer-tags .xpath-composer-attr-control').change(error_handler(function(ev) {
+				var tag_id = $(ev.target).attr('data-tag-id');
+				var attr_id = $(ev.target).attr('data-attr-id');
+				xpath_composer_tags[tag_id].attrs[attr_id].enabled = $(ev.target).prop('checked');
 				upd_title(tag_id);
 				upd_xpath();
 				validate_selection();
-			});
+			}));
 			guess_selection();
 			$('#modal-xpath-composer').modal('show');
 		}
-		$('#xpath-composer-result').on('keypress', function() {
+		$('#xpath-composer-result').on('keypress', error_handler(function() {
 			// custom xpath validation is not supported
 			$('.xpath-composer-validation').hide();
-		});
+		}));
 		function validate_result(result) {
 			switch (result) {
-			case -1:
-				$('.xpath-composer-validation').hide();
-				$('.xpath-composer-validation[data-status="fail-other"]').show();
-				break;
-			case 0:
-				$('.xpath-composer-validation').hide();
-				$('.xpath-composer-validation[data-status="fail-none"]').show();
-				break;
-			case 1:
-				$('.xpath-composer-validation').hide();
-				$('.xpath-composer-validation[data-status="ok"]').show();
-				break;
-			default:
-				$('.xpath-composer-validation').hide();
-				$('.xpath-composer-validation[data-status="fail-more"]').show();
-				break;
-			}
-		}
-		function elements_eq(els1, els2) {
-			if (els1.length != els2.length)
-				return false;
-			for (var e in els1) {
-				if (!els2[e])
-					return false;
-				if (els1[e].name != els2[e].name)
-					return false;
-				// attributes may chenge when some animation in action
-				/*
-				for (var a in els1[e].attrs) {
-					if (!els2[e].attrs[a])
-						return false;
-					if (els1[e].attrs[a] != els2[e].attrs[a])
-						return false;
-				}
-				*/
-			}
-			return true;
-		}
-		var last_elements = [];
-		$(window).on('message', function(ev) {
-			var data = ev.originalEvent.data;
-			if (data.key != recv_msg_key) {
-				console.log('Bad message key, message: ' + JSON.stringify(data));
-				return;
-			}
-			xpath_browser_wnd = ev.originalEvent.source;
-			switch (data.type) {
-			case 'elements':
-				var elements = data.elements.reverse();
-				// allow selected element to gain input focus
-				if (elements_eq(elements, last_elements))
+				case -1:
+					$('.xpath-composer-validation').hide();
+					$('.xpath-composer-validation[data-status="fail-other"]').show();
 					break;
-				last_elements = elements;
-				xpath_composer(elements);
-				break;
-			case 'validate_result':
-				validate_result(data.result);
-				break;
-			default:
-				console.log('Unhandled message: ' + JSON.stringify(data));
-				break;
+				case 0:
+					$('.xpath-composer-validation').hide();
+					$('.xpath-composer-validation[data-status="fail-none"]').show();
+					break;
+				case 1:
+					$('.xpath-composer-validation').hide();
+					$('.xpath-composer-validation[data-status="ok"]').show();
+					break;
+				default:
+					$('.xpath-composer-validation').hide();
+					$('.xpath-composer-validation[data-status="fail-more"]').show();
+					break;
 			}
-		});
+		}
+		messaging.recv(error_handler(function(data) {
+			switch (data.type) {
+				case 'xpath-composer-elements':
+					xpath_composer(data.elements.reverse());
+					break;
+				case 'xpath-composer-validate-result':
+					validate_result(data.result);
+					break;
+			}
+		}));
 	}
 }));

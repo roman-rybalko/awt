@@ -2,7 +2,7 @@
  * Loads the correct sidebar on window load,
  * collapses the sidebar on window resize.
  */
-$(error_handler(function() {
+$(error_handler(function($) {
 	var sidebarCollapsed = null;
 	$(window).bind("load resize", function() {
 		var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
@@ -33,7 +33,7 @@ $(error_handler(function() {
 		$('#side-menu').metisMenu();
 }));
 
-$(error_handler(function() {
+$(error_handler(function($) {
 	if ($('.modal').length)
 		$('.modal').on('shown.bs.modal', function() {
 			$(this).find('.form-control').first().focus();
@@ -111,11 +111,11 @@ $(error_handler(function() {
 			$(this).attr('title', cache[name]);
 		});
 	}
-	$('#xpath-composer-ok').click(function() {
+	$('#xpath-composer-ok').click(error_handler(function(ev) {
 		var xpath = $('#xpath-composer-result').val();
 		$('input.action-xpath-element').val(xpath);
 		$('input.action-xpath-expression').val(xpath + '/@class');
-	});
+	}));
 	var datetime_format = 'YYYY-MM-DD HH:mm:ss';
 	$('.date input').each(function() {
 		var value = $(this).val();
@@ -196,10 +196,10 @@ $(error_handler(function() {
 			if (value)
 				$(this).closest('.alert').alert('close');
 		});
-		$('.close[data-dismiss="alert"][data-dismiss-state]').click(function() {
-			var name = $(this).attr('data-dismiss-state');
+		$('.close[data-dismiss="alert"][data-dismiss-state]').click(error_handler(function(ev) {
+			var name = $(ev.target).attr('data-dismiss-state');
 			storage1.set(name, true);
-		});
+		}));
 	}
 	function aggregate_day(data) {
 		var d = new Date();

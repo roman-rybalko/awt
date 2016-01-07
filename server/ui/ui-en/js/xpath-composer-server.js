@@ -1,22 +1,11 @@
-(function($) {
-
-	var debug = true;
-	var send_msg_key = 'gwLy0GfprNNM';
-	var recv_msg_key = 'sRiLTYpar7EU';
-
-	function send_msg(data) {
-		data.key = send_msg_key;
-		try {
-			parent.postMessage(data, '*');
-		} catch (e) {
-			if (debug)
-				console.log('postMessage: ' + e);
-		}
-	}
-	$('body *').mousedown(function(ev) {
-		if (ev.eventPhase != Event.AT_TARGET) return;
-						  var els = [];
-		var el = this;
+_awt_error_handler(function($) {
+	var messaging = _awt_messaging;
+	var error_handler = _awt_error_handler;
+	$('body *').mousedown(error_handler(function(ev) {
+		if (ev.eventPhase != Event.AT_TARGET)
+			return;
+		var els = [];
+		var el = ev.target;
 		while (el) {
 			var descr = {name: el.nodeName, attrs: {}};
 			for (var a = 0; a < el.attributes.length; ++a)
@@ -24,12 +13,11 @@
 			els.push(descr);
 			el = el.parentElement;
 		}
-		send_msg({type: 'elements', elements: els});
-	});
-	
+		messaging.send({type: 'xpath-composer-elements', elements: els});
+	}));
 	function validate_tags(tags) {
 		if (!tags.length) {
-			send_msg({type: 'validate_result', result: -1});
+			messaging.send({type: 'xpath-composer-validate-result', result: -1});
 			return;
 		}
 		try {
@@ -49,38 +37,17 @@
 				selector += attrs.join('');
 				result = result.find(selector);
 			}
-			send_msg({type: 'validate_result', result: result.length});
+			messaging.send({type: 'xpath-composer-validate-result', result: result.length});
 		} catch (e) {
-			if (debug)
-				console.log('validate error:', e);
-			send_msg({type: 'validate_result', result: -1});
+			messaging.send({type: 'xpath-composer-validate-result', result: -1});
+			throw e;
 		}
 	}
-
-	function error_handler(f) {
-		return function(arg1, arg2, arg3) {
-			try {
-				return f(arg1, arg2, arg3);
-			} catch (e) {
-				// TODO
-			}
-		};
-	}
-
-	$(window).on('message', error_handler(function(ev) {
-		var data = ev.originalEvent.data;
-		if (data.key != recv_msg_key) {
-			if (debug)
-				console.log('Bad message key, message: ' + JSON.stringify(data));
-			return;
-		}
+	messaging.recv(error_handler(function(data) {
 		switch (data.type) {
-		case 'validate':
-			validate_tags(data.tags);
-			break;
-		default:
-			if (debug)
-				console.log('Unhandled message: ' + JSON.stringify(data));
+			case 'xpath-composer-validate':
+				validate_tags(data.tags);
+				break;
 		}
 	}));
 })(jQuery);

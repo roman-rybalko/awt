@@ -1,14 +1,16 @@
-$(error_handler(function() {
+$(_awt_error_handler(function($) {
+	var messaging = _awt_messaging;
+	var error_handler = _awt_error_handler;
 	var started = false;
-	messaging.onrecv(error_handler(function(data) {
+	messaging.recv(error_handler(function(data) {
 		if (started)
 			return;
 		var cur_selection = {top: -1, left: -1, width: -1, height: -1};
 		$('body *').on('mouseover', error_handler(function(ev) {
 			if (ev.eventPhase != Event.AT_TARGET)
 				return;
-			var pos = $(this).offset();
-			var size = {width: $(this).width(), height: $(this).height()};
+			var pos = $(ev.target).offset();
+			var size = {width: $(ev.target).width(), height: $(ev.target).height()};
 			if (cur_selection.top == pos.top && cur_selection.left == pos.left && cur_selection.width == size.width && cur_selection.height == size.height)
 				return;
 			cur_selection = {top: pos.top, left: top.left, width: size.width, height: size.height};

@@ -1,4 +1,4 @@
-$(error_handler(function() {
+$(error_handler(function($) {
 	var storage = new Storage('xpath-browser-');
 	function browser_url(url) {
 		if (url) {
@@ -16,9 +16,11 @@ $(error_handler(function() {
 		pos += data.pos;
 		if (pos < 0 || pos >= data.urls.length)
 			return null;
-		data.pos = pos;
 		var url = data.urls[pos];
-		storage.set('history', data);
+		if (data.pos != pos) {
+			data.pos = pos;
+			storage.set('history', data);
+		}
 		return url;
 	}
 	function url_history_add(url) {
@@ -30,27 +32,29 @@ $(error_handler(function() {
 		storage.set('history', data);
 	}
 	browser_url();
-	$('.xpath-browser-backward').click(function() {
+	$('.xpath-browser-backward').click(error_handler(function() {
 		var url = url_history(-1);
 		browser_url(url);
-	});
-	$('.xpath-browser-forward').click(function() {
+	}));
+	$('.xpath-browser-forward').click(error_handler(function() {
 		var url = url_history(+1);
 		browser_url(url);
-	});
-	$('.xpath-browser-open').click(function() {
-		var id = $(this).attr('data-id');
+	}));
+	$('.xpath-browser-open').click(error_handler(function(ev) {
+		var id = $(ev.target).attr('data-id');
 		var url = $('#xpath-browser-url-' + id).val();
 		if (!url) return;
-		if (messaging.target)
-			messaging.target.close();
-		messaging.target = window.open(url);
-	});
-	messaging.onrecv(error_handler(function(data) {
+		messaging.setTarget(window.open(url));
+		if (url_history(0) != url)
+			url_history_add(url);
+	}));
+	messaging.recv(error_handler(function(data) {
 		switch (data.type) {
 			case 'xpath-browser-url':
-				browser_url(data.url);
-				url_history_add(data.url);
+				if (url_history(0) != data.url) {
+					browser_url(data.url);
+					url_history_add(data.url);
+				}
 				break;
 		}
 	}));
