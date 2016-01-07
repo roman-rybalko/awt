@@ -50,4 +50,4 @@ _awt_error_handler(function($) {
 				break;
 		}
 	}));
-})(jQuery);
+})($);

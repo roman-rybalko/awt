@@ -389,6 +389,9 @@
 			</div>
 		</xsl:if>
 	</div>
+	<script type="text/javascript">
+		$('.xpath-browser-composer-script').html(document.location.href.replace(/\/[^\/]*$/,'') + '/ui-en/php/xpath-browser-composer.php');
+	</script> <!-- xpath-browser-composer-script update code -->
 </xsl:template>
 
 <xsl:template name="new_action_form">
@@ -431,6 +434,21 @@
 							<div class="col-lg-12">
 								<div class="well well-sm">
 									<b>Usage:</b><br/>
+									<p>
+										To enable XPATH Browser/Composer functionality you need to inject the service script<br/>
+										<code class="xpath-browser-composer-script">https://advancedwebtesting.com/ui/ui-en/php/xpath-browser-composer.php</code><br/>
+										into the target page.
+									</p>
+									<p>
+										You may use the following javascript code snippet<br/>
+										<code>var script = document.createElement('script');</code><br/>
+										<code>script.src="<span class="xpath-browser-composer-script">https://advancedwebtesting.com/ui/ui-en/php/xpath-browser-composer.php</span>";</code><br/>
+										<code>document.getElementsByTagName('head')[0].appendChild(script);</code><br/>
+										with browser extensions like <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/" target="_blank">Greasemonkey</a>,
+										<a href="https://chrome.google.com/webstore/detail/custom-javascript-for-web/poakhlngfciodnhlhhgnaaelnpjljija" target="_blank">Custom JavaScript for websites</a>
+										or <a href="https://chrome.google.com/webstore/detail/jscript-tricks/odialddippdmebbfbflcneemfdglimod" target="_blank">JScript tricks</a>.
+									</p>
+									<!-- the xpath-browser-composer-script update code see there ^^^ -->
 								</div>
 							</div>
 						</div>

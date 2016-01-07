@@ -18,8 +18,8 @@ var Messaging = function(server) {
 		try {
 			if (target)
 				target.postMessage({data: data, key: send_key}, '*');
-			//if (data != 'ping' && console)
-			//	console.log('send:', data);
+			if (data != 'ping' && console)
+				console.log('send:', data);
 		} catch (e) {
 			if (console)
 				console.log('postMessage: ' + e);
@@ -43,8 +43,8 @@ var Messaging = function(server) {
 			var source = ev.originalEvent.source;
 			if (source)
 				set_target(source);
-			//if (data.data != 'ping' && console)
-			//	console.log('recv:', data.data);
+			if (data.data != 'ping' && console)
+				console.log('recv:', data.data);
 			for (i in cbs)
 				cbs[i](data.data);
 		} catch (e) {
