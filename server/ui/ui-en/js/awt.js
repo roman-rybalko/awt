@@ -34,10 +34,7 @@ $(error_handler(function($) {
 }));
 
 $(error_handler(function($) {
-	if ($('.modal').length)
-		$('.modal').on('shown.bs.modal', function() {
-			$(this).find('.form-control').first().focus();
-		});
+	$('.location-path').html(document.location.href.replace(/\/[^\/]*$/,'/'));
 	$('.action-type').each(function() {
 		var select = $(this);
 		var id = select.attr('data-id');
@@ -344,7 +341,8 @@ $(error_handler(function($) {
 			});
 		});
 	}
-	if ($('.modal-pending-transaction-code').length) {
-		$('.modal-pending-transaction-code').first().modal('show');
-	}
+	$('.modal').on('shown.bs.modal', function() {
+		$(this).find('.form-control').first().focus();
+	});
+	$('.modal-pending-transaction-code').first().modal('show');
 }));

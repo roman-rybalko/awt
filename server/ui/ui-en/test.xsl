@@ -389,9 +389,6 @@
 			</div>
 		</xsl:if>
 	</div>
-	<script type="text/javascript">
-		$('.location-path').html(document.location.href.replace(/\/[^\/]*$/,'/'));
-	</script> <!-- .location-path update code -->
 </xsl:template>
 
 <xsl:template name="new_action_form">
@@ -443,17 +440,16 @@
 										You may use the following javascript code snippet<br/>
 										<code>var script = document.createElement('script');</code><br/>
 										<code>script.src="<span class="location-path">https://advancedwebtesting.com/ui/</span>ui-en/php/xpath-browser-composer.php";</code><br/>
-										<code>document.getElementsByTagName('head')[0].appendChild(script);</code><br/>
+										<code>document.head.appendChild(script);</code><br/>
 										with browser extensions like <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/" target="_blank">Greasemonkey</a>,
 										<a href="https://chrome.google.com/webstore/detail/custom-javascript-for-web/poakhlngfciodnhlhhgnaaelnpjljija" target="_blank">Custom JavaScript for websites</a>
 										or <a href="https://chrome.google.com/webstore/detail/jscript-tricks/odialddippdmebbfbflcneemfdglimod" target="_blank">JScript tricks</a>.
 									</p>
 									<p>
-										You may open the test page
+										Try to open the test page
 										<a href="#" onmousedown="$('.xpath-browser-url').val($(this).text()); return false;" onclick="return false;"><span class="location-path">https://advancedwebtesting.com/ui/</span>ui-en/xpath-browser-composer-test.html</a>
-										to try and see how it works.
+										to see how it works.
 									</p>
-									<!-- the .location-path update code see there ^^^ -->
 								</div>
 							</div>
 						</div>
