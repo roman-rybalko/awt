@@ -373,8 +373,8 @@
 								</div>
 							</div>
 							<div data-status="process" class="xpath-composer-validation text-progress" style="display:none;">Validating...</div>
-							<div data-status="ok" class="xpath-composer-validation text-success" style="display:none;">A single element matched.</div>
-							<div data-status="fail-more" class="xpath-composer-validation text-failure" style="display:none;">More than one elements matched.</div>
+							<div data-status="ok" class="xpath-composer-validation text-success" style="display:none;">A single element found.</div>
+							<div data-status="fail-count" class="xpath-composer-validation text-failure" style="display:none;"><span class="xpath-composer-validation-count"></span> elements found.</div>
 							<div data-status="fail-none" class="xpath-composer-validation text-failure" style="display:none;">No elements found.</div>
 							<div data-status="fail-other" class="xpath-composer-validation text-failure" style="display:none;">Validation error: <span class="xpath-composer-validation-error"></span></div>
 						</div>

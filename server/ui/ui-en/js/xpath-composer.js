@@ -69,7 +69,10 @@ $(error_handler(function($) {
 					var upd_fl = false;
 					for (var a in tags[t].attrs) {
 						var attr = tags[t].attrs[a];
-						if (attr.expr.match(/@id|@name|@type|@value|contains.+@src|contains.+@href|contains.+@action|@role/i)) {
+						if (
+							attr.expr.match(/@id|@name|@type|@value|contains.+@src|contains.+@href|contains.+@action|@role/i)
+							|| (!attr.name && attr.substring && attr.substring.length < 42 /* magic length */)
+						) {
 							upd_fl = true;
 							attr.enabled = true;
 							$('#xpath-composer-tags .xpath-composer-attr-control[data-tag-id=' + t + '][data-attr-id=' + a + ']').prop('checked', true);
@@ -124,17 +127,25 @@ $(error_handler(function($) {
 						break;
 					}
 				}
+				attrs.push({expr: 'contains(text(), "' + elements[e].text + '")', substring: elements[e].text, enabled: false});
 				xpath_composer_tags[e] = {name: elements[e].name, attrs: attrs, enabled: false};
 				$('#xpath-composer-tag-template .xpath-composer-tag-title').html('//' + elements[e].name);
 				$('#xpath-composer-tag-template .xpath-composer-tag-title').attr('data-tag-id', e);
 				$('#xpath-composer-tag-template .xpath-composer-tag-text').empty();
 				for (var a in attrs) {
-					var css = '[' + attrs[a].name;
-					if (attrs[a].value)
-						css += ' = "' + attrs[a].value + '"';
-					if (attrs[a].substring)
-						css += ' *= "' + attrs[a].substring + '"';
-					css += ']';
+					var css = '';
+					if (attrs[a].name) {
+						css += '[' + attrs[a].name;
+						if (attrs[a].value)
+							css += ' = "' + attrs[a].value + '"';
+						if (attrs[a].substring)
+							css += ' *= "' + attrs[a].substring + '"';
+						if (attrs[a].name)
+							css += ']';
+					} else {
+						if (attrs[a].substring)
+							css += ':contains("' + attrs[a].substring + '")';
+					}
 					$('#xpath-composer-attr-template .xpath-composer-attr-text').html(attrs[a].expr);
 					$('#xpath-composer-attr-template .xpath-composer-attr-text').attr('title', css);
 					$('#xpath-composer-attr-template .xpath-composer-attr-control').attr('data-tag-id', e);
@@ -198,7 +209,8 @@ $(error_handler(function($) {
 					break;
 				default:
 					$('.xpath-composer-validation').hide();
-					$('.xpath-composer-validation[data-status="fail-more"]').show();
+					$('.xpath-composer-validation[data-status="fail-count"]').find('.xpath-composer-validation-count').html(result);
+					$('.xpath-composer-validation[data-status="fail-count"]').show();
 					break;
 			}
 		}
