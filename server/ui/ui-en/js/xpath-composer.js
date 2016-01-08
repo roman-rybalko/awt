@@ -1,27 +1,32 @@
 $(error_handler(function($) {
-	var old_title = null;
-	function highlight(title_prefix) {
-		if (old_title)
-			return;
-		old_title = document.title;
-		function upd_title() {
-			if (!old_title)
-				return;
-			if (document.title == old_title)
-				document.title = title_prefix + ' ' + old_title;
-			else
-				document.title = old_title;
-			setTimeout(upd_title, 500);
-		}
-		upd_title();
-		$(window).one('focus', function() {
-			if (!old_title)
-				return;
-			document.title = old_title;
-			old_title = null;
-		});
-	}
 	if ($('#modal-xpath-composer').length) {
+		var old_title = null;
+		function highlight(title_prefix) {
+			if (old_title)
+				return;
+			old_title = document.title;
+			function upd_title() {
+				if (!old_title)
+					return;
+				if (document.title == old_title)
+					document.title = title_prefix + ' ' + old_title;
+				else
+					document.title = old_title;
+				setTimeout(upd_title, 500);
+			}
+			upd_title();
+			$(window).one('focus', function() {
+				if (!old_title)
+					return;
+				document.title = old_title;
+				old_title = null;
+			});
+		}
+		function validate() {
+			$('.xpath-composer-validation').hide();
+			$('.xpath-composer-validation[data-status="process"]').show();
+			messaging.send({type: 'xpath-composer-validate', xpath: $('#xpath-composer-result').val()});
+		}
 		function xpath_composer(elements) {
 			var xpath_composer_tags = [];
 			function upd_title(tag_id) {
@@ -56,26 +61,6 @@ $(error_handler(function($) {
 							xpath += '[' + attrs.join(' and ') + ']';
 					}
 				$('#xpath-composer-result').val(xpath);
-			}
-			function validate_selection() {
-				$('.xpath-composer-validation').hide();
-				$('.xpath-composer-validation[data-status="process"]').show();
-				var tags = [];
-				for (var t in xpath_composer_tags)
-					if (xpath_composer_tags[t].enabled) {
-						var tag = {name: xpath_composer_tags[t].name, attrs: []};
-						for (var a in xpath_composer_tags[t].attrs)
-							if (xpath_composer_tags[t].attrs[a].enabled) {
-								var attr = {name: xpath_composer_tags[t].attrs[a].name};
-								if (xpath_composer_tags[t].attrs[a].value)
-									attr.value = xpath_composer_tags[t].attrs[a].value;
-								if (xpath_composer_tags[t].attrs[a].substring)
-									attr.substring = xpath_composer_tags[t].attrs[a].substring;
-								tag.attrs.push(attr);
-							}
-						tags.push(tag);
-					}
-				messaging.send({type: 'xpath-composer-validate', tags: tags});
 			}
 			function guess_selection() {
 				var tag_cnt = 1;
@@ -113,7 +98,7 @@ $(error_handler(function($) {
 					$('#xpath-composer-tags .xpath-composer-tag-control[data-tag-id=' + t + ']').prop('checked', true);
 				}
 				upd_xpath();
-				validate_selection();
+				validate();
 			}
 			$('#xpath-composer-tags').empty();
 			for (var e in elements) {
@@ -175,7 +160,7 @@ $(error_handler(function($) {
 				xpath_composer_tags[tag_id].enabled = $(ev.target).prop('checked');
 				upd_title(tag_id);
 				upd_xpath();
-				validate_selection();
+				validate();
 			}));
 			$('#xpath-composer-tags .xpath-composer-attr-control').change(error_handler(function(ev) {
 				var tag_id = $(ev.target).attr('data-tag-id');
@@ -183,20 +168,24 @@ $(error_handler(function($) {
 				xpath_composer_tags[tag_id].attrs[attr_id].enabled = $(ev.target).prop('checked');
 				upd_title(tag_id);
 				upd_xpath();
-				validate_selection();
+				validate();
 			}));
 			guess_selection();
 			$('#modal-xpath-composer').modal('show');
 			highlight('[XPATH Composer]');
 		}
-		$('#xpath-composer-result').on('keypress', error_handler(function() {
-			// custom xpath validation is not supported
-			$('.xpath-composer-validation').hide();
+		$('#xpath-composer-result').on('keyup', error_handler(function() {
+			validate();
 		}));
 		function validate_result(result) {
-			switch (result) {
+			if (typeof(result) == 'string') {
+				$('.xpath-composer-validation').hide();
+				$('.xpath-composer-validation[data-status="fail-other"]').find('.xpath-composer-validation-error').html(result);
+				$('.xpath-composer-validation[data-status="fail-other"]').show();
+			} else switch (result) {
 				case -1:
 					$('.xpath-composer-validation').hide();
+					$('.xpath-composer-validation[data-status="fail-other"]').find('.xpath-composer-validation-error').html(result);
 					$('.xpath-composer-validation[data-status="fail-other"]').show();
 					break;
 				case 0:

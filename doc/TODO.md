@@ -2,7 +2,6 @@
 ====
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг
-12. XPATH -> jQuery/CSS3 selector translator
 13. XMPP Reports
 14. SMS Reports
 15. Отдельный раздел и таблица notifications, каждая notification содержит параметры: email/телефон/jid. Каждый Schedule Job содержит

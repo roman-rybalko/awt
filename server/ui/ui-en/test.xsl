@@ -359,11 +359,6 @@
 							</div>
 							<div class="panel-group" id="xpath-composer-tags">
 							</div>
-							<div data-status="process" class="xpath-composer-validation text-progress" style="display:none;">Validating...</div>
-							<div data-status="ok" class="xpath-composer-validation text-success" style="display:none;">A single element matched.</div>
-							<div data-status="fail-more" class="xpath-composer-validation text-failure" style="display:none;">More than one elements matched.</div>
-							<div data-status="fail-none" class="xpath-composer-validation text-failure" style="display:none;">No elements found.</div>
-							<div data-status="fail-other" class="xpath-composer-validation text-failure" style="display:none;">Validation error.</div>
 							<div class="row">
 								<div class="col-lg-10">
 									<div class="form-group">
@@ -377,6 +372,11 @@
 									</button>
 								</div>
 							</div>
+							<div data-status="process" class="xpath-composer-validation text-progress" style="display:none;">Validating...</div>
+							<div data-status="ok" class="xpath-composer-validation text-success" style="display:none;">A single element matched.</div>
+							<div data-status="fail-more" class="xpath-composer-validation text-failure" style="display:none;">More than one elements matched.</div>
+							<div data-status="fail-none" class="xpath-composer-validation text-failure" style="display:none;">No elements found.</div>
+							<div data-status="fail-other" class="xpath-composer-validation text-failure" style="display:none;">Validation error: <span class="xpath-composer-validation-error"></span></div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">
