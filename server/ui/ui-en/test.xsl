@@ -433,7 +433,7 @@
 									<b>Usage:</b><br/>
 									<p>
 										To enable XPATH Browser/Composer functionality you need to inject the service script<br/>
-										<code><span class="location-path">https://advancedwebtesting.com/ui/</span>ui/ui-en/php/xpath-browser-composer.php</code><br/>
+										<code><span class="location-path">https://advancedwebtesting.com/ui/</span>ui-en/php/xpath-browser-composer.php</code><br/>
 										into the target page.
 									</p>
 									<p>
