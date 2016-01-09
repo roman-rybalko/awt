@@ -1,5 +1,9 @@
 План
 ====
+1. Переименовать attr в pred в xpath-composer.js
+1. Добавить index/nth-child в xpath-composer
+1. Исправить guess_selection - выбирать по индексу если нет других предикатов
+2. Автодобавление action в тест (галка) (нужно доработать guess_selection - всегда выбирать последний элемент)
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг
 13. XMPP Reports
@@ -19,3 +23,5 @@
 24. В Tasks сделать status числовым (ускорить xslt)
 25. Рефакторинг Task\Manager - перенести Type\Manager в поле класса
 26. Client selenium_open_timeout - отдельный таймаут для "open" Action
+27. Обфускация JavaScript в output buffer для ui-en/php/xpath-browser-composer.php (?)
+28. Добавление, удаление и изменение action без перезагрузки страницы ?test=1 (?)
