@@ -1,5 +1,4 @@
-function _awt_error_handler(f) {
-	var messaging = _awt_messaging;
+function error_handler(f) {
 	return function(arg1, arg2, arg3) {
 		try {
 			return f(arg1, arg2, arg3);

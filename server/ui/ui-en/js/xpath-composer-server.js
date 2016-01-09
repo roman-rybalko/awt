@@ -1,6 +1,4 @@
-_awt_error_handler(function($) {
-	var messaging = _awt_messaging;
-	var error_handler = _awt_error_handler;
+$(error_handler(function($) {
 	$('body *').mousedown(error_handler(function(ev) {
 		if (ev.eventPhase != Event.AT_TARGET)
 			return;
@@ -103,4 +101,4 @@ _awt_error_handler(function($) {
 				break;
 		}
 	}));
-})($);
+}));
