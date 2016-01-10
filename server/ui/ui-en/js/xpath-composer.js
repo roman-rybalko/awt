@@ -108,23 +108,23 @@ $(error_handler(function($) {
 				var preds = [];
 				for (var a in elements[e].attrs) {
 					switch (a.toLowerCase()) {
-					case 'href':
-					case 'src':
-					case 'action':
-						var path = elements[e].attrs[a].match(/\/([^\/]+)$/);
-						if (path)
-							preds.push({expr: 'contains(@' + a + ', "' + path[1] + '")', name: a, substring: path[1], enabled: false});
-						preds.push({expr: '@' + a + ' = "' + elements[e].attrs[a] + '"', name: a, value: elements[e].attrs[a], enabled: false});
-						break;
-					case 'class':
-						var classes = elements[e].attrs[a].split(/\s+/);
-						for (var c in classes)
-							preds.push({expr: 'contains(@' + a + ', "' + classes[c] + '")', name: a, substring: classes[c], enabled: false});
-						preds.push({expr: '@' + a + ' = "' + elements[e].attrs[a] + '"', name: a, value: elements[e].attrs[a], enabled: false});
-						break;
-					default:
-						preds.push({expr: '@' + a + ' = "' + elements[e].attrs[a] + '"', name: a, value: elements[e].attrs[a], enabled: false});
-						break;
+						case 'href':
+						case 'src':
+						case 'action':
+							var path = elements[e].attrs[a].match(/\/([^\/]+)$/);
+							if (path)
+								preds.push({expr: 'contains(@' + a + ', "' + path[1] + '")', name: a, substring: path[1], enabled: false});
+							preds.push({expr: '@' + a + ' = "' + elements[e].attrs[a] + '"', name: a, value: elements[e].attrs[a], enabled: false});
+							break;
+						case 'class':
+							var classes = elements[e].attrs[a].split(/\s+/);
+							for (var c in classes)
+								preds.push({expr: 'contains(@' + a + ', "' + classes[c] + '")', name: a, substring: classes[c], enabled: false});
+							preds.push({expr: '@' + a + ' = "' + elements[e].attrs[a] + '"', name: a, value: elements[e].attrs[a], enabled: false});
+							break;
+						default:
+							preds.push({expr: '@' + a + ' = "' + elements[e].attrs[a] + '"', name: a, value: elements[e].attrs[a], enabled: false});
+							break;
 					}
 				}
 				preds.push({expr: 'contains(text(), "' + elements[e].text + '")', substring: elements[e].text, enabled: false});
@@ -193,7 +193,8 @@ $(error_handler(function($) {
 				$('.xpath-composer-validation').hide();
 				$('.xpath-composer-validation[data-status="fail-other"]').find('.xpath-composer-validation-error').html(result);
 				$('.xpath-composer-validation[data-status="fail-other"]').show();
-			} else switch (result) {
+			} else
+			switch (result) {
 				case -1:
 					$('.xpath-composer-validation').hide();
 					$('.xpath-composer-validation[data-status="fail-other"]').find('.xpath-composer-validation-error').html(result);
