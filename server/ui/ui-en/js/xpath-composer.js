@@ -35,7 +35,10 @@ $(error_handler(function($) {
 				var preds = [];
 				for (var p in tag.preds)
 					if (tag.preds[p].enabled)
-						preds.push(tag.preds[p].expr);
+						if (typeof(tag.preds[p].index) == 'undefined')
+							preds.push(tag.preds[p].expr);
+						else
+							title += '[' + tag.preds[p].expr + ']';
 				if (preds.length)
 					title += '[' + preds.join(' and ') + ']';
 				$('#xpath-composer-tags .xpath-composer-tag-title[data-tag-id=' + tag_id +']').html(title);
@@ -56,7 +59,10 @@ $(error_handler(function($) {
 						var preds = [];
 						for (var p in tags[t].preds)
 							if (tags[t].preds[p].enabled)
-								preds.push(tags[t].preds[p].expr);
+								if (typeof(tags[t].preds[p].index) == 'undefined')
+									preds.push(tags[t].preds[p].expr);
+								else
+									xpath += '[' + tags[t].preds[p].expr + ']';
 						if (preds.length)
 							xpath += '[' + preds.join(' and ') + ']';
 					}
@@ -127,7 +133,8 @@ $(error_handler(function($) {
 							break;
 					}
 				}
-				preds.push({expr: 'contains(text(), "' + elements[e].text + '")', substring: elements[e].text, enabled: false});
+				preds.push({expr: 'contains(text(), "' + elements[e].text + '")', text: elements[e].text, enabled: false});
+				preds.push({expr: '' + (elements[e].index + 1), index: elements[e].index, enabled: false});
 				xpath_composer_tags[e] = {name: elements[e].name, preds: preds, enabled: false};
 				$('#xpath-composer-tag-template .xpath-composer-tag-title').html('//' + elements[e].name);
 				$('#xpath-composer-tag-template .xpath-composer-tag-title').attr('data-tag-id', e);
@@ -140,11 +147,12 @@ $(error_handler(function($) {
 							css += ' = "' + preds[p].value + '"';
 						if (preds[p].substring)
 							css += ' *= "' + preds[p].substring + '"';
-						if (preds[p].name)
-							css += ']';
+						css += ']';
 					} else {
-						if (preds[p].substring)
-							css += ':contains("' + preds[p].substring + '")';
+						if (preds[p].text)
+							css += ':contains("' + preds[p].text + '")';
+						if (typeof(preds[p].index) != 'undefined')
+							css += ':nth-of-type(' + (preds[p].index + 1) + ')';
 					}
 					$('#xpath-composer-pred-template .xpath-composer-pred-text').html(preds[p].expr);
 					$('#xpath-composer-pred-template .xpath-composer-pred-text').attr('title', css);
