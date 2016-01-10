@@ -28,9 +28,9 @@ $(error_handler(function($) {
 			messaging.send({type: 'xpath-composer-validate', xpath: $('#xpath-composer-result').val()});
 		}
 		function xpath_composer(elements) {
-			var xpath_composer_tags = [];
+			var tags = [];
 			function upd_title(tag_id) {
-				var tag = xpath_composer_tags[tag_id];
+				var tag = tags[tag_id];
 				var title = '//' + tag.name;
 				var preds = [];
 				for (var p in tag.preds)
@@ -45,7 +45,6 @@ $(error_handler(function($) {
 			}
 			function upd_xpath() {
 				var xpath = '';
-				var tags = xpath_composer_tags;
 				for (var t in tags)
 					if (tags[t].enabled) {
 						if (t-1 >= 0)
@@ -69,7 +68,6 @@ $(error_handler(function($) {
 				$('#xpath-composer-result').val(xpath);
 			}
 			function guess_selection() {
-				var tags = xpath_composer_tags;
 				// select key attributes
 				for (var t in tags)
 					for (var p in tags[t].preds) {
@@ -157,7 +155,7 @@ $(error_handler(function($) {
 				}
 				preds.push({expr: 'contains(text(), "' + elements[e].text + '")', text: elements[e].text, enabled: false});
 				preds.push({expr: '' + (elements[e].index + 1), index: elements[e].index, enabled: false});
-				xpath_composer_tags[e] = {name: elements[e].name, preds: preds, enabled: false};
+				tags[e] = {name: elements[e].name, preds: preds, enabled: false};
 				$('#xpath-composer-tag-template .xpath-composer-tag-title').html('//' + elements[e].name);
 				$('#xpath-composer-tag-template .xpath-composer-tag-title').attr('data-tag-id', e);
 				$('#xpath-composer-tag-template .xpath-composer-tag-text').empty();
@@ -198,7 +196,7 @@ $(error_handler(function($) {
 			//$('#xpath-composer-tags .xpath-composer-tag-hidden').last().collapse('show');
 			$('#xpath-composer-tags .xpath-composer-tag-control').change(error_handler(function(ev) {
 				var tag_id = $(ev.target).attr('data-tag-id');
-				xpath_composer_tags[tag_id].enabled = $(ev.target).prop('checked');
+				tags[tag_id].enabled = $(ev.target).prop('checked');
 				upd_title(tag_id);
 				upd_xpath();
 				validate();
@@ -206,7 +204,7 @@ $(error_handler(function($) {
 			$('#xpath-composer-tags .xpath-composer-pred-control').change(error_handler(function(ev) {
 				var tag_id = $(ev.target).attr('data-tag-id');
 				var pred_id = $(ev.target).attr('data-pred-id');
-				xpath_composer_tags[tag_id].preds[pred_id].enabled = $(ev.target).prop('checked');
+				tags[tag_id].preds[pred_id].enabled = $(ev.target).prop('checked');
 				upd_title(tag_id);
 				upd_xpath();
 				validate();
