@@ -330,10 +330,10 @@
 							XPATH Composer
 						</div>
 						<div class="panel-body">
-							<div style="display: none;" id="xpath-composer-attr-template">
+							<div style="display: none;" id="xpath-composer-pred-template">
 								<label class="checkbox-inline">
-									<input type="checkbox" class="xpath-composer-attr-control"/>
-									<span class="xpath-composer-attr-text">
+									<input type="checkbox" class="xpath-composer-pred-control"/>
+									<span class="xpath-composer-pred-text">
 										xxx
 									</span>
 								</label>

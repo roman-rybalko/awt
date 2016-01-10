@@ -1,6 +1,5 @@
 План
 ====
-1. Переименовать attr в pred в xpath-composer.js
 1. Добавить index/nth-child в xpath-composer
 1. Исправить guess_selection - выбирать по индексу если нет других предикатов
 2. Автодобавление action в тест (галка) (нужно доработать guess_selection - всегда выбирать последний элемент)
