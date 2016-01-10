@@ -69,42 +69,64 @@ $(error_handler(function($) {
 				$('#xpath-composer-result').val(xpath);
 			}
 			function guess_selection() {
-				var tag_cnt = 1;
 				var tags = xpath_composer_tags;
-				for (var t in tags) {
-					var upd_fl = false;
+				// select key attributes
+				for (var t in tags)
 					for (var p in tags[t].preds) {
 						var pred = tags[t].preds[p];
-						if (
-							pred.expr.match(/@id|@name|@type|@value|contains.+@src|contains.+@href|contains.+@action|@role/i)
-							|| (!pred.name && pred.substring && pred.substring.length < 42 /* magic length */)
-						) {
-							upd_fl = true;
+						if (pred.expr.match(/@id|@name|@type|@value|contains.+@src|contains.+@href|contains.+@action|@role/i))
 							pred.enabled = true;
-							$('#xpath-composer-tags .xpath-composer-pred-control[data-tag-id=' + t + '][data-pred-id=' + p + ']').prop('checked', true);
-						}
+						if (!pred.name && pred.substring && pred.substring.length < 42 /* magic length */)
+							pred.enabled = true;
 					}
-					if (upd_fl)
-						upd_title(t);
-				}
-				for (var t = tags.length-1, tag_cnt = 1; t >= 0 && tag_cnt > 0; --t)
+				// select index predicate for tags without selected predicates
+				for (var t in tags) {
+					var enabled = false;
 					for (var p in tags[t].preds)
 						if (tags[t].preds[p].enabled) {
-							tags[t].enabled = true;
-							$('#xpath-composer-tags .xpath-composer-tag-control[data-tag-id=' + t + ']').prop('checked', true);
-							--tag_cnt;
+							enabled = true;
 							break;
 						}
+					if (!enabled)
+						for (var p in tags[t].preds)
+							if (typeof(tags[t].preds[p].index) != 'undefined') {
+								tags[t].preds[p].enabled = true;
+								break;
+							}
+				}
+				var tag_cnt = 2;  // select at least 2 tags
+				// select the last tag
+				if (tags.length) {
+					var t = tags.length - 1;
+					tags[t].enabled = true;
+					--tag_cnt;
+				}
+				// select key tags
 				for (var t in tags)
 					if (tags[t].name.match(/form|input|button/i)) {
 						tags[t].enabled = true;
-						$('#xpath-composer-tags .xpath-composer-tag-control[data-tag-id=' + t + ']').prop('checked', true);
 						--tag_cnt;
 					}
-				if (tag_cnt > 0) {
-					var t = tags.length - 1;
-					tags[t].enabled = true;
-					$('#xpath-composer-tags .xpath-composer-tag-control[data-tag-id=' + t + ']').prop('checked', true);
+				// select at least tag_cnt tags having selected attributes (every tag here actually have a selected attribute)
+				for (var t = tags.length-1; t >= 0 && tag_cnt > 0; --t)
+					for (var p in tags[t].preds)
+						if (tags[t].preds[p].enabled) {
+							tags[t].enabled = true;
+							--tag_cnt;
+							break;
+						}
+				// done
+				for (var t in tags) {
+					upd_title(t);
+					if (tags[t].enabled)
+						$('#xpath-composer-tags .xpath-composer-tag-control[data-tag-id=' + t + ']').prop('checked', true);
+					else
+						$('#xpath-composer-tags .xpath-composer-tag-control[data-tag-id=' + t + ']').prop('checked', false);
+					for (var p in tags[t].preds)
+						if (tags[t].preds[p].enabled)
+							$('#xpath-composer-tags .xpath-composer-pred-control[data-tag-id=' + t + '][data-pred-id=' + p + ']').prop('checked', true);
+						else
+							$('#xpath-composer-tags .xpath-composer-pred-control[data-tag-id=' + t + '][data-pred-id=' + p + ']').prop('checked', false);
 				}
 				upd_xpath();
 				validate();
