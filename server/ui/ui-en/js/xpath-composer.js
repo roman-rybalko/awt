@@ -68,15 +68,21 @@ $(error_handler(function($) {
 				$('#xpath-composer-result').val(xpath);
 			}
 			function guess_selection() {
-				// enable key attributes
-				for (var t in tags)
-					for (var p in tags[t].preds) {
-						var pred = tags[t].preds[p];
-						if (pred.expr.match(/@id|@name|@type|@value|contains.+@src|contains.+@href|contains.+@action|@role/i))
+				for (var t in tags) {
+					var tag = tags[t];
+					for (var p in tag.preds) {
+						var pred = tag.preds[p];
+						// enable key attributes
+						if (pred.expr.match(/@id|@name|@type|@role|contains.+@src|contains.+@action/i))
 							pred.enabled = true;
-						if (!pred.name && pred.substring && pred.substring.length < 42 /* magic length */)
+						// OPTION tag has const value attr
+						if (tag.name.match(/^option$/i) && pred.expr.match(/@value/i))
+							pred.enabled = true;
+						// A tag has a unique text
+						if (tag.name.match(/^a$/i) && pred.text)
 							pred.enabled = true;
 					}
+				}
 				var tag_cnt = 2;  // enable at least 2 tags
 				function enable_tag(t) {
 					if (t < 0)

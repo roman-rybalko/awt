@@ -451,6 +451,11 @@
 										to see how it works.
 									</p>
 								</div>
+								<div class="alert alert-info alert-dismissable">
+									<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="xpath-composer-rclick">&#215;</button>
+									<b>Tip:</b>
+									Use right-click on anchors to capture the tag and prevent page loading.
+								</div>
 							</div>
 						</div>
 						<div class="row">
