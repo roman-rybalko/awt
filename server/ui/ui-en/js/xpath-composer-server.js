@@ -5,7 +5,7 @@ $(error_handler(function($) {
 		var els = [];
 		var el = ev.target;
 		while (el) {
-			var descr = {name: el.nodeName, attrs: {}, text: $(el).text().substr(0, 128), index: $(el).index()};
+			var descr = {name: el.nodeName, attrs: {}, text: $(el).text().substr(0, 128), 'nth-of-type': $(el.parentElement).children(el.nodeName).index(el) + 1};
 			for (var a = 0; a < el.attributes.length; ++a)
 				descr.attrs[el.attributes[a].name] = el.attributes[a].value;
 			els.push(descr);

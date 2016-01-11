@@ -35,7 +35,7 @@ $(error_handler(function($) {
 				var preds = [];
 				for (var p in tag.preds)
 					if (tag.preds[p].enabled)
-						if (typeof(tag.preds[p].index) == 'undefined')
+						if (!tag.preds[p]['nth-of-type'])
 							preds.push(tag.preds[p].expr);
 						else
 							title += '[' + tag.preds[p].expr + ']';
@@ -58,7 +58,7 @@ $(error_handler(function($) {
 						var preds = [];
 						for (var p in tags[t].preds)
 							if (tags[t].preds[p].enabled)
-								if (typeof(tags[t].preds[p].index) == 'undefined')
+								if (!tags[t].preds[p]['nth-of-type'])
 									preds.push(tags[t].preds[p].expr);
 								else
 									xpath += '[' + tags[t].preds[p].expr + ']';
@@ -68,7 +68,7 @@ $(error_handler(function($) {
 				$('#xpath-composer-result').val(xpath);
 			}
 			function guess_selection() {
-				// select key attributes
+				// enable key attributes
 				for (var t in tags)
 					for (var p in tags[t].preds) {
 						var pred = tags[t].preds[p];
@@ -77,42 +77,52 @@ $(error_handler(function($) {
 						if (!pred.name && pred.substring && pred.substring.length < 42 /* magic length */)
 							pred.enabled = true;
 					}
-				// select index predicate for tags without selected predicates
+				var tag_cnt = 2;  // enable at least 2 tags
+				function enable_tag(t) {
+					if (t < 0)
+						return;
+					if (tags[t].enabled)
+						return;
+					tags[t].enabled = true;
+					--tag_cnt;
+				}
+				// enable the last tag (target)
+				enable_tag(tags.length - 1);
+				// enable key tags
+				for (var t in tags)
+					if (tags[t].name.match(/form|input|button|select|option/i))
+						enable_tag(t);
+				// enable remaining tags having enabled predicates
+				for (var t = tags.length-1; t >= 0 && tag_cnt > 0; --t)
+					for (var p in tags[t].preds)
+						if (tags[t].preds[p].enabled) {
+							enable_tag(t);
+							break;
+						}
+				// enable remaining tags
+				for (var t = tags.length-1; t >= 0 && tag_cnt > 0; --t)
+					for (var p in tags[t].preds)
+						enable_tag(t);
+				// enable index predicate for enabled tags without enabled predicates
 				for (var t in tags) {
+					if (!tags[t].enabled)
+						continue;
 					var enabled = false;
 					for (var p in tags[t].preds)
 						if (tags[t].preds[p].enabled) {
 							enabled = true;
 							break;
 						}
-					if (!enabled)
-						for (var p in tags[t].preds)
-							if (typeof(tags[t].preds[p].index) != 'undefined') {
-								tags[t].preds[p].enabled = true;
-								break;
-							}
-				}
-				var tag_cnt = 2;  // select at least 2 tags
-				// select the last tag
-				if (tags.length) {
-					var t = tags.length - 1;
-					tags[t].enabled = true;
-					--tag_cnt;
-				}
-				// select key tags
-				for (var t in tags)
-					if (tags[t].name.match(/form|input|button/i)) {
-						tags[t].enabled = true;
-						--tag_cnt;
-					}
-				// select at least tag_cnt tags having selected attributes (every tag here actually have a selected attribute)
-				for (var t = tags.length-1; t >= 0 && tag_cnt > 0; --t)
+					if (enabled)
+						continue;
 					for (var p in tags[t].preds)
-						if (tags[t].preds[p].enabled) {
-							tags[t].enabled = true;
-							--tag_cnt;
+						if (tags[t].preds[p]['nth-of-type']) {
+							tags[t].preds[p].enabled = true;
+							// enable parent since index predicate works only with parent tag
+							enable_tag(t-1);
 							break;
 						}
+				}
 				// done
 				for (var t in tags) {
 					upd_title(t);
@@ -153,8 +163,10 @@ $(error_handler(function($) {
 							break;
 					}
 				}
-				preds.push({expr: 'contains(text(), "' + elements[e].text + '")', text: elements[e].text, enabled: false});
-				preds.push({expr: '' + (elements[e].index + 1), index: elements[e].index, enabled: false});
+				if (elements[e].text > '')
+					preds.push({expr: 'contains(text(), "' + elements[e].text + '")', text: elements[e].text, enabled: false});
+				if (elements[e]['nth-of-type'] > 0)
+					preds.push({expr: '' + elements[e]['nth-of-type'], 'nth-of-type': elements[e]['nth-of-type'], enabled: false});
 				tags[e] = {name: elements[e].name, preds: preds, enabled: false};
 				$('#xpath-composer-tag-template .xpath-composer-tag-title').html('//' + elements[e].name);
 				$('#xpath-composer-tag-template .xpath-composer-tag-title').attr('data-tag-id', e);
@@ -171,8 +183,8 @@ $(error_handler(function($) {
 					} else {
 						if (preds[p].text)
 							css += ':contains("' + preds[p].text + '")';
-						if (typeof(preds[p].index) != 'undefined')
-							css += ':nth-of-type(' + (preds[p].index + 1) + ')';
+						if (preds[p]['nth-of-type'])
+							css += ':nth-of-type(' + preds[p]['nth-of-type'] + ')';
 					}
 					$('#xpath-composer-pred-template .xpath-composer-pred-text').html(preds[p].expr);
 					$('#xpath-composer-pred-template .xpath-composer-pred-text').attr('title', css);
