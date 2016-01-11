@@ -3,6 +3,9 @@
 2. Автодобавление action в тест (галка) (нужно доработать guess_selection - всегда выбирать последний элемент)
 3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
 4. административный интерфейс - статистика, мониторинг
+5. Test Group. Запустить группу тестов. Запуск только вручную.
+6. schedule экспорт-импорт
+7. test group export/import
 13. XMPP Reports
 14. SMS Reports
 15. Отдельный раздел и таблица notifications, каждая notification содержит параметры: email/телефон/jid. Каждый Schedule Job содержит
