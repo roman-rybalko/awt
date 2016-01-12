@@ -1,6 +1,14 @@
+// var xpath_composer_autoadd = function(xpath, value) {return false;}
 $(error_handler(function($) {
 	if ($('#modal-xpath-composer').length) {
 		var old_title = null;
+		function highlight_stop() {
+			if (!old_title)
+				return;
+			document.title = old_title;
+			old_title = null;
+			$(window).off('focus', highlight_stop);
+		}
 		function highlight(title_prefix) {
 			if (old_title)
 				return;
@@ -15,19 +23,14 @@ $(error_handler(function($) {
 				setTimeout(upd_title, 500);
 			}
 			upd_title();
-			$(window).one('focus', function() {
-				if (!old_title)
-					return;
-				document.title = old_title;
-				old_title = null;
-			});
+			$(window).one('focus', highlight_stop);
 		}
 		function validate() {
 			$('.xpath-composer-validation').hide();
 			$('.xpath-composer-validation[data-status="process"]').show();
 			messaging.send({type: 'xpath-composer-validate', xpath: $('#xpath-composer-result').val()});
 		}
-		function xpath_composer(elements) {
+		function xpath_composer_elements(elements) {
 			var tags = [];
 			function upd_title(tag_id) {
 				var tag = tags[tag_id];
@@ -76,10 +79,10 @@ $(error_handler(function($) {
 						if (pred.expr.match(/@id|@name|@type|@role|contains.+@src|contains.+@action/i))
 							pred.enabled = true;
 						// OPTION tag has const value attr
-						if (tag.name.match(/^option$/i) && pred.expr.match(/@value/i))
+						if (tag.name.toLowerCase() == 'option' && pred.expr.match(/@value/i))
 							pred.enabled = true;
-						// A tag has a unique text
-						if (tag.name.match(/^a$/i) && pred.text)
+						// A, BUTTON, H1 tags has a unique text
+						if (tag.name.match(/^(a|button|h\d)$/i) && pred.text)
 							pred.enabled = true;
 					}
 				}
@@ -230,6 +233,32 @@ $(error_handler(function($) {
 			guess_selection();
 			$('#modal-xpath-composer').modal('show');
 			highlight('[XPATH Composer]');
+			if (xpath_composer_autoadd) {
+				var call = true;
+				while (true) {
+					if (!tags.length)
+						break;
+					var tag = tags[tags.length-1];
+					if (tag.name.toLowerCase() != 'input')
+						break;
+					for (var p in tag.preds)
+						if (tag.preds[p].name && tag.preds[p].name.toLowerCase() == 'type' && tag.preds[p].value.toLowerCase() == 'text') {
+							call = false;
+							break;
+						}
+					break;
+				}
+				if (call && xpath_composer_autoadd($('#xpath-composer-result').val())) {
+					highlight_stop();
+					$('#modal-xpath-composer').modal('hide');
+				}
+			}
+		}
+		function xpath_composer_input(value) {
+			if (xpath_composer_autoadd && xpath_composer_autoadd($('#xpath-composer-result').val(), value)) {
+				highlight_stop();
+				$('#modal-xpath-composer').modal('hide');
+			}
 		}
 		$('#xpath-composer-result').on('keyup', error_handler(function() {
 			validate();
@@ -264,7 +293,10 @@ $(error_handler(function($) {
 		messaging.recv(error_handler(function(data) {
 			switch (data.type) {
 				case 'xpath-composer-elements':
-					xpath_composer(data.elements.reverse());
+					xpath_composer_elements(data.elements.reverse());
+					break;
+				case 'xpath-composer-input':
+					xpath_composer_input(data.value);
 					break;
 				case 'xpath-composer-validate-result':
 					validate_result(data.result);

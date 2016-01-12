@@ -298,6 +298,7 @@
 				</div>
 			</div>
 		</xsl:for-each>
+		<div id="action-autoadd-container"></div>
 		<xsl:if test="not(@deleted)">
 			<div class="row" id="action-add">
 				<div class="col-lg-12">
@@ -389,6 +390,67 @@
 			</div>
 		</xsl:if>
 	</div>
+	<div style="display: none;">
+		<div id="action-autoadd-template-click">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-warning">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-9">
+									<div class="row">
+										<div class="col-lg-2">
+											<b>Click</b>
+										</div>
+										<div class="col-lg-10">
+											<b>Element XPATH</b>: <span class="action-autoadd-click-xpath"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<a href="#" class="btn btn-xs btn-primary location-href">
+										<i class="fa fa-pencil"></i>
+										Edit
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="action-autoadd-template-enter">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-warning">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-9">
+									<div class="row">
+										<div class="col-lg-2">
+											<b>Enter data</b>
+										</div>
+										<div class="col-lg-6">
+											<b>Input XPATH</b>: <span class="action-autoadd-enter-xpath"></span>
+										</div>
+										<div class="col-lg-4">
+											<b>Value</b>: <span class="action-autoadd-enter-value"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<a href="#" class="btn btn-xs btn-primary location-href">
+										<i class="fa fa-pencil"></i>
+										Edit
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </xsl:template>
 
 <xsl:template name="new_action_form">
@@ -451,34 +513,58 @@
 										to see how it works.
 									</p>
 								</div>
-								<div class="alert alert-info alert-dismissable">
-									<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="xpath-composer-rclick">&#215;</button>
-									<b>Tip:</b>
-									Use right-click on anchors to capture the tag and prevent page loading.
-								</div>
 							</div>
 						</div>
 						<div class="row">
 							<form action="#" onsubmit="$(this).find('button.xpath-browser-open').click(); return false;"> <!-- to make "enter" work -->
 								<div class="col-lg-1">
-									<button type="button" class="btn btn-block btn-primary xpath-browser-backward" title="Backward" data-id="{$id}">
-										<i class="fa fa-backward"></i>
-									</button>
+									<div class="form-group">
+										<button type="button" class="btn btn-block btn-primary xpath-browser-backward" title="Backward" data-id="{$id}">
+											<i class="fa fa-backward"></i>
+										</button>
+									</div>
 								</div>
 								<div class="col-lg-1">
-									<button type="button" class="btn btn-block btn-primary xpath-browser-forward" title="Forward" data-id="{$id}">
-										<i class="fa fa-forward"></i>
-									</button>
+									<div class="form-group">
+										<button type="button" class="btn btn-block btn-primary xpath-browser-forward" title="Forward" data-id="{$id}">
+											<i class="fa fa-forward"></i>
+										</button>
+									</div>
 								</div>
 								<div class="col-lg-9">
-									<input type="text" class="form-control xpath-browser-url" placeholder="URL" id="xpath-browser-url-{$id}"/>
+									<div class="form-group">
+										<input type="text" class="form-control xpath-browser-url" placeholder="URL" id="xpath-browser-url-{$id}"/>
+									</div>
 								</div>
 								<div class="col-lg-1">
-									<button type="submit" class="btn btn-block btn-primary xpath-browser-open" title="Open" data-id="{$id}">
-										<i class="fa fa-play"></i>
-									</button>
+									<div class="form-group">
+										<button type="submit" class="btn btn-block btn-primary xpath-browser-open" title="Open" data-id="{$id}">
+											<i class="fa fa-play"></i>
+										</button>
+									</div>
 								</div>
 							</form>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+								<xsl:choose>
+									<xsl:when test="$id = 'add'">
+										<div class="checkbox">
+											<label>
+												<input type="checkbox" id="action-autoadd-flag"/>
+												Add actions automatically
+											</label>
+										</div>
+									</xsl:when>
+									<xsl:otherwise>
+										<div class="alert alert-info alert-dismissable">
+											<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="xpath-composer-rclick">&#215;</button>
+											<b>Tip:</b>
+											Use right-click on anchors to capture the tag and prevent page loading.
+										</div>
+									</xsl:otherwise>
+								</xsl:choose>
+							</div>
 						</div>
 					</div>
 				</div>

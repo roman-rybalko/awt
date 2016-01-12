@@ -1,5 +1,10 @@
 $(error_handler(function($) {
-	$('body *').mousedown(error_handler(function(ev) {
+	var input_value = null;
+	$('body *').on('mousedown', error_handler(function(ev) {
+		if (input_value) {
+			messaging.send({type: 'xpath-composer-input', value: input_value});
+			input_value = null;
+		}
 		if (ev.eventPhase != Event.AT_TARGET)
 			return;
 		var els = [];
@@ -17,6 +22,9 @@ $(error_handler(function($) {
 			el = el.parentElement;
 		}
 		messaging.send({type: 'xpath-composer-elements', elements: els});
+	}));
+	$('body input[type="text"]').on('keyup', error_handler(function(ev) {
+		input_value = $(ev.target).val();
 	}));
 
 	function xpath2css(xpath) {
