@@ -350,14 +350,14 @@ $(error_handler(function($) {
 
 var xpath_composer_autoadd_queue = [];
 var xpath_composer_autoadd = error_handler(function(xpath, value) {
-	if (!$('#action-autoadd-flag').prop('checked'))
+	if (!$('#action-autoadd-control').prop('checked'))
 		return false;
 	var start = ! xpath_composer_autoadd_queue.length;
 	xpath_composer_autoadd_queue.push({xpath: xpath, value: value});
 	function process_queue() {
 		if (!xpath_composer_autoadd_queue.length)
 			return;
-		if (!$('#action-autoadd-flag').prop('checked')) {
+		if (!$('#action-autoadd-control').prop('checked')) {
 			xpath_composer_autoadd_queue = [];
 			return;
 		}

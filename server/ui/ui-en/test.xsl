@@ -331,35 +331,7 @@
 							XPATH Composer
 						</div>
 						<div class="panel-body">
-							<div style="display: none;" id="xpath-composer-pred-template">
-								<label class="checkbox-inline">
-									<input type="checkbox" class="xpath-composer-pred-control"/>
-									<span class="xpath-composer-pred-text">
-										xxx
-									</span>
-								</label>
-							</div>
-							<div style="display: none;" id="xpath-composer-tag-template">
-								<div class="panel panel-default">
-									<div class="panel-heading xpath-composer-tag-link">
-										<h4 class="panel-title">
-											<span class="space-x">
-												<input type="checkbox" class="xpath-composer-tag-control"/>
-											</span>
-											<span class="xpath-composer-tag-title">
-												xxx
-											</span>
-										</h4>
-									</div>
-									<div class="panel-collapse collapse xpath-composer-tag-hidden">
-										<div class="panel-body xpath-composer-tag-text">
-											xxx
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="panel-group" id="xpath-composer-tags">
-							</div>
+							<div class="panel-group" id="xpath-composer-tags"></div>
 							<div class="row">
 								<div class="col-lg-10">
 									<div class="form-group">
@@ -384,6 +356,31 @@
 								<i class="fa fa-undo"></i>
 								Cancel
 							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="display: none;">
+				<div id="xpath-composer-pred-template">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" class="xpath-composer-pred-control"/>
+							<span class="xpath-composer-pred-text"></span>
+						</label>
+					</div>
+				</div>
+				<div id="xpath-composer-tag-template">
+					<div class="panel panel-default">
+						<div class="panel-heading xpath-composer-tag-link">
+							<h4 class="panel-title">
+								<span class="space-x">
+									<input type="checkbox" class="xpath-composer-tag-control"/>
+								</span>
+								<span class="xpath-composer-tag-title"></span>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse xpath-composer-tag-hidden">
+							<div class="panel-body xpath-composer-tag-text"></div>
 						</div>
 					</div>
 				</div>
@@ -547,23 +544,19 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-12">
-								<xsl:choose>
-									<xsl:when test="$id = 'add'">
-										<div class="checkbox">
-											<label>
-												<input type="checkbox" id="action-autoadd-flag"/>
-												Add actions automatically
-											</label>
-										</div>
-									</xsl:when>
-									<xsl:otherwise>
-										<div class="alert alert-info alert-dismissable">
-											<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="xpath-composer-rclick">&#215;</button>
-											<b>Tip:</b>
-											Use right-click on anchors to capture the tag and prevent page loading.
-										</div>
-									</xsl:otherwise>
-								</xsl:choose>
+								<xsl:if test="$id = 'add'">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" id="action-autoadd-control"/>
+											Auto-add actions (XPATH Composer will not be used)
+										</label>
+									</div>
+								</xsl:if>
+								<div class="alert alert-info alert-dismissable">
+									<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="xpath-composer-rclick">&#215;</button>
+									<b>Tip:</b>
+									Use right-click on anchors to capture the tag and prevent page loading.
+								</div>
 							</div>
 						</div>
 					</div>
