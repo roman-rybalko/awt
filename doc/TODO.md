@@ -3,11 +3,11 @@
 1. оптимизация xpath
 2. сохранение состояния checkbox
 3. прием средств в USD
-3. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
-4. административный интерфейс - статистика, мониторинг
+4. убрать redirect, показывать страницу redirect при определенных условиях (добавление test, добавление task), оставить redirect только для перехода на внешние сайты billing (server interface cleanup)
 5. Test Group. Запустить группу тестов. Запуск только вручную.
 6. schedule экспорт-импорт
 7. test group export/import
+10. административный интерфейс - статистика, мониторинг
 13. XMPP Reports
 14. SMS Reports
 15. Отдельный раздел и таблица notifications, каждая notification содержит параметры: email/телефон/jid. Каждый Schedule Job содержит
@@ -27,3 +27,4 @@
 26. Client selenium_open_timeout - отдельный таймаут для "open" Action
 27. Обфускация JavaScript в output buffer для ui-en/php/xpath-browser-composer.php (?)
 28. Добавление, удаление и изменение action без перезагрузки страницы ?test=1 (?)
+29. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
