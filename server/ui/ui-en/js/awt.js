@@ -76,7 +76,7 @@ $(error_handler(function($) {
 		action_data_update();
 		$('#action-selector-proxy-' + id).on('change', action_data_update);
 	});
-	if (typeof task_types !== 'undefined') {
+	if (typeof task_types !== 'undefined') error_handler(function() {
 		var index = [];
 		for (var tt in task_types) {
 			index[task_types[tt].name] = task_types[tt];
@@ -107,7 +107,7 @@ $(error_handler(function($) {
 			}
 			$(this).attr('title', cache[name]);
 		});
-	}
+	})();
 	$('#xpath-composer-ok').click(error_handler(function(ev) {
 		var xpath = $('#xpath-composer-result').val();
 		$('input.action-xpath-element').val(xpath);
@@ -126,7 +126,7 @@ $(error_handler(function($) {
 			allowInputToggle: true,
 			format: datetime_format
 		});
-	$('.form-schedule-task').submit(function() {
+	$('.form-schedule-task').submit(error_handler(function() {
 		if (! $(this).find('input[name="name"]').val().match(/\S/)) {
 			$(this).find('input[name="name"]').focus();
 			return false;
@@ -134,8 +134,8 @@ $(error_handler(function($) {
 		$(this).find('.date input').each(function() {
 			$(this).val(moment($(this).val(), datetime_format).unix());
 		});
-	});
-	if (typeof sched_tests !== 'undefined') {
+	}));
+	if (typeof sched_tests !== 'undefined') error_handler(function() {
 		var tests = [];
 		for (var st in sched_tests)
 			tests[sched_tests[st].id] = sched_tests[st].name;
@@ -148,7 +148,7 @@ $(error_handler(function($) {
 				$(this).closest('tr').toggleClass('danger', true);
 			}
 		});
-	}
+	})();
 	function period_unix2human(period) {
 		var data = [];
 		var units = 0;
@@ -177,27 +177,27 @@ $(error_handler(function($) {
 		var time = $(this).html().replace(/\s+/g, '');
 		$(this).html(moment.unix(time).format(datetime_format));
 	});
-	if ($('.table-dataTable').length) {  // after .time-unix2human .period-unix2human
+	if ($('.table-dataTable').length) error_handler(function() {  // after .time-unix2human .period-unix2human
 		var table = $('.table-dataTable').DataTable({
 			responsive: true			
 		});
 		var hash = window.location.hash;
 		if (hash)
 			table.search(hash).draw();
-	}
-	if ($('.close[data-dismiss="alert"][data-dismiss-state]').length) {
-		var storage1 = new Storage('dismiss-state-', 42 /* expire days */);  // var storage is busy
+	})();
+	if ($('.close[data-dismiss="alert"][data-dismiss-state]').length) error_handler(function() {
+		var storage = new Storage('dismiss-state-', 42 /* expire days */);
 		$('.close[data-dismiss="alert"][data-dismiss-state]').each(function() {
 			var name = $(this).attr('data-dismiss-state');
-			var value = storage1.get(name);
+			var value = storage.get(name);
 			if (value)
 				$(this).closest('.alert').alert('close');
 		});
 		$('.close[data-dismiss="alert"][data-dismiss-state]').click(error_handler(function(ev) {
 			var name = $(ev.target).attr('data-dismiss-state');
-			storage1.set(name, true);
+			storage.set(name, true);
 		}));
-	}
+	})();
 	function aggregate_day(data) {
 		var d = new Date();
 		var offset = d.getTime() - d.getTime() % 86400000 - new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime();
@@ -216,7 +216,7 @@ $(error_handler(function($) {
 			result2.push([i, result[i]]);
 		return result2.sort(function(a,b){return a[0]-b[0];});
 	}
-	if ($('#tasks-chart').length) {
+	if ($('#tasks-chart').length) error_handler(function() {
 		var options = {
 			series: {
 				bars: {
@@ -266,8 +266,8 @@ $(error_handler(function($) {
 			data: aggregate_day(tasks_failed),
 		};
 		$('#tasks-chart').plot([data1, data2, data3], options);
-	}
-	if ($('#task-actions-chart').length) {
+	})();
+	if ($('#task-actions-chart').length) error_handler(function() {
 		var options = {
 			series: {
 				bars: {
@@ -297,8 +297,8 @@ $(error_handler(function($) {
 			data: aggregate_day(actions_executed)
 		};
 		$('#task-actions-chart').plot([data1], options);
-	}
-	if ($('a.apply-data-display-period, form.apply-data-display-period').length) {
+	})();
+	if ($('a.apply-data-display-period, form.apply-data-display-period').length) error_handler(function() {
 		var storage = new Storage('setting-' + awt_login + '-');
 		var time = storage.get('data-display-period');
 		if (time === null && awt_login == '') {  /// set default for demo login
@@ -314,8 +314,8 @@ $(error_handler(function($) {
 				$(this).attr(attr, $(this).attr(attr) + '&time=' + time);
 			});
 		}
-	}
-	if ($('span.apply-data-display-period, div.apply-data-display-period').length) {
+	})();
+	if ($('span.apply-data-display-period, div.apply-data-display-period').length) error_handler(function() {
 		if (typeof(awt_time) != 'undefined' && awt_time > 0) {
 			var period = Math.round(new Date().getTime() / 1000) - awt_time;
 			period = period_unix2human(period);
@@ -323,15 +323,15 @@ $(error_handler(function($) {
 				$(this).html('(past ' + period + ')');
 			});
 		}
-	}
-	if ($('select#setting-data-display-period').length) {
+	})();
+	if ($('select#setting-data-display-period').length) error_handler(function() {
 		var storage = new Storage('setting-' + awt_login + '-');
 		var time = storage.get('data-display-period') || 0;
 		$('select#setting-data-display-period option').each(function() {
 			if ($(this).val() == time)
 				$(this).prop('selected', true);
 		});
-		$('select#setting-data-display-period').change(function() {
+		$('select#setting-data-display-period').change(error_handler(function() {
 			time = $(this).val();
 			storage.set('data-display-period', time);
 			if (time > 0)
@@ -339,8 +339,8 @@ $(error_handler(function($) {
 			$('a.apply-data-display-period').each(function() {
 				$(this).attr('href', $(this).attr('href') + '&time=' + time);
 			});
-		});
-	}
+		}));
+	})();
 	$('.modal').on('shown.bs.modal', function() {
 		$(this).find('.form-control').first().focus();
 	});
