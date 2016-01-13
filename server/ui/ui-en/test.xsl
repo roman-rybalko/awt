@@ -177,116 +177,133 @@
 									</div>
 								</div>
 								<xsl:if test="not(../@deleted)">
-									<div class="col-lg-3">
-										<button type="button" class="btn btn-xs btn-primary space-x space-y" data-toggle="modal" data-target="#modal-action-modify-{@id}">
+									<div class="col-lg-1">
+										<button type="button" class="btn btn-xs btn-block btn-primary" data-toggle="modal" data-target="#modal-action-modify-{@id}">
 											<i class="fa fa-edit"></i>
 											Modify
 										</button>
-										<div class="modal" id="modal-action-modify-{@id}" role="dialog">
-											<div class="modal-dialog modal-lg">
-												<div class="panel panel-primary">
-													<div class="panel-heading">
-														<button type="button" class="close" data-dismiss="modal">&#215;</button>
-														Modify: <xsl:value-of select="@name"/>
-													</div>
-													<div class="panel-body">
-														<form role="form" method="post">
-															<input type="hidden" name="id" value="{@id}"/>
-															<div class="row">
-																<xsl:apply-templates select="." mode="form">
-																	<xsl:with-param name="id">modify-<xsl:value-of select="@id"/></xsl:with-param>
-																</xsl:apply-templates>
-															</div>
-															<div class="form-group">
-																<button type="submit" name="modify" class="btn btn-block btn-primary">
-																	<i class="fa fa-pencil"></i>
-																	Modify
-																</button>
-															</div>
-														</form>
-														<xsl:call-template name="xpath_browser">
-															<xsl:with-param name="id">modify-<xsl:value-of select="@id"/></xsl:with-param>
-														</xsl:call-template>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">
-															<i class="fa fa-undo"></i>
-															Cancel
-														</button>
-													</div>
-												</div>
-											</div>
-										</div>
-										<button type="button" class="btn btn-xs btn-success space-x space-y" data-toggle="modal" data-target="#modal-action-insert-{@id}">
+									</div>
+									<div class="col-lg-1">
+										<button type="button" class="btn btn-xs btn-block btn-success" data-toggle="modal" data-target="#modal-action-insert-{@id}">
 											<i class="fa fa-expand"></i>
 											Insert
 										</button>
-										<div class="modal" id="modal-action-insert-{@id}" role="dialog">
-											<div class="modal-dialog modal-lg">
-												<div class="panel panel-success">
-													<div class="panel-heading">
-														<button type="button" class="close" data-dismiss="modal">&#215;</button>
-														Insert
-													</div>
-													<div class="panel-body">
-														<form role="form" method="post" id="action-form-{@id}">
-															<input type="hidden" name="id" value="{@id}"/>
-															<xsl:call-template name="new_action_form">
-																<xsl:with-param name="id">insert-<xsl:value-of select="@id"/></xsl:with-param>
-															</xsl:call-template>
-															<div class="form-group">
-																<button type="submit" name="insert" class="btn btn-block btn-success">
-																	<i class="fa fa-expand"></i>
-																	Insert
-																</button>
-															</div>
-														</form>
-														<xsl:call-template name="xpath_browser">
-															<xsl:with-param name="id">insert-<xsl:value-of select="@id"/></xsl:with-param>
-														</xsl:call-template>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">
-															<i class="fa fa-undo"></i>
-															Cancel
-														</button>
-													</div>
-												</div>
-											</div>
-										</div>
-										<button type="button" class="btn btn-xs btn-danger space-x space-y" data-toggle="modal" data-target="#modal-action-delete-{@id}">
+									</div>
+									<div class="col-lg-1">
+										<button type="button" class="btn btn-xs btn-block btn-danger" data-toggle="modal" data-target="#modal-action-delete-{@id}">
 											<i class="glyphicon glyphicon-trash"></i>
 											Delete
 										</button>
-										<div class="modal" id="modal-action-delete-{@id}" role="dialog">
-											<div class="modal-dialog">
-												<div class="panel panel-danger">
-													<div class="panel-heading">
-														<button type="button" class="close" data-dismiss="modal">&#215;</button>
-														Delete
-													</div>
-													<div class="panel-body">
+									</div>
+									<div class="modal" id="modal-action-modify-{@id}" role="dialog">
+										<div class="modal-dialog modal-lg">
+											<div class="panel panel-primary">
+												<div class="panel-heading">
+													<button type="button" class="close" data-dismiss="modal">&#215;</button>
+													Modify:
+													<xsl:value-of select="@name" />
+												</div>
+												<div class="panel-body">
+													<form role="form" method="post">
+														<input type="hidden" name="id" value="{@id}" />
 														<div class="row">
-															<xsl:apply-templates select="." mode="html"/>
+															<xsl:apply-templates select="." mode="form">
+																<xsl:with-param name="id">
+																	modify-
+																	<xsl:value-of select="@id" />
+																</xsl:with-param>
+															</xsl:apply-templates>
 														</div>
-														<div class="row">
-															<div class="col-lg-12">
-																<form role="form" method="post">
-																	<input type="hidden" name="id" value="{@id}"/>
-																	<button type="submit" name="delete" class="btn btn-block btn-danger">
-																		<i class="glyphicon glyphicon-trash"></i>
-																		Delete
-																	</button>
-																</form>
-															</div>
+														<div class="form-group">
+															<button type="submit" name="modify" class="btn btn-block btn-primary">
+																<i class="fa fa-pencil"></i>
+																Modify
+															</button>
+														</div>
+													</form>
+													<xsl:call-template name="xpath_browser">
+														<xsl:with-param name="id">
+															modify-
+															<xsl:value-of select="@id" />
+														</xsl:with-param>
+													</xsl:call-template>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">
+														<i class="fa fa-undo"></i>
+														Cancel
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal" id="modal-action-insert-{@id}" role="dialog">
+										<div class="modal-dialog modal-lg">
+											<div class="panel panel-success">
+												<div class="panel-heading">
+													<button type="button" class="close" data-dismiss="modal">&#215;</button>
+													Insert
+												</div>
+												<div class="panel-body">
+													<form role="form" method="post" id="action-form-{@id}">
+														<input type="hidden" name="id" value="{@id}" />
+														<xsl:call-template name="new_action_form">
+															<xsl:with-param name="id">
+																insert-
+																<xsl:value-of select="@id" />
+															</xsl:with-param>
+														</xsl:call-template>
+														<div class="form-group">
+															<button type="submit" name="insert" class="btn btn-block btn-success">
+																<i class="fa fa-expand"></i>
+																Insert
+															</button>
+														</div>
+													</form>
+													<xsl:call-template name="xpath_browser">
+														<xsl:with-param name="id">
+															insert-
+															<xsl:value-of select="@id" />
+														</xsl:with-param>
+													</xsl:call-template>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">
+														<i class="fa fa-undo"></i>
+														Cancel
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal" id="modal-action-delete-{@id}" role="dialog">
+										<div class="modal-dialog">
+											<div class="panel panel-danger">
+												<div class="panel-heading">
+													<button type="button" class="close" data-dismiss="modal">&#215;</button>
+													Delete
+												</div>
+												<div class="panel-body">
+													<div class="row">
+														<xsl:apply-templates select="." mode="html" />
+													</div>
+													<div class="row">
+														<div class="col-lg-12">
+															<form role="form" method="post">
+																<input type="hidden" name="id" value="{@id}" />
+																<button type="submit" name="delete" class="btn btn-block btn-danger">
+																	<i class="glyphicon glyphicon-trash"></i>
+																	Delete
+																</button>
+															</form>
 														</div>
 													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">
-															<i class="fa fa-undo"></i>
-															Cancel
-														</button>
-													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">
+														<i class="fa fa-undo"></i>
+														Cancel
+													</button>
 												</div>
 											</div>
 										</div>
@@ -331,7 +348,23 @@
 							XPATH Composer
 						</div>
 						<div class="panel-body">
-							<div class="panel-group" id="xpath-composer-tags"></div>
+							<div class="panel-group" id="xpath-composer-tags" style="margin-bottom: 10px;"></div>
+							<p>
+								<div class="btn-group" data-toggle="buttons">
+									<label class="btn btn-xs btn-primary">
+										<input type="radio" name="xpath-composer-xpath-algo" id="xpath-composer-optimization"/>
+										XPATH optimization
+									</label>
+									<label class="btn btn-xs btn-primary">
+										<input type="radio" name="xpath-composer-xpath-algo" id="xpath-composer-guess"/>
+										Guess
+									</label>
+									<label class="btn btn-xs btn-primary">
+										<input type="radio" name="xpath-composer-xpath-algo"/>
+										Manual
+									</label>
+								</div>
+							</p>
 							<div class="row">
 								<div class="col-lg-10">
 									<div class="form-group">
@@ -371,15 +404,15 @@
 				</div>
 				<div id="xpath-composer-tag-template">
 					<div class="panel panel-default">
-						<div class="panel-heading xpath-composer-tag-link">
-							<h4 class="panel-title">
+						<div class="panel-heading xpath-composer-tag-toggle">
+							<h4 class="panel-title xpath-composer-tag-toggle">
 								<span class="space-x">
 									<input type="checkbox" class="xpath-composer-tag-control"/>
 								</span>
 								<span class="xpath-composer-tag-title"></span>
 							</h4>
 						</div>
-						<div class="panel-collapse collapse xpath-composer-tag-hidden">
+						<div class="panel-collapse collapse xpath-composer-tag-collapsed">
 							<div class="panel-body xpath-composer-tag-text"></div>
 						</div>
 					</div>
@@ -405,7 +438,7 @@
 									</div>
 								</div>
 								<div class="col-lg-3">
-									<a href="#" class="btn btn-xs btn-primary location-href">
+									<a href="#" class="btn btn-xs btn-block btn-primary location-href">
 										<i class="fa fa-pencil"></i>
 										Edit
 									</a>
@@ -436,7 +469,7 @@
 									</div>
 								</div>
 								<div class="col-lg-3">
-									<a href="#" class="btn btn-xs btn-primary location-href">
+									<a href="#" class="btn btn-xs btn-primary btn-block location-href">
 										<i class="fa fa-pencil"></i>
 										Edit
 									</a>
@@ -505,7 +538,7 @@
 										or <a href="https://chrome.google.com/webstore/detail/jscript-tricks/odialddippdmebbfbflcneemfdglimod" target="_blank">JScript tricks</a>.
 									</p>
 									<p>
-										Try to open the test page
+										Try the test page
 										<a href="#" onmousedown="$('.xpath-browser-url').val($(this).text()); return false;" onclick="return false;"><span class="location-path">https://advancedwebtesting.com/ui/</span>ui-en/xpath-browser-composer-test.html</a>
 										to see how it works.
 									</p>
