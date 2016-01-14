@@ -278,6 +278,9 @@ $(error_handler(function($) {
 	function optimization(count) {
 		if (!$('#xpath-composer-optimization').prop('checked'))
 			return;
+		function finish() {
+			optimization_reset();
+		}
 		if (!tags[tags.length - 1].enabled) {  // enable the last tag since it's the key one
 			tags[tags.length - 1].enabled = true;
 			optimization_state = null;
@@ -302,13 +305,13 @@ $(error_handler(function($) {
 							pred.enabled = false;
 						} else {
 							if (t >= tags.length - 1) {  // keep the last tag
-								optimization_reset();  // end
+								finish();
 							} else {
 								tag.enabled = false;
 							}
 						}
 					} else {
-						optimization_reset();  // end
+						finish();
 					}
 				} else {
 					optimization_state = null;
@@ -355,7 +358,7 @@ $(error_handler(function($) {
 						}
 						if (p >= tag.preds.length) {
 							if (t >= tags.length - 1) {  // keep the last tag
-								optimization_reset();  // end
+								finish();
 							} else {
 								tag.enabled = false;
 								optimization_state.tag_id = t;
@@ -366,7 +369,7 @@ $(error_handler(function($) {
 					}
 				})();
 				if (tag_id_start >= tags.length) {
-					optimization_reset();  // end
+					finish();
 				}
 			} else if (optimization_state.count > 1) {
 				if (count == 1) {
@@ -434,7 +437,7 @@ $(error_handler(function($) {
 					}
 				})();
 				if (tag_id_start < 0) {
-					optimization_reset();  // end
+					finish();
 				}
 			} else {
 				throw new Error('xpath optimization: unexpected state: ' + JSON.stringify(optimization_state));
