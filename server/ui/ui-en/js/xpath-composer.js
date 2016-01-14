@@ -274,170 +274,179 @@ $(error_handler(function($) {
 		validate();
 	}));
 
-	var optimization_state = null;
+	var optimization_state;
 	function optimization(count) {
 		if (!$('#xpath-composer-optimization').prop('checked'))
 			return;
+		function restart() {
+			optimization_state = null;
+			optimization(count);
+		}
 		function finish() {
 			optimization_reset();
+			ui_update();
+			validate();
 		}
-		if (!tags[tags.length - 1].enabled) {  // enable the last tag since it's the key one
-			tags[tags.length - 1].enabled = true;
-			optimization_state = null;
+		function iterator(it, inc) {
+			if (!tags || !tags.length || !inc)
+				return {tag_id: -1, pred_id: -1};
+			if (!it && inc > 0)
+				return {tag_id: 0, pred_id: 0};
+			if (!it && inc < 0)
+				return {tag_id: tags.length - 1, pred_id: -1};
+			if (it.tag_id == -1)
+				return it;
+			var new_it = JSON.parse(JSON.stringify(it));
+			if (inc > 0) {
+				for(; inc; --inc) {
+					// attrs then tag
+					if (new_it.pred_id == -1) {
+						new_it.tag_id += 1;
+						if (new_it.tag_id < tags.length) {
+							if (tags[new_it.tag_id].preds.length) {
+								new_it.pred_id = 0;
+							}
+						} else {
+							new_it.tag_id = -1;
+						}
+					} else {
+						new_it.pred_id += 1;
+						if (new_it.pred_id == tags[new_it.tag_id].preds.length) {
+							new_it.pred_id = -1;
+						}
+					}
+				}
+			} else if (inc < 0) {
+				// tag then attrs
+				for (; inc; ++inc) {
+					if (new_it.pred_id == -1) {
+						new_it.pred_id = tags[new_it.tag_id].preds.length - 1;
+					} else {
+						new_it.pred_id -= 1;
+						if (new_it.pred_id < 0) {
+							new_it.pred_id = -1;
+							new_it.tag_id -= 1;
+							if (new_it.tag_id < 0) {
+								new_it.tag_id = -1;
+							}
+						}
+					}
+				}
+			}
+			return new_it;
+		}
+		if (!tags[tags.length-1].enabled) {  // enable the last tag since it's the key one
+			tags[tags.length-1].enabled = true;
+			restart();
+			return;
 		} else if (optimization_state) {
 			if (typeof(optimization_state.count) == 'string' || optimization_state.count < 1) {
 				if (typeof(count) == 'string' || count < 1) {
-					for (var t = 0; t < tags.length; ++t) {
-						var tag = tags[t];
-						if (!tag.enabled)
-							continue;
-						for (var p = 0; p < tag.preds.length; ++p) {
-							var pred = tag.preds[p];
-							if (!pred.enabled)
-								continue;
-							break;
-						}
-						break;
-					}
 					optimization_state.count = count;
-					if (t < tags.length) {
-						if (p < tag.preds.length) {
-							pred.enabled = false;
+					var it = optimization_state.it = iterator(optimization_state.it, +1);
+					if (it.tag_id != -1) {
+						if (it.pred_id != -1) {
+							tags[it.tag_id].preds[it.pred_id].enabled = false;
 						} else {
-							if (t >= tags.length - 1) {  // keep the last tag
+							if (it.tag_id >= tags.length - 1) {  // keep the last tag
 								finish();
+								return;
 							} else {
-								tag.enabled = false;
+								tags[it.tag_id].enabled = false;
 							}
 						}
 					} else {
 						finish();
+						return;
 					}
 				} else {
-					optimization_state = null;
-					optimization(count);
+					restart();
 					return;
 				}
 			} else if (optimization_state.count == 1) {
-				if (count != 1) {
-					if (typeof(optimization_state.tag_id) != 'undefined' && optimization_state.tag_id < tags.length) {
-						var tag = tags[optimization_state.tag_id];
-						if (optimization_state.pred_id < tag.preds.length) {
-							var pred = tag.preds[optimization_state.pred_id];
-							pred.enabled = true;
+				var it = optimization_state.it;
+				if (count != 1) {  // roolback
+					if (it) {
+						if (it.pred_id != -1) {
+							tags[it.tag_id].preds[it.pred_id].enabled = true;
 						} else {
-							tag.enabled = true;
+							tags[it.tag_id].enabled = true;
 						}
 					}
 				}
-				if (typeof(optimization_state.tag_id) != 'undefined' && optimization_state.tag_id < tags.length) {
-					var tag_id_start = optimization_state.tag_id;
-					if (optimization_state.pred_id < tags[tag_id_start].preds.length) {
-						var pred_id_start = optimization_state.pred_id + 1;
-					} else {
-						tag_id_start += 1;
-						var pred_id_start = 0;
-					}
-				} else {
-					var tag_id_start = 0;
-					var pred_id_start = 0;
-				}
-				(function() {
-					for (var t = tag_id_start; t < tags.length; ++t, tag_id_start = t, pred_id_start = 0) {
-						var tag = tags[t];
-						if (!tag.enabled)
+				for (it = iterator(it, +1); it.tag_id != -1; it = iterator(it, +1)) {
+					if (!tags[it.tag_id].enabled)
+						continue;
+					if (it.pred_id != -1) {
+						if (!tags[it.tag_id].preds[it.pred_id].enabled)
 							continue;
-						for (var p = pred_id_start; p < tag.preds.length; ++p) {
-							var pred = tag.preds[p];
-							if (!pred.enabled)
-								continue;
-							pred.enabled = false;
-							optimization_state.tag_id = t;
-							optimization_state.pred_id = p;
+						tags[it.tag_id].preds[it.pred_id].enabled = false;
+						optimization_state.it = it;
+						break;
+					} else {
+						if (it.tag_id >= tags.length - 1) {  // keep the last tag
+							finish();
 							return;
+						} else {
+							tags[it.tag_id].enabled = false;
+							optimization_state.it = it;
 						}
-						if (p >= tag.preds.length) {
-							if (t >= tags.length - 1) {  // keep the last tag
-								finish();
-							} else {
-								tag.enabled = false;
-								optimization_state.tag_id = t;
-								optimization_state.pred_id = p;
-							}
-							return;
-						}
+						break;
 					}
-				})();
-				if (tag_id_start >= tags.length) {
+				}
+				if (it.tag_id == -1) {
 					finish();
+					return;
 				}
 			} else if (optimization_state.count > 1) {
 				if (count == 1) {
-					optimization_state = null;
-					optimization(count);
+					restart();
 					return;
 				}
-				if (typeof(count) == 'string' || count < 1) {
-					if (typeof(optimization_state.tag_id) != 'undefined' && optimization_state.tag_id >= 0) {
-						var tag = tags[optimization_state.tag_id];
-						if (optimization_state.pred_id >= 0) {
-							var pred = tag.preds[optimization_state.pred_id];
-							pred.enabled = false;
+				var it = optimization_state.it;
+				if (typeof(count) == 'string' || count < 1) {  // rollback
+					if (it) {
+						if (it.pred_id != -1) {
+							tags[it.tag_id].preds[it.pred_id].enabled = false;
 						} else {
-							tag.enabled = false;
+							tags[it.tag_id].enabled = false;
 						}
 					}
 				}
-				if (typeof(optimization_state.tag_id) != 'undefined' && optimization_state.tag_id >= 0) {
-					var tag_id_start = optimization_state.tag_id;
-					if (optimization_state.pred_id >= 0) {
-						var pred_id_start = optimization_state.pred_id - 1;
+				var notext = $('#xpath-composer-optimization-notext').prop('checked');
+				var noattr = $('#xpath-composer-optimization-noattr').prop('checked');
+				var noindex = $('#xpath-composer-optimization-noindex').prop('checked');
+				var nocontains = $('#xpath-composer-optimization-nocontains').prop('checked');
+				for (it = iterator(it, -1); it.tag_id != -1; it = iterator(it, -1)) {
+					if (it.pred_id != -1) {
+						var pred = tags[it.tag_id].preds[it.pred_id];
+						if (pred.enabled)
+							continue;
+						if (pred.text && notext)
+							continue;
+						if ((pred.expr.substr(0, 1) == '@') && noattr)
+							continue;
+						if (pred['nth-of-type'] && noindex)
+							continue;
+						if ((pred.expr.substr(0, 9) == 'contains(') && nocontains)
+							continue;
+						pred.enabled = true;
+						optimization_state.it = it;
+						if (pred['nth-of-type'] && it.tag_id > 0 && !tags[it.tag_id-1].enabled) {  // enable parent tag for index pred
+							tags[it.tag_id-1].enabled = true;
+						}
+						break;
 					} else {
-						var pred_id_start = tags[tag_id_start].preds.length - 1;
+						if (!tags[it.tag_id].enabled) {
+							tags[it.tag_id].enabled = true;
+							optimization_state.it = it;
+							break;
+						}
 					}
-				} else {
-					var tag_id_start = tags.length - 1;
-					var pred_id_start = tags[tag_id_start].preds.length - 1;
 				}
-				(function() {
-					var notext = $('#xpath-composer-optimization-notext').prop('checked');
-					var noattr = $('#xpath-composer-optimization-noattr').prop('checked');
-					var noindex = $('#xpath-composer-optimization-noindex').prop('checked');
-					var nocontains = $('#xpath-composer-optimization-nocontains').prop('checked');
-					for (var t = tag_id_start; t >= 0; (function() {
-						--t;
-						tag_id_start = t;
-						if (t >= 0)
-							pred_id_start = tags[t].preds.length - 1;
-					})()) {
-						var tag = tags[t];
-						if (!tag.enabled) {
-							tag.enabled = true;
-							optimization_state.tag_id = t;
-							optimization_state.pred_id = -1;
-							return;
-						}
-						for (var p = pred_id_start; p >= 0; --p) {
-							var pred = tag.preds[p];
-							if (pred.enabled)
-								continue;
-							if (pred.text && notext)
-								continue;
-							if ((pred.expr.substr(0, 1) == '@') && noattr)
-								continue;
-							if (pred['nth-of-type'] && noindex)
-								continue;
-							if ((pred.expr.substr(0, 9) == 'contains(') && nocontains)
-								continue;
-							pred.enabled = true;
-							optimization_state.tag_id = t;
-							optimization_state.pred_id = p;
-							return;
-						}
-					}
-				})();
-				if (tag_id_start < 0) {
+				if (it.tag_id == -1) {
 					finish();
+					return;
 				}
 			} else {
 				throw new Error('xpath optimization: unexpected state: ' + JSON.stringify(optimization_state));
@@ -449,8 +458,25 @@ $(error_handler(function($) {
 			optimization(count);
 			return;
 		}
-		ui_update();
-		validate();
+		(function() {
+			var filter = null;
+			for (var t in tags) {
+				for (var p in tags[t].preds) {
+					if (tags[t].preds[p].enabled && tags[t].preds[p]['nth-of-type'] && t > 0 && !tags[t-1].enabled)
+						filter = 'index predicate should have parent tag enabled';
+					if (filter)
+						break;
+				}
+				if (filter)
+					break;
+			}
+			if (filter) {
+				optimization(filter);
+			} else {
+				ui_update();
+				validate();
+			}
+		})();
 	}
 	function optimization_reset(enable) {
 		optimization_state = null;
