@@ -146,7 +146,6 @@ $(error_handler(function($) {
 	$('#xpath-composer-guess').change(error_handler(function() {
 		if (!$('#xpath-composer-guess').prop('checked'))
 			return;
-		optimization_reset();
 		guess();
 		ui_update();
 		validate();
@@ -302,7 +301,11 @@ $(error_handler(function($) {
 						if (p < tag.preds.length) {
 							pred.enabled = false;
 						} else {
-							tag.enabled = false;
+							if (t >= tags.length - 1) {  // keep the last tag
+								optimization_reset();  // end
+							} else {
+								tag.enabled = false;
+							}
 						}
 					} else {
 						optimization_reset();  // end

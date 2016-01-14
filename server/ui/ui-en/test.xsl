@@ -370,15 +370,15 @@
 								</div>
 								<div class="btn-group" data-toggle="buttons">
 									<label class="btn btn-xs btn-success">
-										<input type="radio" name="xpath-composer-xpath-algo" id="xpath-composer-optimization"/>
-										XPATH optimization
+										<input type="radio" name="xpath-composer-algo" id="xpath-composer-optimization"/>
+										Optimize
 									</label>
 									<label class="btn btn-xs btn-primary">
-										<input type="radio" name="xpath-composer-xpath-algo" id="xpath-composer-guess"/>
+										<input type="radio" name="xpath-composer-algo" id="xpath-composer-guess"/>
 										Guess
 									</label>
 									<label class="btn btn-xs btn-warning">
-										<input type="radio" name="xpath-composer-xpath-algo"/>
+										<input type="radio" name="xpath-composer-algo"/>
 										Manual
 									</label>
 								</div>
