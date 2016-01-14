@@ -177,20 +177,16 @@
 									</div>
 								</div>
 								<xsl:if test="not(../@deleted)">
-									<div class="col-lg-1">
-										<button type="button" class="btn btn-xs btn-block btn-primary" data-toggle="modal" data-target="#modal-action-modify-{@id}">
+									<div class="col-lg-3">
+										<button type="button" class="btn btn-xs btn-primary space-x space-y" data-toggle="modal" data-target="#modal-action-modify-{@id}">
 											<i class="fa fa-edit"></i>
 											Modify
 										</button>
-									</div>
-									<div class="col-lg-1">
-										<button type="button" class="btn btn-xs btn-block btn-success" data-toggle="modal" data-target="#modal-action-insert-{@id}">
+										<button type="button" class="btn btn-xs btn-success space-x space-y" data-toggle="modal" data-target="#modal-action-insert-{@id}">
 											<i class="fa fa-expand"></i>
 											Insert
 										</button>
-									</div>
-									<div class="col-lg-1">
-										<button type="button" class="btn btn-xs btn-block btn-danger" data-toggle="modal" data-target="#modal-action-delete-{@id}">
+										<button type="button" class="btn btn-xs btn-danger space-x space-y" data-toggle="modal" data-target="#modal-action-delete-{@id}">
 											<i class="glyphicon glyphicon-trash"></i>
 											Delete
 										</button>
@@ -208,10 +204,7 @@
 														<input type="hidden" name="id" value="{@id}" />
 														<div class="row">
 															<xsl:apply-templates select="." mode="form">
-																<xsl:with-param name="id">
-																	modify-
-																	<xsl:value-of select="@id" />
-																</xsl:with-param>
+																<xsl:with-param name="id">modify-<xsl:value-of select="@id"/></xsl:with-param>
 															</xsl:apply-templates>
 														</div>
 														<div class="form-group">
@@ -222,10 +215,7 @@
 														</div>
 													</form>
 													<xsl:call-template name="xpath_browser">
-														<xsl:with-param name="id">
-															modify-
-															<xsl:value-of select="@id" />
-														</xsl:with-param>
+														<xsl:with-param name="id">modify-<xsl:value-of select="@id"/></xsl:with-param>
 													</xsl:call-template>
 												</div>
 												<div class="modal-footer">
@@ -248,10 +238,7 @@
 													<form role="form" method="post" id="action-form-{@id}">
 														<input type="hidden" name="id" value="{@id}" />
 														<xsl:call-template name="new_action_form">
-															<xsl:with-param name="id">
-																insert-
-																<xsl:value-of select="@id" />
-															</xsl:with-param>
+															<xsl:with-param name="id">insert-<xsl:value-of select="@id"/></xsl:with-param>
 														</xsl:call-template>
 														<div class="form-group">
 															<button type="submit" name="insert" class="btn btn-block btn-success">
@@ -261,10 +248,7 @@
 														</div>
 													</form>
 													<xsl:call-template name="xpath_browser">
-														<xsl:with-param name="id">
-															insert-
-															<xsl:value-of select="@id" />
-														</xsl:with-param>
+														<xsl:with-param name="id">insert-<xsl:value-of select="@id"/></xsl:with-param>
 													</xsl:call-template>
 												</div>
 												<div class="modal-footer">
@@ -285,7 +269,7 @@
 												</div>
 												<div class="panel-body">
 													<div class="row">
-														<xsl:apply-templates select="." mode="html" />
+														<xsl:apply-templates select="." mode="html"/>
 													</div>
 													<div class="row">
 														<div class="col-lg-12">
@@ -459,7 +443,7 @@
 									</div>
 								</div>
 								<div class="col-lg-3">
-									<a href="#" class="btn btn-xs btn-block btn-primary location-href">
+									<a href="#" class="btn btn-xs btn-primary location-href">
 										<i class="fa fa-pencil"></i>
 										Edit
 									</a>
@@ -490,7 +474,7 @@
 									</div>
 								</div>
 								<div class="col-lg-3">
-									<a href="#" class="btn btn-xs btn-primary btn-block location-href">
+									<a href="#" class="btn btn-xs btn-primary location-href">
 										<i class="fa fa-pencil"></i>
 										Edit
 									</a>
