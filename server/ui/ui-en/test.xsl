@@ -351,7 +351,25 @@
 							<div class="panel-group" id="xpath-composer-tags" style="margin-bottom: 10px;"></div>
 							<p>
 								<div class="btn-group" data-toggle="buttons">
-									<label class="btn btn-xs btn-primary">
+									<label class="btn btn-xs btn-success">
+										<input type="checkbox" id="xpath-composer-optimization-notext"/>
+										no text()
+									</label>
+									<label class="btn btn-xs btn-success">
+										<input type="checkbox" id="xpath-composer-optimization-noattr"/>
+										no @attr
+									</label>
+									<label class="btn btn-xs btn-success">
+										<input type="checkbox" id="xpath-composer-optimization-noindex"/>
+										no [index]
+									</label>
+									<label class="btn btn-xs btn-success">
+										<input type="checkbox" id="xpath-composer-optimization-nocontains"/>
+										no contains(...)
+									</label>
+								</div>
+								<div class="btn-group" data-toggle="buttons">
+									<label class="btn btn-xs btn-success">
 										<input type="radio" name="xpath-composer-xpath-algo" id="xpath-composer-optimization"/>
 										XPATH optimization
 									</label>
@@ -359,11 +377,14 @@
 										<input type="radio" name="xpath-composer-xpath-algo" id="xpath-composer-guess"/>
 										Guess
 									</label>
-									<label class="btn btn-xs btn-primary">
+									<label class="btn btn-xs btn-warning">
 										<input type="radio" name="xpath-composer-xpath-algo"/>
 										Manual
 									</label>
 								</div>
+								<button class="btn btn-xs btn-danger" id="xpath-composer-clear">
+									Clear
+								</button>
 							</p>
 							<div class="row">
 								<div class="col-lg-10">

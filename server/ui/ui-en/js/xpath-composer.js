@@ -336,11 +336,8 @@ $(error_handler(function($) {
 					var tag_id_start = 0;
 					var pred_id_start = 0;
 				}
-				if (tag_id_start >= tags.length) {
-					optimization_reset();  // end
-				}
 				(function() {
-					for (var t = tag_id_start; t < tags.length; ++t, pred_id_start = 0) {
+					for (var t = tag_id_start; t < tags.length; ++t, tag_id_start = t, pred_id_start = 0) {
 						var tag = tags[t];
 						if (!tag.enabled)
 							continue;
@@ -365,6 +362,9 @@ $(error_handler(function($) {
 						}
 					}
 				})();
+				if (tag_id_start >= tags.length) {
+					optimization_reset();  // end
+				}
 			} else if (optimization_state.count > 1) {
 				if (count == 1) {
 					optimization_state = null;
@@ -393,12 +393,14 @@ $(error_handler(function($) {
 					var tag_id_start = tags.length - 1;
 					var pred_id_start = tags[tag_id_start].preds.length - 1;
 				}
-				if (tag_id_start < 0) {
-					optimization_reset();  // end
-				}
 				(function() {
+					var notext = $('#xpath-composer-optimization-notext').prop('checked');
+					var noattr = $('#xpath-composer-optimization-noattr').prop('checked');
+					var noindex = $('#xpath-composer-optimization-noindex').prop('checked');
+					var nocontains = $('#xpath-composer-optimization-nocontains').prop('checked');
 					for (var t = tag_id_start; t >= 0; (function() {
 						--t;
+						tag_id_start = t;
 						if (t >= 0)
 							pred_id_start = tags[t].preds.length - 1;
 					})()) {
@@ -413,6 +415,14 @@ $(error_handler(function($) {
 							var pred = tag.preds[p];
 							if (pred.enabled)
 								continue;
+							if (pred.text && notext)
+								continue;
+							if ((pred.expr.substr(0, 1) == '@') && noattr)
+								continue;
+							if (pred['nth-of-type'] && noindex)
+								continue;
+							if ((pred.expr.substr(0, 9) == 'contains(') && nocontains)
+								continue;
 							pred.enabled = true;
 							optimization_state.tag_id = t;
 							optimization_state.pred_id = p;
@@ -420,6 +430,9 @@ $(error_handler(function($) {
 						}
 					}
 				})();
+				if (tag_id_start < 0) {
+					optimization_reset();  // end
+				}
 			} else {
 				throw new Error('xpath optimization: unexpected state: ' + JSON.stringify(optimization_state));
 			}
@@ -477,6 +490,18 @@ $(error_handler(function($) {
 		}
 		optimization(result);
 	}
+
+	function clear() {
+		for (t in tags) {
+			tags[t].enabled = false;
+			for (p in tags[t].preds)
+				tags[t].preds[p].enabled = false;
+		}
+	}
+	$('#xpath-composer-clear').click(error_handler(function() {
+		clear();
+		ui_update();
+	}));
 
 	messaging.recv(error_handler(function(data) {
 		switch (data.type) {
