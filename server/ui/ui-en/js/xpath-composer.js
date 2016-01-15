@@ -279,12 +279,14 @@ $(error_handler(function($) {
 	function optimization(count) {
 		if (!$('#xpath-composer-optimization').prop('checked'))
 			return;
+		if (optimization_state && optimization_state.finished)
+			return;
 		function restart() {
 			optimization_state = null;
 			optimization(count);
 		}
 		function finish() {
-			optimization_reset();
+			optimization_state.finished = true;
 			ui_update();
 			validate();
 		}
@@ -520,14 +522,13 @@ $(error_handler(function($) {
 			}
 		})();
 	}
-	function optimization_reset(enable) {
+	function optimization_reset() {
 		optimization_state = null;
-		$('#xpath-composer-optimization').prop('checked', enable ? true : false);
 	}
 	$('#xpath-composer-optimization').change(error_handler(function() {
 		if (!$('#xpath-composer-optimization').prop('checked'))
 			return;
-		optimization_reset('enable');
+		optimization_reset();
 		validate();
 	}));
 
