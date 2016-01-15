@@ -80,68 +80,24 @@ $(error_handler(function($) {
 	}
 
 	function guess() {
-		var tag_cnt = 2;  // enable at least 2 tags
-		for (var t in tags) {
-			var tag = tags[t];
-			if (tag.enabled)
-				--tag_cnt;
-			for (var p in tag.preds) {
-				var pred = tag.preds[p];
-				// enable key attributes
-				if (pred.expr.match(/@id|@name|@type|@role|contains.+@src|contains.+@action/i))
-					pred.enabled = true;
-				// OPTION tag has const value attr
-				if (tag.name.toLowerCase() == 'option' && pred.expr.match(/@value/i))
-					pred.enabled = true;
-				// A, BUTTON, H1 tags has a unique text
-				if (tag.name.match(/^(a|button|h\d)$/i) && pred.text)
-					pred.enabled = true;
-			}
-		}
-		function tag_enable(t) {
-			if (t < 0)
-				return;
-			if (tags[t].enabled)
-				return;
-			tags[t].enabled = true;
-			--tag_cnt;
-		}
-		// enable the last tag (target)
-		tag_enable(tags.length - 1);
-		// enable key tags
+		// enable tags but body & html
 		for (var t in tags)
-			if (tags[t].name.match(/form|input|button|select|option/i))
-				tag_enable(t);
-		// enable remaining tags having enabled predicates
-		for (var t = tags.length-1; t >= 0 && tag_cnt > 0; --t)
-			for (var p in tags[t].preds)
-				if (tags[t].preds[p].enabled) {
-					tag_enable(t);
-					break;
-				}
-		// enable remaining tags
-		for (var t = tags.length-1; t >= 0 && tag_cnt > 0; --t)
-			tag_enable(t);
-		// enable index predicate for enabled tags without enabled predicates
-		for (var t in tags) {
-			if (!tags[t].enabled)
-				continue;
-			var enabled = false;
-			for (var p in tags[t].preds)
-				if (tags[t].preds[p].enabled) {
-					enabled = true;
-					break;
-				}
-			if (enabled)
-				continue;
-			for (var p in tags[t].preds)
-				if (tags[t].preds[p]['nth-of-type']) {
-					tags[t].preds[p].enabled = true;
-					// enable parent since index predicate works only with parent tag
-					tag_enable(t-1);
-					break;
-				}
-		}
+			if (!tags[t].name.match(/^(body|html)$/i))
+				tags[t].enabled = true;
+		// enable non-first index for tags with enabled parent
+		for (var t in tags)
+			if (t > 0 && tags[t-1].enabled)
+				for (var p in tags[t].preds)
+					if (tags[t].preds[p]['nth-of-type'] && tags[t].preds[p]['nth-of-type'] > 1) {
+						tags[t].preds[p].enabled = true;
+						break;
+					}
+		// enable an attr for the last tag (as a comment for the user)
+		for (var p in tags[tags.length-1].preds)
+			if (tags[tags.length-1].preds[p].expr.match(/@id|@name|@type|@role/i)) {
+				tags[tags.length-1].preds[p].enabled = true;
+				break;
+			}
 	}
 	$('#xpath-composer-guess').change(error_handler(function() {
 		if (!$('#xpath-composer-guess').prop('checked'))
@@ -505,6 +461,8 @@ $(error_handler(function($) {
 		(function() {
 			var filter = null;
 			for (var t in tags) {
+				if (!tags[t].enabled)
+					continue;
 				for (var p in tags[t].preds) {
 					if (tags[t].preds[p].enabled && tags[t].preds[p]['nth-of-type'] && t > 0 && !tags[t-1].enabled)
 						filter = 'index predicate should have parent tag enabled';
