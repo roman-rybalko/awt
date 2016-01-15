@@ -158,6 +158,9 @@ $(error_handler(function($) {
 		$('#xpath-composer-tags').empty();
 		for (var e in elements) {
 			var preds = [];
+			// make index the first to stimulate optimization alg to produce attrs over tags
+			if (elements[e]['nth-of-type'])
+				preds.push({expr: '' + elements[e]['nth-of-type'], 'nth-of-type': elements[e]['nth-of-type'], enabled: false});
 			for (var a in elements[e].attrs) {
 				switch (a.toLowerCase()) {
 					case 'href':
@@ -179,10 +182,8 @@ $(error_handler(function($) {
 						break;
 				}
 			}
-			if (elements[e].text > '')
+			if (elements[e].text)
 				preds.push({expr: 'contains(text(), "' + elements[e].text + '")', text: elements[e].text, enabled: false});
-			if (elements[e]['nth-of-type'] > 0)
-				preds.push({expr: '' + elements[e]['nth-of-type'], 'nth-of-type': elements[e]['nth-of-type'], enabled: false});
 			tags[e] = {name: elements[e].name, preds: preds, enabled: false};
 			$('#xpath-composer-tag-template .xpath-composer-tag-title').html('//' + elements[e].name);
 			$('#xpath-composer-tag-template .xpath-composer-tag-title').attr('data-tag-id', e);
@@ -299,36 +300,80 @@ $(error_handler(function($) {
 			var new_it = JSON.parse(JSON.stringify(it));
 			if (inc > 0) {
 				for(; inc; --inc) {
-					// attrs then tag
-					if (new_it.pred_id == -1) {
-						new_it.tag_id += 1;
-						if (new_it.tag_id < tags.length) {
-							if (tags[new_it.tag_id].preds.length) {
-								new_it.pred_id = 0;
-							}
-						} else {
-							new_it.tag_id = -1;
-						}
+					// parent after child index
+					if (new_it.tag_id > 0 && new_it.pred_id != -1 && tags[new_it.tag_id].preds[new_it.pred_id]['nth-of-type']) {
+						new_it.tag_id -= 1;
+						new_it.pred_id = -1;
 					} else {
-						new_it.pred_id += 1;
-						if (new_it.pred_id == tags[new_it.tag_id].preds.length) {
-							new_it.pred_id = -1;
+						while (true) {
+							// attrs before tag
+							if (new_it.pred_id == -1) {
+								new_it.tag_id += 1;
+								if (new_it.tag_id < tags.length) {
+									if (tags[new_it.tag_id].preds.length) {
+										new_it.pred_id = 0;
+									}
+								} else {
+									new_it.tag_id = -1;
+								}
+							} else {
+								new_it.pred_id += 1;
+								if (new_it.pred_id == tags[new_it.tag_id].preds.length) {
+									new_it.pred_id = -1;
+								}
+							}
+							// skip child index
+							if (new_it.tag_id > 0 && new_it.pred_id != -1 && tags[new_it.tag_id].preds[new_it.pred_id]['nth-of-type'])
+								continue;
+							break;
+						}
+						// child index before parent
+						if (new_it.pred_id == -1 && new_it.tag_id + 1 < tags.length) {
+							for (var p = 0; p < tags[new_it.tag_id+1].preds.length; ++p)
+								if (tags[new_it.tag_id+1].preds[p]['nth-of-type'])
+									break;
+							if (p < tags[new_it.tag_id+1].preds.length) {
+								new_it.tag_id += 1;
+								new_it.pred_id = p;
+							}
 						}
 					}
 				}
 			} else if (inc < 0) {
-				// tag then attrs
 				for (; inc; ++inc) {
-					if (new_it.pred_id == -1) {
-						new_it.pred_id = tags[new_it.tag_id].preds.length - 1;
+					// child index after parent
+					if (new_it.pred_id == -1 && new_it.tag_id + 1 < tags.length) {
+						for (var p = 0; p < tags[new_it.tag_id+1].preds.length; ++p)
+							if (tags[new_it.tag_id+1].preds[p]['nth-of-type'])
+								break;
+						if (p < tags[new_it.tag_id+1].preds.length) {
+							new_it.tag_id += 1;
+							new_it.pred_id = p;
+						}
 					} else {
-						new_it.pred_id -= 1;
-						if (new_it.pred_id < 0) {
-							new_it.pred_id = -1;
-							new_it.tag_id -= 1;
-							if (new_it.tag_id < 0) {
-								new_it.tag_id = -1;
+						while (true) {
+							// tag before attrs
+							if (new_it.pred_id == -1) {
+								new_it.pred_id = tags[new_it.tag_id].preds.length - 1;
+							} else {
+								new_it.pred_id -= 1;
+								if (new_it.pred_id < 0) {
+									new_it.pred_id = -1;
+									new_it.tag_id -= 1;
+									if (new_it.tag_id < 0) {
+										new_it.tag_id = -1;
+									}
+								}
 							}
+							// skip parent
+							if (new_it.pred_id == -1 && new_it.tag_id + 1 < tags.length && new_it.tag_id != -1)
+								continue;
+							break;
+						}
+						// parent before child index
+						if (new_it.tag_id > 0 && new_it.pred_id != -1 && tags[new_it.tag_id].preds[new_it.pred_id]['nth-of-type']) {
+							new_it.tag_id -= 1;
+							new_it.pred_id = -1;
 						}
 					}
 				}
@@ -432,9 +477,6 @@ $(error_handler(function($) {
 							continue;
 						pred.enabled = true;
 						optimization_state.it = it;
-						if (pred['nth-of-type'] && it.tag_id > 0 && !tags[it.tag_id-1].enabled) {  // enable parent tag for index pred
-							tags[it.tag_id-1].enabled = true;
-						}
 						break;
 					} else {
 						if (!tags[it.tag_id].enabled) {
