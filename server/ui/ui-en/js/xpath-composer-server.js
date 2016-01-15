@@ -47,8 +47,10 @@ $(error_handler(function($) {
 			});
 		}
 
-		xpath = xpath  // escape strings, will not escape empty strings ("") or unquoted strings (string-without-quotes)
-			.replace(/(=|,)(\s*)("|')(.*?[^\\]\3)/g, function(s, m1, m2, m3, m4) {return m1 + m2 + escape(m3 + m4);})
+		xpath = xpath  // strings pre-processing
+			// escape strings, will not escape empty strings ("") or unquoted strings (string-without-quotes)
+			.replace(/(=|,|\[|and)(\s*)("|')(.*?[^\\]\3)/g, function(s, m1, m2, m3, m4) {return m1 + m2 + escape(m3 + m4);})
+			.replace(/\(:.+?:\)/g, '')  // remove XPATH 2.0 comments (after string escaping since a string containing a comment is a valid expression)
 		;
 
 		if (xpath.match(/\s+or\s+/))
@@ -90,6 +92,7 @@ $(error_handler(function($) {
 			.replace(/\/\./g, '')  // self (parent clause "/.." should be handled before here)
 			.replace(/\/\//g, ' ')  // descendant
 			.replace(/\//g, ' > ')  // child
+			.replace(/position\(\)=/g, '')  // "position() = n" clause (preprocess, will be handled further in index)
 			.replace(/\*\[(\d+)\]/g, '*:nth-child($1)')  // index
 			.replace(/\[(\d+)\]/g, ':nth-of-type($1)')  // index
 			.replace(/@/g, '')  // attribute
@@ -97,6 +100,7 @@ $(error_handler(function($) {
 			.replace(/\[contains\((\S+?),(\S+?)\)\]/g, '[$1*=$2]')  // "contains" clause
 			.replace(/starts\-with\((\S+?),(\S+?)\)/g, '$1^=$2')  // "starts-with" clause
 			.replace(/ends\-with\((\S+?),(\S+?)\)/g, '$1\$=$2')  // "ends-with" clause
+			.replace(/\[__ESCAPE__\S+?\]/g, '')  // always-true-string as a comment
 		;
 
 		xpath = unescape(xpath);  // unescape strings

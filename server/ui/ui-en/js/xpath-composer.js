@@ -31,10 +31,10 @@ $(error_handler(function($) {
 		var preds = [];
 		for (var p in tag.preds)
 			if (tag.preds[p].enabled)
-				if (!tag.preds[p]['nth-of-type'])
-					preds.push(tag.preds[p].expr);
-				else
+				if (tag.preds[p]['nth-of-type'])
 					title += '[' + tag.preds[p].expr + ']';
+				else
+					preds.push(tag.preds[p].expr);
 		if (preds.length)
 			title += '[' + preds.join(' and ') + ']';
 		$('#xpath-composer-tags .xpath-composer-tag-title[data-tag-id=' + tag_id +']').html(title);
@@ -54,12 +54,35 @@ $(error_handler(function($) {
 				var preds = [];
 				for (var p in tags[t].preds)
 					if (tags[t].preds[p].enabled)
-						if (!tags[t].preds[p]['nth-of-type'])
-							preds.push(tags[t].preds[p].expr);
-						else
+						if (tags[t].preds[p]['nth-of-type'])
 							xpath += '[' + tags[t].preds[p].expr + ']';
+						else
+							preds.push(tags[t].preds[p].expr);
+				/*
+				 * Technically it is possible to add every attr as a comment to every tag
+				 * but the XPATH then become un-human-manageable.
+				 * Attempting to reduce the generated XPATH to 1024 chars
+				 * (the max size an average human can be aware of):
+				 * commenting only the last tag only with the selected predicates.
+				 * There are TODOs for this.
+				 */
+				var comments = [];
+				if (t == tags.length - 1)  // append comments to the last tag
+					for (var p in tags[t].preds) {
+						if (tags[t].preds[p].enabled)
+							continue;
+						if (
+							tags[t].preds[p].expr.match(/^(@id|@name|@type|@role|@value|@class)/i)
+							|| (tags[t].name.match(/^(a|button|h\d)$/i) && tags[t].preds[p].text)
+						) {
+							comments.push(tags[t].preds[p].expr);
+						}
+					}
 				if (preds.length)
-					xpath += '[' + preds.join(' and ') + ']';
+					xpath += '['
+						+ preds.join(' and ')
+						+ (comments.length ? ' and "(: ' + comments.join(' and ').replace(/("|\/)/g, '\\$1') + ' :)"' : '')  // always-true-string as a comment
+						+ ']';
 			}
 		$('#xpath-composer-result').val(xpath);
 	}
@@ -84,15 +107,15 @@ $(error_handler(function($) {
 		for (var t in tags)
 			if (!tags[t].name.match(/^(body|html)$/i))
 				tags[t].enabled = true;
-		// enable non-first index for tags with enabled parent
+		// enable index for tags with enabled parents
 		for (var t in tags)
 			if (t > 0 && tags[t-1].enabled)
 				for (var p in tags[t].preds)
-					if (tags[t].preds[p]['nth-of-type'] && tags[t].preds[p]['nth-of-type'] > 1) {
+					if (tags[t].preds[p]['nth-of-type']) {
 						tags[t].preds[p].enabled = true;
 						break;
 					}
-		// enable an attr for the last tag (as a comment for the user)
+		// enable a specific attr for the last tag
 		for (var p in tags[tags.length-1].preds)
 			if (tags[tags.length-1].preds[p].expr.match(/@id|@name|@type|@role/i)) {
 				tags[tags.length-1].preds[p].enabled = true;
@@ -112,7 +135,7 @@ $(error_handler(function($) {
 	function xpath_composer_elements(elements) {
 		tags = [];
 		$('#xpath-composer-tags').empty();
-		for (var e in elements) {
+		for (var e = 0; e < elements.length; ++e) {
 			var preds = [];
 			// make index the first to stimulate optimization alg to produce attrs over tags
 			if (elements[e]['nth-of-type'])
