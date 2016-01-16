@@ -34,6 +34,14 @@ $(error_handler(function($) {
 }));
 
 $(error_handler(function($) {
+	if (navigator && navigator.userAgent.match(/MSIE\s*[23456789]/)) try {
+		var storage = new Storage('msie-alert-', 1 /* expire days */);
+		var showed = storage.get('showed');
+		if (!showed) {
+			storage.set('showed', true);
+			alert('Internet Explorer is not fully supported. Please, consider to upgrade to Google Chrome, Opera, Firefox or Safari.');
+		}
+	} catch (e) {}
 	$('.location-path').html(document.location.href.replace(/\/[^\/]*$/,'/'));
 	$('a.location-href').attr('href', document.location.href);
 	$('.action-type').each(function() {
