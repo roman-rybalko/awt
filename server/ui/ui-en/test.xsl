@@ -353,6 +353,30 @@
 									</label>
 								</div>
 								<div class="btn-group" data-toggle="buttons">
+									<label class="btn btn-xs btn-default">
+										<input type="radio" name="xpath-composer-comments-tags" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-none"/>
+										comments: none
+									</label>
+									<label class="btn btn-xs btn-default active">
+										<input type="radio" name="xpath-composer-comments-tags" checked="checked" id="xpath-composer-comments-tags-main" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-main"/>
+										main tag
+									</label>
+									<label class="btn btn-xs btn-default">
+										<input type="radio" name="xpath-composer-comments-tags" id="xpath-composer-comments-tags-all" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-all"/>
+										all tags
+									</label>
+								</div>
+								<div class="btn-group" data-toggle="buttons">
+									<label class="btn btn-xs btn-default">
+										<input type="radio" name="xpath-composer-comments-preds" id="xpath-composer-comments-preds-all" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-preds-all"/>
+										all predicates
+									</label>
+									<label class="btn btn-xs btn-default active">
+										<input type="radio" name="xpath-composer-comments-preds" checked="checked" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-preds-specific"/>
+										specific predicates
+									</label>
+								</div>
+								<div class="btn-group" data-toggle="buttons">
 									<label class="btn btn-xs btn-success">
 										<input type="radio" name="xpath-composer-algo" id="xpath-composer-optimization"/>
 										Optimize

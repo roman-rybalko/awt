@@ -204,12 +204,20 @@ $(error_handler(function($) {
 		$('input.control-state[type="checkbox"], input.control-state[type="radio"]').each(function() {
 			var name = $(this).attr('data-control-state');
 			var value = storage.get(name);
-			if (value) {
-				$(this).prop('checked', true);
-				$(this).parent('label').addClass('active');
-			}
+			if (value)
+				$(this).click();
 		});
-		$('input.control-state[type="checkbox"], input.control-state[type="radio"]').change(error_handler(function(ev) {
+		$('input.control-state[type="checkbox"]').change(error_handler(function(ev) {
+			var name = $(ev.target).attr('data-control-state');
+			storage.set(name, $(ev.target).prop('checked'));
+		}));
+		$('input.control-state[type="radio"]').change(error_handler(function(ev) {
+			var name = $(ev.target).attr('name');
+			$('input.control-state[type="radio"][name="' + name + '"]').each(function() {
+				var name = $(this).attr('data-control-state');
+				if (name)
+					storage.set(name, false);
+			});
 			var name = $(ev.target).attr('data-control-state');
 			storage.set(name, $(ev.target).prop('checked'));
 		}));

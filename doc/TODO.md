@@ -27,7 +27,6 @@
 27. Обфускация JavaScript в output buffer для ui-en/php/xpath-browser-composer.php (?)
 28. Добавление, удаление и изменение action без перезагрузки страницы ?test=1 (?)
 29. ie7, ie8, ie9: virtualbox + win2k3srv + rdesktop
-30. xpath-composer: насройка генерации комментариев (нет/только для главного тега/для всех тегов, основные атрибуты/все атрибуты)
 31. сохранение url в комментариях xpath и загрузка его в xpath-browser, загрузка xpath в xpath-composer
 32. xpath-composer: загрузка состояния из xpath (разбор xpath, разбор комментариев)
 33. проверять размер selector и data при добавлении test action и возвращать ошибку если превышает допустимый размер

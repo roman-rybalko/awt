@@ -39,8 +39,12 @@ $(error_handler(function($) {
 			title += '[' + preds.join(' and ') + ']';
 		$('#xpath-composer-tags .xpath-composer-tag-title[data-tag-id=' + tag_id +']').html(title);
 	}
+
 	function xpath_update() {
 		var xpath = '';
+		var comments_tags_main = $('#xpath-composer-comments-tags-main').prop('checked');
+		var comments_tags_all = $('#xpath-composer-comments-tags-all').prop('checked');
+		var comments_preds_all = $('#xpath-composer-comments-preds-all').prop('checked');
 		for (var t in tags)
 			if (tags[t].enabled) {
 				if (t-1 >= 0)
@@ -60,22 +64,17 @@ $(error_handler(function($) {
 							preds.push(tags[t].preds[p].expr);
 				if (preds.length)
 					xpath += '[' + preds.join(' and ') + ']';
-				/*
-				 * Technically it is possible to add every attr as a comment to every tag
-				 * but the XPATH then become un-human-manageable.
-				 * Attempting to reduce the generated XPATH to 1024 chars
-				 * (the max size an average human can be aware of):
-				 * commenting only the last tag only with the selected predicates.
-				 * There are TODOs for this.
-				 */
 				var comments = [];
-				if (t == tags.length - 1)  // append comments to the last tag
+				if ((comments_tags_main && t == tags.length - 1) || comments_tags_all)
 					for (var p in tags[t].preds) {
 						if (tags[t].preds[p].enabled)
 							continue;
 						if (
-							tags[t].preds[p].expr.match(/^(@id|@name|@type|@role|@value|@class)/i)
-							|| (tags[t].name.match(/^(a|button|h\d)$/i) && tags[t].preds[p].text)
+							comments_preds_all
+							|| (
+								tags[t].preds[p].expr.match(/^(@id|@name|@type|@role|@value|@class)/i)
+								|| (tags[t].name.match(/^(a|button|h\d)$/i) && tags[t].preds[p].text)
+							)
 						) {
 							comments.push(tags[t].preds[p].expr);
 						}
@@ -85,6 +84,10 @@ $(error_handler(function($) {
 			}
 		$('#xpath-composer-result').val(xpath);
 	}
+	$('.xpath-composer-comments').change(error_handler(function() {
+		xpath_update();
+	}));
+
 	function ui_update() {
 		for (var t in tags) {
 			tag_title_update(t);
