@@ -404,6 +404,15 @@ var xpath_composer_autoadd = error_handler(function(xpath, value) {
 				$('#action-autoadd-container').append($('#action-autoadd-template-click').html());
 			}
 		})).fail(error_handler(function(error) {
+			var op = xpath_composer_autoadd_queue.shift();
+			if (op.value) {
+				$('#action-autoadd-template-enter .action-autoadd-enter-xpath').html('FAILED: ' + op.xpath);
+				$('#action-autoadd-template-enter .action-autoadd-enter-value').html('FAILED: ' + op.value);
+				$('#action-autoadd-container').append($('#action-autoadd-template-enter').html());
+			} else {
+				$('#action-autoadd-template-click .action-autoadd-click-xpath').html('FAILED: ' + op.xpath);
+				$('#action-autoadd-container').append($('#action-autoadd-template-click').html());
+			}
 			if (console)
 				console.log('xpath-composer action autoadd fail:', error.status, error.statusText);
 		})).always(error_handler(function() {
