@@ -53,7 +53,7 @@
 						Pricing
 					</div>
 					<div class="panel-body">
-						1 Browser Action = 1 RUB
+						100 Browser Actions = $1 USD
 					</div>
 				</div>
 			</div>
@@ -96,8 +96,8 @@
 					<div class="panel-body">
 						<div class="alert alert-warning">
 							<b>Limits:</b><br/>
-							<b>PayPal:</b> MIN = 200 RUB, MAX = 500 RUB<br/>
-							<b>WebMoney:</b> MIN = 1 RUB, MAX = 200 RUB
+							<b>PayPal:</b> MIN = $2 USD (200 Actions), MAX = $5 USD (500 Actions)<br/>
+							<b>WebMoney:</b> MIN = $0.01 USD (1 Action), MAX = $2 USD (200 Actions)
 						</div>
 						<form role="form" method="post">
 							<div class="form-group">
