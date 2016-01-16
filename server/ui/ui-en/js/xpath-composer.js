@@ -80,7 +80,7 @@ $(error_handler(function($) {
 						}
 					}
 				if (comments.length)
-					xpath += '["(: ' + comments.join(' and ').replace(/("|\/)/g, '\\$1') + ' :)"]';  // always-true-string as a comment
+					xpath += '["(: ' + comments.join(' and ').replace(/"|'|\//g, '') + ' :)"]';  // always-true-string as a comment, do not use \\-escaping since it's buggy in some browsers (e.g. phantomjs)
 			}
 		$('#xpath-composer-result').val(xpath);
 	}

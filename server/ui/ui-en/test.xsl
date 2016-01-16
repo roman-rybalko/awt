@@ -355,7 +355,7 @@
 								<div class="btn-group" data-toggle="buttons">
 									<label class="btn btn-xs btn-default">
 										<input type="radio" name="xpath-composer-comments-tags" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-none"/>
-										comments: none
+										no comments
 									</label>
 									<label class="btn btn-xs btn-default active">
 										<input type="radio" name="xpath-composer-comments-tags" checked="checked" id="xpath-composer-comments-tags-main" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-main"/>
