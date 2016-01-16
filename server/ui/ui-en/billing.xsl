@@ -18,7 +18,7 @@
 				<h1 class="page-header">Billing</h1>
 				<xsl:apply-templates select="//message"/>
 				<div class="alert alert-info alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="set-email">&#215;</button>
+					<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="set-email">&#215;</button>
 					<b>Tip:</b>
 					Please, check your E-Mail in <a href="./?settings=1">Settings</a>.
 				</div>
@@ -220,7 +220,7 @@
 				</div>
 				<xsl:if test="count(subscription) &gt; 1">
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-subscription-order">&#215;</button>
+						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="billing-subscription-order">&#215;</button>
 						<b>Tip:</b>
 						Firstly is processed the subscription with a higher amount.
 					</div>
@@ -488,7 +488,7 @@
 				</div>
 				<xsl:if test="pending_transaction">
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-pending-transactions-process">&#215;</button>
+						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="billing-pending-transactions-process">&#215;</button>
 						<b>Tip:</b>
 						Pending Transactions are also processed every minute automatically.
 					</div>
@@ -543,7 +543,7 @@
 			<div class="col-lg-12">
 				<xsl:if test="count(transaction) &gt; 500">
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-display-period">&#215;</button>
+						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="data-display-period">&#215;</button>
 						<b>Tip:</b>
 						Use <b>Data Display Period</b> option in <a href="./?settings=1">Settings</a> to reduce displayed data and speed up the UI.
 					</div>
@@ -614,7 +614,7 @@
 				</div>
 				<xsl:if test="transaction">
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="billing-transactions-display-period">&#215;</button>
+						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="billing-transactions-display-period">&#215;</button>
 						<b>Tip:</b>
 						Transactions here are displayed for 42 days max. Please, use <a href="./file.php?billing=1">Export transactions (CSV)</a> for a full list.
 					</div>

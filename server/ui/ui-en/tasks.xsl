@@ -20,7 +20,7 @@
 				<xsl:apply-templates select="//message"/>
 				<xsl:if test="not(task)">
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-create-test1">&#215;</button>
+						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="tasks-create-test1">&#215;</button>
 						<b>Tip:</b>
 						Create a <a href="./?tests=1">test</a> to run a task.
 					</div>
@@ -28,7 +28,7 @@
 				<div class="apply-data-display-period">
 					<xsl:if test="count(task) &gt; 500">
 						<div class="alert alert-info alert-dismissable">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-display-period">&#215;</button>
+							<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="data-display-period">&#215;</button>
 							<b>Tip:</b>
 							Use <b>Data Display Period</b> option in <a href="./?settings=1">Settings</a> to reduce displayed data and speed up the UI.
 						</div>
@@ -106,7 +106,7 @@
 						</div>
 					</div>
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-pending">&#215;</button>
+						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="tasks-pending">&#215;</button>
 						<b>Tip:</b>
 						Pending Tasks are processed every 5 seconds (when the processing queue is empty).
 					</div>
@@ -183,7 +183,7 @@
 						</div>
 					</div>
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="tasks-cancel">&#215;</button>
+						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="tasks-cancel">&#215;</button>
 						<b>Tip:</b>
 						Running Task may be canceled after timeout (by default 10 seconds per action).
 					</div>
@@ -342,7 +342,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="alert alert-info alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-purge-period">&#215;</button>
+						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="data-purge-period">&#215;</button>
 						<b>Tip:</b>
 						Tasks are purged after 42 days.
 					</div>

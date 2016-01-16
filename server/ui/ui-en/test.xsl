@@ -336,19 +336,19 @@
 							<p>
 								<div class="btn-group" data-toggle="buttons">
 									<label class="btn btn-xs btn-success">
-										<input type="checkbox" id="xpath-composer-optimization-notext"/>
+										<input type="checkbox" id="xpath-composer-optimization-notext" class="control-state" data-control-state="xpath-composer-optimization-notext"/>
 										no text()
 									</label>
 									<label class="btn btn-xs btn-success">
-										<input type="checkbox" id="xpath-composer-optimization-noattr"/>
+										<input type="checkbox" id="xpath-composer-optimization-noattr" class="control-state" data-control-state="xpath-composer-optimization-noattr"/>
 										no @attr
 									</label>
 									<label class="btn btn-xs btn-success">
-										<input type="checkbox" id="xpath-composer-optimization-noindex"/>
+										<input type="checkbox" id="xpath-composer-optimization-noindex" class="control-state" data-control-state="xpath-composer-optimization-noindex"/>
 										no [index]
 									</label>
 									<label class="btn btn-xs btn-success">
-										<input type="checkbox" id="xpath-composer-optimization-nocontains"/>
+										<input type="checkbox" id="xpath-composer-optimization-nocontains" class="control-state" data-control-state="xpath-composer-optimization-nocontains"/>
 										no contains(...)
 									</label>
 								</div>
@@ -585,13 +585,13 @@
 								<xsl:if test="$id = 'add'">
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" id="action-autoadd-control"/>
+											<input type="checkbox" id="action-autoadd-control" class="control-state" data-control-state="xpath-composer-autoadd"/>
 											Auto-add actions (XPATH Composer will not be used)
 										</label>
 									</div>
 								</xsl:if>
 								<div class="alert alert-info alert-dismissable">
-									<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="xpath-composer-rclick">&#215;</button>
+									<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="xpath-composer-rclick">&#215;</button>
 									<b>Tip:</b>
 									Use right-click on anchors to capture the tag and prevent page loading.
 								</div>

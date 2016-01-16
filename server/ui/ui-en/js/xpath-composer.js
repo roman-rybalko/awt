@@ -241,6 +241,8 @@ $(error_handler(function($) {
 			if (call && xpath_composer_autoadd($('#xpath-composer-result').val())) {
 				highlight_stop();
 				$('#modal-xpath-composer').modal('hide');
+				$('#xpath-composer-optimization').prop('checked', false);
+				$('#xpath-composer-optimization').parent('label').removeClass('active');
 			}
 		}
 	}

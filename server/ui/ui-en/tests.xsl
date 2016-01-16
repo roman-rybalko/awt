@@ -256,7 +256,7 @@
 				</div>
 			</div>
 			<div class="alert alert-info alert-dismissable">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-dismiss-state="data-purge-period">&#215;</button>
+				<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="data-purge-period">&#215;</button>
 				<b>Tip:</b>
 				Deleted tests are purged after 42 days.
 			</div>

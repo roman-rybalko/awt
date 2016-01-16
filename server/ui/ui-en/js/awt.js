@@ -186,17 +186,32 @@ $(error_handler(function($) {
 		if (hash)
 			table.search(hash).draw();
 	})();
-	if ($('.close[data-dismiss="alert"][data-dismiss-state]').length) error_handler(function() {
-		var storage = new Storage('dismiss-state-', 42 /* expire days */);
-		$('.close[data-dismiss="alert"][data-dismiss-state]').each(function() {
-			var name = $(this).attr('data-dismiss-state');
+	if ($('.tip-state').length) error_handler(function() {
+		var storage = new Storage('tip-state-', 42 /* expire days */);
+		$('.tip-state').each(function() {
+			var name = $(this).attr('data-tip-state');
 			var value = storage.get(name);
 			if (value)
 				$(this).closest('.alert').alert('close');
 		});
-		$('.close[data-dismiss="alert"][data-dismiss-state]').click(error_handler(function(ev) {
-			var name = $(ev.target).attr('data-dismiss-state');
+		$('.tip-state').click(error_handler(function(ev) {
+			var name = $(ev.target).attr('data-tip-state');
 			storage.set(name, true);
+		}));
+	})();
+	if ($('.control-state').length) error_handler(function() {
+		var storage = new Storage('control-state-' + awt_login + '-');
+		$('input.control-state[type="checkbox"], input.control-state[type="radio"]').each(function() {
+			var name = $(this).attr('data-control-state');
+			var value = storage.get(name);
+			if (value) {
+				$(this).prop('checked', true);
+				$(this).parent('label').addClass('active');
+			}
+		});
+		$('input.control-state[type="checkbox"], input.control-state[type="radio"]').change(error_handler(function(ev) {
+			var name = $(ev.target).attr('data-control-state');
+			storage.set(name, $(ev.target).prop('checked'));
 		}));
 	})();
 	function aggregate_day(data) {
