@@ -9,10 +9,10 @@ var Messaging = function(server) {
 		recv_key = 'MgJu7pUHuQMyan9x2Rof8A';
 	}
 	var target = null;
-	var set_target = this.set_target = function(newTarget) {
-		if (target && target != newTarget)
+	var set_target = this.set_target = function(new_target) {
+		if (target && target != new_target)
 			target.close();
-		target = newTarget;
+		target = new_target;
 	}
 	this.send = function(data) {
 		try {
