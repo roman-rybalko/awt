@@ -324,7 +324,7 @@
 				</div>
 			</div>
 			<div class="modal" id="modal-xpath-composer" role="dialog">
-				<div class="modal-dialog">
+				<div class="modal-dialog modal-lg">
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<button type="button" class="close" data-dismiss="modal">&#215;</button>
@@ -365,10 +365,11 @@
 										<input type="radio" name="xpath-composer-algo"/>
 										Manual
 									</label>
+									<label class="btn btn-xs btn-danger" id="xpath-composer-clear">
+										<input type="radio" name="xpath-composer-algo"/>
+										Clear
+									</label>
 								</div>
-								<button class="btn btn-xs btn-danger" id="xpath-composer-clear">
-									Clear
-								</button>
 							</p>
 							<div class="row">
 								<div class="col-lg-10">

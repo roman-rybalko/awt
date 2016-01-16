@@ -58,6 +58,8 @@ $(error_handler(function($) {
 							xpath += '[' + tags[t].preds[p].expr + ']';
 						else
 							preds.push(tags[t].preds[p].expr);
+				if (preds.length)
+					xpath += '[' + preds.join(' and ') + ']';
 				/*
 				 * Technically it is possible to add every attr as a comment to every tag
 				 * but the XPATH then become un-human-manageable.
@@ -78,11 +80,8 @@ $(error_handler(function($) {
 							comments.push(tags[t].preds[p].expr);
 						}
 					}
-				if (preds.length)
-					xpath += '['
-						+ preds.join(' and ')
-						+ (comments.length ? ' and "(: ' + comments.join(' and ').replace(/("|\/)/g, '\\$1') + ' :)"' : '')  // always-true-string as a comment
-						+ ']';
+				if (comments.length)
+					xpath += '["(: ' + comments.join(' and ').replace(/("|\/)/g, '\\$1') + ' :)"]';  // always-true-string as a comment
 			}
 		$('#xpath-composer-result').val(xpath);
 	}
