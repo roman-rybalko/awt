@@ -329,7 +329,7 @@
 						<div class="panel-heading">
 							<button type="button" class="close" data-dismiss="modal">&#215;</button>
 							<i class="fa fa-pencil"></i>
-							XPATH Composer
+							XPath Composer
 						</div>
 						<div class="panel-body">
 							<div class="panel-group" id="xpath-composer-tags" style="margin-bottom: 10px;"></div>
@@ -398,7 +398,7 @@
 							<div class="row">
 								<div class="col-lg-10">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Element XPATH" id="xpath-composer-result"/>
+										<input type="text" class="form-control" placeholder="Element XPath" id="xpath-composer-result"/>
 									</div>
 								</div>
 								<div class="col-lg-2">
@@ -463,7 +463,7 @@
 											<b>Click</b>
 										</div>
 										<div class="col-lg-10">
-											<b>Element XPATH</b>: <span class="action-autoadd-click-xpath"></span>
+											<b>Element XPath</b>: <span class="action-autoadd-click-xpath"></span>
 										</div>
 									</div>
 								</div>
@@ -491,7 +491,7 @@
 											<b>Enter data</b>
 										</div>
 										<div class="col-lg-6">
-											<b>Input XPATH</b>: <span class="action-autoadd-enter-xpath"></span>
+											<b>Input XPath</b>: <span class="action-autoadd-enter-xpath"></span>
 										</div>
 										<div class="col-lg-4">
 											<b>Value</b>: <span class="action-autoadd-enter-value"></span>
@@ -542,7 +542,7 @@
 				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#xpath-browser-{$id}" href="#xpath-browser-body-{$id}">
 						<i class="fa fa-globe"></i>
-						XPATH Browser
+						XPath Browser
 					</a>
 				</h4>
 			</div>
@@ -554,7 +554,7 @@
 								<div class="well well-sm">
 									<b>Usage:</b><br/>
 									<p>
-										To enable XPATH Browser/Composer functionality you need to inject the service script<br/>
+										To enable XPath Browser/Composer functionality you need to inject the service script<br/>
 										<code><span class="location-path">https://advancedwebtesting.com/ui/</span>ui-en/php/xpath-browser-composer.php</code><br/>
 										into the target page.
 									</p>
@@ -611,7 +611,7 @@
 									<div class="checkbox">
 										<label>
 											<input type="checkbox" id="action-autoadd-control" class="control-state" data-control-state="xpath-composer-autoadd"/>
-											Auto-add actions (XPATH Composer will not be used)
+											Auto-add actions (XPath Composer will not be used)
 										</label>
 									</div>
 								</xsl:if>

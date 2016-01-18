@@ -56,12 +56,12 @@
 		<b>Element exists</b>
 	</div>
 	<div class="col-lg-10" title="{@selector}">
-		<b>Element XPATH</b>: <xsl:value-of select="@selector"/>
+		<b>Element XPath</b>: <xsl:value-of select="@selector"/>
 	</div>
 </xsl:template>
 
 <xsl:template match="action[@type = 'exists']" mode="text">
-	<xsl:text/>Element exists, Element XPATH: <xsl:value-of select="@selector"/>
+	<xsl:text/>Element exists, Element XPath: <xsl:value-of select="@selector"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'exists']" mode="form">
@@ -71,20 +71,20 @@
 			<b>Usage:</b><br/>
 			Check an element is present on the page.
 			<br/>
-			<i>Element XPATH</i> must specify an xpath to an element, not to an attribute or text.
+			<i>Element XPath</i> must specify an xpath to an element, not to an attribute or text.
 			May contain variables {var}. The variable is initialized in another action.
 			<br/>
 			<b>Examples:</b>
 			<br/>
-			<i>Element XPATH</i>: <code>//table</code> (find a table in the document)
+			<i>Element XPath</i>: <code>//table</code> (find a table in the document)
 			<br/>
-			<i>Element XPATH</i>: <code>//input[@name = "search"]</code> (find an input with attribute name="search")
+			<i>Element XPath</i>: <code>//input[@name = "search"]</code> (find an input with attribute name="search")
 			<br/>
-			<i>Element XPATH</i>: <code>//{element}[@id = "{element_id}" and contains(@class, "in")]</code> (variable substitution)
+			<i>Element XPath</i>: <code>//{element}[@id = "{element_id}" and contains(@class, "in")]</code> (variable substitution)
 			<br/>
-			<i>Element XPATH</i>: <code>//input[@name = "search"]/@value</code> - <span class="text-failure">wrong</span>
+			<i>Element XPath</i>: <code>//input[@name = "search"]/@value</code> - <span class="text-failure">wrong</span>
 			<br/>
-			<i>Element XPATH</i>: <code>//table//text()</code> - <span class="text-failure">wrong</span>
+			<i>Element XPath</i>: <code>//table//text()</code> - <span class="text-failure">wrong</span>
 			<br/>
 			<b>Reference:</b>
 			<br/>
@@ -105,7 +105,7 @@
 	<div class="col-lg-10">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}">
-				Element XPATH
+				Element XPath
 			</label>
 			<input class="form-control action-xpath-element" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
@@ -117,12 +117,12 @@
 		<b>Click</b>
 	</div>
 	<div class="col-lg-10" title="{@selector}">
-		<b>Element XPATH</b>: <xsl:value-of select="@selector"/>
+		<b>Element XPath</b>: <xsl:value-of select="@selector"/>
 	</div>
 </xsl:template>
 
 <xsl:template match="action[@type = 'click']" mode="text">
-	<xsl:text/>Click, Element XPATH: <xsl:value-of select="@selector"/>
+	<xsl:text/>Click, Element XPath: <xsl:value-of select="@selector"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'click']" mode="form">
@@ -132,20 +132,20 @@
 			<b>Usage:</b><br/>
 			Click on an element. The element may be any visible element, not only an input or a link. If the element is not visible an error will be raised.
 			<br/>
-			<i>Element XPATH</i> must specify an xpath to the element, not an attribute or a text.
+			<i>Element XPath</i> must specify an xpath to the element, not an attribute or a text.
 			May contain variables {var}. The variable is initialized in another action.
 			<br/>
 			<b>Examples:</b>
 			<br/>
-			<i>Element XPATH</i>: <code>//table//a</code> (click a link in a table)
+			<i>Element XPath</i>: <code>//table//a</code> (click a link in a table)
 			<br/>
-			<i>Element XPATH</i>: <code>//button[@type = "submit" and @name = "search"]</code> (click a button with attributes name="search" and type="submit")
+			<i>Element XPath</i>: <code>//button[@type = "submit" and @name = "search"]</code> (click a button with attributes name="search" and type="submit")
 			<br/>
-			<i>Element XPATH</i>: <code>//{element}[@id = "id123456" and contains(@{element_attr}, "{element_attr_value}")]</code> (variable substitution)
+			<i>Element XPath</i>: <code>//{element}[@id = "id123456" and contains(@{element_attr}, "{element_attr_value}")]</code> (variable substitution)
 			<br/>
-			<i>Element XPATH</i>: <code>//input[@name = "search"]/@value</code> - <span class="text-failure">wrong</span>
+			<i>Element XPath</i>: <code>//input[@name = "search"]/@value</code> - <span class="text-failure">wrong</span>
 			<br/>
-			<i>Element XPATH</i>: <code>//a/text()</code> - <span class="text-failure">wrong</span>
+			<i>Element XPath</i>: <code>//a/text()</code> - <span class="text-failure">wrong</span>
 			<br/>
 			<b>Reference:</b>
 			<br/>
@@ -166,7 +166,7 @@
 	<div class="col-lg-10">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}">
-				Element XPATH
+				Element XPath
 			</label>
 			<input class="form-control action-xpath-element" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
@@ -178,7 +178,7 @@
 		<b>Enter data</b>
 	</div>
 	<div class="col-lg-6" title="{@selector}">
-		<b>Input XPATH</b>: <xsl:value-of select="@selector"/>
+		<b>Input XPath</b>: <xsl:value-of select="@selector"/>
 	</div>
 	<div class="col-lg-4" title="{@data}">
 		<b>Value</b>: <xsl:value-of select="@data"/>
@@ -186,7 +186,7 @@
 </xsl:template>
 
 <xsl:template match="action[@type = 'enter']" mode="text">
-	<xsl:text/>Enter data, Input XPATH: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
+	<xsl:text/>Enter data, Input XPath: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'enter']" mode="form">
@@ -196,24 +196,24 @@
 			<b>Usage:</b><br/>
 			Enter a value into an input (via keyboard events).
 			<br/>
-			<i>Input XPATH</i> must specify an xpath to the input element.
+			<i>Input XPath</i> must specify an xpath to the input element.
 			May contain variables {var}. The variable is initialized in another action.
 			<br/>
 			<i>Value</i> may contain variables {var}.
 			<br/>
 			<b>Examples:</b>
 			<br/>
-			<i>Input XPATH</i>: <code>//input</code>, <i>Value</i>: <code>test value</code>
+			<i>Input XPath</i>: <code>//input</code>, <i>Value</i>: <code>test value</code>
 			<br/>
-			<i>Input XPATH</i>: <code>//input[@name = "q" and contains(@class, "search")]</code>, <i>Value</i>: <code>web testing</code>
+			<i>Input XPath</i>: <code>//input[@name = "q" and contains(@class, "search")]</code>, <i>Value</i>: <code>web testing</code>
 			<br/>
-			<i>Input XPATH</i>: <code>//form[ends-with(@action, "submit.cgi")]//input[@name = "data"]</code>, <i>Value</i>: <code>sample data</code>
+			<i>Input XPath</i>: <code>//form[ends-with(@action, "submit.cgi")]//input[@name = "data"]</code>, <i>Value</i>: <code>sample data</code>
 			<br/>
-			<i>Input XPATH</i>: <code>//div[@id = "{targetId}"]/input</code>, <i>Value</i>: <code>{targetValue}</code> (variable substitution)
+			<i>Input XPath</i>: <code>//div[@id = "{targetId}"]/input</code>, <i>Value</i>: <code>{targetValue}</code> (variable substitution)
 			<br/>
-			<i>Input XPATH</i>: <code>//input[@name = "search"]/@value</code> - <span class="text-failure">wrong</span>
+			<i>Input XPath</i>: <code>//input[@name = "search"]/@value</code> - <span class="text-failure">wrong</span>
 			<br/>
-			<i>Input XPATH</i>: <code>//a/text()</code> - <span class="text-failure">wrong</span>
+			<i>Input XPath</i>: <code>//a/text()</code> - <span class="text-failure">wrong</span>
 			<br/>
 			<b>Reference:</b>
 			<br/>
@@ -234,7 +234,7 @@
 	<div class="col-lg-6">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}">
-				Input XPATH
+				Input XPath
 			</label>
 			<input class="form-control action-xpath-element" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
@@ -251,10 +251,10 @@
 
 <xsl:template match="action[@type = 'modify']" mode="html">
 	<div class="col-lg-2">
-		<b>Modify XPATH</b>
+		<b>Modify XPath</b>
 	</div>
 	<div class="col-lg-6" title="{@selector}">
-		<b>XPATH Expression</b>: <xsl:value-of select="@selector"/>
+		<b>XPath Expression</b>: <xsl:value-of select="@selector"/>
 	</div>
 	<div class="col-lg-4" title="{@data}">
 		<b>Value</b>: <xsl:value-of select="@data"/>
@@ -262,7 +262,7 @@
 </xsl:template>
 
 <xsl:template match="action[@type = 'modify']" mode="text">
-	<xsl:text/>Modify XPATH, XPATH Expression: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
+	<xsl:text/>Modify XPath, XPath Expression: <xsl:value-of select="@selector"/>, Value: <xsl:value-of select="@data"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'modify']" mode="form">
@@ -280,7 +280,7 @@
 			to disable an event-triggered script,
 			etc.
 			<br/>
-			<i>XPATH Expression</i> must specify an xpath to an element or an attribute.
+			<i>XPath Expression</i> must specify an xpath to an element or an attribute.
 			If an xpath to an element is specified, inner content of the element (el.innerHTML) will be replaced.
 			May contain variables {var}. The variable is initialized in another action.
 			<br/>
@@ -288,13 +288,13 @@
 			<br/>
 			<b>Examples:</b>
 			<br/>
-			<i>XPATH Expression</i>: <code>//input/@value</code>, <i>Value</i>: <code>100.01</code>
+			<i>XPath Expression</i>: <code>//input/@value</code>, <i>Value</i>: <code>100.01</code>
 			<br/>
-			<i>XPATH Expression</i>: <code>//div[@id = "trash-body" and contains(@class, "collapse")]/@style</code>, <i>Value</i>: <code>display: initial</code> (show the element)
+			<i>XPath Expression</i>: <code>//div[@id = "trash-body" and contains(@class, "collapse")]/@style</code>, <i>Value</i>: <code>display: initial</code> (show the element)
 			<br/>
-			<i>XPATH Expression</i>: <code>//a[contains(@href, "advancedwebtesting.com")]/@onmousedown</code>, <i>Value</i>: <code>return true;</code> (disable the script)
+			<i>XPath Expression</i>: <code>//a[contains(@href, "advancedwebtesting.com")]/@onmousedown</code>, <i>Value</i>: <code>return true;</code> (disable the script)
 			<br/>
-			<i>XPATH Expression</i>: <code>//div[@id = "{id}"]</code>, <i>Value</i>: <code>{data}</code> (variable substitution)
+			<i>XPath Expression</i>: <code>//div[@id = "{id}"]</code>, <i>Value</i>: <code>{data}</code> (variable substitution)
 			<br/>
 			<b>Reference:</b>
 			<br/>
@@ -308,14 +308,14 @@
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
-				Modify XPATH
+				Modify XPath
 			</label>
 		</div>
 	</div>
 	<div class="col-lg-6">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}">
-				XPATH Expression
+				XPath Expression
 			</label>
 			<input class="form-control action-xpath-expression" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
@@ -532,18 +532,18 @@
 
 <xsl:template match="action[@type = 'var_xpath']" mode="html">
 	<div class="col-lg-2">
-		<b>Save XPATH to Variable</b>
+		<b>Save XPath to Variable</b>
 	</div>
 	<div class="col-lg-4" title="{@selector}">
 		<b>Variable</b>: <xsl:value-of select="@selector"/>
 	</div>
 	<div class="col-lg-6" title="{@data}">
-		<b>XPATH Expression</b>: <xsl:value-of select="@data"/>
+		<b>XPath Expression</b>: <xsl:value-of select="@data"/>
 	</div>
 </xsl:template>
 
 <xsl:template match="action[@type = 'var_xpath']" mode="text">
-	<xsl:text/>Save XPATH to Variable, Variable: <xsl:value-of select="@selector"/>, XPATH Expression: <xsl:value-of select="@data"/>
+	<xsl:text/>Save XPath to Variable, Variable: <xsl:value-of select="@selector"/>, XPath Expression: <xsl:value-of select="@data"/>
 </xsl:template>
 
 <xsl:template match="action[@type = 'var_xpath']" mode="form">
@@ -551,24 +551,24 @@
 	<div class="col-lg-12">
 		<div class="well well-sm">
 			<b>Usage:</b><br/>
-			Take a value of the element or attribute, selected by <i>XPATH Expression</i>, and copy the value into a variable.
+			Take a value of the element or attribute, selected by <i>XPath Expression</i>, and copy the value into a variable.
 			Initializes a new variable if it does not exist.
 			<br/>
 			<i>Variable</i> - variable name. May contain other variables {var}. If the variable exists it will be replaced.
 			<br/>
-			<i>XPATH Expression</i> must specify an xpath to an element or an attribute.
+			<i>XPath Expression</i> must specify an xpath to an element or an attribute.
 			If an xpath to an element is specified, inner content of the element (el.innerHTML) will be saved.
 			May contain variables {var}.
 			<br/>
 			<b>Examples:</b>
 			<br/>
-			<i>Variable</i>: <code>price</code>, <i>XPATH Expression</i>: <code>//span[@id = "price"]</code>
+			<i>Variable</i>: <code>price</code>, <i>XPath Expression</i>: <code>//span[@id = "price"]</code>
 			<br/>
-			<i>Variable</i>: <code>url</code>, <i>XPATH Expression</i>: <code>//a[contains(text(), "Hosting")]/@href</code>
+			<i>Variable</i>: <code>url</code>, <i>XPath Expression</i>: <code>//a[contains(text(), "Hosting")]/@href</code>
 			<br/>
-			<i>Variable</i>: <code>url2</code>, <i>XPATH Expression</i>: <code>//a[contains(text(), "Hosting") and @href != "{url}"]/@href</code> (variable substitution)
+			<i>Variable</i>: <code>url2</code>, <i>XPath Expression</i>: <code>//a[contains(text(), "Hosting") and @href != "{url}"]/@href</code> (variable substitution)
 			<br/>
-			<i>Variable</i>: <code>classes_{id}</code>, <i>XPATH Expression</i>: <code>//div[@id = "{id}"]/@class</code> (variable substitution)
+			<i>Variable</i>: <code>classes_{id}</code>, <i>XPath Expression</i>: <code>//div[@id = "{id}"]/@class</code> (variable substitution)
 			<br/>
 			<b>Reference:</b>
 			<br/>
@@ -582,7 +582,7 @@
 	<div class="col-lg-2">
 		<div class="form-group">
 			<label for="action-selector-{@type}-{$id}" id="action-type-{@type}-{$id}">
-				Save XPATH to Variable
+				Save XPath to Variable
 			</label>
 		</div>
 	</div>
@@ -597,7 +597,7 @@
 	<div class="col-lg-6">
 		<div class="form-group">
 			<label for="action-data-{@type}-{$id}">
-				XPATH Expression
+				XPath Expression
 			</label>
 			<input class="form-control action-xpath-expression" type="text" name="data" value="{@data}" id="action-data-{@type}-{$id}"/>
 		</div>
