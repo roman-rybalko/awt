@@ -34,14 +34,17 @@ $(error_handler(function($) {
 }));
 
 $(error_handler(function($) {
-	if (navigator && navigator.userAgent.match(/MSIE\s*[23456789]/)) try {
-		var storage = new Storage('msie-alert-', 1 /* expire days */);
-		var showed = storage.get('showed');
+	if (navigator && navigator.userAgent.match(/MSIE\s*[23456789]/)) error_handler(function() {
+		var showed = document.cookie.match(/msie_support_alert/);
 		if (!showed) {
-			storage.set('showed', true);
+			var d = new Date();
+		    d.setTime(d.getTime() + 24*60*60*1000);
+		    document.cookie = 'msie_support_alert=1; expires=' + d.toUTCString();
+		}
+		if (!showed) {
 			alert('Internet Explorer is not fully supported. Please, consider to upgrade to Google Chrome, Opera, Firefox or Safari.');
 		}
-	} catch (e) {}
+	})();
 	$('.location-path').html(document.location.href.replace(/\/[^\/]*$/,'/'));
 	$('a.location-href').attr('href', document.location.href);
 	$('.action-type').each(function() {
