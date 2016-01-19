@@ -12,7 +12,7 @@ stop()
 	while pgrep ${NODE_ID}-$s; do sleep 1; done
 }
 stop batch
-[ -z "$SEL_ADDR" ] || stop selenium
+[ -z "$SEL_PORT" ] || stop selenium
 if [ -n "$X_FILE" ]; then
 	stop x
 	rm -Rf "$X_FILE"

@@ -7,6 +7,7 @@ INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(12, 'deskt
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(13, 'ff', 1);
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(14, 'gc', 1);
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(15, 'o', 1);
+INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(16, 'ie', 12);
 
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(21, 'mobile_landscape', 11);
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(22, 'mobile_portrait', 11);
@@ -32,5 +33,8 @@ INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(71, 'o_192
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(72, 'o_1024x768', 32);
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(73, 'o_1920x1080', 15);
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(74, 'o_1024x768', 15);
+
+INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(81, 'ie8', 16);
+INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(82, 'ie11', 16);
 
 INSERT INTO `task_types` (`type_id`, `name`, `parent_type_id`) VALUES(100, 'test', NULL);

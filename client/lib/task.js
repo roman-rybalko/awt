@@ -262,8 +262,12 @@ function handle_task() {
 				}
 			} catch (e) {
 				console.log('error:', e);
-				scrns[action.id] = config.selenium_scrn(selenium);
 				fails[action.id] = e.message;
+				try {
+					scrns[action.id] = config.selenium_scrn(selenium);
+				} catch (e) {
+					console.log('error:', e);
+				}
 				if (!task.debug)
 					break;
 			}
