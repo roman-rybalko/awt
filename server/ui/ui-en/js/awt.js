@@ -4,8 +4,8 @@
  */
 $(error_handler(function($) {
 	var sidebarCollapsed = null;
-	$(window).bind("load resize", function() {
-		var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
+	$(window).bind("load resize", error_handler(function() {
+		var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 		if (width < 768) {
 			if (sidebarCollapsed === null || sidebarCollapsed === false) {
 				$('div.navbar-collapse').addClass('collapse');
@@ -19,7 +19,7 @@ $(error_handler(function($) {
 				sidebarCollapsed = false;
 			}
 		}
-	});
+	}));
 
 	var url = window.location;
 	var element = $('ul.nav a').filter(function() {
@@ -138,12 +138,12 @@ $(error_handler(function($) {
 			allowInputToggle: true,
 			format: datetime_format
 		});
-	$('.form-schedule-task').submit(error_handler(function() {
-		if (! $(this).find('input[name="name"]').val().match(/\S/)) {
-			$(this).find('input[name="name"]').focus();
+	$('.form-schedule-task').submit(error_handler(function(ev) {
+		if (! $(ev.target).find('input[name="name"]').val().match(/\S/)) {
+			$(ev.target).find('input[name="name"]').focus();
 			return false;
 		}
-		$(this).find('.date input').each(function() {
+		$(ev.target).find('.date input').each(function() {
 			$(this).val(moment($(this).val(), datetime_format).unix());
 		});
 	}));
@@ -225,7 +225,7 @@ $(error_handler(function($) {
 		$('input.control-state[type="radio"]').change(error_handler(function(ev) {
 			var name = $(ev.target).attr('name');
 			$('input.control-state[type="radio"][name="' + name + '"]').each(function() {
-				var name = $(this).attr('data-control-state');
+				var name = $(ev.target).attr('data-control-state');
 				if (name)
 					storage.set(name, false);
 			});
@@ -366,8 +366,8 @@ $(error_handler(function($) {
 			if ($(this).val() == time)
 				$(this).prop('selected', true);
 		});
-		$('select#setting-data-display-period').change(error_handler(function() {
-			time = $(this).val();
+		$('select#setting-data-display-period').change(error_handler(function(ev) {
+			time = $(ev.target).val();
 			storage.set('data-display-period', time);
 			if (time > 0)
 				time = Math.round(new Date().getTime() / 1000) - time;
