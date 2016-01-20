@@ -4,7 +4,6 @@
 2. исправить баг при отсутствии данных статистики
 3. протестировать js-redirect в demo.php
 4. новые ключевые слова: +cheap -ask +online
-4. убрать redirect, показывать страницу redirect при определенных условиях (добавление test, добавление task), оставить redirect только для перехода на внешние сайты billing (server interface cleanup)
 5. Test Group. Запустить группу тестов. Запуск только вручную.
 6. schedule экспорт-импорт
 7. test group export/import

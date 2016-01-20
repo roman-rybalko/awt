@@ -19,7 +19,7 @@ class User {
 		} else {
 			header('Content-Type: text/xml');
 		}
-		//\WebConstructionSet\OutputBuffer\XmlFormatter::init();
+		\WebConstructionSet\OutputBuffer\XmlFormatter::init();
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
 		echo '<?xml-stylesheet type="text/xsl" href="ui-en/index.xsl"?>';
 		$userDb = new \WebConstructionSet\Database\Relational\User($this->db);
@@ -68,10 +68,10 @@ class User {
 <?php
 			if (isset($_GET['register'])) {
 				$user->logout();
-				$this->redirect('?register=1', 0);
+				echo '<logout/>';
 			} else if (isset($_GET['login'])) {
 				$user->logout();
-				$this->redirect('?login=1', 0);
+				echo '<logout/>';
 			} else if (isset($_GET['logout'])) {
 				$this->logout($user);
 			} else if (isset($_GET['settings'])) {
@@ -120,13 +120,6 @@ class User {
 		echo '</user>';
 	}
 
-	private function redirect($url, $timeout = null) {
-		echo '<redirect url="', htmlspecialchars($url), '"';
-		if ($timeout)
-			echo ' timeout="', $timeout, '"';
-		echo '/>';
-	}
-
 	private function login(\WebConstructionSet\Accounting\User $user) {
 ?>
 <!--
@@ -143,13 +136,8 @@ class User {
 				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 				$histMgr->add('login', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
 				$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $this->userId);
-				if ($settMgr->get()['email'])
-					$this->redirect('');
-				else {
-					echo '<message type="info" value="set_up_email"/>';
-					$this->redirect('?settings=1', 3);
-				}
-				return;
+				if (!$settMgr->get()['email'])
+					echo '<message type="notice" value="set_up_email"/>';
 			} else
 				echo '<message type="error" value="bad_login"/>';
 		}
@@ -171,9 +159,7 @@ class User {
 				if ($_POST['password1'] == $_POST['password2']) {
 					if ($user->register($_POST['user'], $_POST['password1'])) {
 						echo '<message type="notice" value="register_ok"/>';
-						echo '<message type="info" value="set_up_email"/>';
-						$this->redirect('?settings=1', 3);
-						return;
+						echo '<message type="notice" value="set_up_email"/>';
 					} else
 						echo '<message type="error" value="login_busy"/>';
 				} else
@@ -218,8 +204,6 @@ class User {
 										['reset_code' => $_SESSION['password_reset_code']])))
 							{
 								echo '<message type="notice" value="email_confirmation_pending"/>';
-								$this->redirect('', 3);
-								return;
 							} else {
 								error_log('Password Reset: user: ' . $_POST['user'] . ' - Mail Manager error');
 								echo '<message type="error" value="password_reset_fail"/>';
@@ -251,8 +235,6 @@ class User {
 				unset($_SESSION['password_reset_code']);
 			} else
 				echo '<message type="error" value="bad_code"/>';
-			$this->redirect('', 3);
-			return;
 		}
 		echo '<password_reset/>';
 	}
@@ -267,7 +249,7 @@ class User {
 		$histMgr->add('logout', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
 		$user->logout();
 		unset($this->userId);
-		$this->redirect('', 0);
+		echo '<logout/>';
 	}
 
 	private function settings(\WebConstructionSet\Database\Relational\User $userDb, $login) {
@@ -376,8 +358,6 @@ class User {
 				unset($_SESSION['settings_email']);
 			} else
 				echo '<message type="error" value="bad_code"/>';
-			$this->redirect('?settings=1');
-			return;
 		}
 		if (isset($_POST['delete_account'])) {
 			$settings = $settMgr->get();
@@ -398,11 +378,8 @@ class User {
 					$data = $account->delete();
 					if ($data)
 						echo $data;
-					else {
+					else
 						echo '<message type="notice" value="delete_account_ok"/>';
-						$this->redirect('?logout=1', 3);
-						return;
-					}
 				}
 			} else
 				echo '<message type="error" value="delete_account_fail"/>';
@@ -414,11 +391,8 @@ class User {
 					$data = $account->delete();
 					if ($data)
 						echo $data;
-					else {
+					else
 						echo '<message type="notice" value="delete_account_ok"/>';
-						$this->redirect('?logout=1', 3);
-						return;
-					}
 				} else
 					echo '<message type="error" value="delete_account_fail"/>';
 			} else
@@ -464,11 +438,9 @@ class User {
 		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
 		if (isset($_POST['add'])) {
 			if ($testId = $testMgr->add($_POST['name'])) {
-				echo '<message type="notice" value="test_add_ok"/>';
+				echo '<message type="notice" value="test_add_ok" id="', $testId, '"/>';
 				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 				$histMgr->add('test_add', ['test_id' => $testId, 'test_name' => $_POST['name']]);
-				$this->redirect('?test=' . $testId);
-				return;
 			} else
 				echo '<message type="error" value="test_add_fail"/>';
 		} else if (isset($_POST['delete'])) {
@@ -578,7 +550,7 @@ class User {
 				$actionId = $testActMgr->add($_POST['type'],
 					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'selector'),
 					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'data'));
-				echo '<message type="notice" value="test_action_add_ok"/>';
+				echo '<message type="notice" value="test_action_add_ok" id="', $actionId, '"/>';
 				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 				$event = [];
 				foreach(['selector', 'data'] as $field)
@@ -670,7 +642,7 @@ class User {
 						$actionId = $testActMgr->add($data1['type'],
 							\AdvancedWebTesting\Tools::valueOrNull($data1, 'selector'),
 							\AdvancedWebTesting\Tools::valueOrNull($data1, 'data'));
-						echo '<message type="notice" value="test_action_add_ok"/>';
+						echo '<message type="notice" value="test_action_add_ok" id="', $actionId, '"/>';
 						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 						$event = [];
 						foreach(['selector', 'data'] as $field)
@@ -752,15 +724,13 @@ class User {
 					if ($billMgr->getAvailableActionsCnt() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
 						if ($taskId = $taskMgr->add($testId, $test['name'], $type, $debug)) {
 							$billMgr->startTask($taskId, $test['id'], $test['name']);
-							echo '<message type="notice" value="task_add_ok"/>';
+							echo '<message type="notice" value="task_add_ok" id="', $taskId, '"/>';
 							$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $this->userId);
 							$statMgr->add(1);
 							$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 							$histMgr->add('task_add', ['task_id' => $taskId,
 								'test_id' => $testId, 'test_name' => $test['name'],
 								'type' => $type]);
-							$this->redirect('?' . $_SERVER['QUERY_STRING'], 1);
-							return;
 						} else
 							echo '<message type="error" value="task_add_fail"/>';
 					} else
@@ -988,19 +958,17 @@ class User {
 		if (isset($_POST['top_up'])) {
 			$actionsCnt = $_POST['actions_cnt'] + 0;
 			if ($actionsCnt && \AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type'])) {
-				while (true) {
-					$id = $billMgr->topUp($actionsCnt, $_POST['payment_type'], isset($_POST['subscription']) && $_POST['subscription']);
-					if (!$id)
-						break;
-					$data = $billMgr->getPendingTransactions($_POST['payment_type'], [$id]);
-					if (!$data)
-						break;
-					$transaction = $data[0];
-					echo '<message type="notice" value="payment_pending"/>';
-					$this->redirect($transaction['url']);
-					return;
-				}
-				echo '<message type="error" value="top_up_fail"/>';
+				$paymentType = $_POST['payment_type'];
+				$pendingTransactionId = $billMgr->topUp($actionsCnt, $paymentType, isset($_POST['subscription']) && $_POST['subscription']);
+				if ($pendingTransactionId) {
+					$data = $billMgr->getPendingTransactions($paymentType, [$pendingTransactionId]);
+					if ($data) {
+						$transaction = $data[0];
+						echo '<message type="notice" value="payment_pending" payment_type="', $paymentType, '" id="', $pendingTransactionId, '"/>';
+					} else
+						echo '<message type="error" value="top_up_fail"/>';
+				} else
+					echo '<message type="error" value="top_up_fail"/>';
 			} else
 				echo '<message type="error" value="bad_params"/>';
 		} else if (isset($_POST['refund'])) {
@@ -1065,8 +1033,6 @@ class User {
 				}
 			if (!$tokenFound)
 				echo '<message type="error" value="bad_paypal_token"/>';
-			$this->redirect('?billing=1' . (isset($_GET['time']) ? '&time=' . $_GET['time'] : ''), 3);
-			return;
 		}
 		if (isset($_GET['LMI_PAYMENT_NO'])) {
 			// WebMoney hack
@@ -1083,8 +1049,6 @@ class User {
 				}
 			if (!$paymentNumberFound)
 				echo '<message type="error" value="bad_webmoney_payment_number"/>';
-			$this->redirect('?billing=1' . (isset($_GET['time']) ? '&time=' . $_GET['time'] : ''), 3);
-			return;
 		}
 		$time = time() - 42 * 86400;
 		if (isset($_GET['time']) && $_GET['time'])

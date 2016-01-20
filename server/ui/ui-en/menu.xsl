@@ -3,9 +3,6 @@
 <xsl:template name="menu">
 	<link href="ui-en/css/metisMenu.min.css" rel="stylesheet" type="text/css"/>
 	<script src="ui-en/js/metisMenu.min.js" type="text/javascript"></script>
-	<script src="ui-en/js/jquery.cookie.min.js" type="text/javascript"></script>
-	<script src="ui-en/js/jquery.storageapi.min.js" type="text/javascript"></script>
-	<script src="ui-en/js/storage.js" type="text/javascript"></script>
 	<script src="ui-en/js/moment.min.js" type="text/javascript"></script>
 	<xsl:if test="@time">
 		<script type="text/javascript">

@@ -2,7 +2,23 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="settings">
-	<xsl:call-template name="menu"/>
+	<xsl:choose>
+		<xsl:when test="//message[@value='bad_code']">
+			<xsl:call-template name="redirect">
+				<xsl:with-param name="url">?settings=1</xsl:with-param>
+				<xsl:with-param name="timeout">3</xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:when test="//message[@value='delete_account_ok']">
+			<xsl:call-template name="redirect">
+				<xsl:with-param name="url">?logout=1</xsl:with-param>
+				<xsl:with-param name="timeout">3</xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:call-template name="menu"/>
+		</xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 <xsl:template match="settings" mode="menu">

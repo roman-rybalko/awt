@@ -2,7 +2,14 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="tasks">
-	<xsl:call-template name="menu"/>
+	<xsl:choose>
+		<xsl:when test="//message[@value='task_add_ok']">
+			<xsl:call-template name="redirect"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:call-template name="menu"/>
+		</xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 <xsl:template match="tasks" mode="menu">

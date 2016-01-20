@@ -2,7 +2,22 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="billing">
-	<xsl:call-template name="menu"/>
+	<xsl:choose>
+		<xsl:when test="//message[@value='payment_pending']">
+			<xsl:call-template name="redirect">
+				<xsl:with-param name="url"><xsl:value-of select="//pending_transaction[@payment_type = //message[@value='payment_pending']/@payment_type and @id = //message[@value='payment_pending']/@id]/@url"/></xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:when test="//message[contains(@value, 'paypal') or contains(@value, 'webmoney')]">
+			<xsl:call-template name="redirect">
+				<xsl:with-param name="url">?billing=1&amp;time=<xsl:value-of select="@time"/></xsl:with-param>
+				<xsl:with-param name="timeout">3</xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:call-template name="menu"/>
+		</xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 <xsl:template match="billing" mode="menu">

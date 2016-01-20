@@ -13,6 +13,9 @@
 	<body>
 		<script src="ui-en/js/jquery.min.js" type="text/javascript"></script>
 		<script src="ui-en/js/error.js" type="text/javascript"></script>
+		<script src="ui-en/js/jquery.cookie.min.js" type="text/javascript"></script>
+		<script src="ui-en/js/jquery.storageapi.min.js" type="text/javascript"></script>
+		<script src="ui-en/js/storage.js" type="text/javascript"></script>
 
 		<img src="ui-en/img/loader.gif" id="loader" style="position: fixed; z-index: 7777777;"/>
 		<script  type="text/javascript">

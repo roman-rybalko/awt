@@ -2,7 +2,16 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="tests">
-	<xsl:call-template name="menu"/>
+	<xsl:choose>
+		<xsl:when test="//message[@value='test_add_ok']">
+			<xsl:call-template name="redirect">
+				<xsl:with-param name="url">?test=<xsl:value-of select="//message[@value='test_add_ok']/@id"/></xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:call-template name="menu"/>
+		</xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 <xsl:template match="tests" mode="menu">

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:template match="redirect">
+<xsl:template name="redirect">
+	<xsl:param name="url"/>
+	<xsl:param name="timeout"/>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
@@ -12,18 +14,24 @@
 					<div class="panel-body">
 						<xsl:apply-templates select="//message"/>
 						<xsl:choose>
-							<xsl:when test="contains(@url, '://')">
-								<a href="{@url}" id="redirect">Continue</a>
+							<xsl:when test="$url = ''">
+								<a href="./" id="redirect">Continue</a>
+								<script type="text/javascript">
+									$('#redirect').attr('href', window.location.href);
+								</script>
+							</xsl:when>
+							<xsl:when test="contains($url, '://')">
+								<a href="{$url}" id="redirect">Continue</a>
 							</xsl:when>
 							<xsl:otherwise>
-								<a href="./{@url}" id="redirect">Continue</a>
+								<a href="./{$url}" id="redirect">Continue</a>
 							</xsl:otherwise>
 						</xsl:choose>
 						<script type="text/javascript">
 							$(function() {
 								window.setTimeout(function() {
 									window.location = $('#redirect').attr('href');
-								}, <xsl:value-of select="@timeout"/>000);
+								}, <xsl:value-of select="$timeout"/>000);
 							});
 						</script>
 					</div>
