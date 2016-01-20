@@ -2,8 +2,8 @@
 
 . ./.config.sh
 {
-	combine.pl website1.txt crawler1.txt software.txt free.txt
-	combine.pl browser1.txt automation1.txt software.txt free.txt
+	combine.pl advanced.txt website1.txt crawler1.txt software.txt
+	combine.pl advanced.txt browser1.txt automation1.txt software.txt
 } \
 | filter \
 | sort -u \

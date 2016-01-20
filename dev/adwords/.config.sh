@@ -1,7 +1,8 @@
 PATH=../../scripts/adwords:$PATH
 
 filter() {
-	grep -vP 'web.+web' | grep -vP 'url.+web' | grep -vP 'web.+url' | grep -vP 'free.+free' | grep -vP 'ware.+ware' | grep -vP 'auto.+auto'
+	grep -vP 'web.+web' | grep -vP 'url.+web' | grep -vP 'web.+url' | grep -vP 'free.+free' | grep -vP 'ware.+ware' | grep -vP 'auto.+auto' \
+	| grep -vP 'cheap.+free' | grep -vP 'free.+cheap' | grep -vP 'cheap.+cheap'
 }
 
 csv() {

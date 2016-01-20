@@ -6,3 +6,6 @@ external
 remote
 xpath
 automated
+online
+cheap
+free
