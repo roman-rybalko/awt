@@ -75,7 +75,7 @@ class User {
 			} else if (isset($_GET['logout'])) {
 				$this->logout($user);
 			} else if (isset($_GET['settings'])) {
-				$this->settings($userDb, $user->getLogin());
+				$this->settings($userDb, $user);
 			} else if (isset($_GET['tests'])) {
 				$this->tests();
 			} else if (isset($_GET['test'])) {
@@ -252,7 +252,7 @@ class User {
 		echo '<logout/>';
 	}
 
-	private function settings(\WebConstructionSet\Database\Relational\User $userDb, $login) {
+	private function settings(\WebConstructionSet\Database\Relational\User $userDb, \WebConstructionSet\Accounting\User $user) {
 ?>
 <!--
 	Settings
@@ -286,6 +286,7 @@ class User {
 	params: delete_account_code
 -->
 <?php
+		$login = $user->getLogin();
 		$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $this->userId);
 		if (isset($_POST['password'])) {
 			if ($userDb->check($login, $_POST['password'])) {
@@ -380,6 +381,8 @@ class User {
 						echo $data;
 					else
 						echo '<message type="notice" value="delete_account_ok"/>';
+					$this->logout($user);
+					return;
 				}
 			} else
 				echo '<message type="error" value="delete_account_fail"/>';
@@ -393,6 +396,8 @@ class User {
 						echo $data;
 					else
 						echo '<message type="notice" value="delete_account_ok"/>';
+					$this->logout($user);
+					return;
 				} else
 					echo '<message type="error" value="delete_account_fail"/>';
 			} else

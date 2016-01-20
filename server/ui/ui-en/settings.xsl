@@ -9,12 +9,6 @@
 				<xsl:with-param name="timeout">3</xsl:with-param>
 			</xsl:call-template>
 		</xsl:when>
-		<xsl:when test="//message[@value='delete_account_ok']">
-			<xsl:call-template name="redirect">
-				<xsl:with-param name="url">?logout=1</xsl:with-param>
-				<xsl:with-param name="timeout">3</xsl:with-param>
-			</xsl:call-template>
-		</xsl:when>
 		<xsl:otherwise>
 			<xsl:call-template name="menu"/>
 		</xsl:otherwise>
