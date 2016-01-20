@@ -1127,6 +1127,8 @@ class User {
 		$time = time();
 		for ($time = $time - 86400 * \Config::PURGE_PERIOD - $time % 86400; $time < $maxTime; $time += 86400)
 			echo '<stat time="', $time, '" tasks_finished="0" tasks_failed="0" actions_executed="0"/>';
+		if ($minTime < $maxTime)
+			$minTime = $maxTime;
 		$time = time();
 		for ($time = $time - $time % 86400; $time > $minTime; $time -= 86400)
 			echo '<stat time="', $time, '" tasks_finished="0" tasks_failed="0" actions_executed="0"/>';
