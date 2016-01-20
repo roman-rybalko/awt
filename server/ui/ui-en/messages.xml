@@ -47,7 +47,7 @@
 </message>
 
 <message value="bad_code">
-	Invalid code (the session may expired).
+	Invalid code (the session may have expired).
 </message>
 
 <message value="password_change_fail">

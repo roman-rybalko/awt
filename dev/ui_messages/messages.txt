@@ -34,7 +34,7 @@ password_change_ok
 	Password has been changed.
 
 bad_code
-	Invalid code (the session may expired).
+	Invalid code (the session may have expired).
 
 password_change_fail
 	Change Password failed (please, try again later).
