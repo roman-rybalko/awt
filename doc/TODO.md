@@ -1,6 +1,5 @@
 План
 ====
-3. протестировать js-redirect в demo.php
 4. новые ключевые слова: +cheap -ask +online
 4. сделать 1000 actions/$1, 2000 actions bonus
 5. Test Group. Запустить группу тестов. Запуск только вручную.
