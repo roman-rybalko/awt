@@ -11,6 +11,23 @@
 		<meta name="description" content="Advanced Web Testing, Web Automation, Web Monitoring"/>
 	</head>
 	<body>
+		<script type="text/javascript">
+			/* <![CDATA[ */
+			if (navigator && navigator.userAgent.match(/MSIE\s*[23456789]/)) (function() {
+				try {
+					var showed = document.cookie.match(/msie_support_alert/);
+					if (!showed) {
+						var d = new Date();
+					    d.setTime(d.getTime() + 24*60*60*1000);
+					    document.cookie = 'msie_support_alert=1; expires=' + d.toUTCString();
+					}
+				} catch (e) {}
+				if (!showed) {
+					alert('Internet Explorer is not fully supported. Please, consider to upgrade to Google Chrome, Opera, Firefox or Safari.');
+				}
+			})();
+			/* ]]> */
+		</script>
 		<script src="ui-en/js/jquery.min.js" type="text/javascript"></script>
 		<script src="ui-en/js/error.js" type="text/javascript"></script>
 		<script src="ui-en/js/jquery.cookie.min.js" type="text/javascript"></script>
