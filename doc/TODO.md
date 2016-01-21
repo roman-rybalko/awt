@@ -1,6 +1,5 @@
 План
 ====
-4. сделать 1000 actions/$1, 2000 actions bonus
 5. Test Group. Запустить группу тестов. Запуск только вручную.
 6. schedule экспорт-импорт
 7. test group export/import
