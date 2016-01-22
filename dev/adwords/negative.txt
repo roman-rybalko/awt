@@ -15,3 +15,5 @@ documentation
 tutorial
 learning
 ask
+harm
+computer
