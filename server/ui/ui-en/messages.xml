@@ -39,7 +39,7 @@
 </message>
 
 <message value="password_reset_fail">
-	Password reset failed (please, contact the support).
+	Password reset failed.
 </message>
 
 <message value="password_change_ok">
@@ -47,11 +47,11 @@
 </message>
 
 <message value="bad_code">
-	Invalid code (the session may have expired).
+	Invalid code.
 </message>
 
 <message value="password_change_fail">
-	Change Password failed (please, try again later).
+	Change Password failed.
 </message>
 
 <message value="bad_current_password">
@@ -75,7 +75,7 @@
 </message>
 
 <message value="delete_account_fail">
-	Delete Account failed (please, try again later).
+	Delete Account failed.
 </message>
 
 <message value="delete_account_ok">
@@ -147,7 +147,7 @@
 </message>
 
 <message value="test_action_modify_fail">
-	Modify Action failed (perhaps invalid parameter).
+	Modify Action failed.
 </message>
 
 <message value="test_action_insert_ok">
@@ -159,7 +159,7 @@
 </message>
 
 <message value="test_import_fail">
-	Import Test failed (please, check the syntax).
+	Import Test failed.
 </message>
 
 <message value="task_add_ok">
@@ -167,7 +167,7 @@
 </message>
 
 <message value="task_add_fail">
-	Task queue failed (perhaps the Test contains too many actions).
+	Task queue failed.
 </message>
 
 <message value="no_funds">
@@ -184,7 +184,7 @@
 </message>
 
 <message value="task_cancel_fail">
-	Cancel Task failed (perhaps the cancel is not allowed in this state or timeout is not reached).
+	Cancel Task failed.
 </message>
 
 <message value="sched_add_ok">
@@ -192,7 +192,7 @@
 </message>
 
 <message value="sched_add_fail">
-	Add Schedule Job failed (perhaps there is an empty string or null somewhere in parameters).
+	Add Schedule Job failed.
 </message>
 
 <message value="sched_delete_ok">
@@ -220,11 +220,11 @@
 </message>
 
 <message value="top_up_fail">
-	Top Up failed (please, try again later or try another payment method).
+	Top Up failed.
 </message>
 
 <message value="bad_params">
-	Invalid parameters (perhaps there is a null or empty string which is forbidden).
+	Invalid parameters.
 </message>
 
 <message value="refund_ok">
@@ -233,7 +233,7 @@
 </message>
 
 <message value="refund_fail">
-	Refund failed (please, try again later).
+	Refund failed.
 </message>
 
 <message value="process_pending_transaction_ok">
@@ -257,7 +257,7 @@
 </message>
 
 <message value="cancel_subscription_fail">
-	Cancel Subscription failed (perhaps it has already been canceled or cancel of this subscription is forbidden).
+	Cancel Subscription failed.
 </message>
 
 <message value="top_up_subscription_ok">
@@ -266,7 +266,7 @@
 </message>
 
 <message value="top_up_subscription_fail">
-	Top Up by Subscription failed (please, check the Transactions log).
+	Top Up by Subscription failed.
 </message>
 
 <message value="modify_subscription_ok">
@@ -274,7 +274,7 @@
 </message>
 
 <message value="modify_subscription_fail">
-	Modification of Subscription failed (perhaps the subscription is canceled by the payment system, invalid or modification is forbidden).
+	Modification of Subscription failed.
 </message>
 
 <message value="paypal_ok">
@@ -286,7 +286,7 @@
 </message>
 
 <message value="bad_paypal_token">
-	Invalid PayPal Token (perhaps it has already been processed).
+	Invalid PayPal Token.
 </message>
 
 <message value="webmoney_ok">
@@ -298,7 +298,7 @@
 </message>
 
 <message value="bad_webmoney_payment_number">
-	Invalid WebMoney payment number (perhaps it has already been processed).
+	Invalid WebMoney payment number.
 </message>
 
 </messages>

@@ -27,4 +27,3 @@
 31. сохранение url в комментариях xpath и загрузка его в xpath-browser, загрузка xpath в xpath-composer
 32. xpath-composer: загрузка состояния из xpath (разбор xpath, разбор комментариев)
 33. проверять размер selector и data при добавлении test action и возвращать ошибку если превышает допустимый размер
-34. codes for error messages

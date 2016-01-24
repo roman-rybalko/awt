@@ -28,16 +28,16 @@ email_confirmation_pending
 	E-Mail confirmation message has been sent, please check your mailbox and proceed according to the instructions.
 
 password_reset_fail
-	Password reset failed (please, contact the support).
+	Password reset failed.
 
 password_change_ok
 	Password has been changed.
 
 bad_code
-	Invalid code (the session may have expired).
+	Invalid code.
 
 password_change_fail
-	Change Password failed (please, try again later).
+	Change Password failed.
 
 bad_current_password
 	Invalid Current Password.
@@ -55,7 +55,7 @@ email_change_ok
 	E-Mail has been changed.
 
 delete_account_fail
-	Delete Account failed (please, try again later).
+	Delete Account failed.
 
 delete_account_ok
 	Account has been deleted.
@@ -109,7 +109,7 @@ test_action_modify_ok
 	Action has been modified.
 
 test_action_modify_fail
-	Modify Action failed (perhaps invalid parameter).
+	Modify Action failed.
 
 test_action_insert_ok
 	Action has been inserted.
@@ -118,13 +118,13 @@ test_action_insert_fail
 	Insert Action failed.
 
 test_import_fail
-	Import Test failed (please, check the syntax).
+	Import Test failed.
 
 task_add_ok
 	New Task has been queued.
 
 task_add_fail
-	Task queue failed (perhaps the Test contains too many actions).
+	Task queue failed.
 
 no_funds
 	Available Actions (Account Balance) depleted, please Top Up.
@@ -137,13 +137,13 @@ task_cancel_ok
 	The Task has been canceled.
 
 task_cancel_fail
-	Cancel Task failed (perhaps the cancel is not allowed in this state or timeout is not reached).
+	Cancel Task failed.
 
 sched_add_ok
 	Schedule Job has been created.
 
 sched_add_fail
-	Add Schedule Job failed (perhaps there is an empty string or null somewhere in parameters).
+	Add Schedule Job failed.
 
 sched_delete_ok
 	Schedule Job has been deleted.
@@ -164,17 +164,17 @@ payment_pending
 	The payment has been staged, please proceed to the payment system.
 
 top_up_fail
-	Top Up failed (please, try again later or try another payment method).
+	Top Up failed.
 
 bad_params
-	Invalid parameters (perhaps there is a null or empty string which is forbidden).
+	Invalid parameters.
 
 refund_ok
 	Refunded.
 	Come again!
 
 refund_fail
-	Refund failed (please, try again later).
+	Refund failed.
 
 process_pending_transaction_ok
 	Pending Transaction has been processed successfully.
@@ -192,20 +192,20 @@ cancel_subscription_ok
 	Subscription has been canceled.
 
 cancel_subscription_fail
-	Cancel Subscription failed (perhaps it has already been canceled or cancel of this subscription is forbidden).
+	Cancel Subscription failed.
 
 top_up_subscription_ok
 	Top Up by Subscription complete.
 	Thanks!
 
 top_up_subscription_fail
-	Top Up by Subscription failed (please, check the Transactions log).
+	Top Up by Subscription failed.
 
 modify_subscription_ok
 	Subscription has been modified.
 
 modify_subscription_fail
-	Modification of Subscription failed (perhaps the subscription is canceled by the payment system, invalid or modification is forbidden).
+	Modification of Subscription failed.
 
 paypal_ok
 	PayPal has been processed successfully.
@@ -214,7 +214,7 @@ paypal_fail
 	PayPal processing failed.
 
 bad_paypal_token
-	Invalid PayPal Token (perhaps it has already been processed).
+	Invalid PayPal Token.
 
 webmoney_ok
 	WebMoney has been processed successfully.
@@ -223,5 +223,5 @@ webmoney_fail
 	WebMoney processing failed.
 
 bad_webmoney_payment_number
-	Invalid WebMoney payment number (perhaps it has already been processed).
+	Invalid WebMoney payment number.
 

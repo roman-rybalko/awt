@@ -19,6 +19,8 @@
 	<div class="alert alert-danger alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&#215;</button>
 		<xsl:call-template name="message"/>
+		Error Code: <b><xsl:value-of select="@code"/></b>.
+		<a href="mailto:support@advancedwebtesting.com?subject=Error%20Code:%20{@code}&amp;body=Login:%20{//user/@login}%0aError%20Value:%20{@value}%0aError%20Code:%20{@code}%0a">Support.</a>
 	</div>
 </xsl:template>
 
