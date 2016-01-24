@@ -1,6 +1,5 @@
 var adGroupLabelUrlMap = {
 	UPD_SBS_DATA_MINING: 'http://deploy.hosts.advancedwebtesting.net/adwords/sbs_data_mining.txt',
-	UPD_SBS_FREE: 'http://deploy.hosts.advancedwebtesting.net/adwords/sbs_free.txt',
 	UPD_SBS_PROGRAMMING_AUTOMATION: 'http://deploy.hosts.advancedwebtesting.net/adwords/sbs_programming_automation.txt',
 	UPD_SBS_PROGRAMMING_CRAWLER: 'http://deploy.hosts.advancedwebtesting.net/adwords/sbs_programming_crawler.txt',
 	UPD_SBS_SOFTWARE: 'http://deploy.hosts.advancedwebtesting.net/adwords/sbs_software.txt',
