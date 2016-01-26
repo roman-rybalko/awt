@@ -17,3 +17,5 @@ learning
 ask
 harm
 computer
+performance
+vulnerability

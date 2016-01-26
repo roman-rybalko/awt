@@ -9,3 +9,4 @@ automated
 online
 cheap
 free
+hosted
