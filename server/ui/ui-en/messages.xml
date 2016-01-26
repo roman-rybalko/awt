@@ -130,6 +130,10 @@
 	New Action has been added.
 </message>
 
+<message value="test_action_add_fail">
+	Add Action failed.
+</message>
+
 <message value="test_action_delete_ok">
 	Action has been deleted.
 </message>

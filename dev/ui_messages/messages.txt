@@ -96,6 +96,9 @@ test_copy_fail
 test_action_add_ok
 	New Action has been added.
 
+test_action_add_fail
+	Add Action failed.
+
 test_action_delete_ok
 	Action has been deleted.
 

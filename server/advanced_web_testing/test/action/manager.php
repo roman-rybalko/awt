@@ -7,6 +7,9 @@ namespace AdvancedWebTesting\Test\Action;
  * Model (MVC)
  */
 class Manager {
+	const SELECTOR_MAX_SIZE = 4096;
+	const DATA_MAX_SIZE = 4096;
+
 	private $actions, $tests;
 
 	public function __construct(\WebConstructionSet\Database\Relational $db, $testId) {
@@ -28,12 +31,18 @@ class Manager {
 				$lastActionId = $action['action_id'];
 		$actionId = $lastActionId + 1;
 		$fields = ['type' => $type, 'action_id' => $actionId];
-		if ($selector !== null)
+		if ($selector !== null) {
+			if (strlen($selector) > self::SELECTOR_MAX_SIZE)
+				return -2;
 			$fields['selector'] = $selector;
-		if ($data !== null)
+		}
+		if ($data !== null) {
+			if (strlen($data) > self::DATA_MAX_SIZE)
+				return -3;
 			$fields['data'] = $data;
+		}
 		if (!$this->actions->insert($fields))
-			throw new \ErrorException('Action insert failed', null, null, __FILE__, __LINE__);
+			return -1;
 		$this->tests->update(['time' => time()], []);  // no check - may be the same time
 		return $actionId;
 	}
@@ -70,12 +79,18 @@ class Manager {
 				throw new \ErrorException('Something wrong in test_actions indexes: test_id=' . $this->testId . ', action_id=' . $id . ' move ids=[' . implode(', ', $ids) . ']', null, null, __FILE__, __LINE__);
 		// вставляем
 		$fields = ['type' => $type, 'action_id' => $actionId];
-		if ($selector !== null)
+		if ($selector !== null) {
+			if (strlen($selector) > self::SELECTOR_MAX_SIZE)
+				return -2;
 			$fields['selector'] = $selector;
-		if ($data !== null)
+		}
+		if ($data !== null) {
+			if (strlen($data) > self::DATA_MAX_SIZE)
+				return -3;
 			$fields['data'] = $data;
+		}
 		if (!$this->actions->insert($fields))
-			throw new \ErrorException('Action insert failed', null, null, __FILE__, __LINE__);
+			return -1;
 		$this->tests->update(['time' => time()], []);  // no check - may be the same time
 		return $actionId;
 	}
@@ -100,11 +115,17 @@ class Manager {
 		$actionId = 0;
 		usort($actions, function($a,$b){return $a['id']-$b['id'];});
 		foreach ($actions as $action) {
+			if (isset($action['selector']) && strlen($action['selector']) > self::SELECTOR_MAX_SIZE)
+				return -2;
+			if (isset($action['data']) && strlen($action['data']) > self::DATA_MAX_SIZE)
+				return -3;
+		}
+		foreach ($actions as $action) {
 			$fields = ['action_id' => ++$actionId];
 			foreach (['type', 'selector', 'data'] as $param)
 				$fields[$param] = $action[$param];
 			if (!$this->actions->insert($fields))
-				throw new \ErrorException('Action insert failed', null, null, __FILE__, __LINE__);
+				return -1;
 		}
 		return $actionId;
 	}
@@ -114,18 +135,24 @@ class Manager {
 	 * @param integer $actionId
 	 * @param string|null $selector
 	 * @param string|null $data
-	 * @return boolean
+	 * @return integer
 	 */
 	public function modify($actionId, $selector, $data) {
 		$fields = [];
-		if ($selector !== null)
+		if ($selector !== null) {
+			if (strlen($selector) > self::SELECTOR_MAX_SIZE)
+				return -2;
 			$fields['selector'] = $selector;
-		if ($data !== null)
+		}
+		if ($data !== null) {
+			if (strlen($data) > self::DATA_MAX_SIZE)
+				return -3;
 			$fields['data'] = $data;
+		}
 		if (!$fields)
-			return false;
+			return -1;
 		if ($result = $this->actions->update($fields, ['action_id' => $actionId]))
-			$this->tests->update(['time' => time()], []);
+			$this->tests->update(['time' => time()], []);  // no check - the time may be the same
 		return $result;
 	}
 

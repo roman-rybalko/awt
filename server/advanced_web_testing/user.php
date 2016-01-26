@@ -19,7 +19,7 @@ class User {
 		} else {
 			header('Content-Type: text/xml');
 		}
-		\WebConstructionSet\OutputBuffer\XmlFormatter::init();
+		//\WebConstructionSet\OutputBuffer\XmlFormatter::init();
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
 		echo '<?xml-stylesheet type="text/xsl" href="ui-en/index.xsl"?>';
 		$userDb = new \WebConstructionSet\Database\Relational\User($this->db);
@@ -487,11 +487,14 @@ class User {
 				if ($testId = $testMgr->add($_POST['name'])) {
 					$testActMgrSrc = new \AdvancedWebTesting\Test\Action\Manager($this->db, $_POST['id']);
 					$testActMgrDst = new \AdvancedWebTesting\Test\Action\Manager($this->db, $testId);
-					$testActMgrDst->import($testActMgrSrc->get());
-					echo '<message type="notice" value="test_copy_ok"/>';
-					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-					$histMgr->add('test_copy', ['test_id' => $testId, 'test_name' => $_POST['name'],
-						'orig_test_name' => $test['name'], 'orig_test_id' => $_POST['id']]);
+					$result = $testActMgrDst->import($testActMgrSrc->get());
+					if ($result > 0) {
+						echo '<message type="notice" value="test_copy_ok"/>';
+						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+						$histMgr->add('test_copy', ['test_id' => $testId, 'test_name' => $_POST['name'],
+							'orig_test_name' => $test['name'], 'orig_test_id' => $_POST['id']]);
+					} else
+						echo '<message type="error" value="test_copy_fail" code="75', $result, '"/>';
 				} else
 					echo '<message type="error" value="test_copy_fail" code="32"/>';
 			} else
@@ -555,15 +558,18 @@ class User {
 				$actionId = $testActMgr->add($_POST['type'],
 					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'selector'),
 					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'data'));
-				echo '<message type="notice" value="test_action_add_ok" id="', $actionId, '"/>';
-				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-				$event = [];
-				foreach(['selector', 'data'] as $field)
-					if (isset($_POST[$field]))
-						$event[$field] = $_POST[$field];
-				$histMgr->add('test_action_add', array_merge([
+				if ($actionId > 0) {
+					echo '<message type="notice" value="test_action_add_ok" id="', $actionId, '"/>';
+					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+					$event = [];
+					foreach(['selector', 'data'] as $field)
+						if (isset($_POST[$field]))
+							$event[$field] = $_POST[$field];
+					$histMgr->add('test_action_add', array_merge([
 						'test_id' => $testId, 'test_name' => $test['name'],
 						'action_id' => $actionId, 'type' => $_POST['type']], $event));
+				} else
+					echo '<message type="error" value="test_action_add_fail" code="73', $actionId, '"/>';
 			} else if (isset($_POST['delete'])) {
 				$actionId = $_POST['id'];
 				if ($actions = $testActMgr->get([$actionId])) {
@@ -586,10 +592,10 @@ class User {
 				$actionId = $_POST['id'];
 				if ($actions = $testActMgr->get([$actionId])) {
 					$action = $actions[0];
-					if ($testActMgr->modify($actionId,
+					$result = $testActMgr->modify($actionId,
 						\AdvancedWebTesting\Tools::valueOrNull($_POST, 'selector', $action['selector']),
-						\AdvancedWebTesting\Tools::valueOrNull($_POST, 'data', $action['data']))
-					) {
+						\AdvancedWebTesting\Tools::valueOrNull($_POST, 'data', $action['data']));
+					if ($result > 0) {
 						echo '<message type="notice" value="test_action_modify_ok"/>';
 						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 						$event = ['type' => $action['type']];
@@ -604,15 +610,15 @@ class User {
 							'test_id' => $testId, 'test_name' => $test['name'],
 							'action_id' => $actionId], $event));
 					} else
-						echo '<message type="error" value="test_action_modify_fail" code="36"/>';
+						echo '<message type="error" value="test_action_modify_fail" code="36', $result, '"/>';
 				} else
 					echo '<message type="error" value="bad_action_id" code="37"/>';
 			} else if (isset($_POST['insert'])) {
 				$actionId = $_POST['id'];
-				if ($testActMgr->insert($actionId, $_POST['type'],
+				$result = $testActMgr->insert($actionId, $_POST['type'],
 					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'selector'),
-					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'data'))
-				) {
+					\AdvancedWebTesting\Tools::valueOrNull($_POST, 'data'));
+				if ($result > 0) {
 					echo '<message type="notice" value="test_action_insert_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$event = ['type' => $_POST['type']];
@@ -623,7 +629,7 @@ class User {
 						'test_id' => $testId, 'test_name' => $test['name'],
 						'action_id' => $actionId], $event));
 				} else
-					echo '<message type="error" value="test_action_insert_fail" code="38"/>';
+					echo '<message type="error" value="test_action_insert_fail" code="38', $result, '"/>';
 			} else if (isset($_POST['import'])) {
 				$data = null;
 				if (isset($_POST['data']))
@@ -647,15 +653,18 @@ class User {
 						$actionId = $testActMgr->add($data1['type'],
 							\AdvancedWebTesting\Tools::valueOrNull($data1, 'selector'),
 							\AdvancedWebTesting\Tools::valueOrNull($data1, 'data'));
-						echo '<message type="notice" value="test_action_add_ok" id="', $actionId, '"/>';
-						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-						$event = [];
-						foreach(['selector', 'data'] as $field)
-							if (\AdvancedWebTesting\Tools::valueOrNull($data1, $field) !== null)
-								$event[$field] = $data1[$field];
-						$histMgr->add('test_action_add', array_merge([
-							'test_id' => $testId, 'test_name' => $test['name'],
-							'action_id' => $actionId, 'type' => $data1['type']], $event));
+						if ($actionId > 0) {
+							echo '<message type="notice" value="test_action_add_ok" id="', $actionId, '"/>';
+							$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+							$event = [];
+							foreach(['selector', 'data'] as $field)
+								if (\AdvancedWebTesting\Tools::valueOrNull($data1, $field) !== null)
+									$event[$field] = $data1[$field];
+							$histMgr->add('test_action_add', array_merge([
+								'test_id' => $testId, 'test_name' => $test['name'],
+								'action_id' => $actionId, 'type' => $data1['type']], $event));
+						} else
+							echo '<message type="error" value="test_action_add_fail" code="74', $actionId, '"/>';
 					}
 				} else
 					echo '<message type="error" value="test_import_fail" code="39"/>';
