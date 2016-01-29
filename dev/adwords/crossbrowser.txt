@@ -4,3 +4,4 @@ cross browser
 cross-browser
 multi browser
 functional
+responsive
