@@ -162,8 +162,20 @@
 	Insert Action failed.
 </message>
 
+<message value="test_import_ok">
+	Test has been imported.
+</message>
+
 <message value="test_import_fail">
 	Import Test failed.
+</message>
+
+<message value="test_clear_ok">
+	Test has been cleared.
+</message>
+
+<message value="test_clear_fail">
+	Clear Test failed.
 </message>
 
 <message value="task_add_ok">

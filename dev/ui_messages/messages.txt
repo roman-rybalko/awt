@@ -120,8 +120,17 @@ test_action_insert_ok
 test_action_insert_fail
 	Insert Action failed.
 
+test_import_ok
+	Test has been imported.
+
 test_import_fail
 	Import Test failed.
+
+test_clear_ok
+	Test has been cleared.
+
+test_clear_fail
+	Clear Test failed.
 
 task_add_ok
 	New Task has been queued.

@@ -41,6 +41,7 @@ while (<$X>) {
 	if (/XXX(\S+)ZZZ/) {
 		$text = $msgs{$1};
 		print $text if $text;
+		warn "$1\n" unless $text;
 		next;
 	}
 	print;
