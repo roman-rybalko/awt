@@ -484,7 +484,7 @@
 								</div>
 								<div class="col-lg-1">
 									<div class="form-group">
-										<button type="submit" class="btn btn-block btn-primary xpath-browser-open" title="Open" data-id="{$id}">
+										<button type="button" class="btn btn-block btn-primary xpath-browser-open" title="Open" data-id="{$id}">
 											<i class="fa fa-play"></i>
 										</button>
 									</div>
