@@ -107,7 +107,7 @@
 			<label for="action-selector-{@type}-{$id}">
 				Element XPath
 			</label>
-			<input class="form-control action-xpath-element" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
+			<input class="form-control action-xpath-element" data-id="{$id}" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
 	</div>
 </xsl:template>
@@ -168,7 +168,7 @@
 			<label for="action-selector-{@type}-{$id}">
 				Element XPath
 			</label>
-			<input class="form-control action-xpath-element" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
+			<input class="form-control action-xpath-element" data-id="{$id}" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
 	</div>
 </xsl:template>
@@ -236,7 +236,7 @@
 			<label for="action-selector-{@type}-{$id}">
 				Input XPath
 			</label>
-			<input class="form-control action-xpath-element" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
+			<input class="form-control action-xpath-element" data-id="{$id}" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
 	</div>
 	<div class="col-lg-4">
@@ -317,7 +317,7 @@
 			<label for="action-selector-{@type}-{$id}">
 				XPath Expression
 			</label>
-			<input class="form-control action-xpath-expression" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
+			<input class="form-control action-xpath-expression" data-id="{$id}" type="text" name="selector" value="{@selector}" id="action-selector-{@type}-{$id}"/>
 		</div>
 	</div>
 	<div class="col-lg-4">
@@ -599,7 +599,7 @@
 			<label for="action-data-{@type}-{$id}">
 				XPath Expression
 			</label>
-			<input class="form-control action-xpath-expression" type="text" name="data" value="{@data}" id="action-data-{@type}-{$id}"/>
+			<input class="form-control action-xpath-expression" data-id="{$id}" type="text" name="data" value="{@data}" id="action-data-{@type}-{$id}"/>
 		</div>
 	</div>
 </xsl:template>

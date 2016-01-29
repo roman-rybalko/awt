@@ -1,5 +1,8 @@
-// var xpath_composer_autoadd = function(xpath, value) {return false;}
+// var xpath_composer_autoadd = false;
 $(error_handler(function($) {
+	if (!$('#xpath-composer-ok').length)
+		return;
+	
 	var old_title = null;
 	function highlight_stop() {
 		if (!old_title)
@@ -88,6 +91,64 @@ $(error_handler(function($) {
 		xpath_update();
 	}));
 
+	function ui_create() {
+		$('#xpath-composer-tags').empty();
+		for (var t in tags) {
+			$('#xpath-composer-tag-template .xpath-composer-tag-title').html('//' + tags[t].name);
+			$('#xpath-composer-tag-template .xpath-composer-tag-title').attr('data-tag-id', t);
+			$('#xpath-composer-tag-template .xpath-composer-tag-text').empty();
+			var preds = tags[t].preds;
+			for (var p in preds) {
+				var css = '';
+				if (preds[p].name) {
+					css += '[' + preds[p].name;
+					if (preds[p].value)
+						css += ' = "' + preds[p].value + '"';
+					if (preds[p].substring)
+						css += ' *= "' + preds[p].substring + '"';
+					css += ']';
+				} else {
+					if (preds[p].text)
+						css += ':contains("' + preds[p].text + '")';
+					if (preds[p]['nth-of-type'])
+						css += ':nth-of-type(' + preds[p]['nth-of-type'] + ')';
+				}
+				$('#xpath-composer-pred-template .xpath-composer-pred-text').html(preds[p].expr);
+				$('#xpath-composer-pred-template .xpath-composer-pred-text').attr('title', css);
+				$('#xpath-composer-pred-template .xpath-composer-pred-control').attr('data-tag-id', t);
+				$('#xpath-composer-pred-template .xpath-composer-pred-control').attr('data-pred-id', p);
+				$('#xpath-composer-tag-template .xpath-composer-tag-text').append($('#xpath-composer-pred-template').html());
+			}
+			$('#xpath-composer-tag-template .xpath-composer-tag-toggle').attr('data-tag-id', t);
+			$('#xpath-composer-tag-template .xpath-composer-tag-collapsed').attr('data-tag-id', t);
+			$('#xpath-composer-tag-template .xpath-composer-tag-control').attr('data-tag-id', t);
+			$('#xpath-composer-tags').append($('#xpath-composer-tag-template').html());
+		}
+		$('#xpath-composer-tags .xpath-composer-tag-collapsed').collapse({
+			parent: '#xpath-composer-tags',
+			toggle: false
+		});
+		$('#xpath-composer-tags .xpath-composer-tag-toggle').click(error_handler(function(ev) {
+			var tag_id = $(ev.target).attr('data-tag-id');
+			$('#xpath-composer-tags .xpath-composer-tag-collapsed[data-tag-id=' + tag_id +']').collapse('toggle');
+		}));
+		$('#xpath-composer-tags .xpath-composer-tag-control').change(error_handler(function(ev) {
+			var tag_id = $(ev.target).attr('data-tag-id');
+			tags[tag_id].enabled = $(ev.target).prop('checked');
+			tag_title_update(tag_id);
+			xpath_update();
+			validate();
+		}));
+		$('#xpath-composer-tags .xpath-composer-pred-control').change(error_handler(function(ev) {
+			var tag_id = $(ev.target).attr('data-tag-id');
+			var pred_id = $(ev.target).attr('data-pred-id');
+			tags[tag_id].preds[pred_id].enabled = $(ev.target).prop('checked');
+			tag_title_update(tag_id);
+			xpath_update();
+			validate();
+		}));
+	}
+	
 	function ui_update() {
 		for (var t in tags) {
 			tag_title_update(t);
@@ -136,7 +197,6 @@ $(error_handler(function($) {
 	var tags = [];
 	function xpath_composer_elements(elements) {
 		tags = [];
-		$('#xpath-composer-tags').empty();
 		for (var e = 0; e < elements.length; ++e) {
 			var preds = [];
 			// make index the first to stimulate optimization alg to produce attrs over tags
@@ -166,63 +226,13 @@ $(error_handler(function($) {
 			if (elements[e].text)
 				preds.push({expr: 'contains(text(), "' + elements[e].text + '")', text: elements[e].text, enabled: false});
 			tags[e] = {name: elements[e].name, preds: preds, enabled: false};
-			$('#xpath-composer-tag-template .xpath-composer-tag-title').html('//' + elements[e].name);
-			$('#xpath-composer-tag-template .xpath-composer-tag-title').attr('data-tag-id', e);
-			$('#xpath-composer-tag-template .xpath-composer-tag-text').empty();
-			for (var p in preds) {
-				var css = '';
-				if (preds[p].name) {
-					css += '[' + preds[p].name;
-					if (preds[p].value)
-						css += ' = "' + preds[p].value + '"';
-					if (preds[p].substring)
-						css += ' *= "' + preds[p].substring + '"';
-					css += ']';
-				} else {
-					if (preds[p].text)
-						css += ':contains("' + preds[p].text + '")';
-					if (preds[p]['nth-of-type'])
-						css += ':nth-of-type(' + preds[p]['nth-of-type'] + ')';
-				}
-				$('#xpath-composer-pred-template .xpath-composer-pred-text').html(preds[p].expr);
-				$('#xpath-composer-pred-template .xpath-composer-pred-text').attr('title', css);
-				$('#xpath-composer-pred-template .xpath-composer-pred-control').attr('data-tag-id', e);
-				$('#xpath-composer-pred-template .xpath-composer-pred-control').attr('data-pred-id', p);
-				$('#xpath-composer-tag-template .xpath-composer-tag-text').append($('#xpath-composer-pred-template').html());
-			}
-			$('#xpath-composer-tag-template .xpath-composer-tag-toggle').attr('data-tag-id', e);
-			$('#xpath-composer-tag-template .xpath-composer-tag-collapsed').attr('data-tag-id', e);
-			$('#xpath-composer-tag-template .xpath-composer-tag-control').attr('data-tag-id', e);
-			$('#xpath-composer-tags').append($('#xpath-composer-tag-template').html());
 		}
-		$('#xpath-composer-tags .xpath-composer-tag-collapsed').collapse({
-			parent: '#xpath-composer-tags',
-			toggle: false
-		});
-		$('#xpath-composer-tags .xpath-composer-tag-toggle').click(error_handler(function(ev) {
-			var tag_id = $(ev.target).attr('data-tag-id');
-			$('#xpath-composer-tags .xpath-composer-tag-collapsed[data-tag-id=' + tag_id +']').collapse('toggle');
-		}));
-		//$('#xpath-composer-tags .xpath-composer-tag-collapsed').last().collapse('show');
-		$('#xpath-composer-tags .xpath-composer-tag-control').change(error_handler(function(ev) {
-			var tag_id = $(ev.target).attr('data-tag-id');
-			tags[tag_id].enabled = $(ev.target).prop('checked');
-			tag_title_update(tag_id);
-			xpath_update();
-			validate();
-		}));
-		$('#xpath-composer-tags .xpath-composer-pred-control').change(error_handler(function(ev) {
-			var tag_id = $(ev.target).attr('data-tag-id');
-			var pred_id = $(ev.target).attr('data-pred-id');
-			tags[tag_id].preds[pred_id].enabled = $(ev.target).prop('checked');
-			tag_title_update(tag_id);
-			xpath_update();
-			validate();
-		}));
+		ui_create();
 		optimization_reset();
 		guess();
 		ui_update();
 		validate();
+		$(document).triggerHandler('xpath-composer-state', [$('#xpath-composer-result').val(), null, tags]);
 		$('#modal-xpath-composer').modal('show');
 		highlight('[XPATH Composer]');
 		if (xpath_composer_autoadd) {
@@ -240,18 +250,22 @@ $(error_handler(function($) {
 					}
 				break;
 			}
-			if (call && xpath_composer_autoadd($('#xpath-composer-result').val())) {
+			if (call) {
+				var xpath = $('#xpath-composer-result').val();
 				highlight_stop();
 				$('#modal-xpath-composer').modal('hide');
 				$('#xpath-composer-optimization').prop('checked', false);
 				$('#xpath-composer-optimization').parent('label').removeClass('active');
+				$(document).triggerHandler('xpath-composer-done', [xpath, null, tags]);
 			}
 		}
 	}
 	function xpath_composer_input(value) {
-		if (xpath_composer_autoadd && xpath_composer_autoadd($('#xpath-composer-result').val(), value)) {
+		if (xpath_composer_autoadd) {
+			var xpath = $('#xpath-composer-result').val();
 			highlight_stop();
 			$('#modal-xpath-composer').modal('hide');
+			$(document).triggerHandler('xpath-composer-done', [xpath, value, tags]);
 		}
 	}
 	$('#xpath-composer-result').on('keyup', error_handler(function() {
@@ -563,6 +577,11 @@ $(error_handler(function($) {
 		ui_update();
 	}));
 
+	$('#xpath-composer-ok').click(error_handler(function() {
+		var xpath = $('#xpath-composer-result').val();
+		$(document).triggerHandler('xpath-composer-done', [xpath, null, tags]);
+	}));
+
 	messaging.recv(error_handler(function(data) {
 		switch (data.type) {
 			case 'xpath-composer-elements':
@@ -575,5 +594,13 @@ $(error_handler(function($) {
 				validate_result(data.result);
 				break;
 		}
+	}));
+
+	$(document).on('xpath-composer', error_handler(function(ev, new_tags) {
+		tags = new_tags;
+		ui_create();
+		optimization_reset();
+		ui_update();
+		$('#modal-xpath-composer').modal('show');
 	}));
 }));

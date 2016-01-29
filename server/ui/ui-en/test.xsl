@@ -209,6 +209,7 @@
 												<div class="panel-body">
 													<form role="form" method="post">
 														<input type="hidden" name="id" value="{@id}" />
+														<input type="hidden" name="user_data" value="{@user_data}" id="action-user-data-modify-{@id}"/>
 														<div class="row">
 															<xsl:apply-templates select="." mode="form">
 																<xsl:with-param name="id">modify-<xsl:value-of select="@id"/></xsl:with-param>
@@ -243,7 +244,8 @@
 												</div>
 												<div class="panel-body">
 													<form role="form" method="post" id="action-form-{@id}">
-														<input type="hidden" name="id" value="{@id}" />
+														<input type="hidden" name="id" value="{@id}"/>
+														<input type="hidden" name="user_data" id="action-user-data-insert-{@id}"/>  <!-- no value -->
 														<xsl:call-template name="new_action_form">
 															<xsl:with-param name="id">insert-<xsl:value-of select="@id"/></xsl:with-param>
 														</xsl:call-template>
@@ -313,6 +315,7 @@
 					<div class="panel panel-success">
 						<div class="panel-body">
 							<form role="form" method="post" id="action-form">
+								<input type="hidden" name="user_data" id="action-user-data-add"/>
 								<xsl:call-template name="new_action_form">
 									<xsl:with-param name="id">add</xsl:with-param>
 								</xsl:call-template>
@@ -330,131 +333,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal" id="modal-xpath-composer" role="dialog">
-				<div class="modal-dialog modal-lg">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<button type="button" class="close" data-dismiss="modal">&#215;</button>
-							<i class="fa fa-pencil"></i>
-							XPath Composer
-						</div>
-						<div class="panel-body">
-							<div class="panel-group" id="xpath-composer-tags" style="margin-bottom: 10px;"></div>
-							<p>
-								<div class="btn-group" data-toggle="buttons">
-									<label class="btn btn-xs btn-success">
-										<input type="checkbox" id="xpath-composer-optimization-notext" class="control-state" data-control-state="xpath-composer-optimization-notext"/>
-										no text()
-									</label>
-									<label class="btn btn-xs btn-success">
-										<input type="checkbox" id="xpath-composer-optimization-noattr" class="control-state" data-control-state="xpath-composer-optimization-noattr"/>
-										no @attr
-									</label>
-									<label class="btn btn-xs btn-success">
-										<input type="checkbox" id="xpath-composer-optimization-noindex" class="control-state" data-control-state="xpath-composer-optimization-noindex"/>
-										no [index]
-									</label>
-									<label class="btn btn-xs btn-success">
-										<input type="checkbox" id="xpath-composer-optimization-nocontains" class="control-state" data-control-state="xpath-composer-optimization-nocontains"/>
-										no contains(...)
-									</label>
-								</div>
-								<div class="btn-group" data-toggle="buttons">
-									<label class="btn btn-xs btn-default">
-										<input type="radio" name="xpath-composer-comments-tags" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-none"/>
-										no comments
-									</label>
-									<label class="btn btn-xs btn-default active">
-										<input type="radio" name="xpath-composer-comments-tags" checked="checked" id="xpath-composer-comments-tags-main" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-main"/>
-										main tag
-									</label>
-									<label class="btn btn-xs btn-default">
-										<input type="radio" name="xpath-composer-comments-tags" id="xpath-composer-comments-tags-all" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-all"/>
-										all tags
-									</label>
-								</div>
-								<div class="btn-group" data-toggle="buttons">
-									<label class="btn btn-xs btn-default">
-										<input type="radio" name="xpath-composer-comments-preds" id="xpath-composer-comments-preds-all" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-preds-all"/>
-										all predicates
-									</label>
-									<label class="btn btn-xs btn-default active">
-										<input type="radio" name="xpath-composer-comments-preds" checked="checked" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-preds-specific"/>
-										specific predicates
-									</label>
-								</div>
-								<div class="btn-group" data-toggle="buttons">
-									<label class="btn btn-xs btn-success">
-										<input type="radio" name="xpath-composer-algo" id="xpath-composer-optimization"/>
-										Optimize
-									</label>
-									<label class="btn btn-xs btn-primary">
-										<input type="radio" name="xpath-composer-algo" id="xpath-composer-guess"/>
-										Guess
-									</label>
-									<label class="btn btn-xs btn-warning">
-										<input type="radio" name="xpath-composer-algo"/>
-										Manual
-									</label>
-									<label class="btn btn-xs btn-danger" id="xpath-composer-clear">
-										<input type="radio" name="xpath-composer-algo"/>
-										Clear
-									</label>
-								</div>
-							</p>
-							<div class="row">
-								<div class="col-lg-10">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Element XPath" id="xpath-composer-result"/>
-									</div>
-								</div>
-								<div class="col-lg-2">
-									<button type="button" class="btn btn-block btn-primary" id="xpath-composer-ok" data-dismiss="modal">
-										<i class="fa fa-check"></i>
-										Ok
-									</button>
-								</div>
-							</div>
-							<div data-status="process" class="xpath-composer-validation text-progress" style="display:none;">Validating...</div>
-							<div data-status="ok" class="xpath-composer-validation text-success" style="display:none;">A single element found.</div>
-							<div data-status="fail-count" class="xpath-composer-validation text-failure" style="display:none;"><span class="xpath-composer-validation-count"></span> elements found.</div>
-							<div data-status="fail-none" class="xpath-composer-validation text-failure" style="display:none;">No elements found.</div>
-							<div data-status="fail-other" class="xpath-composer-validation text-failure" style="display:none;">Validation error: <span class="xpath-composer-validation-error"></span></div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">
-								<i class="fa fa-undo"></i>
-								Cancel
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div style="display: none;">
-				<div id="xpath-composer-pred-template">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" class="xpath-composer-pred-control"/>
-							<span class="xpath-composer-pred-text"></span>
-						</label>
-					</div>
-				</div>
-				<div id="xpath-composer-tag-template">
-					<div class="panel panel-default">
-						<div class="panel-heading xpath-composer-tag-toggle">
-							<h4 class="panel-title xpath-composer-tag-toggle">
-								<span class="space-x">
-									<input type="checkbox" class="xpath-composer-tag-control"/>
-								</span>
-								<span class="xpath-composer-tag-title"></span>
-							</h4>
-						</div>
-						<div class="panel-collapse collapse xpath-composer-tag-collapsed">
-							<div class="panel-body xpath-composer-tag-text"></div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<xsl:call-template name="xpath_composer"/>
 		</xsl:if>
 	</div>
 	<div style="display: none;">
@@ -547,13 +426,13 @@
 		<div class="panel panel-info last">
 			<div class="panel-heading">
 				<h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#xpath-browser-{$id}" href="#xpath-browser-body-{$id}">
+					<a data-toggle="collapse" data-parent="#xpath-browser-{$id}" href="#xpath-browser-collapse-{$id}">
 						<i class="fa fa-globe"></i>
 						XPath Browser
 					</a>
 				</h4>
 			</div>
-			<div id="xpath-browser-body-{$id}" class="panel-collapse collapse">
+			<div id="xpath-browser-collapse-{$id}" class="panel-collapse collapse xpath-browser-collapse" data-id="{$id}">
 				<div class="panel-body">
 					<div class="container-fluid">
 						<div class="row">
@@ -576,7 +455,7 @@
 									</p>
 									<p>
 										Try the test page
-										<a href="#" onmousedown="$('.xpath-browser-url').val($(this).text()); return false;" onclick="return false;"><span class="location-path">https://advancedwebtesting.com/ui/</span>ui-en/xpath-browser-composer-test.html</a>
+										<a href="#" onmousedown="$('#xpath-browser-url-{$id}').val($(this).text()); return false;" onclick="return false;"><span class="location-path">https://advancedwebtesting.com/ui/</span>ui-en/xpath-browser-composer-test.html</a>
 										to see how it works.
 									</p>
 								</div>
@@ -600,7 +479,7 @@
 								</div>
 								<div class="col-lg-9">
 									<div class="form-group">
-										<input type="text" class="form-control xpath-browser-url" placeholder="URL" id="xpath-browser-url-{$id}"/>
+										<input type="text" class="form-control" placeholder="URL" id="xpath-browser-url-{$id}"/>
 									</div>
 								</div>
 								<div class="col-lg-1">
@@ -617,7 +496,7 @@
 								<xsl:if test="$id = 'add'">
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" id="action-autoadd-control" class="control-state" data-control-state="xpath-composer-autoadd"/>
+											<input type="checkbox" class="control-state action-autoadd-control" data-control-state="xpath-composer-autoadd" data-id="{$id}"/>
 											Auto-add actions (XPath Composer will not be used)
 										</label>
 									</div>
@@ -630,6 +509,134 @@
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template name="xpath_composer">
+	<div class="modal" id="modal-xpath-composer" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<button type="button" class="close" data-dismiss="modal">&#215;</button>
+					<i class="fa fa-pencil"></i>
+					XPath Composer
+				</div>
+				<div class="panel-body">
+					<div class="panel-group" id="xpath-composer-tags" style="margin-bottom: 10px;"></div>
+					<p>
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-xs btn-success">
+								<input type="checkbox" id="xpath-composer-optimization-notext" class="control-state" data-control-state="xpath-composer-optimization-notext"/>
+								no text()
+							</label>
+							<label class="btn btn-xs btn-success">
+								<input type="checkbox" id="xpath-composer-optimization-noattr" class="control-state" data-control-state="xpath-composer-optimization-noattr"/>
+								no @attr
+							</label>
+							<label class="btn btn-xs btn-success">
+								<input type="checkbox" id="xpath-composer-optimization-noindex" class="control-state" data-control-state="xpath-composer-optimization-noindex"/>
+								no [index]
+							</label>
+							<label class="btn btn-xs btn-success">
+								<input type="checkbox" id="xpath-composer-optimization-nocontains" class="control-state" data-control-state="xpath-composer-optimization-nocontains"/>
+								no contains(...)
+							</label>
+						</div>
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-xs btn-default">
+								<input type="radio" name="xpath-composer-comments-tags" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-none"/>
+								no comments
+							</label>
+							<label class="btn btn-xs btn-default active">
+								<input type="radio" name="xpath-composer-comments-tags" checked="checked" id="xpath-composer-comments-tags-main" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-main"/>
+								main tag
+							</label>
+							<label class="btn btn-xs btn-default">
+								<input type="radio" name="xpath-composer-comments-tags" id="xpath-composer-comments-tags-all" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-tags-all"/>
+								all tags
+							</label>
+						</div>
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-xs btn-default">
+								<input type="radio" name="xpath-composer-comments-preds" id="xpath-composer-comments-preds-all" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-preds-all"/>
+								all predicates
+							</label>
+							<label class="btn btn-xs btn-default active">
+								<input type="radio" name="xpath-composer-comments-preds" checked="checked" class="xpath-composer-comments control-state" data-control-state="xpath-composer-comments-preds-specific"/>
+								specific predicates
+							</label>
+						</div>
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-xs btn-success">
+								<input type="radio" name="xpath-composer-algo" id="xpath-composer-optimization"/>
+								Optimize
+							</label>
+							<label class="btn btn-xs btn-primary">
+								<input type="radio" name="xpath-composer-algo" id="xpath-composer-guess"/>
+								Guess
+							</label>
+							<label class="btn btn-xs btn-warning">
+								<input type="radio" name="xpath-composer-algo"/>
+								Manual
+							</label>
+							<label class="btn btn-xs btn-danger" id="xpath-composer-clear">
+								<input type="radio" name="xpath-composer-algo"/>
+								Clear
+							</label>
+						</div>
+					</p>
+					<div class="row">
+						<div class="col-lg-10">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Element XPath" id="xpath-composer-result"/>
+							</div>
+						</div>
+						<div class="col-lg-2">
+							<button type="button" class="btn btn-block btn-primary" id="xpath-composer-ok" data-dismiss="modal">
+								<i class="fa fa-check"></i>
+								Ok
+							</button>
+						</div>
+					</div>
+					<div data-status="process" class="xpath-composer-validation text-progress" style="display:none;">Validating...</div>
+					<div data-status="ok" class="xpath-composer-validation text-success" style="display:none;">A single element found.</div>
+					<div data-status="fail-count" class="xpath-composer-validation text-failure" style="display:none;"><span class="xpath-composer-validation-count"></span> elements found.</div>
+					<div data-status="fail-none" class="xpath-composer-validation text-failure" style="display:none;">No elements found.</div>
+					<div data-status="fail-other" class="xpath-composer-validation text-failure" style="display:none;">Validation error: <span class="xpath-composer-validation-error"></span></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<i class="fa fa-undo"></i>
+						Cancel
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="display: none;">
+		<div id="xpath-composer-pred-template">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" class="xpath-composer-pred-control"/>
+					<span class="xpath-composer-pred-text"></span>
+				</label>
+			</div>
+		</div>
+		<div id="xpath-composer-tag-template">
+			<div class="panel panel-default">
+				<div class="panel-heading xpath-composer-tag-toggle">
+					<h4 class="panel-title xpath-composer-tag-toggle">
+						<span class="space-x">
+							<input type="checkbox" class="xpath-composer-tag-control"/>
+						</span>
+						<span class="xpath-composer-tag-title"></span>
+					</h4>
+				</div>
+				<div class="panel-collapse collapse xpath-composer-tag-collapsed">
+					<div class="panel-body xpath-composer-tag-text"></div>
 				</div>
 			</div>
 		</div>

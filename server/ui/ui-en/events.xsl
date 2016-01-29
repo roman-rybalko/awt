@@ -370,6 +370,52 @@
 	</div>
 </xsl:template>
 
+<xsl:template match="event[@name='test_import']" mode="severity">
+	success
+</xsl:template>
+
+<xsl:template match="event[@name='test_import']" mode="title">
+	Import Actions
+</xsl:template>
+
+<xsl:template match="event[@name='test_import']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">Test:</b>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Actions Count:</b>
+				<xsl:value-of select="@actions_cnt"/>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='test_clear']" mode="severity">
+	danger
+</xsl:template>
+
+<xsl:template match="event[@name='test_clear']" mode="title">
+	Delete all Actions
+</xsl:template>
+
+<xsl:template match="event[@name='test_clear']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">Test:</b>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Actions Count:</b>
+				<xsl:value-of select="@actions_cnt"/>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
 <xsl:template match="event[@name='task_add']" mode="severity">
 	warning
 </xsl:template>

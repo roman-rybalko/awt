@@ -109,11 +109,6 @@ $(error_handler(function($) {
 			$(this).attr('title', cache[name]);
 		});
 	})();
-	$('#xpath-composer-ok').click(error_handler(function(ev) {
-		var xpath = $('#xpath-composer-result').val();
-		$('input.action-xpath-element').val(xpath);
-		$('input.action-xpath-expression').val(xpath + '/@class');
-	}));
 	var datetime_format = 'YYYY-MM-DD HH:mm:ss';
 	$('.date input').each(function() {
 		var value = $(this).val();
@@ -371,22 +366,33 @@ $(error_handler(function($) {
 	$('.modal-pending-transaction-code').first().modal('show');
 }));
 
-var xpath_composer_autoadd_queue = [];
-var xpath_composer_autoadd = error_handler(function(xpath, value) {
-	if (!$('#action-autoadd-control').prop('checked'))
-		return false;
-	var start = ! xpath_composer_autoadd_queue.length;
-	xpath_composer_autoadd_queue.push({xpath: xpath, value: value});
-	function process_queue() {
-		if (!xpath_composer_autoadd_queue.length)
+var xpath_composer_autoadd = false;
+$(error_handler(function($) {
+	if (!$('.action-autoadd-control').length)
+		return;
+
+	$('.xpath-browser-collapse').on('show.bs.collapse', error_handler(function(ev) {
+		var id = $(ev.target).attr('data-id');
+		$('.xpath-browser-collapse[data-id != "' + id + '"]').collapse('hide');
+		var state_data = $('#action-user-data-' + id).val();
+		xpath_composer_autoadd = $('.action-autoadd-control[data-id="' + id + '"]').prop('checked');  // true/false/undefined
+		$(document).triggerHandler('xpath-browser', [id, state_data]);
+	}));
+	$('.action-autoadd-control').change(error_handler(function(ev) {
+		xpath_composer_autoadd = $(ev.target).prop('checked');
+	}));
+
+	var queue = [];
+	function queue_process() {
+		if (!queue.length)
 			return;
-		if (!$('#action-autoadd-control').prop('checked')) {
-			xpath_composer_autoadd_queue = [];
+		if (!xpath_composer_autoadd) {
+			queue = [];
 			return;
 		}
-		var op = xpath_composer_autoadd_queue[0];
-		loader.show();
-		var params = {add: 1, selector: op.xpath};
+		var op = queue[0];
+		loader.show();  // global loader, see user.xsl
+		var params = {add: 1, selector: op.xpath, user_data: op.user_data};
 		if (op.value) {
 			params.type = 'enter';
 			params.data = op.value;
@@ -394,7 +400,7 @@ var xpath_composer_autoadd = error_handler(function(xpath, value) {
 			params.type = 'click';
 		}
 		$.post(document.location.href, params).done(error_handler(function() {
-			var op = xpath_composer_autoadd_queue.shift();
+			var op = queue.shift();
 			if (op.value) {
 				$('#action-autoadd-template-enter .action-autoadd-enter-xpath').html(op.xpath);
 				$('#action-autoadd-template-enter .action-autoadd-enter-value').html(op.value);
@@ -404,7 +410,7 @@ var xpath_composer_autoadd = error_handler(function(xpath, value) {
 				$('#action-autoadd-container').append($('#action-autoadd-template-click').html());
 			}
 		})).fail(error_handler(function(error) {
-			var op = xpath_composer_autoadd_queue.shift();
+			var op = queue.shift();
 			if (op.value) {
 				$('#action-autoadd-template-enter .action-autoadd-enter-xpath').html('FAILED: ' + op.xpath);
 				$('#action-autoadd-template-enter .action-autoadd-enter-value').html('FAILED: ' + op.value);
@@ -417,10 +423,20 @@ var xpath_composer_autoadd = error_handler(function(xpath, value) {
 				console.log('xpath-composer action autoadd fail:', error.status, error.statusText);
 		})).always(error_handler(function() {
 			loader.hide();
-			process_queue();
+			queue_process();
 		}));
 	}
-	if (start)
-		process_queue();
-	return true;
-});
+
+	$(document).on('xpath-browser-done', error_handler(function(ev, id, xpath, value, state_data) {
+		if (xpath_composer_autoadd) {
+			var start = ! queue.length;
+			queue.push({xpath: xpath, value: value, user_data: state_data});
+			if (start)
+				queue_process();
+		} else {
+			$('#action-user-data-' + id).val(state_data);
+			$('input.action-xpath-element[data-id="' + id + '"]').val(xpath);
+			$('input.action-xpath-expression[data-id="' + id + '"]').val(xpath + '/@class');
+		}
+	}));
+}));

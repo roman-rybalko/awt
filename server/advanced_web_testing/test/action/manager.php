@@ -9,6 +9,7 @@ namespace AdvancedWebTesting\Test\Action;
 class Manager {
 	const SELECTOR_MAX_SIZE = 4096;
 	const DATA_MAX_SIZE = 4096;
+	const USERDATA_MAX_SIZE = 4096;
 
 	private $actions, $tests;
 
@@ -22,9 +23,10 @@ class Manager {
 	 * @param string $type
 	 * @param string|null $selector
 	 * @param string|null $data
+	 * @param string|null $userData
 	 * @return integer actionId
 	 */
-	public function add($type, $selector, $data) {
+	public function add($type, $selector, $data, $userData) {
 		$lastActionId = 0;
 		foreach ($this->actions->select(['action_id']) as $action)
 			if ($action['action_id'] > $lastActionId)
@@ -41,6 +43,11 @@ class Manager {
 				return -3;
 			$fields['data'] = $data;
 		}
+		if ($userData !== null) {
+			if (strlen($userData) > self::USERDATA_MAX_SIZE)
+				return -4;
+			$fields['user_data'] = $userData;
+		}
 		if (!$this->actions->insert($fields))
 			return -1;
 		$this->tests->update(['time' => time()], []);  // no check - may be the same time
@@ -53,9 +60,10 @@ class Manager {
 	 * @param string $type
 	 * @param string|null $selector
 	 * @param string|null $data
+	 * @param string|null $userData
 	 * @return integer actionId
 	 */
-	public function insert($actionId, $type, $selector, $data) {
+	public function insert($actionId, $type, $selector, $data, $userData) {
 		// получаем список идентификаторов, которые надо изменить
 		$ids = [];
 		foreach ($this->actions->select(['action_id']) as $action)
@@ -89,6 +97,11 @@ class Manager {
 				return -3;
 			$fields['data'] = $data;
 		}
+		if ($userData !== null) {
+			if (strlen($userData) > self::USERDATA_MAX_SIZE)
+				return -4;
+			$fields['user_data'] = $userData;
+		}
 		if (!$this->actions->insert($fields))
 			return -1;
 		$this->tests->update(['time' => time()], []);  // no check - may be the same time
@@ -112,17 +125,29 @@ class Manager {
 	 * @return integer Последний actionId
 	 */
 	public function import($actions) {
-		$actionId = 0;
-		usort($actions, function($a,$b){return $a['id']-$b['id'];});
+		if (!is_array($actions))
+			return -11;
 		foreach ($actions as $action) {
+			if (!isset($action['id']))
+				return -12;
+			if (!isset($action['type']))
+				return -13;
 			if (isset($action['selector']) && strlen($action['selector']) > self::SELECTOR_MAX_SIZE)
 				return -2;
 			if (isset($action['data']) && strlen($action['data']) > self::DATA_MAX_SIZE)
 				return -3;
+			if (isset($action['user_data']) && strlen($action['user_data']) > self::USERDATA_MAX_SIZE)
+				return -4;
 		}
+		$lastActionId = 0;
+		foreach ($this->actions->select(['action_id']) as $action)
+			if ($action['action_id'] > $lastActionId)
+				$lastActionId = $action['action_id'];
+		$actionId = $lastActionId;  // will be incremented before use
+		usort($actions, function($a,$b){return $a['id']-$b['id'];});
 		foreach ($actions as $action) {
 			$fields = ['action_id' => ++$actionId];
-			foreach (['type', 'selector', 'data'] as $param)
+			foreach (['type', 'selector', 'data', 'user_data'] as $param)
 				$fields[$param] = $action[$param];
 			if (!$this->actions->insert($fields))
 				return -1;
@@ -135,9 +160,10 @@ class Manager {
 	 * @param integer $actionId
 	 * @param string|null $selector
 	 * @param string|null $data
+	 * @param string|null $userData
 	 * @return integer
 	 */
-	public function modify($actionId, $selector, $data) {
+	public function modify($actionId, $selector, $data, $userData) {
 		$fields = [];
 		if ($selector !== null) {
 			if (strlen($selector) > self::SELECTOR_MAX_SIZE)
@@ -149,6 +175,11 @@ class Manager {
 				return -3;
 			$fields['data'] = $data;
 		}
+		if ($userData !== null) {
+			if (strlen($userData) > self::USERDATA_MAX_SIZE)
+				return -4;
+			$fields['user_data'] = $userData;
+		}
 		if (!$fields)
 			return -1;
 		if ($result = $this->actions->update($fields, ['action_id' => $actionId]))
@@ -159,21 +190,22 @@ class Manager {
 	/**
 	 * Получить
 	 * @param [integer]|null $actionIds null - все
-	 * @return [][id => integer, type => string, selector => string|null, data => string|null]
+	 * @return [][id => integer, type => string, selector => string|null, data => string|null, user_data => string|null]
 	 */
 	public function get($actionIds = null) {
+		$fields = ['action_id', 'type', 'selector', 'data', 'user_data'];
 		$data = [];
 		if ($actionIds === null)
-			$data = $this->actions->select(['action_id', 'type', 'selector', 'data']);
+			$data = $this->actions->select($fields);
 		else
 			foreach ($actionIds as $actionId)
-				if ($data1 = $this->actions->select(['action_id', 'type', 'selector', 'data'], ['action_id' => $actionId]))
+				if ($data1 = $this->actions->select($fields, ['action_id' => $actionId]))
 					$data = array_merge($data, $data1);
 		$actions = [];
 		usort($data, function($a,$b){return $a['action_id']-$b['action_id'];});
 		foreach ($data as $data1) {
 			$action = [];
-			foreach (['action_id' => 'id', 'type' => 'type', 'selector' => 'selector', 'data' => 'data'] as $src => $dst)
+			foreach (['action_id' => 'id', 'type' => 'type', 'selector' => 'selector', 'data' => 'data', 'user_data' => 'user_data'] as $src => $dst)
 				$action[$dst] = $data1[$src];
 			$actions[] = $action;
 		}

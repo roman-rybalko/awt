@@ -45,7 +45,9 @@ params: billing [time]
 			$testActMgr = new \AdvancedWebTesting\Test\Action\Manager($this->db, $testId);
 			header('Content-Type: application/json');
 			header('Content-Disposition: attachment; filename="' . $test['name'] . '.json"');
-			echo json_encode($testActMgr->get(), JSON_PRETTY_PRINT);
+			$data = json_encode($testActMgr->get(), JSON_PRETTY_PRINT);
+			$data = str_replace("\\t", "\t", $data);  // fix json_decode bug for \t
+			echo $data;
 		} else {
 			http_response_code(404);
 			header('Content-Type: text/plain');

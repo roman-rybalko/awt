@@ -1,7 +1,7 @@
 create table tests(user_id integer not null, name varchar(256) not null, test_id integer primary key auto_increment not null, deleted integer(1), time integer not null);
 create index tests_idx1 on tests(user_id);
 create index tests_idx2 on tests(deleted, time);
-create table test_actions(test_id integer not null, type varchar(256) not null, selector varchar(4096), data varchar(4096), action_id integer not null);
+create table test_actions(test_id integer not null, type varchar(256) not null, selector varchar(4096), data varchar(4096), user_data varchar(4096), action_id integer not null);
 create unique index test_actions_idx on test_actions(test_id, action_id);
 create table tasks(user_id integer not null, test_id integer not null, test_name varchar(255) not null, type varchar(256) not null, debug integer(1), status integer, node_id varchar(256), result varchar(256), task_id integer primary key auto_increment not null, time integer not null);
 create index tasks_idx1 on tasks(status);

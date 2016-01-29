@@ -1,7 +1,7 @@
 function error_handler(f) {
-	return function(arg1, arg2, arg3) {
+	return function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9) {
 		try {
-			return f(arg1, arg2, arg3);
+			return f(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
 		} catch (e) {
 			if (console)
 				console.log('exception:', e, e.stack ? e.stack : '');
