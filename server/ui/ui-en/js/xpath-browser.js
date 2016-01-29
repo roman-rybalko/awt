@@ -113,6 +113,7 @@ $(error_handler(function($) {
 					browser_url(id, data.url);
 					url_history_add(data.url);
 				}
+				$(document).triggerHandler('xpath-browser-url', [data.url]);
 				break;
 		}
 	}));

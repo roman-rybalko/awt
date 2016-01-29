@@ -602,5 +602,8 @@ $(error_handler(function($) {
 		optimization_reset();
 		ui_update();
 		$('#modal-xpath-composer').modal('show');
+		$(document).one('xpath-browser-url', error_handler(function() {
+			validate();
+		}));
 	}));
 }));
