@@ -39,9 +39,16 @@ function wait_condition(condition) {
 	return false;
 }
 
+var saved_scrn;  // optimization for show_selection()'s extra call
 function get_scrn(selenium) {
 	if (selenium) {
-		var scrn = wait_promise(selenium.takeScreenshot());
+		var scrn;
+		if (saved_scrn) {
+			scrn = saved_scrn;
+		} else {
+			scrn = wait_promise(selenium.takeScreenshot());
+			saved_scrn = scrn;
+		}
 		return {
 			data: new Buffer(scrn, 'base64'),
 			ext: '.png'
@@ -88,6 +95,7 @@ function show_selection(selenium, area) {
 	}, selection_html_id, area.x, area.y, area.w, area.h, border_size));
 	if (error)
 		console.log('selutil/show_selection js error:', error);
+	get_scrn(selenium);  // flush viweport buffer
 }
 
 function hide_selection(selenium) {
@@ -106,6 +114,7 @@ function hide_selection(selenium) {
 			console.log('selutil/hide_selection js error:', error);
 	}
 	selection_html_id = null;
+	saved_scrn = null;
 }
 
 function scroll(selenium, pos) {
@@ -145,8 +154,9 @@ function show_element(selenium, xpath) {
 	var el = wait_promise(selenium.findElement({xpath: xpath}));
 	var location = wait_promise(el.getLocation());
 	var size = wait_promise(el.getSize());
-	scroll(selenium, {x: location.x + Math.round(size.width / 2), y: location.y + Math.round(size.height / 2)});
 	show_selection(selenium, {x: location.x, y: location.y, w: size.width, h: size.height});
+	// scroll() after show_selection(), because show_selection() flushes viewport buffer which moves viewport to the top of the page
+	scroll(selenium, {x: location.x + Math.round(size.width / 2), y: location.y + Math.round(size.height / 2)});
 	return el;
 }
 

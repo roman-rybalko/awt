@@ -30,4 +30,3 @@
 36. по списку сайтов автоматическоая генерация коммерческого предложения и отправка на контактный e-mail организации (?)
 37. компрессия БД средствами mysql
 38. phontomjs viweport size
-39. call screenshot after selection set to flush screen buffer, then call scroll (screenshot moves viewport to the top), screenshot state
