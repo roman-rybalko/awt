@@ -1,14 +1,12 @@
 $(error_handler(function($) {
 	var started = false;
-	messaging.recv(error_handler(function(data) {
+	messaging.recv(error_handler(function() {
 		if (started)
 			return;
 		var cur_selection = {top: -1, left: -1, width: -1, height: -1};
-		$('body *').on('mouseover', error_handler(function(ev) {
-			if (ev.eventPhase != Event.AT_TARGET)
-				return;
-			var pos = $(ev.target).offset();
-			var size = {width: $(ev.target).width(), height: $(ev.target).height()};
+		$(document).on('xpath-browser-selection', error_handler(function(ev, target) {
+			var pos = $(target).offset();
+			var size = {width: $(target).width(), height: $(target).height()};
 			if (cur_selection.top == pos.top && cur_selection.left == pos.left && cur_selection.width == size.width && cur_selection.height == size.height)
 				return;
 			cur_selection = {top: pos.top, left: top.left, width: size.width, height: size.height};
@@ -46,6 +44,11 @@ $(error_handler(function($) {
 				+ ' width: 1px;'
 				+ ' height: ' + size.height + 'px;'
 				+ '"></div>');
+		}));
+		$('body *').on('mouseover', error_handler(function(ev) {
+			if (ev.eventPhase != Event.AT_TARGET)
+				return;
+			$(document).triggerHandler('xpath-browser-selection', [ev.target]);
 		}));
 		messaging.send({type: 'xpath-browser-url', url: window.location.href});
 		started = true;

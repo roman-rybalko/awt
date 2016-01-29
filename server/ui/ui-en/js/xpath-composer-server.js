@@ -115,6 +115,8 @@ $(error_handler(function($) {
 			if (console)
 				console.log('css:', selector);
 			result = result.find(selector);
+			if (result.length)
+				$(document).triggerHandler('xpath-browser-selection', [result.get(0)]);
 			messaging.send({type: 'xpath-composer-validate-result', result: result.length});
 		} catch (e) {
 			messaging.send({type: 'xpath-composer-validate-result', result: e.message});
