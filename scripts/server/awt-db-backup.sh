@@ -1,8 +1,5 @@
 #! /bin/sh -e
 
-AWTD="/srv/www/htdocs/awt/server"
-AWTD="/var/www/awt"
-B=awt.sql
 B=/var/backups/awt/db.sql
 U=awt-bak
 P=9z4NC5cUD68XM7EYHrgKjF
