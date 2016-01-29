@@ -138,8 +138,10 @@ class User {
 				$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $this->userId);
 				if (!$settMgr->get()['email'])
 					echo '<message type="notice" value="set_up_email"/>';
-			} else
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_login" code="1"/>';
+			}
 		}
 		echo '<login/>';
 	}
@@ -160,12 +162,18 @@ class User {
 					if ($user->register($_POST['user'], $_POST['password1'])) {
 						echo '<message type="notice" value="register_ok"/>';
 						echo '<message type="notice" value="set_up_email"/>';
-					} else
+					} else {
+						http_response_code(400);
 						echo '<message type="error" value="login_busy" code="1"/>';
-				} else
+					}
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="passwords_dont_match" code="3"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_captcha" code="4"/>';
+			}
 		}
 		echo '<register/>';
 	}
@@ -206,20 +214,27 @@ class User {
 								echo '<message type="notice" value="email_confirmation_pending"/>';
 							} else {
 								error_log('Password Reset: user: ' . $_POST['user'] . ' - Mail Manager error');
+								http_response_code(400);
 								echo '<message type="error" value="password_reset_fail" code="5"/>';
 							}
 						} else {
 							error_log('Password Reset: user: ' . $_POST['user'] . ' - no E-Mail');
+							http_response_code(400);
 							echo '<message type="error" value="password_reset_fail" code="6"/>';
 						}
 					} else {
 						error_log('Password Reset: user: ' . $_POST['user'] . ' - bad login');
+						http_response_code(400);
 						echo '<message type="error" value="password_reset_fail" code="7"/>';
 					}
-				} else
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="passwords_dont_match" code="8"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_captcha" code="9"/>';
+			}
 		} else if (isset($_GET['reset_code'])) {
 			if (isset($_SESSION['password_reset_code']) && $_SESSION['password_reset_code'] == $_GET['reset_code']) {
 				if ($userDb->password($_SESSION['password_reset_user_id'], $_SESSION['password_reset_password'])) {
@@ -228,13 +243,16 @@ class User {
 					$histMgr->add('password_change', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
 				} else {
 					error_log('Password Reset: userDb error');
+					http_response_code(400);
 					echo '<message type="error" value="password_reset_fail" code="10"/>';
 				}
 				unset($_SESSION['password_reset_password']);
 				unset($_SESSION['password_reset_user_id']);
 				unset($_SESSION['password_reset_code']);
-			} else
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_code" code="11"/>';
+			}
 		}
 		echo '<password_reset/>';
 	}
@@ -295,12 +313,18 @@ class User {
 						echo '<message type="notice" value="password_change_ok"/>';
 						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 						$histMgr->add('password_change', ['ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
-					} else
+					} else {
+						http_response_code(400);
 						echo '<message type="error" value="password_change_fail" code="12"/>';
-				} else
+					}
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="passwords_dont_match" code="13"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_current_password" code="14"/>';
+			}
 		}
 		if (isset($_POST['task_fail_email_report']) || isset($_POST['task_success_email_report'])) {
 			$settings = $settMgr->get();
@@ -319,8 +343,10 @@ class User {
 							$event['old_' . $param] = $settings[$param] ? $settings[$param] : 0;
 					}
 				$histMgr->add('settings_change', $event);
-			} else
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="settings_change_fail" code="15"/>';
+			}
 		}
 		if (isset($_POST['email']) && $_POST['email']) {
 			$oldEmail = $settMgr->get()['email'];
@@ -334,10 +360,14 @@ class User {
 						\WebConstructionSet\Url\Tools::getMyUrl(), ['email_code' => $_SESSION['settings_email_code']])))
 				{
 					echo '<message type="notice" value="email_confirmation_pending"/>';
-				} else
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="email_change_fail" code="16"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="email_change_fail" code="17"/>';
+			}
 		} else if (isset($_GET['email_code'])) {
 			if (isset($_SESSION['settings_email_code']) && $_SESSION['settings_email_code'] == $_GET['email_code']) {
 				$oldEmail = $settMgr->get()['email'];
@@ -351,14 +381,20 @@ class User {
 						echo '<message type="notice" value="email_change_ok"/>';
 						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 						$histMgr->add('email_change', ['email' => $newEmail, 'old_email' => $oldEmail, 'ip' => $_SERVER['REMOTE_ADDR'], 'ua' => substr($_SERVER['HTTP_USER_AGENT'], 0, 128)]);
-					} else
+					} else {
+						http_response_code(400);
 						echo '<message type="error" value="email_change_fail" code="18"/>';
-				} else
+					}
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="email_change_fail" code="19"/>';
+				}
 				unset($_SESSION['settings_email_code']);
 				unset($_SESSION['settings_email']);
-			} else
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_code" code="20"/>';
+			}
 		}
 		if (isset($_POST['delete_account'])) {
 			$settings = $settMgr->get();
@@ -372,8 +408,10 @@ class User {
 							\WebConstructionSet\Url\Tools::getMyUrl(), ['delete_account_code' => $_SESSION['delete_account_code']])))
 					{
 						echo '<message type="notice" value="email_confirmation_pending"/>';
-					} else
+					} else {
+						http_response_code(500);
 						echo '<message type="error" value="delete_account_fail" code="21"/>';
+					}
 				} else {
 					$account = new \AdvancedWebTesting\User\Account($this->db, $this->userId);
 					$data = $account->delete();
@@ -384,8 +422,10 @@ class User {
 					$this->logout($user);
 					return;
 				}
-			} else
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="delete_account_fail" code="22"/>';
+			}
 		} else if (isset($_GET['delete_account_code'])) {
 			if (isset($_SESSION['delete_account_code']) && $_SESSION['delete_account_code'] == $_GET['delete_account_code']) {
 				unset($_SESSION['delete_account_code']);
@@ -398,10 +438,14 @@ class User {
 						echo '<message type="notice" value="delete_account_ok"/>';
 					$this->logout($user);
 					return;
-				} else
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="delete_account_fail" code="23"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_code" code="24"/>';
+			}
 		}
 		echo '<settings';
 		foreach ($settMgr->get() as $name => $value)
@@ -446,8 +490,10 @@ class User {
 				echo '<message type="notice" value="test_add_ok" id="', $testId, '"/>';
 				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 				$histMgr->add('test_add', ['test_id' => $testId, 'test_name' => $_POST['name']]);
-			} else
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="test_add_fail" code="25"/>';
+			}
 		} else if (isset($_POST['delete'])) {
 			if ($tests = $testMgr->get([$_POST['id']])) {
 				$test = $tests[0];
@@ -455,10 +501,14 @@ class User {
 					echo '<message type="notice" value="test_delete_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$histMgr->add('test_delete', ['test_id' => $_POST['id'], 'test_name' => $test['name']]);
-				} else
+				} else {
+					http_response_code(500);
 					echo '<message type="error" value="test_delete_fail" code="26"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_test_id" code="27"/>';
+			}
 		} else if (isset($_POST['restore'])) {
 			if ($tests = $testMgr->get([$_POST['id']])) {
 				$test = $tests[0];
@@ -466,10 +516,14 @@ class User {
 					echo '<message type="notice" value="test_restore_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$histMgr->add('test_restore', ['test_id' => $_POST['id'], 'test_name' => $test['name']]);
-				} else
+				} else {
+					http_response_code(500);
 					echo '<message type="error" value="test_restore_fail" code="28"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_test_id" code="29"/>';
+			}
 		} else if (isset($_POST['rename'])) {
 			if ($tests = $testMgr->get([$_POST['id']])) {
 				$test = $tests[0];
@@ -477,10 +531,14 @@ class User {
 					echo '<message type="notice" value="test_rename_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$histMgr->add('test_rename', ['test_id' => $_POST['id'], 'test_name' => $_POST['name'], 'old_test_name' => $test['name']]);
-				} else
+				} else {
+					http_response_code(500);
 					echo '<message type="error" value="test_rename_fail" code="30"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_test_id" code="31"/>';
+			}
 		} else if (isset($_POST['copy'])) {
 			if ($tests = $testMgr->get([$_POST['id']])) {
 				$test = $tests[0];
@@ -493,12 +551,18 @@ class User {
 						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 						$histMgr->add('test_copy', ['test_id' => $testId, 'test_name' => $_POST['name'],
 							'orig_test_name' => $test['name'], 'orig_test_id' => $_POST['id']]);
-					} else
+					} else {
+						http_response_code(500);
 						echo '<message type="error" value="test_copy_fail" code="75', $result, '"/>';
-				} else
+					}
+				} else {
+					http_response_code(500);
 					echo '<message type="error" value="test_copy_fail" code="32"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_test_id" code="33"/>';
+			}
 		}
 		echo '<tests>';
 		foreach ($testMgr->get() as $test) {
@@ -569,8 +633,10 @@ class User {
 					$histMgr->add('test_action_add', array_merge([
 						'test_id' => $testId, 'test_name' => $test['name'],
 						'action_id' => $actionId, 'type' => $_POST['type']], $event));
-				} else
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="test_action_add_fail" code="73', $actionId, '"/>';
+				}
 			} else if (isset($_POST['delete'])) {
 				$actionId = $_POST['id'];
 				if ($actions = $testActMgr->get([$actionId])) {
@@ -585,10 +651,14 @@ class User {
 						$histMgr->add('test_action_delete', array_merge([
 							'test_id' => $testId, 'test_name' => $test['name'],
 							'action_id' => $actionId], $event));
-					} else
+					} else {
+						http_response_code(500);
 						echo '<message type="error" value="test_action_delete_fail" code="34"/>';
-				} else
+					}
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="bad_action_id" code="35"/>';
+				}
 			} else if (isset($_POST['modify'])) {
 				$actionId = $_POST['id'];
 				if ($actions = $testActMgr->get([$actionId])) {
@@ -611,10 +681,14 @@ class User {
 						$histMgr->add('test_action_modify', array_merge([
 							'test_id' => $testId, 'test_name' => $test['name'],
 							'action_id' => $actionId], $event));
-					} else
+					} else {
+						http_response_code(400);
 						echo '<message type="error" value="test_action_modify_fail" code="36', $result, '"/>';
-				} else
+					}
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="bad_action_id" code="37"/>';
+				}
 			} else if (isset($_POST['insert'])) {
 				$actionId = $_POST['id'];
 				$result = $testActMgr->insert($actionId, $_POST['type'],
@@ -631,8 +705,10 @@ class User {
 					$histMgr->add('test_action_insert', array_merge([
 						'test_id' => $testId, 'test_name' => $test['name'],
 						'action_id' => $actionId], $event));
-				} else
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="test_action_insert_fail" code="38', $result, '"/>';
+				}
 			} else if (isset($_POST['import'])) {
 				$data = null;
 				if (isset($_POST['data']))
@@ -644,16 +720,20 @@ class User {
 					echo '<message type="notice" value="test_import_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$histMgr->add('test_import', ['test_id' => $testId, 'test_name' => $test['name'], 'actions_cnt' => count($data)]);
-				} else
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="test_import_fail" code="39', $result, '"/>';
+				}
 			} else if (isset($_POST['clear'])) {
 				$result = $testActMgr->clear();
 				if ($result > 0) {
 					echo '<message type="notice" value="test_clear_ok"/>';
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$histMgr->add('test_clear', ['test_id' => $testId, 'test_name' => $test['name'], 'actions_cnt' => $result]);
-				} else
+				} else {
+					http_response_code(500);
 					echo '<message type="error" value="test_clear_fail" code="40', $result, '"/>';
+				}
 			}
 			echo '<test id="', $testId, '" name="', htmlspecialchars($test['name']), '"',
 				' time="', $test['time'], '" max_actions_cnt="', \Config::TEST_MAX_ACTIONS_CNT, '"';
@@ -670,6 +750,7 @@ class User {
 			echo '</test>';
 			$this->taskTypes();
 		} else {
+			http_response_code(400);
 			echo '<message type="error" value="bad_test_id" code="41"/>';
 			echo '<test/>';
 		}
@@ -715,14 +796,22 @@ class User {
 							$histMgr->add('task_add', ['task_id' => $taskId,
 								'test_id' => $testId, 'test_name' => $test['name'],
 								'type' => $type]);
-						} else
+						} else {
+							http_response_code(400);
 							echo '<message type="error" value="task_add_fail" code="42"/>';
-					} else
+						}
+					} else {
+						http_response_code(400);
 						echo '<message type="error" value="no_funds" code="43"/>';
-				} else
+					}
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="test_is_deleted" code="44"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_test_id" code="45"/>';
+			}
 		} else if (isset($_POST['cancel'])) {
 			$taskId = $_POST['task_id'];
 			if ($tasks = $taskMgr->get([$taskId])) {
@@ -732,10 +821,14 @@ class User {
 					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 					$histMgr->add('task_cancel', ['task_id' => $taskId,
 						'test_id' => $task['test_id'], 'test_name' => $task['test_name']]);
-				} else
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="task_cancel_fail" code="46"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_task_id" code="47"/>';
+			}
 		}
 		$time = 0;
 		if (isset($_GET['time']) && $_GET['time'])
@@ -805,10 +898,14 @@ class User {
 					$histMgr->add('sched_add', ['sched_id' => $schedId, 'sched_name' => $_POST['name'],
 						'test_id' => $_POST['test_id'], 'test_name' => $test['name'], 'test_deleted' => $test['deleted'],
 						'type' => $_POST['type'], 'start' => $_POST['start'], 'period' => $_POST['period']]);
-				} else
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="sched_add_fail" code="48"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_test_id" code="49"/>';
+			}
 		} else if (isset($_POST['delete'])) {
 			if ($scheds = $taskSched->get([$_POST['id']])) {
 				$sched = $scheds[0];
@@ -822,10 +919,14 @@ class User {
 					$histMgr->add('sched_delete', ['sched_id' => $_POST['id'], 'sched_name' => $sched['name'],
 						'test_id' => $sched['test_id'], 'test_name' => $test['name'], 'test_deleted' => $test['deleted'],
 						'type' => $sched['type'], 'start' => $sched['start'], 'period' => $sched['period']]);
-				} else
+				} else {
+					http_response_code(500);
 					echo '<message type="error" value="sched_delete_fail" code="50"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_sched_id" code="51"/>';
+			}
 		} else if (isset($_POST['modify'])) {
 			if ($scheds = $taskSched->get([$_POST['id']])) {
 				$sched = $scheds[0];
@@ -855,10 +956,14 @@ class User {
 						else
 							$event['old_test_name'] = '__deleted__';
 					$histMgr->add('sched_modify', array_merge(['sched_id' => $_POST['id']], $event));
-				} else
+				} else {
+					http_response_code(400);
 					echo '<message type="error" value="sched_modify_fail" code="52"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_sched_id" code="53"/>';
+			}
 		}
 		echo '<schedule>';
 		foreach ($taskSched->get() as $sched)
@@ -949,58 +1054,86 @@ class User {
 					if ($data) {
 						$transaction = $data[0];
 						echo '<message type="notice" value="payment_pending" payment_type="', $paymentType, '" id="', $pendingTransactionId, '"/>';
-					} else
+					} else {
+						http_response_code(500);
 						echo '<message type="error" value="top_up_fail" code="54"/>';
-				} else
+					}
+				} else {
+					http_response_code(500);
 					echo '<message type="error" value="top_up_fail" code="55"/>';
-			} else
+				}
+			} else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_params" code="56"/>';
+			}
 		} else if (isset($_POST['refund'])) {
 			if ($billMgr->refund($_POST['id']))
 				echo '<message type="notice" value="refund_ok"/>';
-			else
+			else {
+				http_response_code(500);
 				echo '<message type="error" value="refund_fail" code="57"/>';
+			}
 		} else if (isset($_POST['process_pending_transaction'])) {
 			if (\AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
 				if ($billMgr->processPendingTransaction($_POST['payment_type'], $_POST['id'], isset($_POST['code']) ? $_POST['code'] : null))
 					echo '<message type="notice" value="process_pending_transaction_ok"/>';
-				else
+				else {
+					http_response_code(500);
 					echo '<message type="error" value="process_pending_transaction_fail" code="58"/>';
-			else
+				}
+			else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_params" code="59"/>';
+			}
 		} else if (isset($_POST['cancel_pending_transaction'])) {
 			if (\AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
 				if ($billMgr->cancelPendingTransaction($_POST['payment_type'], $_POST['id']))
 					echo '<message type="notice" value="cancel_pending_transaction_ok"/>';
-				else
+				else {
+					http_response_code(500);
 					echo '<message type="error" value="cancel_pending_transaction_fail" code="60"/>';
-			else
+				}
+			else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_params" code="61"/>';
+			}
 		} else if (isset($_POST['cancel_subscription'])) {
 			if (\AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
 				if ($billMgr->cancelSubscription($_POST['payment_type'], $_POST['id']))
 					echo '<message type="notice" value="cancel_subscription_ok"/>';
-				else
+				else {
+					http_response_code(500);
 					echo '<message type="error" value="cancel_subscription_fail" code="62"/>';
-			else
+				}
+			else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_params" code="63"/>';
+			}
 		} else if (isset($_POST['top_up_subscription'])) {
 			if (\AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
 				if ($billMgr->processSubscription($_POST['payment_type'], $_POST['id']))
 					echo '<message type="notice" value="top_up_subscription_ok"/>';
-				else
+				else {
+					http_response_code(500);
 					echo '<message type="error" value="top_up_subscription_fail" code="64"/>';
-			else
+				}
+			else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_params" code="65"/>';
+			}
 		} else if (isset($_POST['modify_subscription'])) {
 			$actionsCnt = $_POST['actions_cnt'] + 0;
 			if ($actionsCnt && \AdvancedWebTesting\Billing\PaymentType::toString($_POST['payment_type']))
 				if ($billMgr->modifySubscription($_POST['payment_type'], $_POST['id'], $actionsCnt))
 					echo '<message type="notice" value="modify_subscription_ok"/>';
-				else
+				else {
+					http_response_code(500);
 					echo '<message type="error" value="modify_subscription_fail" code="66"/>';
-			else
+				}
+			else {
+				http_response_code(400);
 				echo '<message type="error" value="bad_params" code="67"/>';
+			}
 		}
 		if (isset($_GET['token'])) {
 			// PayPal hack
@@ -1011,12 +1144,16 @@ class User {
 					$tokenFound = true;
 					if ($billMgr->processPendingTransaction(\AdvancedWebTesting\Billing\PaymentType::PAYPAL, $pendingTransaction['id']))
 						echo '<message type="notice" value="paypal_ok"/>';
-					else
+					else {
+						http_response_code(500);
 						echo '<message type="error" value="paypal_fail" code="68"/>';
+					}
 					break;
 				}
-			if (!$tokenFound)
+			if (!$tokenFound) {
+				http_response_code(400);
 				echo '<message type="error" value="bad_paypal_token" code="69"/>';
+			}
 		}
 		if (isset($_GET['LMI_PAYMENT_NO'])) {
 			// WebMoney hack
@@ -1027,12 +1164,16 @@ class User {
 					$paymentNumberFound = true;
 					if ($billMgr->processPendingTransaction(\AdvancedWebTesting\Billing\PaymentType::WEBMONEY, $pendingTransaction['id']))
 						echo '<message type="notice" value="webmoney_ok"/>';
-					else
+					else {
+						http_response_code(500);
 						echo '<message type="error" value="webmoney_fail" code="70"/>';
+					}
 					break;
 				}
-			if (!$paymentNumberFound)
+			if (!$paymentNumberFound) {
+				http_response_code(400);
 				echo '<message type="error" value="bad_webmoney_payment_number" code="71"/>';
+			}
 		}
 		$time = time() - 42 * 86400;
 		if (isset($_GET['time']) && $_GET['time'])

@@ -38,6 +38,7 @@ class Task {
 			}
 			$xml .= '</task>';
 		} else {
+			http_response_code(400);
 			$xml .= '<message type="error" value="bad_task_id" code="72"/>';
 			$xml .= '<task/>';
 		}
