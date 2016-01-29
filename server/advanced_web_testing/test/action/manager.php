@@ -9,7 +9,7 @@ namespace AdvancedWebTesting\Test\Action;
 class Manager {
 	const SELECTOR_MAX_SIZE = 4096;
 	const DATA_MAX_SIZE = 4096;
-	const USERDATA_MAX_SIZE = 4096;
+	const USERDATA_MAX_SIZE = 32768;
 
 	private $actions, $tests;
 
