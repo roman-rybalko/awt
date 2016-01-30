@@ -8,10 +8,16 @@ var Messaging = function(server) {
 		send_key = 'zIAQaueFniYDnnoTi8g27l';
 		recv_key = 'MgJu7pUHuQMyan9x2Rof8A';
 	}
-	var target = null;
+	var target;
+	var old_target;  // save old target to prevent spurious message to reset it while it's being closed
 	var set_target = this.set_target = function(new_target) {
-		if (target && target != new_target)
+		if (new_target == old_target)
+			return;
+		if (new_target == target)
+			return;
+		if (target)
 			target.close();
+		old_target = target;
 		target = new_target;
 	}
 	this.send = function(data) {
