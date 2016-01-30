@@ -11,8 +11,12 @@ $(error_handler(function($) {
 		if (!data)
 			data = {pos: -1, urls: []};
 		pos += data.pos;
-		if (pos < 0 || pos >= data.urls.length)
-			return null;
+		if (pos < 0)
+			pos = 0;
+		if (pos >= data.urls.length - 1)
+			pos = data.urls.length - 1;
+		if (pos < 0)
+			return '';
 		var url = data.urls[pos];
 		if (data.pos != pos) {
 			data.pos = pos;
@@ -24,11 +28,8 @@ $(error_handler(function($) {
 		var data = storage.get('history');
 		if (!data)
 			data = {pos: -1, urls: []};
-		if (data.pos > 0)
-			data.urls.splice(data.pos, 0, url);
-		else {
+		if (data.urls.length == 0 || data.urls[data.urls.length - 1] != url) {
 			data.urls.push(url);
-			data.pos = 0;
 		}
 		if (data.urls.length > hist_urls_max_cnt) {
 			data.pos -= data.urls.length - hist_urls_max_cnt;
@@ -53,8 +54,6 @@ $(error_handler(function($) {
 	$('.xpath-browser-backward').click(error_handler(function(ev) {
 		var id = $(ev.target).attr('data-id');
 		var url = $('#xpath-browser-url-' + id).val();
-		if (url_history(0) != url)
-			url_history_add(url);
 		url = url_history(-1);
 		browser_url(id, url);
 		state.url = url;
@@ -62,8 +61,6 @@ $(error_handler(function($) {
 	$('.xpath-browser-forward').click(error_handler(function(ev) {
 		var id = $(ev.target).attr('data-id');
 		var url = $('#xpath-browser-url-' + id).val();
-		if (url_history(0) != url)
-			url_history_add(url);
 		url = url_history(+1);
 		browser_url(id, url);
 		state.url = url;
@@ -76,8 +73,7 @@ $(error_handler(function($) {
 			return;
 		if (!url.match(/:\/\//))
 			url = 'http://' + url;
-		if (url_history(0) != url)
-			url_history_add(url);
+		url_history_add(url);
 		if (state.tags)
 			$(document).triggerHandler('xpath-composer', [state.tags]);
 		messaging.set_target(window.open(url));
