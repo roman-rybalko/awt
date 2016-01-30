@@ -32,9 +32,6 @@ class User {
 	Register
 	action: ?register=1
 
-	Login
-	action: ?login=1
-
 	Logout
 	action: ?logout=1
 
@@ -67,9 +64,6 @@ class User {
 -->
 <?php
 			if (isset($_GET['register'])) {
-				$user->logout();
-				echo '<logout/>';
-			} else if (isset($_GET['login'])) {
 				$user->logout();
 				echo '<logout/>';
 			} else if (isset($_GET['logout'])) {

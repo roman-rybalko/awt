@@ -27,14 +27,6 @@
 					<li>
 						<div class="navbar-button-wrap">
 							<form action="./" method="get">
-								<input type="hidden" name="login" value="1"/>
-								<button type="submit" class="btn btn-success">Login</button>
-							</form>
-						</div>
-					</li>
-					<li>
-						<div class="navbar-button-wrap">
-							<form action="./" method="get">
 								<input type="hidden" name="register" value="1"/>
 								<button class="btn btn-success">Register</button>
 							</form>
