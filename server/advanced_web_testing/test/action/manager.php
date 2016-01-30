@@ -147,8 +147,11 @@ class Manager {
 		usort($actions, function($a,$b){return $a['id']-$b['id'];});
 		foreach ($actions as $action) {
 			$fields = ['action_id' => ++$actionId];
-			foreach (['type', 'selector', 'data', 'user_data'] as $param)
-				$fields[$param] = $action[$param];
+			foreach (['type', 'selector', 'data', 'user_data'] as $param) {
+				if (isset($action[$param])) {
+					$fields[$param] = $action[$param];
+				}
+			}
 			if (!$this->actions->insert($fields))
 				return -1;
 		}
