@@ -11,7 +11,7 @@ class Paypal implements \AdvancedWebTesting\Billing\PaymentBackend {
 	 * @param double $actionPrice
 	 * @param string $currencyCode
 	 */
-	public function __construct(\WebConstructionSet\Database\Relational $db, $userId, $actionPrice = 0.01, $currencyCode = 'USD') {
+	public function __construct(\WebConstructionSet\Database\Relational $db, $userId, $actionPrice = 0.001, $currencyCode = 'USD') {
 		$this->paypal = new \WebConstructionSet\Billing\Paypal($db, \Config::PAYPAL_USER, \Config::PAYPAL_PASSWORD, \Config::PAYPAL_SIGNATURE, \Config::PAYPAL_SANDBOX, $userId);
 		$this->actionPrice = $actionPrice;
 		$this->currencyCode = $currencyCode;
@@ -27,13 +27,23 @@ class Paypal implements \AdvancedWebTesting\Billing\PaymentBackend {
 	public function createTransaction($externalId, $actionsCnt, $subscription = null) {
 		$params = [
 			'L_PAYMENTREQUEST_0_ITEMCATEGORY0' => 'Digital',
-			'L_PAYMENTREQUEST_0_NAME0' => 'Browser Action',
-			'L_PAYMENTREQUEST_0_AMT0' => $this->actionPrice,
-			'L_PAYMENTREQUEST_0_QTY0' => $actionsCnt,
 			'PAYMENTREQUEST_0_ITEMAMT' => $actionsCnt * $this->actionPrice,
 			'NOSHIPPING' => 1,
 			'ALLOWNOTE' => 0,
 		];
+		if ($this->actionPrice < 0.01) {
+			$params = array_merge($params, [
+				'L_PAYMENTREQUEST_0_NAME0' => $actionsCnt . ' Browser Actions',
+				'L_PAYMENTREQUEST_0_AMT0' => $actionsCnt * $this->actionPrice,
+				'L_PAYMENTREQUEST_0_QTY0' => 1,
+			]);
+		} else {
+			$params = array_merge($params, [
+				'L_PAYMENTREQUEST_0_NAME0' => 'Browser Action',
+				'L_PAYMENTREQUEST_0_AMT0' => $this->actionPrice,
+				'L_PAYMENTREQUEST_0_QTY0' => $actionsCnt,
+			]);
+		}
 		return $this->paypal->initiateTransaction($externalId, $actionsCnt * $this->actionPrice, $this->currencyCode, $subscription, $params);
 	}
 

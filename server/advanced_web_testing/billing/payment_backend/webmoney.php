@@ -9,7 +9,7 @@ class Webmoney implements \AdvancedWebTesting\Billing\PaymentBackend {
 	private $wm, $wmId, $wmPurse, $wmCert, $wmCertKey, $wmSecretKey, $wmValidityPeriodDays, $wmDayLimit, $wmWeekLimit, $wmMonthLimit;
 	private $currency, $actionPrice, $serverName;
 
-	public function __construct(\WebConstructionSet\Database\Relational $db, $userId, $actionPrice = 0.01, $lang = 'EN') {
+	public function __construct(\WebConstructionSet\Database\Relational $db, $userId, $actionPrice = 0.001, $lang = 'EN') {
 		$fields = [];
 		if ($userId !== null)
 			$fields['user_id'] = $userId;
