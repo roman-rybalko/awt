@@ -31,6 +31,7 @@ $(error_handler(function($) {
 		if (data.urls.length == 0 || data.urls[data.urls.length - 1] != url) {
 			data.urls.push(url);
 		}
+		data.pos = data.urls.length - 1;
 		if (data.urls.length > hist_urls_max_cnt) {
 			data.pos -= data.urls.length - hist_urls_max_cnt;
 			data.urls.splice(0, data.urls.length - hist_urls_max_cnt);
@@ -51,23 +52,23 @@ $(error_handler(function($) {
 	var id;
 	var state = {};
 
-	$('.xpath-browser-backward').click(error_handler(function(ev) {
-		var id = $(ev.target).attr('data-id');
+	$('.xpath-browser-backward').click(error_handler(function() {
+		var id = $(this).attr('data-id');
 		var url = $('#xpath-browser-url-' + id).val();
 		url = url_history(-1);
 		browser_url(id, url);
 		state.url = url;
 	}));
-	$('.xpath-browser-forward').click(error_handler(function(ev) {
-		var id = $(ev.target).attr('data-id');
+	$('.xpath-browser-forward').click(error_handler(function() {
+		var id = $(this).attr('data-id');
 		var url = $('#xpath-browser-url-' + id).val();
 		url = url_history(+1);
 		browser_url(id, url);
 		state.url = url;
 	}));
 
-	$('.xpath-browser-open').click(error_handler(function(ev) {
-		var id = $(ev.target).attr('data-id');
+	$('.xpath-browser-open').click(error_handler(function() {
+		var id = $(this).attr('data-id');
 		var url = $('#xpath-browser-url-' + id).val();
 		if (!url)
 			return;
