@@ -89,18 +89,16 @@ $(error_handler(function($) {
 	}));
 
 	$(document).on('xpath-browser', error_handler(function(ev, new_id, state_data) {
-		if (id != new_id) {
-			id = new_id;
-			try {
-				state = JSON.parse(state_data);
-			} catch (e) {
-				state = {};
-			}
-			if (state.url)
-				$('#xpath-browser-url-' + id).val(state.url);
-			else
-				$('#xpath-browser-url-' + id).val(url_history(0));
+		id = new_id;
+		try {
+			state = JSON.parse(state_data);
+		} catch (e) {
+			state = {};
 		}
+		if (state.url)
+			$('#xpath-browser-url-' + id).val(state.url);
+		else
+			$('#xpath-browser-url-' + id).val(url_history(0));
 	}));
 
 	messaging.recv(error_handler(function(data) {
