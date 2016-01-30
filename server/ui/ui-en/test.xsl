@@ -122,8 +122,13 @@
 						Import
 					</div>
 					<div class="panel-body">
+						<div class="alert alert-info alert-dismissable">
+							<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="test-import-max-fsize">&#215;</button>
+							<b>Tip:</b>
+							Max. file size: 1 Mb
+						</div>
 						<form role="form" method="post" enctype="multipart/form-data">
-							<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+							<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
 							<p>
 								<input name="data" type="file" accept=".json,application/json"/>
 							</p>
