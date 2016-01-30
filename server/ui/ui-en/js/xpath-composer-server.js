@@ -116,7 +116,7 @@ $(error_handler(function($) {
 				console.log('css:', selector);
 			result = result.find(selector);
 			if (result.length)
-				$(document).triggerHandler('xpath-browser-selection', [result.get(0)]);
+				$(document).triggerHandler('xpath-browser-selection', [result.get(0), 'scroll to target (bool)']);
 			messaging.send({type: 'xpath-composer-validate-result', result: result.length});
 		} catch (e) {
 			messaging.send({type: 'xpath-composer-validate-result', result: e.message});
