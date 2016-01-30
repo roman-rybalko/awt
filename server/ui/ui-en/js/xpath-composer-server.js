@@ -23,8 +23,8 @@ $(error_handler(function($) {
 		}
 		messaging.send({type: 'xpath-composer-elements', elements: els});
 	}));
-	$('body input[type="text"]').on('keyup', error_handler(function(ev) {
-		input_value = $(ev.target).val();
+	$('body input[type="text"]').on('keyup', error_handler(function() {
+		input_value = $(this).val();
 	}));
 
 	function xpath2css(xpath) {

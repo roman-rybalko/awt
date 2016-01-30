@@ -122,12 +122,12 @@ $(error_handler(function($) {
 			allowInputToggle: true,
 			format: datetime_format
 		});
-	$('.form-schedule-task').submit(error_handler(function(ev) {
-		if (! $(ev.target).find('input[name="name"]').val().match(/\S/)) {
-			$(ev.target).find('input[name="name"]').focus();
+	$('.form-schedule-task').submit(error_handler(function() {
+		if (! $(this).find('input[name="name"]').val().match(/\S/)) {
+			$(this).find('input[name="name"]').focus();
 			return false;
 		}
-		$(ev.target).find('.date input').each(function() {
+		$(this).find('.date input').each(function() {
 			$(this).val(moment($(this).val(), datetime_format).unix());
 		});
 	}));
@@ -189,8 +189,8 @@ $(error_handler(function($) {
 			if (value)
 				$(this).closest('.alert').alert('close');
 		});
-		$('.tip-state').click(error_handler(function(ev) {
-			var name = $(ev.target).attr('data-tip-state');
+		$('.tip-state').click(error_handler(function() {
+			var name = $(this).attr('data-tip-state');
 			storage.set(name, true);
 		}));
 	})();
@@ -202,19 +202,19 @@ $(error_handler(function($) {
 			if (value)
 				$(this).click();
 		});
-		$('input.control-state[type="checkbox"]').change(error_handler(function(ev) {
-			var name = $(ev.target).attr('data-control-state');
-			storage.set(name, $(ev.target).prop('checked'));
+		$('input.control-state[type="checkbox"]').change(error_handler(function() {
+			var name = $(this).attr('data-control-state');
+			storage.set(name, $(this).prop('checked'));
 		}));
-		$('input.control-state[type="radio"]').change(error_handler(function(ev) {
-			var name = $(ev.target).attr('name');
+		$('input.control-state[type="radio"]').change(error_handler(function() {
+			var name = $(this).attr('name');
 			$('input.control-state[type="radio"][name="' + name + '"]').each(function() {
-				var name = $(ev.target).attr('data-control-state');
+				var name = $(this).attr('data-control-state');
 				if (name)
 					storage.set(name, false);
 			});
-			var name = $(ev.target).attr('data-control-state');
-			storage.set(name, $(ev.target).prop('checked'));
+			var name = $(this).attr('data-control-state');
+			storage.set(name, $(this).prop('checked'));
 		}));
 	})();
 	function aggregate_day(data) {
@@ -350,8 +350,8 @@ $(error_handler(function($) {
 			if ($(this).val() == time)
 				$(this).prop('selected', true);
 		});
-		$('select#setting-data-display-period').change(error_handler(function(ev) {
-			time = $(ev.target).val();
+		$('select#setting-data-display-period').change(error_handler(function() {
+			time = $(this).val();
 			storage.set('data-display-period', time);
 			if (time > 0)
 				time = Math.round(new Date().getTime() / 1000) - time;
@@ -371,15 +371,15 @@ $(error_handler(function($) {
 	if (!$('.action-autoadd-control').length)
 		return;
 
-	$('.xpath-browser-collapse').on('show.bs.collapse', error_handler(function(ev) {
-		var id = $(ev.target).attr('data-id');
+	$('.xpath-browser-collapse').on('show.bs.collapse', error_handler(function() {
+		var id = $(this).attr('data-id');
 		$('.xpath-browser-collapse[data-id != "' + id + '"]').collapse('hide');
 		var state_data = $('#action-user-data-' + id).val();
 		xpath_composer_autoadd = $('.action-autoadd-control[data-id="' + id + '"]').prop('checked');  // true/false/undefined
 		$(document).triggerHandler('xpath-browser', [id, state_data]);
 	}));
-	$('.action-autoadd-control').change(error_handler(function(ev) {
-		xpath_composer_autoadd = $(ev.target).prop('checked');
+	$('.action-autoadd-control').change(error_handler(function() {
+		xpath_composer_autoadd = $(this).prop('checked');
 	}));
 
 	var queue = [];

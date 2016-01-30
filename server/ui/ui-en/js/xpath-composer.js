@@ -128,21 +128,21 @@ $(error_handler(function($) {
 			parent: '#xpath-composer-tags',
 			toggle: false
 		});
-		$('#xpath-composer-tags .xpath-composer-tag-toggle').click(error_handler(function(ev) {
-			var tag_id = $(ev.target).attr('data-tag-id');
+		$('#xpath-composer-tags .xpath-composer-tag-toggle').click(error_handler(function() {
+			var tag_id = $(this).attr('data-tag-id');
 			$('#xpath-composer-tags .xpath-composer-tag-collapsed[data-tag-id=' + tag_id +']').collapse('toggle');
 		}));
-		$('#xpath-composer-tags .xpath-composer-tag-control').change(error_handler(function(ev) {
-			var tag_id = $(ev.target).attr('data-tag-id');
-			tags[tag_id].enabled = $(ev.target).prop('checked');
+		$('#xpath-composer-tags .xpath-composer-tag-control').change(error_handler(function() {
+			var tag_id = $(this).attr('data-tag-id');
+			tags[tag_id].enabled = $(this).prop('checked');
 			tag_title_update(tag_id);
 			xpath_update();
 			validate();
 		}));
-		$('#xpath-composer-tags .xpath-composer-pred-control').change(error_handler(function(ev) {
-			var tag_id = $(ev.target).attr('data-tag-id');
-			var pred_id = $(ev.target).attr('data-pred-id');
-			tags[tag_id].preds[pred_id].enabled = $(ev.target).prop('checked');
+		$('#xpath-composer-tags .xpath-composer-pred-control').change(error_handler(function() {
+			var tag_id = $(this).attr('data-tag-id');
+			var pred_id = $(this).attr('data-pred-id');
+			tags[tag_id].preds[pred_id].enabled = $(this).prop('checked');
 			tag_title_update(tag_id);
 			xpath_update();
 			validate();
