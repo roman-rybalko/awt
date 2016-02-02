@@ -10,7 +10,7 @@ function mailLog(subject) {
 }
 
 function main() {
-	var kk = AdWordsApp.keywords().withCondition('TopOfPageCpc > 0').get();
+	var kk = AdWordsApp.keywords().withCondition('TopOfPageCpc > 0').orderBy("FirstPageCpc ASC").get();
 	while (kk.hasNext()) {
 		var k = kk.next();
 		log('id: ' + k.getId() + ', text: ' + k.getText() + ', 1st page bid: ' + k.getFirstPageCpc() + ', top of page bid: ' + k.getTopOfPageCpc());
