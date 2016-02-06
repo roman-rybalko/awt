@@ -16,6 +16,8 @@
 	<xsl:include href="actions.xsl"/>
 	<xsl:include href="tests.xsl"/>
 	<xsl:include href="test.xsl"/>
+	<xsl:include href="test_groups.xsl"/>
+	<xsl:include href="test_group.xsl"/>
 	<xsl:include href="tasks.xsl"/>
 	<xsl:include href="task.xsl"/>
 	<xsl:include href="schedule.xsl"/>

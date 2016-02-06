@@ -17,6 +17,7 @@ class Cron {
 		$this->mail();
 		$this->billing();
 		$this->accounts();
+		$this->testGroups();
 	}
 
 	private function stats() {
@@ -27,13 +28,13 @@ class Cron {
 
 	private function tests() {
 		// Purge
-		$testMsg = new \AdvancedWebTesting\Test\Manager($this->db, null);
-		$tests = $testMsg->clear1(time() - \Config::PURGE_PERIOD * 86400);
+		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, null);
+		$tests = $testMgr->clear1(time() - \Config::PURGE_PERIOD * 86400);
 		foreach ($tests as $test) {
 			$testActMgr = new \AdvancedWebTesting\Test\Action\Manager($this->db, $test['id']);
 			$testActMgr->clear();
 		}
-		$testMsg->clear2($tests);
+		$testMgr->clear2($tests);
 	}
 
 	private function tasks() {
@@ -153,5 +154,16 @@ class Cron {
 			$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);
 			$settMgr->clear();
 		}
+	}
+
+	private function testGroups() {
+		// Purge
+		$testGrpMgr = new \AdvancedWebTesting\TestGroup\Manager($this->db, null);
+		$testGrps = $testGrpMgr->clear1(time() - \Config::PURGE_PERIOD * 86400);
+		foreach ($testGrps as $testGrp) {
+			$tgTestMgr = new \AdvancedWebTesting\TestGroup\Test\Manager($this->db, $testGrp['id']);
+			$tgTestMgr->clear();
+		}
+		$testGrpMgr->clear2($testGrps);
 	}
 }

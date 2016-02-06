@@ -121,7 +121,6 @@ class Manager {
 
 	/**
 	 * @param [][id => integer, type => string, selector => string|null, data => string|null] $actions
-	 * @throws \ErrorException
 	 * @return integer Последний actionId
 	 */
 	public function import($actions) {

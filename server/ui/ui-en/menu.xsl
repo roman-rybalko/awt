@@ -74,6 +74,12 @@
 							</a>
 						</li>
 						<li>
+							<a href="./?test_groups=1">
+								<i class="fa fa-file-code-o fa-fw"></i>
+								Test Groups
+							</a>
+						</li>
+						<li>
 							<a href="./?tasks=1" class="apply-data-display-period">
 								<i class="fa fa-play fa-fw"></i>
 								Tasks

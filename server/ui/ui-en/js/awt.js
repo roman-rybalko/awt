@@ -178,8 +178,10 @@ $(error_handler(function($) {
 			responsive: true			
 		});
 		var hash = window.location.hash;
-		if (hash)
+		if (hash) {
 			table.search(hash).draw();
+			$('.table-dataTable').closest('.collapse').collapse('show');
+		}
 	})();
 	if ($('.tip-state').length) error_handler(function() {
 		var storage = new Storage('tip-state-', 42 /* expire days */);

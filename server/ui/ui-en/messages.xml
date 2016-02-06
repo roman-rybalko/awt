@@ -178,6 +178,83 @@
 	Clear Test failed.
 </message>
 
+<message value="test_group_add_ok">
+	Test Group has been created.
+</message>
+
+<message value="test_group_add_fail">
+	Create Test Group failed.
+</message>
+
+<message value="test_group_delete_ok">
+	Test Group has been deleted.
+</message>
+
+<message value="test_group_delete_fail">
+	Delete Test Group failed.
+</message>
+
+<message value="bad_test_group_id">
+	Invalid Test Group ID.
+</message>
+
+<message value="test_group_restore_ok">
+	Test Group has been restored.
+</message>
+
+<message value="test_group_restore_fail">
+	Restore Test Group failed.
+</message>
+
+<message value="test_group_rename_ok">
+	Test Group has been renamed.
+</message>
+
+<message value="test_group_rename_fail">
+	Rename Test Group failed.
+</message>
+
+<message value="test_group_copy_ok">
+	Test Group has been copied.
+</message>
+
+<message value="test_group_copy_fail">
+	Copy Test Group failed.
+</message>
+
+<message value="tg_test_add_ok">
+	Test has been added.
+</message>
+
+<message value="tg_test_add_fail">
+	Add Test failed.
+</message>
+
+<message value="tg_test_delete_ok">
+	Test has been removed.
+</message>
+
+<message value="tg_test_delete_fail">
+	Remove Test failed.
+</message>
+
+<message value="bad_tg_test_id">
+	Invalid Test ID.
+</message>
+
+<message value="test_group_clear_ok">
+	Test Group has been cleared.
+</message>
+
+<message value="test_group_clear_fail">
+	Clear Test Group failed.
+</message>
+
+<message value="test_group_is_deleted">
+	Test Group is deleted.
+	Please, restore it first.
+</message>
+
 <message value="task_add_ok">
 	New Task has been queued.
 </message>

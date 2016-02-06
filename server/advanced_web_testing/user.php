@@ -19,7 +19,7 @@ class User {
 		} else {
 			header('Content-Type: text/xml');
 		}
-		//\WebConstructionSet\OutputBuffer\XmlFormatter::init();
+		\WebConstructionSet\OutputBuffer\XmlFormatter::init();
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
 		echo '<?xml-stylesheet type="text/xsl" href="ui-en/index.xsl"?>';
 		$userDb = new \WebConstructionSet\Database\Relational\User($this->db);
@@ -43,6 +43,12 @@ class User {
 
 	Test
 	action: ?test=xxx
+
+	Test Groups
+	action: ?test_groups=1
+
+	Test Group
+	action: ?test_group=xxx
 
 	Tasks
 	action: ?tasks=1
@@ -74,6 +80,10 @@ class User {
 				$this->tests();
 			} else if (isset($_GET['test'])) {
 				$this->test();
+			} else if (isset($_GET['test_groups'])) {
+				$this->testGroups();
+			} else if (isset($_GET['test_group'])) {
+				$this->testGroup();
 			} else if (isset($_GET['tasks'])) {
 				$this->tasks();
 			} else if (isset($_GET['task'])) {
@@ -539,12 +549,14 @@ class User {
 				if ($testId = $testMgr->add($_POST['name'])) {
 					$testActMgrSrc = new \AdvancedWebTesting\Test\Action\Manager($this->db, $_POST['id']);
 					$testActMgrDst = new \AdvancedWebTesting\Test\Action\Manager($this->db, $testId);
-					$result = $testActMgrDst->import($testActMgrSrc->get());
-					if ($result > 0) {
+					$actions = $testActMgrSrc->get();
+					$result = $testActMgrDst->import($actions);
+					if ($result >= 0) {
 						echo '<message type="notice" value="test_copy_ok"/>';
 						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
 						$histMgr->add('test_copy', ['test_id' => $testId, 'test_name' => $_POST['name'],
-							'orig_test_name' => $test['name'], 'orig_test_id' => $_POST['id']]);
+							'orig_test_name' => $test['name'], 'orig_test_id' => $_POST['id'],
+							'actions_cnt' => count($actions)]);
 					} else {
 						http_response_code(500);
 						echo '<message type="error" value="test_copy_fail" code="75', $result, '"/>';
@@ -750,6 +762,227 @@ class User {
 		}
 	}
 
+	private function testGroups() {
+?>
+<!--
+	Test Groups
+
+	Add
+	method: post
+	params: name
+	submit: add
+
+	Delete
+	method: post
+	params: id
+	submit: delete
+
+	Restore
+	method: post
+	params: id
+	submit: restore
+
+	Rename
+	method: post
+	params: id name
+	submit: rename
+
+	Copy
+	method: post
+	params: id name
+	submit: copy
+-->
+<?php
+		$testGrpMgr = new \AdvancedWebTesting\TestGroup\Manager($this->db, $this->userId);
+		if (isset($_POST['add'])) {
+			if ($testGrpId = $testGrpMgr->add($_POST['name'])) {
+				echo '<message type="notice" value="test_group_add_ok" id="', $testGrpId, '"/>';
+				$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+				$histMgr->add('test_group_add', ['test_group_id' => $testGrpId, 'test_group_name' => $_POST['name']]);
+			} else {
+				http_response_code(400);
+				echo '<message type="error" value="test_group_add_fail" code="77"/>';
+			}
+		} else if (isset($_POST['delete'])) {
+			if ($testGrps = $testGrpMgr->get([$_POST['id']])) {
+				$testGrp = $testGrps[0];
+				if ($testGrpMgr->delete($_POST['id'])) {
+					echo '<message type="notice" value="test_group_delete_ok"/>';
+					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+					$histMgr->add('test_group_delete', ['test_group_id' => $_POST['id'], 'test_group_name' => $testGrp['name']]);
+				} else {
+					http_response_code(500);
+					echo '<message type="error" value="test_group_delete_fail" code="78"/>';
+				}
+			} else {
+				http_response_code(400);
+				echo '<message type="error" value="bad_test_group_id" code="79"/>';
+			}
+		} else if (isset($_POST['restore'])) {
+			if ($testGrps = $testGrpMgr->get([$_POST['id']])) {
+				$testGrp = $testGrps[0];
+				if ($testGrpMgr->restore($_POST['id'])) {
+					echo '<message type="notice" value="test_group_restore_ok"/>';
+					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+					$histMgr->add('test_group_restore', ['test_group_id' => $_POST['id'], 'test_group_name' => $testGrp['name']]);
+				} else {
+					http_response_code(500);
+					echo '<message type="error" value="test_group_restore_fail" code="80"/>';
+				}
+			} else {
+				http_response_code(400);
+				echo '<message type="error" value="bad_test_group_id" code="81"/>';
+			}
+		} else if (isset($_POST['rename'])) {
+			if ($testGrps = $testGrpMgr->get([$_POST['id']])) {
+				$testGrp = $testGrps[0];
+				if ($testGrpMgr->rename($_POST['id'], $_POST['name'])) {
+					echo '<message type="notice" value="test_group_rename_ok"/>';
+					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+					$histMgr->add('test_group_rename', ['test_group_id' => $_POST['id'], 'test_group_name' => $_POST['name'], 'old_test_group_name' => $testGrp['name']]);
+				} else {
+					http_response_code(500);
+					echo '<message type="error" value="test_group_rename_fail" code="82"/>';
+				}
+			} else {
+				http_response_code(400);
+				echo '<message type="error" value="bad_test_group_id" code="83"/>';
+			}
+		} else if (isset($_POST['copy'])) {
+			if ($testGrps = $testGrpMgr->get([$_POST['id']])) {
+				$testGrp = $testGrps[0];
+				if ($testGrpId = $testGrpMgr->add($_POST['name'])) {
+					$testGrpTestMgrSrc = new \AdvancedWebTesting\TestGroup\Test\Manager($this->db, $_POST['id']);
+					$testGrpTestMgrDst = new \AdvancedWebTesting\TestGroup\Test\Manager($this->db, $testGrpId);
+					$tgTests = $testGrpTestMgrSrc->get();
+					$result = $testGrpTestMgrDst->import($tgTests);
+					if ($result >= 0) {
+						echo '<message type="notice" value="test_group_copy_ok"/>';
+						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+						$histMgr->add('test_group_copy', ['test_group_id' => $testGrpId, 'test_group_name' => $_POST['name'],
+							'orig_test_group_id' => $_POST['id'], 'orig_test_group_name' => $testGrp['name'],
+							'tests_cnt' => count($tgTests)]);
+					} else {
+						http_response_code(500);
+						echo '<message type="error" value="test_group_copy_fail" code="84', $result, '"/>';
+					}
+				} else {
+					http_response_code(500);
+					echo '<message type="error" value="test_group_copy_fail" code="85"/>';
+				}
+			} else {
+				http_response_code(400);
+				echo '<message type="error" value="bad_test_group_id" code="86"/>';
+			}
+		}
+		echo '<test_groups>';
+		foreach ($testGrpMgr->get() as $testGrp) {
+			echo '<test_group id="', $testGrp['id'], '" name="', htmlspecialchars($testGrp['name']), '" time="', $testGrp['time'], '"';
+			if ($testGrp['deleted'])
+				echo ' deleted="1"';
+			echo '/>';
+		}
+		echo '</test_groups>';
+	}
+
+	private function testGroup() {
+?>
+<!--
+	Test Group
+	method: get
+	params: test_group
+
+	Add
+	method: post
+	params: test_id task_type
+	submit: add
+
+	Delete
+	method: post
+	params: id
+	submit: delete
+
+	Clear
+	method: post
+	submit: clear
+-->
+<?php
+		$testGrpId = $_GET['test_group'];
+		$testGrpMgr = new \AdvancedWebTesting\TestGroup\Manager($this->db, $this->userId);
+		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
+		if ($testGrps = $testGrpMgr->get([$testGrpId])) {
+			$testGrp = $testGrps[0];
+			$tgTestMgr = new \AdvancedWebTesting\TestGroup\Test\Manager($this->db, $testGrpId);
+			if (isset($_POST['add'])) {
+				$testId = $_POST['test_id'];
+				$taskType = $_POST['task_type'];
+				if ($tests = $testMgr->get([$testId])) {
+					$test = $tests[0];
+					if ($tgTestId = $tgTestMgr->add($testId, $test['name'], $taskType)) {
+						echo '<message type="notice" value="tg_test_add_ok" id="', $tgTestId, '"/>';
+						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+						$histMgr->add('tg_test_add', ['tg_test_id' => $tgTestId,
+							'test_group_id' => $testGrpId, 'test_group_name' => $testGrp['name'],
+							'test_id' => $testId, 'test_name' => $test['name'],
+							'task_type' => $taskType]);
+					} else {
+						http_response_code(500);
+						echo '<message type="error" value="tg_test_add_fail" code="88"/>';
+					}
+				} else {
+					http_response_code(400);
+					echo '<message type="error" value="bad_test_id" code="87"/>';
+				}
+			} else if (isset($_POST['delete'])) {
+				$tgTestId = $_POST['id'];
+				if ($testGrpTests = $tgTestMgr->get([$tgTestId])) {
+					$testGrpTest = $testGrpTests[0];
+					if ($tgTestMgr->delete($tgTestId)) {
+						echo '<message type="notice" value="tg_test_delete_ok"/>';
+						$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+						$histMgr->add('tg_test_delete', ['tg_test_id' => $tgTestId,
+							'test_group_id' => $testGrpId, 'test_group_name' => $testGrp['name'],
+							'test_id' => $testGrpTest['test_id'], 'test_name' => $testGrpTest['test_name'],
+							'task_type' => $testGrpTest['task_type']]);
+					} else {
+						http_response_code(500);
+						echo '<message type="error" value="tg_test_delete_fail" code="90"/>';
+					}
+				} else {
+					http_response_code(400);
+					echo '<message type="error" value="bad_tg_test_id" code="89"/>';
+				}
+			} else if (isset($_POST['clear'])) {
+				$result = $tgTestMgr->clear();
+				if ($result > 0) {
+					echo '<message type="notice" value="test_group_clear_ok"/>';
+					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+					$histMgr->add('test_group_clear', ['test_group_id' => $testGrpId, 'test_group_name' => $testGrp['name'], 'tests_cnt' => $result]);
+				} else {
+					http_response_code(500);
+					echo '<message type="error" value="test_group_clear_fail" code="91', $result, '"/>';
+				}
+			}
+			echo '<test_group id="', $testGrpId, '" name="', htmlspecialchars($testGrp['name']), '" time="', $testGrp['time'], '"';
+			if ($testGrp['deleted'])
+				echo ' deleted="1"';
+			echo '>';
+			foreach ($tgTestMgr->get() as $testGrpTest) {
+				echo '<tg_test id="', $testGrpTest['id'], '" test_id="', $testGrpTest['test_id'], '" test_name="', htmlspecialchars($testGrpTest['test_name']), '"',
+					' task_type="', htmlspecialchars($testGrpTest['task_type']), '"/>';
+			}
+			foreach ($testMgr->get() as $test)
+				if (!$test['deleted'])
+					echo '<test name="', htmlspecialchars($test['name']), '" id="', $test['id'], '"/>';
+			echo '</test_group>';
+			$this->taskTypes();
+		} else {
+			http_response_code(400);
+			echo '<message type="error" value="bad_test_group_id" code="76"/>';
+			echo '<test_group/>';
+		}
+	}
+
 	private function tasks() {
 ?>
 <!--
@@ -762,6 +995,11 @@ class User {
 	params: test_id type [debug]
 	submit: add
 
+	Add
+	method: post
+	params: test_group_id
+	submit: add
+
 	Cancel
 	method: post
 	params: task_id
@@ -770,37 +1008,72 @@ class User {
 <?php
 		$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $this->userId);
 		if (isset($_POST['add'])) {
-			$testId = $_POST['test_id'];
-			$type = $_POST['type'];
+			$testIds = [];
+			$types = [];
 			$debug = false;
-			if (isset($_POST['debug']) && $_POST['debug'])
-				$debug = true;
-			$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
-			if ($tests = $testMgr->get([$testId])) {
-				$test = $tests[0];
-				if (!$test['deleted']) {
-					$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
-					if ($billMgr->getAvailableActionsCnt() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
-						if ($taskId = $taskMgr->add($testId, $test['name'], $type, $debug)) {
-							$billMgr->startTask($taskId, $test['id'], $test['name']);
-							echo '<message type="notice" value="task_add_ok" id="', $taskId, '"/>';
-							$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $this->userId);
-							$statMgr->add(1);
-							$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
-							$histMgr->add('task_add', ['task_id' => $taskId,
-								'test_id' => $testId, 'test_name' => $test['name'],
-								'type' => $type]);
-						} else {
-							http_response_code(400);
-							echo '<message type="error" value="task_add_fail" code="42"/>';
+			if (isset($_POST['test_id'])) {
+				$testId = $_POST['test_id'];
+				$type = $_POST['type'];
+				$testIds[] = $testId;
+				$types[] = $type;
+				if (isset($_POST['debug']) && $_POST['debug'])
+					$debug = true;
+			}
+			if (isset($_POST['test_group_id'])) {
+				$testGrpId = $_POST['test_group_id'];
+				$testGrpMgr = new \AdvancedWebTesting\TestGroup\Manager($this->db, $this->userId);
+				if ($testGrps = $testGrpMgr->get([$testGrpId])) {
+					$testGrp = $testGrps[0];
+					if (!$testGrp['deleted']) {
+						$tgTestMgr = new \AdvancedWebTesting\TestGroup\Test\Manager($this->db, $testGrpId);
+						foreach ($tgTestMgr->get() as $tgTest) {
+							$testIds[] = $tgTest['test_id'];
+							$types[] = $tgTest['task_type'];
 						}
 					} else {
 						http_response_code(400);
-						echo '<message type="error" value="no_funds" code="43"/>';
+						echo '<message type="error" value="test_group_is_deleted" code="93"/>';
 					}
 				} else {
 					http_response_code(400);
-					echo '<message type="error" value="test_is_deleted" code="44"/>';
+					echo '<message type="error" value="bad_test_group_id" code="92"/>';
+				}
+			}
+			$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
+			if ($tests = $testMgr->get($testIds)) {
+				for ($i = 0; $i < count($tests); ++$i) {
+					$test = $tests[$i];
+					$testId = $test['id'];
+					$type = $types[$i];
+					if (!$test['deleted']) {
+						$billMgr = new \AdvancedWebTesting\Billing\Manager($this->db, $this->userId);
+						if ($billMgr->getAvailableActionsCnt() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
+							if ($taskId = $taskMgr->add($testId, $test['name'], $type, $debug)) {
+								$billMgr->startTask($taskId, $test['id'], $test['name']);
+								echo '<message type="notice" value="task_add_ok" id="', $taskId, '"/>';
+								$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $this->userId);
+								$statMgr->add(1);
+								$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+								$event = ['task_id' => $taskId,
+									'test_id' => $testId, 'test_name' => $test['name'],
+									'type' => $type];
+								if (isset($testGrp)) {
+									$event['test_group_id'] = $testGrp['id'];
+									$event['test_group_name'] = $testGrp['name'];
+								}
+								$histMgr->add('task_add', $event);
+							} else {
+								http_response_code(400);
+								echo '<message type="error" value="task_add_fail" code="42"/>';
+							}
+						} else {
+							http_response_code(400);
+							echo '<message type="error" value="no_funds" code="43"/>';
+						}
+					} else {
+						http_response_code(400);
+						echo '<message type="error" value="test_is_deleted" code="44"/>';
+					}
 				}
 			} else {
 				http_response_code(400);

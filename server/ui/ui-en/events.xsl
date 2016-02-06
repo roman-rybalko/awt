@@ -204,7 +204,7 @@
 <xsl:template match="event[@name='test_copy']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-3">
 				<b class="space-x">Test:</b>
 				<a href="./?test={@orig_test_id}">
 					<xsl:value-of select="@orig_test_name"/>
@@ -213,6 +213,10 @@
 				<a href="./?test={@test_id}">
 					<xsl:value-of select="@test_name"/>
 				</a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Actions Count:</b>
+				<xsl:value-of select="@actions_cnt"/>
 			</div>
 		</div>
 	</div>
@@ -435,12 +439,18 @@
 				<b class="space-x">Test:</b>
 				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
 			</div>
-			<div class="col-lg-6">
+			<div class="col-lg-3">
 				<b class="space-x">Type:</b>
 				<span class="task-type">
 					<xsl:value-of select="@type"/>
 				</span>
 			</div>
+			<xsl:if test="@test_group_id">
+				<div class="col-lg-3">
+					<b class="space-x">Test Group:</b>
+					<a href="./?test_group={@test_group_id}"><xsl:value-of select="@test_group_name"/></a>
+				</div>
+			</xsl:if>
 		</div>
 	</div>
 </xsl:template>
@@ -805,6 +815,198 @@
 			<div class="col-lg-12">
 				<b class="space-x">SMTP Response:</b>
 				<xsl:value-of select="@smtp_response"/>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_add']" mode="severity">
+	success
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_add']" mode="title">
+	New Test Group
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_add']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<b class="space-x">Test Group:</b>
+				<a href="./?test_group={@test_group_id}"><xsl:value-of select="@test_group_name"/></a>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_delete']" mode="severity">
+	danger
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_delete']" mode="title">
+	Delete Test Group
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_delete']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<b class="space-x">Test Group:</b>
+				<a href="./?test_group={@test_group_id}"><xsl:value-of select="@test_group_name"/></a>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_restore']" mode="severity">
+	success
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_restore']" mode="title">
+	Restore Test Group
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_restore']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<b class="space-x">Test Group:</b>
+				<a href="./?test_group={@test_group_id}"><xsl:value-of select="@test_group_name"/></a>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_rename']" mode="severity">
+	info
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_rename']" mode="title">
+	Rename Test Group
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_rename']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<b class="space-x">Test Group:</b>
+				<a href="./?test_group={@test_group_id}">
+					<xsl:value-of select="@old_test_group_name"/>
+				</a>
+				-&gt;
+				<a href="./?test_group={@test_group_id}">
+					<xsl:value-of select="@test_group_name"/>
+				</a>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_copy']" mode="severity">
+	success
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_copy']" mode="title">
+	Copy Test Group
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_copy']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">Test Group:</b>
+				<a href="./?test_group={@orig_test_group_id}">
+					<xsl:value-of select="@orig_test_group_name"/>
+				</a>
+				-&gt;
+				<a href="./?test_group={@test_group_id}">
+					<xsl:value-of select="@test_group_name"/>
+				</a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Tests Count:</b>
+				<xsl:value-of select="@tests_cnt"/>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='tg_test_add']" mode="severity">
+	success
+</xsl:template>
+
+<xsl:template match="event[@name='tg_test_add']" mode="title">
+	Add Test into Test Group
+</xsl:template>
+
+<xsl:template match="event[@name='tg_test_add']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">Test Group:</b>
+				<a href="./?test_group={@test_group_id}"><xsl:value-of select="@test_group_name"/></a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Test:</b>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Type:</b>
+				<span class="task-type">
+					<xsl:value-of select="@task_type"/>
+				</span>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='tg_test_delete']" mode="severity">
+	danger
+</xsl:template>
+
+<xsl:template match="event[@name='tg_test_delete']" mode="title">
+	Delete Test from Test Group
+</xsl:template>
+
+<xsl:template match="event[@name='tg_test_delete']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">Test Group:</b>
+				<a href="./?test_group={@test_group_id}"><xsl:value-of select="@test_group_name"/></a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Test:</b>
+				<a href="./?test={@test_id}"><xsl:value-of select="@test_name"/></a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Type:</b>
+				<span class="task-type">
+					<xsl:value-of select="@task_type"/>
+				</span>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_clear']" mode="severity">
+	danger
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_clear']" mode="title">
+	Delete all Tests in Test Group
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_clear']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">Test Group:</b>
+				<a href="./?test_group={@test_group_id}"><xsl:value-of select="@test_group_name"/></a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Tests Count:</b>
+				<xsl:value-of select="@tests_cnt"/>
 			</div>
 		</div>
 	</div>
