@@ -1234,7 +1234,7 @@ class User {
 		}
 		echo '<schedule>';
 		foreach ($taskSched->get() as $sched)
-			echo '<task id="', $sched['id'], '" name="', $sched['name'], '"',
+			echo '<job id="', $sched['id'], '" name="', $sched['name'], '"',
 				' start="', $sched['start'], '" period="', $sched['period'], '"',
 				' type="', htmlspecialchars($sched['type']), '" test_id="', $sched['test_id'], '"/>';
 		foreach ($testMgr->get() as $test)

@@ -30,5 +30,4 @@
 37. компрессия БД средствами mysql, когда размер превысит 1Gb
 38. Распределенное хранение скриншотов (см. concept).
 39. Сделать для task_types отдельный url, загружать task_types через ajax
-40. xml schedule/task переименовать в schedule/job
 42. переименовать tasks add -> start

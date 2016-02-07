@@ -27,14 +27,14 @@
 			<div class="col-lg-12">
 				<h1 class="page-header">Schedule</h1>
 				<xsl:apply-templates select="//message"/>
-				<xsl:if test="not(task)">
+				<xsl:if test="not(job)">
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="schedule-create-test">&#215;</button>
 						<b>Tip:</b>
 						Create a <a href="./?tests=1">test</a> to make schedule available.
 					</div>
 				</xsl:if>
-				<xsl:if test="task">
+				<xsl:if test="job">
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="set-email">&#215;</button>
 						<b>Tip:</b>
@@ -49,7 +49,7 @@
 					<div class="panel-body">
 						<table class="table table-striped table-hover table-dataTable"
 							data-order='[[4, "asc"]]'>
-							<xsl:if test="count(task) &lt;= 10">
+							<xsl:if test="count(job) &lt;= 10">
 								<xsl:attribute name="data-paging">false</xsl:attribute>
 							</xsl:if>
 							<thead>
@@ -65,7 +65,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<xsl:for-each select="task">
+								<xsl:for-each select="job">
 									<tr>
 										<td>
 											#<xsl:value-of select="@id"/>
@@ -89,14 +89,14 @@
 										</td>
 										<td>
 											<button type="button" class="btn btn-xs btn-primary"
-												data-toggle="modal" data-target="#modal-task-modify-{@id}">
+												data-toggle="modal" data-target="#modal-job-modify-{@id}">
 												<i class="fa fa-pencil"></i>
 												Modify
 											</button>
 										</td>
 										<td>
 											<button type="button" class="btn btn-xs btn-danger"
-												data-toggle="modal" data-target="#modal-task-delete-{@id}">
+												data-toggle="modal" data-target="#modal-job-delete-{@id}">
 												<i class="glyphicon glyphicon-trash"></i>
 												Delete
 											</button>
@@ -105,8 +105,8 @@
 								</xsl:for-each>
 							</tbody>
 						</table>
-						<xsl:for-each select="task">
-							<div class="modal" id="modal-task-modify-{@id}" role="dialog">
+						<xsl:for-each select="job">
+							<div class="modal" id="modal-job-modify-{@id}" role="dialog">
 								<div class="modal-dialog modal-lg">
 									<div class="panel panel-primary">
 										<div class="panel-heading">
@@ -115,7 +115,7 @@
 											<xsl:value-of select="@name"/>
 										</div>
 										<div class="panel-body">
-											<form role="form" method="post" class="form-schedule-task">
+											<form role="form" method="post" class="form-schedule-job">
 												<input type="hidden" name="id" value="{@id}"/>
 												<xsl:call-template name="sched_job_form"/>
 												<div class="row">
@@ -139,7 +139,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="modal" id="modal-task-delete-{@id}" role="dialog">
+							<div class="modal" id="modal-job-delete-{@id}" role="dialog">
 								<div class="modal-dialog modal-sm">
 									<div class="panel panel-danger">
 										<div class="panel-heading">
@@ -181,7 +181,7 @@
 				<div class="col-lg-12">
 					<div class="panel panel-success">
 						<div class="panel-body">
-							<form role="form" method="post" class="form-schedule-task">
+							<form role="form" method="post" class="form-schedule-job">
 								<xsl:call-template name="sched_job_form">
 									<xsl:with-param name="period">3600</xsl:with-param>
 								</xsl:call-template>

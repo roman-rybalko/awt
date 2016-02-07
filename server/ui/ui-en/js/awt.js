@@ -122,7 +122,7 @@ $(error_handler(function($) {
 			allowInputToggle: true,
 			format: datetime_format
 		});
-	$('.form-schedule-task').submit(error_handler(function() {
+	$('.form-schedule-job').submit(error_handler(function() {
 		if (! $(this).find('input[name="name"]').val().match(/\S/)) {
 			$(this).find('input[name="name"]').focus();
 			return false;
