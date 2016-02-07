@@ -34,6 +34,130 @@ $(error_handler(function($) {
 }));
 
 $(error_handler(function($) {
+	var dataTablesDefer = 0;
+	function dataTablesInit() {
+		if (dataTablesDefer)
+			return;
+		if ($('.table-dataTable').length) error_handler(function() {
+			var table = $('.table-dataTable').DataTable({
+				responsive: true			
+			});
+			var hash = window.location.hash;
+			if (hash) {
+				table.search(hash).draw();
+				$('.table-dataTable').closest('.collapse').collapse('show');
+			}
+		})();
+	}
+	// before others to start the ajax early
+	if ($('.task-type').length) {
+		++dataTablesDefer;
+		$.get('./?task_types=1').done(error_handler(function(data) {
+			var task_types = [];
+			$(data).find('task_types type').each(function() {
+				task_types.push({name: $(this).attr('name'), id: $(this).attr('id'), parent_id: $(this).attr('parent_id')});
+			});
+			var index = [];
+			var set = {};
+			for (var tt in task_types) {
+				set[task_types[tt].name] = 1;
+				index[task_types[tt].name] = task_types[tt];
+				index[task_types[tt].id] = task_types[tt];
+				task_types[tt].children = [];
+			}
+			for (var tt in task_types)
+				if (index[task_types[tt].parent_id])
+					index[task_types[tt].parent_id].children.push(task_types[tt]);
+			// before others
+			$('select.task-type').each(function() {
+				var select = $(this);
+				var selected = select.attr('data-selected');
+				for (var type in set) {
+					var option = $(document.createElement('option'));
+					option.attr('value', type);
+					option.attr('class', 'task-type');
+					option.text(type);
+					if (type == selected)
+						option.prop('selected', true);
+					select.append(option);
+				}
+			});
+			// before others
+			$('div.task-type').each(function() {
+				var div = $(this);
+				for (var type in set) {
+					var button = $(document.createElement('button'));
+					button.attr('type', 'submit');
+					button.attr('name', 'type');
+					button.attr('value', type);
+					button.attr('class', 'btn btn-success btn-outline space-x space-y task-type');
+					button.text(type);
+					div.append(button);
+				}
+			});
+			var cache = {};
+			$('.task-type').not('select, div').each(function() {
+				var name = $(this).html().replace(/\s+/g, '');
+				if (!cache[name]) {
+					var type = index[name];
+					if (type) {
+						var names = [];
+						function walk(type) {
+							if (names.indexOf(type.name) == -1)
+								names.push(type.name);
+							for (var c in type.children)
+								walk(type.children[c]);
+						}
+						walk(type);
+						cache[name] = names.join(', ');
+					} else {
+						cache[name] = name;
+					}
+				}
+				$(this).attr('title', cache[name]);
+			});
+		})).always(error_handler(function() {
+			--dataTablesDefer;
+			dataTablesInit();
+		}));
+	}
+	// before others to start the ajax early
+	if ($('.test-id2name').length) {
+		++dataTablesDefer;
+		$.get('./?tests=1').done(error_handler(function(data) {
+			var tests = {};
+			$(data).find('tests test').each(function() {
+				if ($(this).attr('deleted'))
+					return;  // continue
+				tests[$(this).attr('id')] = $(this).attr('name');
+			});
+			$('select.test-id2name').each(function() {
+				var select = $(this);
+				var selected = select.attr('data-selected');
+				for (var id in tests) {
+					var option = $(document.createElement('option'));
+					option.attr('value', id);
+					option.text(tests[id]);
+					if (id == selected)
+						option.prop('selected', true);
+					select.append(option);
+				}
+			});
+			$('.test-id2name').not('select').each(function() {
+				var id = $(this).html().replace(/\s+/g, '');
+				if (tests[id])
+					$(this).html(tests[id]);
+				else {
+					$(this).html('<i class="fa fa-times text-failure" title="Deleted"></i><span style="display: none;">' + id + ' (order data)</span>');
+					$(this).closest('tr').toggleClass('danger', true);
+				}
+			});
+			$('.test-id2name-show').show();
+		})).always(error_handler(function() {
+			--dataTablesDefer;
+			dataTablesInit();
+		}));
+	}
 	$('.location-path').html(document.location.href.replace(/\/[^\/]*$/,'/'));
 	$('a.location-href').attr('href', document.location.href);
 	$('.action-type').each(function() {
@@ -77,38 +201,6 @@ $(error_handler(function($) {
 		action_data_update();
 		$('#action-selector-proxy-' + id).on('change', action_data_update);
 	});
-	if (typeof task_types !== 'undefined') error_handler(function() {
-		var index = [];
-		for (var tt in task_types) {
-			index[task_types[tt].name] = task_types[tt];
-			index[task_types[tt].id] = task_types[tt];
-			task_types[tt].children = [];
-		}
-		for (var tt in task_types)
-			if (index[task_types[tt].parent_id])
-				index[task_types[tt].parent_id].children.push(task_types[tt]);
-		var cache = {};
-		$('.task-type').each(function() {
-			var name = $(this).html().replace(/\s+/g, '');
-			if (!cache[name]) {
-				var type = index[name];
-				if (type) {
-					var names = [];
-					function walk(type) {
-						if (names.indexOf(type.name) == -1)
-							names.push(type.name);
-						for (var c in type.children)
-							walk(type.children[c]);
-					}
-					walk(type);
-					cache[name] = names.join(', ');
-				} else {
-					cache[name] = name;
-				}
-			}
-			$(this).attr('title', cache[name]);
-		});
-	})();
 	var datetime_format = 'YYYY-MM-DD HH:mm:ss';
 	$('.date input').each(function() {
 		var value = $(this).val();
@@ -131,20 +223,6 @@ $(error_handler(function($) {
 			$(this).val(moment($(this).val(), datetime_format).unix());
 		});
 	}));
-	if (typeof sched_tests !== 'undefined') error_handler(function() {
-		var tests = [];
-		for (var st in sched_tests)
-			tests[sched_tests[st].id] = sched_tests[st].name;
-		$('.test-id2name').each(function() {
-			var id = $(this).html().replace(/\s+/g, '');
-			if (tests[id])
-				$(this).html(tests[id]);
-			else {
-				$(this).html('<i class="fa fa-times text-failure" title="Deleted"></i><span style="display: none;">' + id + ' (order data)</span>');
-				$(this).closest('tr').toggleClass('danger', true);
-			}
-		});
-	})();
 	function period_unix2human(period) {
 		var data = [];
 		var units = 0;
@@ -173,16 +251,7 @@ $(error_handler(function($) {
 		var time = $(this).html().replace(/\s+/g, '');
 		$(this).html(moment.unix(time).format(datetime_format));
 	});
-	if ($('.table-dataTable').length) error_handler(function() {  // after .time-unix2human .period-unix2human
-		var table = $('.table-dataTable').DataTable({
-			responsive: true			
-		});
-		var hash = window.location.hash;
-		if (hash) {
-			table.search(hash).draw();
-			$('.table-dataTable').closest('.collapse').collapse('show');
-		}
-	})();
+	dataTablesInit();  // after .time-unix2human .period-unix2human
 	if ($('.tip-state').length) error_handler(function() {
 		var storage = new Storage('tip-state-', 42 /* expire days */);
 		$('.tip-state').each(function() {

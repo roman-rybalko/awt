@@ -19,7 +19,6 @@
 	<script src="ui-en/js/dataTables.responsive.min.js" type="text/javascript"></script>
 	<link href="ui-en/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<script src="ui-en/js/responsive.bootstrap.min.js" type="text/javascript"></script>
-	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
@@ -179,25 +178,13 @@
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label>Test</label>
-											<select class="form-control" name="test_id">
-												<xsl:for-each select="//test_group/test">
-													<option value="{@id}">
-														<xsl:value-of select="@name"/>
-													</option>
-												</xsl:for-each>
-											</select>
+											<select class="form-control test-id2name" name="test_id"/>
 										</div>
 									</div>
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label>Type</label>
-											<select class="form-control" name="task_type">
-												<xsl:for-each select="//task_types/type[not(@name = preceding::type/@name)]">
-													<option value="{@name}" class="task-type">
-														<xsl:value-of select="@name"/>
-													</option>
-												</xsl:for-each>
-											</select>
+											<select class="form-control task-type" name="task_type"/>
 										</div>
 									</div>
 								</div>

@@ -24,7 +24,6 @@
 	<script src="ui-en/js/error-client.js" type="text/javascript"></script>
 	<script src="ui-en/js/xpath-browser.js" type="text/javascript"></script>
 	<script src="ui-en/js/xpath-composer.js" type="text/javascript"></script>
-	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">

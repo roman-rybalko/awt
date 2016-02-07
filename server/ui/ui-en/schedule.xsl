@@ -14,14 +14,6 @@
 	<script src="ui-en/js/responsive.bootstrap.min.js" type="text/javascript"></script>
 	<link href="ui-en/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
 	<script src="ui-en/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-	<xsl:call-template name="js_task_types"/>
-	<script type="text/javascript">
-		sched_tests = [  // global
-			<xsl:for-each select="test">
-				{name: "<xsl:value-of select="@name"/>", id: "<xsl:value-of select="@id"/>"},
-			</xsl:for-each>
-		];
-	</script>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
@@ -176,29 +168,27 @@
 				</div>
 			</div>
 		</div>
-		<xsl:if test="test">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="panel panel-success">
-						<div class="panel-body">
-							<form role="form" method="post" class="form-schedule-job">
-								<xsl:call-template name="sched_job_form">
-									<xsl:with-param name="period">3600</xsl:with-param>
-								</xsl:call-template>
-								<div class="row">
-									<div class="col-lg-12">
-										<button type="submit" name="add" class="btn btn-block btn-success">
-											<i class="fa fa-plus"></i>
-											New
-										</button>
-									</div>
+		<div class="row test-id2name-show" style="display: none;">
+			<div class="col-lg-12">
+				<div class="panel panel-success">
+					<div class="panel-body">
+						<form role="form" method="post" class="form-schedule-job">
+							<xsl:call-template name="sched_job_form">
+								<xsl:with-param name="period">3600</xsl:with-param>
+							</xsl:call-template>
+							<div class="row">
+								<div class="col-lg-12">
+									<button type="submit" name="add" class="btn btn-block btn-success">
+										<i class="fa fa-plus"></i>
+										New
+									</button>
 								</div>
-							</form>
-						</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
-		</xsl:if>
+		</div>
 	</div>
 </xsl:template>
 
@@ -218,21 +208,13 @@
 		<div class="col-lg-2">
 			<div class="form-group">
 				<label>Test</label>
-				<select class="form-control" name="test_id">
-					<xsl:call-template name="opts_task_tests">
-						<xsl:with-param name="value" select="$test_id"/>
-					</xsl:call-template>
-				</select>
+				<select class="form-control test-id2name" name="test_id" data-selected="{$test_id}"/>
 			</div>
 		</div>
 		<div class="col-lg-2">
 			<div class="form-group">
 				<label>Type</label>
-				<select class="form-control" name="type">
-					<xsl:call-template name="opts_task_types">
-						<xsl:with-param name="value" select="$type"/>
-					</xsl:call-template>
-				</select>
+				<select class="form-control task-type" name="type" data-selected="{$type}"/>
 			</div>
 		</div>
 		<div class="col-lg-4">
@@ -257,30 +239,6 @@
 			</div>
 		</div>
 	</div>
-</xsl:template>
-
-<xsl:template name="opts_task_types">
-	<xsl:param name="value"></xsl:param>
-	<xsl:for-each select="//task_types/type[not(@name = preceding::type/@name)]">
-		<option value="{@name}" class="task-type">
-			<xsl:if test="@name = $value">
-				<xsl:attribute name="selected"/>
-			</xsl:if>
-			<xsl:value-of select="@name"/>
-		</option>
-	</xsl:for-each>
-</xsl:template>
-
-<xsl:template name="opts_task_tests">
-	<xsl:param name="value"></xsl:param>
-	<xsl:for-each select="//schedule/test">
-		<option value="{@id}">
-			<xsl:if test="@id = $value">
-				<xsl:attribute name="selected"/>
-			</xsl:if>
-			<xsl:value-of select="@name"/>
-		</option>
-	</xsl:for-each>
 </xsl:template>
 
 <xsl:template name="opts_periods">

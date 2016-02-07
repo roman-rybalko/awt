@@ -21,7 +21,6 @@
 	<script src="ui-en/js/dataTables.responsive.min.js" type="text/javascript"></script>
 	<link href="ui-en/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<script src="ui-en/js/responsive.bootstrap.min.js" type="text/javascript"></script>
-	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">

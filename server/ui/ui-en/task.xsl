@@ -6,7 +6,6 @@
 </xsl:template>
 
 <xsl:template match="task" mode="menu">
-	<xsl:call-template name="js_task_types"/>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">

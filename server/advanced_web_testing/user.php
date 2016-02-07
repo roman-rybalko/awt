@@ -67,6 +67,9 @@ class User {
 
 	Stats
 	action: ?stats=1
+
+	Task Types
+	action: ?task_types=1
 -->
 <?php
 			if (isset($_GET['register'])) {
@@ -96,6 +99,8 @@ class User {
 				$this->billing();
 			} else if (isset($_GET['stats'])) {
 				$this->stats();
+			} else if (isset($_GET['task_types'])) {
+				$this->taskTypes();
 			} else {
 				$this->stats();
 			}
@@ -579,7 +584,6 @@ class User {
 			echo '/>';
 		}
 		echo '</tests>';
-		$this->taskTypes();
 	}
 
 	private function test() {
@@ -754,7 +758,6 @@ class User {
 				echo '/>';
 			}
 			echo '</test>';
-			$this->taskTypes();
 		} else {
 			http_response_code(400);
 			echo '<message type="error" value="bad_test_id" code="41"/>';
@@ -909,13 +912,13 @@ class User {
 <?php
 		$testGrpId = $_GET['test_group'];
 		$testGrpMgr = new \AdvancedWebTesting\TestGroup\Manager($this->db, $this->userId);
-		$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
 		if ($testGrps = $testGrpMgr->get([$testGrpId])) {
 			$testGrp = $testGrps[0];
 			$tgTestMgr = new \AdvancedWebTesting\TestGroup\Test\Manager($this->db, $testGrpId);
 			if (isset($_POST['add'])) {
 				$testId = $_POST['test_id'];
 				$taskType = $_POST['task_type'];
+				$testMgr = new \AdvancedWebTesting\Test\Manager($this->db, $this->userId);
 				if ($tests = $testMgr->get([$testId])) {
 					$test = $tests[0];
 					if ($tgTestId = $tgTestMgr->add($testId, $test['name'], $taskType)) {
@@ -971,11 +974,7 @@ class User {
 				echo '<tg_test id="', $testGrpTest['id'], '" test_id="', $testGrpTest['test_id'], '" test_name="', htmlspecialchars($testGrpTest['test_name']), '"',
 					' task_type="', htmlspecialchars($testGrpTest['task_type']), '"/>';
 			}
-			foreach ($testMgr->get() as $test)
-				if (!$test['deleted'])
-					echo '<test name="', htmlspecialchars($test['name']), '" id="', $test['id'], '"/>';
 			echo '</test_group>';
-			$this->taskTypes();
 		} else {
 			http_response_code(400);
 			echo '<message type="error" value="bad_test_group_id" code="76"/>';
@@ -1109,7 +1108,6 @@ class User {
 				' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"',
 				' time="', $task['time'], '"/>';
 		echo '</tasks>';
-		$this->taskTypes();
 	}
 
 	private function task() {
@@ -1122,7 +1120,6 @@ class User {
 <?php
 		$task = new \AdvancedWebTesting\User\Task($this->db, $this->userId);
 		echo $task->get($_GET['task']);
-		$this->taskTypes();
 	}
 
 	private function taskTypes() {
@@ -1237,11 +1234,7 @@ class User {
 			echo '<job id="', $sched['id'], '" name="', $sched['name'], '"',
 				' start="', $sched['start'], '" period="', $sched['period'], '"',
 				' type="', htmlspecialchars($sched['type']), '" test_id="', $sched['test_id'], '"/>';
-		foreach ($testMgr->get() as $test)
-			if (!$test['deleted'])
-				echo '<test name="', htmlspecialchars($test['name']), '" id="', $test['id'], '"/>';
 		echo '</schedule>';
-		$this->taskTypes();
 	}
 
 	private function history() {
@@ -1264,7 +1257,6 @@ class User {
 			echo '/>';
 		}
 		echo '</history>';
-		$this->taskTypes();
 	}
 
 	private function billing() {
