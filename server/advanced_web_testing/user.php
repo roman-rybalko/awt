@@ -993,12 +993,12 @@ class User {
 	Add
 	method: post
 	params: test_id type [debug]
-	submit: add
+	submit: start
 
 	Add
 	method: post
 	params: test_group_id
-	submit: add
+	submit: start
 
 	Cancel
 	method: post
@@ -1007,7 +1007,7 @@ class User {
 -->
 <?php
 		$taskMgr = new \AdvancedWebTesting\Task\Manager($this->db, $this->userId);
-		if (isset($_POST['add'])) {
+		if (isset($_POST['start'])) {
 			$testIds = [];
 			$types = [];
 			$debug = false;
@@ -1050,7 +1050,7 @@ class User {
 						if ($billMgr->getAvailableActionsCnt() >= \AdvancedWebTesting\Billing\Price::TASK_START) {
 							if ($taskId = $taskMgr->add($testId, $test['name'], $type, $debug)) {
 								$billMgr->startTask($taskId, $test['id'], $test['name']);
-								echo '<message type="notice" value="task_add_ok" id="', $taskId, '"/>';
+								echo '<message type="notice" value="task_start_ok" id="', $taskId, '"/>';
 								$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $this->userId);
 								$statMgr->add(1);
 								$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
@@ -1061,10 +1061,10 @@ class User {
 									$event['test_group_id'] = $testGrp['id'];
 									$event['test_group_name'] = $testGrp['name'];
 								}
-								$histMgr->add('task_add', $event);
+								$histMgr->add('task_start', $event);
 							} else {
 								http_response_code(400);
-								echo '<message type="error" value="task_add_fail" code="42"/>';
+								echo '<message type="error" value="task_start_fail" code="42"/>';
 							}
 						} else {
 							http_response_code(400);

@@ -188,7 +188,7 @@
 												</p>
 												<form role="form" method="post" action="./?tasks=1" class="apply-data-display-period">
 													<input type="hidden" name="test_group_id" value="{@id}"/>
-													<button type="submit" name="add" class="btn btn-block btn-success">
+													<button type="submit" name="start" class="btn btn-block btn-success">
 														<i class="fa fa-play fa-fw"></i>
 														Run
 													</button>

@@ -420,15 +420,15 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="event[@name='task_add']" mode="severity">
+<xsl:template match="event[@name='task_start']" mode="severity">
 	warning
 </xsl:template>
 
-<xsl:template match="event[@name='task_add']" mode="title">
+<xsl:template match="event[@name='task_start']" mode="title">
 	Manual Task
 </xsl:template>
 
-<xsl:template match="event[@name='task_add']" mode="data">
+<xsl:template match="event[@name='task_start']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">

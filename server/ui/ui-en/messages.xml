@@ -255,11 +255,11 @@
 	Please, restore it first.
 </message>
 
-<message value="task_add_ok">
+<message value="task_start_ok">
 	New Task has been queued.
 </message>
 
-<message value="task_add_fail">
+<message value="task_start_fail">
 	Task queue failed.
 </message>
 

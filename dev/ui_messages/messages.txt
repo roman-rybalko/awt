@@ -190,10 +190,10 @@ test_group_is_deleted
 	Test Group is deleted.
 	Please, restore it first.
 
-task_add_ok
+task_start_ok
 	New Task has been queued.
 
-task_add_fail
+task_start_fail
 	Task queue failed.
 
 no_funds

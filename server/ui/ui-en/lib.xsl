@@ -34,7 +34,7 @@
 					</div>
 					<form role="form" method="post" action="./?tasks=1" class="apply-data-display-period">
 						<input type="hidden" name="test_id" value="{$test_id}"/>
-						<input type="hidden" name="add" value="1"/>
+						<input type="hidden" name="start" value="1"/>
 						<div class="checkbox">
 							<label>
 								<input type="checkbox" name="debug"/>

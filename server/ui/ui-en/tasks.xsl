@@ -3,7 +3,7 @@
 
 <xsl:template match="tasks">
 	<xsl:choose>
-		<xsl:when test="//message[@value='task_add_ok']">
+		<xsl:when test="//message[@value='task_start_ok']">
 			<xsl:call-template name="redirect"/>
 		</xsl:when>
 		<xsl:otherwise>
