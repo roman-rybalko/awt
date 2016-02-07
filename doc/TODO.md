@@ -31,5 +31,4 @@
 38. Распределенное хранение скриншотов (см. concept).
 39. Сделать для task_types отдельный url, загружать task_types через ajax
 40. xml schedule/task переименовать в schedule/job
-41. рефакторинг БД - переименовать test_id -> id в таблице tests, task_id -> id в таблице tasks, tg_test_id -> id в tg_tests ...
 42. переименовать tasks add -> start
