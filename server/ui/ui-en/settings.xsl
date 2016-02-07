@@ -176,6 +176,9 @@
 							all your <a href="./?tests=1">Tests</a> will be deleted,
 						</li>
 						<li>
+							all your <a href="./?test_groups=1">Test Groups</a> will be deleted,
+						</li>
+						<li>
 							all your <a href="./?tasks=1">Pending Tasks</a> will be canceled,
 						</li>
 						<li>

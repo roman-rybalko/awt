@@ -16,6 +16,7 @@ We got a request to delete your account.
 
 If you delete your account,
 all your Tests will be deleted,
+all your Test Groups will be deleted,
 all your Pending Tasks will be canceled,
 all your Schedule Jobs will be canceled,
 all your Payment Subscriptions will be canceled,

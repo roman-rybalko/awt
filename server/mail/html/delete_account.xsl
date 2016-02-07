@@ -21,6 +21,9 @@
 						all your <a href="{../@root_url}?tests=1">Tests</a> will be deleted,
 					</li>
 					<li>
+						all your <a href="{../@root_url}?test_groups=1">Test Groups</a> will be deleted,
+					</li>
+					<li>
 						all your <a href="{../@root_url}?tasks=1">Pending Tasks</a> will be canceled,
 					</li>
 					<li>
