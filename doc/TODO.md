@@ -1,7 +1,6 @@
 План
 ====
 6. schedule экспорт-импорт
-7. test group export/import
 10. административный интерфейс - статистика, мониторинг
 13. XMPP Reports
 14. SMS Reports

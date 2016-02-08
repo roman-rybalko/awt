@@ -180,6 +180,12 @@ tg_test_delete_fail
 bad_tg_test_id
 	Invalid Test ID.
 
+test_group_import_ok
+	Test Group has been imported.
+
+test_group_import_fail
+	Import Test Group failed.
+
 test_group_clear_ok
 	Test Group has been cleared.
 

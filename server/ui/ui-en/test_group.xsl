@@ -96,6 +96,96 @@
 				</div>
 			</div>
 		</div>
+		<xsl:if test="not(@deleted)">
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="form-group">
+						<a href="./file.php?test_group={@id}" class="btn btn-block btn-primary">
+							<i class="glyphicon glyphicon-export"></i>
+							Export
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="form-group">
+						<a href="#" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-import">
+							<i class="glyphicon glyphicon-import"></i>
+							Import
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="form-group">
+						<a href="#" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal-clear">
+							<i class="glyphicon glyphicon-trash"></i>
+							Clear
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="modal" id="modal-import" role="dialog">
+				<div class="modal-dialog modal-sm">
+					<div class="panel panel-success">
+						<div class="panel-heading">
+							<button type="button" class="close" data-dismiss="modal">&#215;</button>
+							Import
+						</div>
+						<div class="panel-body">
+							<div class="alert alert-info alert-dismissable">
+								<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="test_group-import-max-fsize">&#215;</button>
+								<b>Tip:</b>
+								Max. file size: 1 Mb
+							</div>
+							<form role="form" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+								<p>
+									<input name="data" type="file" accept=".json,application/json"/>
+								</p>
+								<button type="submit" name="import" class="btn btn-block btn-success">
+									<i class="glyphicon glyphicon-import"></i>
+									Import
+								</button>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								<i class="fa fa-undo"></i>
+								Cancel
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal" id="modal-clear" role="dialog">
+				<div class="modal-dialog modal-sm">
+					<div class="panel panel-danger">
+						<div class="panel-heading">
+							<button type="button" class="close" data-dismiss="modal">&#215;</button>
+							Clear
+						</div>
+						<div class="panel-body">
+							<form role="form" method="post">
+								<p>
+									<b>
+										Delete All Tests ?
+									</b>
+								</p>
+								<button type="submit" name="clear" class="btn btn-block btn-danger">
+									<i class="glyphicon glyphicon-trash"></i>
+									Clear
+								</button>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								<i class="fa fa-undo"></i>
+								Cancel
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</xsl:if>
 		<xsl:if test="tg_test">
 			<div class="row">
 				<div class="col-lg-12">
@@ -124,45 +214,49 @@
 												<xsl:value-of select="@task_type"/>
 											</td>
 											<td>
-												<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-tg_test-delete-{@id}">
-													<i class="glyphicon glyphicon-trash"></i>
-													Delete
-												</button>
+												<xsl:if test="not(../@deleted)">
+													<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-tg_test-delete-{@id}">
+														<i class="glyphicon glyphicon-trash"></i>
+														Delete
+													</button>
+												</xsl:if>
 											</td>
 										</tr>
 									</xsl:for-each>
 								</tbody>
 							</table>
-							<xsl:for-each select="tg_test">
-								<div class="modal" id="modal-tg_test-delete-{@id}" role="dialog">
-									<div class="modal-dialog modal-sm">
-										<div class="panel panel-danger">
-											<div class="panel-heading">
-												<button type="button" class="close" data-dismiss="modal">&#215;</button>
-												Delete: <xsl:value-of select="@test_name"/>
-											</div>
-											<div class="panel-body">
-												<p>
-													Delete <b><xsl:value-of select="@test_name"/></b> ?
-												</p>
-												<form role="form" method="post">
-													<input type="hidden" name="id" value="{@id}"/>
-													<button type="submit" name="delete" class="btn btn-block btn-danger">
-														<i class="glyphicon glyphicon-trash"></i>
-														Delete
+							<xsl:if test="not(@deleted)">
+								<xsl:for-each select="tg_test">
+									<div class="modal" id="modal-tg_test-delete-{@id}" role="dialog">
+										<div class="modal-dialog modal-sm">
+											<div class="panel panel-danger">
+												<div class="panel-heading">
+													<button type="button" class="close" data-dismiss="modal">&#215;</button>
+													Delete: <xsl:value-of select="@test_name"/>
+												</div>
+												<div class="panel-body">
+													<p>
+														Delete <b><xsl:value-of select="@test_name"/></b> ?
+													</p>
+													<form role="form" method="post">
+														<input type="hidden" name="id" value="{@id}"/>
+														<button type="submit" name="delete" class="btn btn-block btn-danger">
+															<i class="glyphicon glyphicon-trash"></i>
+															Delete
+														</button>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">
+														<i class="fa fa-undo"></i>
+														Cancel
 													</button>
-												</form>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default" data-dismiss="modal">
-													<i class="fa fa-undo"></i>
-													Cancel
-												</button>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</xsl:for-each>
+								</xsl:for-each>
+							</xsl:if>
 						</div>
 					</div>
 				</div>

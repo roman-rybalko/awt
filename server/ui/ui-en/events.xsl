@@ -989,6 +989,29 @@
 	</div>
 </xsl:template>
 
+<xsl:template match="event[@name='test_group_import']" mode="severity">
+	success
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_import']" mode="title">
+	Import Tests into Test Group
+</xsl:template>
+
+<xsl:template match="event[@name='test_group_import']" mode="data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				<b class="space-x">Test Group:</b>
+				<a href="./?test_group={@test_group_id}"><xsl:value-of select="@test_group_name"/></a>
+			</div>
+			<div class="col-lg-3">
+				<b class="space-x">Tests Count:</b>
+				<xsl:value-of select="@tests_cnt"/>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
 <xsl:template match="event[@name='test_group_clear']" mode="severity">
 	danger
 </xsl:template>

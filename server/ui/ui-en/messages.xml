@@ -242,6 +242,14 @@
 	Invalid Test ID.
 </message>
 
+<message value="test_group_import_ok">
+	Test Group has been imported.
+</message>
+
+<message value="test_group_import_fail">
+	Import Test Group failed.
+</message>
+
 <message value="test_group_clear_ok">
 	Test Group has been cleared.
 </message>

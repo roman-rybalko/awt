@@ -905,6 +905,11 @@ class User {
 	params: id
 	submit: delete
 
+	Import
+	method: post
+	params: data
+	submit: import
+
 	Clear
 	method: post
 	submit: clear
@@ -954,6 +959,21 @@ class User {
 				} else {
 					http_response_code(400);
 					echo '<message type="error" value="bad_tg_test_id" code="89"/>';
+				}
+			} else if (isset($_POST['import'])) {
+				$data = null;
+				if (isset($_POST['data']))
+					$data = json_decode($_POST['data'], true /* assoc */);
+				else if (isset($_FILES['data']) && is_uploaded_file($_FILES['data']['tmp_name']))
+					$data = json_decode(file_get_contents($_FILES['data']['tmp_name']), true /* assoc */);
+				$result = $tgTestMgr->import($data);
+				if ($result > 0) {
+					echo '<message type="notice" value="test_group_import_ok"/>';
+					$histMgr = new \AdvancedWebTesting\History\Manager($this->db, $this->userId);
+					$histMgr->add('test_group_import', ['test_group_id' => $testGrpId, 'test_group_name' => $testGrp['name'], 'tests_cnt' => $result]);
+				} else {
+					http_response_code(400);
+					echo '<message type="error" value="test_group_import_fail" code="94', $result, '"/>';
 				}
 			} else if (isset($_POST['clear'])) {
 				$result = $tgTestMgr->clear();

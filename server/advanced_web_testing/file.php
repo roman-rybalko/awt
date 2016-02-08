@@ -22,6 +22,8 @@ class File {
 				$this->test();
 			} else if (isset($_GET['billing'])) {
 				$this->billing();
+			} else if (isset($_GET['test_group'])) {
+				$this->testGroup();
 			} else {
 				header('Content-Type: text/plain');
 ?>
@@ -49,7 +51,7 @@ params: billing [time]
 			$data = json_encode($data, JSON_PRETTY_PRINT);
 			echo $data;
 		} else {
-			http_response_code(404);
+			http_response_code(400);
 			header('Content-Type: text/plain');
 			echo 'bad_test_id';
 		}
@@ -122,5 +124,23 @@ params: billing [time]
 			}
 			echo "\n";
 		});
+	}
+
+	private function testGroup() {
+		$testGrpId = $_GET['test_group'];
+		$testGrpMgr = new \AdvancedWebTesting\TestGroup\Manager($this->db, $this->userId);
+		if ($testGrps = $testGrpMgr->get([$testGrpId])) {
+			$testGrp = $testGrps[0];
+			$tgTestMgr = new \AdvancedWebTesting\TestGroup\Test\Manager($this->db, $testGrpId);
+			header('Content-Type: application/json');
+			header('Content-Disposition: attachment; filename="' . $testGrp['name'] . '.json"');
+			$data = $tgTestMgr->get();
+			$data = json_encode($data, JSON_PRETTY_PRINT);
+			echo $data;
+		} else {
+			http_response_code(400);
+			header('Content-Type: text/plain');
+			echo 'bad_test_group_id';
+		}
 	}
 }
