@@ -25,7 +25,7 @@ bad_captcha
 	CAPTCHA mismatch.
 
 email_confirmation_pending
-	E-Mail confirmation message has been sent, please check your mailbox and proceed according to the instructions.
+	E-Mail confirmation message has been sent. Please check your mailbox and proceed according to the instructions.
 
 password_reset_fail
 	Password reset failed.
