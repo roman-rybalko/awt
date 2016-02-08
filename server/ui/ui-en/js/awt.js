@@ -40,7 +40,7 @@ $(error_handler(function($) {
 			return;
 		if ($('.table-dataTable').length) error_handler(function() {
 			var table = $('.table-dataTable').DataTable({
-				responsive: true			
+				responsive: true
 			});
 			var hash = window.location.hash;
 			if (hash) {
@@ -152,7 +152,6 @@ $(error_handler(function($) {
 					$(this).closest('tr').toggleClass('danger', true);
 				}
 			});
-			$('.test-id2name-show').show();
 		})).always(error_handler(function() {
 			--dataTablesDefer;
 			dataTablesInit();
