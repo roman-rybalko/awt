@@ -47,8 +47,9 @@ function main() {
 				++updated;
 				if (maxBid < newBid)
 					maxBid = newBid;
-				if (!minBid || (newBid > 0 && minBid > newBid))
-					minBid = newBid;
+				if (newBid > 0)
+					if (!minBid || minBid > newBid)
+						minBid = newBid;
 			}
 			++total;
 		}
