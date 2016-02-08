@@ -74,7 +74,7 @@ class User {
 <?php
 			if (isset($_GET['register'])) {
 				$user->logout();
-				echo '<logout/>';
+				$this->register($user);
 			} else if (isset($_GET['logout'])) {
 				$this->logout($user);
 			} else if (isset($_GET['settings'])) {

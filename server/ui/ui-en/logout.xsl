@@ -4,11 +4,14 @@
 	<xsl:choose>
 		<xsl:when test="//message">
 			<xsl:call-template name="redirect">
+				<xsl:with-param name="url">./</xsl:with-param>
 				<xsl:with-param name="timeout">5</xsl:with-param>
 			</xsl:call-template>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:call-template name="redirect"/>
+			<xsl:call-template name="redirect">
+				<xsl:with-param name="url">./</xsl:with-param>
+			</xsl:call-template>
 		</xsl:otherwise>
 	</xsl:choose>
 </xsl:template>
