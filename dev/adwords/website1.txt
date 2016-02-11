@@ -7,3 +7,8 @@
 +web +app
 +webapp
 +url
+web +ui
+js +ui
+javascript +ui
++it
++selenium

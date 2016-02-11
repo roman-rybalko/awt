@@ -1,6 +1,5 @@
-+testing
+beta +testing
 +checking
 +qa testing
 +qa check
-+beta +testing
 +quality +assurance
