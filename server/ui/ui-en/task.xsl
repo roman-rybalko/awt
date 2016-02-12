@@ -125,7 +125,7 @@
 							</div>
 							<div class="col-lg-2">
 								<xsl:if test="@scrn">
-									<a href="results/{@scrn}">
+									<a href="results/{@scrn}" target="_blank">
 										<img src="results/{@scrn}" class="img-thumbnail img-responsive">
 											<xsl:attribute name="alt">
 												<xsl:if test="@succeeded">
