@@ -104,9 +104,9 @@
 							</a>
 						</li>
 						<li>
-							<a href="http://www.youtube.com/channel/UCQWs8D0AqvofSedL_4g4DIw" target="_blank">
+							<a href="http://www.youtube.com/channel/UCQWs8D0AqvofSedL_4g4DIw">
 								<i class="fa fa-life-bouy fa-fw"></i>
-								Help
+								Tutorial
 							</a>
 						</li>
 					</ul>
