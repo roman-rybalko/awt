@@ -9,13 +9,13 @@ $(error_handler(function($) {
 		if (width < 768) {
 			if (sidebarCollapsed === null || sidebarCollapsed === false) {
 				$('div.navbar-collapse').addClass('collapse');
-				$("#page-wrapper").css("min-height", "0");
+				$("#page-wrapper").css('min-height', '0');
 				sidebarCollapsed = true;
 			}
 		} else {
 			if (sidebarCollapsed === null || sidebarCollapsed === true) {
 				$('div.navbar-collapse').removeClass('collapse');
-				$("#page-wrapper").css("min-height", "calc(100vh - 51px - 51px)");  // viewport - header - footer (with borders)
+				$("#page-wrapper").css('min-height', 'calc(100vh - 51px - 51px)');  // viewport - header - footer (with borders)
 				sidebarCollapsed = false;
 			}
 		}
