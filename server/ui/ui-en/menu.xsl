@@ -33,6 +33,12 @@
 						</div>
 					</li>
 				</xsl:if>
+				<li>
+					<a href="http://www.youtube.com/channel/UCQWs8D0AqvofSedL_4g4DIw" target="_blank">
+						<i class="fa fa-life-bouy fa-fw"></i>
+						Help
+					</a>
+				</li>
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 						<i class="fa fa-user fa-fw"></i>
@@ -101,12 +107,6 @@
 							<a href="./?history=1" class="apply-data-display-period">
 								<i class="fa fa-calendar fa-fw"></i>
 								History
-							</a>
-						</li>
-						<li>
-							<a href="http://www.youtube.com/channel/UCQWs8D0AqvofSedL_4g4DIw">
-								<i class="fa fa-life-bouy fa-fw"></i>
-								Tutorial
 							</a>
 						</li>
 					</ul>
