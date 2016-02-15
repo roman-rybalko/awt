@@ -36,7 +36,7 @@
 				<li>
 					<a href="http://www.youtube.com/channel/UCQWs8D0AqvofSedL_4g4DIw" target="_blank">
 						<i class="fa fa-life-bouy fa-fw"></i>
-						Help
+						Tutorial
 					</a>
 				</li>
 				<li class="dropdown">
