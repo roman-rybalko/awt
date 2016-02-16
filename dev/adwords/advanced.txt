@@ -1,5 +1,4 @@
 
-advanced
 cloud
 external
 remote
@@ -7,5 +6,4 @@ xpath
 automated
 online
 cheap
-free
 hosted

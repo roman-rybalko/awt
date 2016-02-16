@@ -1,4 +1,5 @@
-beta +testing
++testing
++beta +testing
 +checking
 +qa testing
 +qa check
