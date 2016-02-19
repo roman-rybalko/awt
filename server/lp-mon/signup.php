@@ -1,5 +1,12 @@
 <?php
-$data = ['site: ' . $_POST['site'], 'email: ' . $_POST['email'], 'phone: ' . $_POST['phone'], 'name: ' . $_POST['name']];
+$data = [
+	'site: ' . $_POST['site'],
+	'email: ' . $_POST['email'],
+	'phone: ' . $_POST['phone'],
+	'name: ' . $_POST['name'],
+	'ip: ' . $_SERVER['REMOTE_ADDR'] . ':' . $_SERVER['REMOTE_PORT'],
+	'ua: ' . $_SERVER['HTTP_USER_AGENT']
+];
 if (!mail('customer@webmonit.ru', 'New customer: ' . $_POST['site'], implode("\r\n", $data), 'Content-Type: text/plain; charset=utf8'))
 	throw new ErrorException(implode(', ', $data));
 ?>
