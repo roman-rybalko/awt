@@ -14,6 +14,8 @@ $domains = [
 	['token' => 'WPC623ER7AY7SNB6JT26BBQ6KC5VIPIUKJXSJEBOKQHBUCW24TZA', 'domain' => 'webautomation.biz', 'subdomain' => '@'],
 	['token' => 'D2TAKYJB4OKXREBDJGTUCXEMMTKYFFKHVP73U2P7KP7DHBL34K3Q', 'domain' => 'webautomation.ru', 'subdomain' => '@'],
 	['token' => 'H2NBHEINPDUKLAVAQ34EGP7GQY75B57TLGAK4RHPD3TVPHQWVJQQ', 'domain' => 'advancedwebtesting.ru', 'subdomain' => '@'],
+	['token' => 'C7ASDUGL6GNFTYP4C2HSMWRUT4776ASTFWGFT3WGEKUPCMS64POA', 'domain' => 'webmonit.ru', 'subdomain' => '@'],
+	['token' => 'PSSLQQY2PSIYFOFGRIQCH7BMSFLXJ4PJAIHGPW2C352ACMZWTG7A', 'domain' => 'webmonit.biz', 'subdomain' => '@'],
 	// ['token' => 'XXX', 'domain' => 'XXX', 'subdomain' => '@'],
 ];
 $types = ['A', 'AAAA'];
