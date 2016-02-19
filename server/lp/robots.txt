@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /*/
 Disallow: /terms.txt
-Disallow: /ui_preloader.html
+Disallow: /ui_preloader.html*
