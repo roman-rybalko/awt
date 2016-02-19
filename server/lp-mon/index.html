@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf8">
+	<meta charset="utf8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="description" content="Мониторинг интернет-сайтов, функциональное тестирование"/>
+	<title>Мониторинг интернет-сайтов</title>
+	<link href="favicon.ico" rel="icon" type="image/x-icon">
+	<link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
+	<link href="bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+	<link href="awt.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="awt-page" itemscope itemtype="http://schema.org/WebApplication">
+		<meta itemprop="operatingSystem" content="any"/>
+		<div id="awt-header">
+			<div class="container" id="story">
+				<h1 itemprop="name">
+					Мониторинг интернет-сайта
+				</h1>
+				<p class="lead">
+					<span itemprop="alternateName">Периодическое функциональное тестирование сайта 24x7</span>
+				</p>
+			</div>
+		</div>
+		<div class="container">
+			<div class="navbar" id="menubar" style="display:none">
+				<div class="navbar-inner">
+					<ul class="nav">
+						<li id="menubar-item-story" class="active"><a href="#story"><i class="icon-info-sign"></i>Истоиря</a></li>
+						<li id="menubar-item-service"><a href="#service"><i class="icon-flag"></i>Суть сервиса</a></li>
+						<li id="menubar-item-connect"><a href="#connect"><i class="icon-check"></i>Порядок подключения</a></li>
+						<li id="menubar-item-pricing"><a href="#pricing"><i class="icon-tags"></i>Стоимость</a></li>
+					</ul>
+					<ul class="nav pull-right">
+						<li id="menubar-item-signup"><a href="#signup"><i class="icon-thumbs-up"></i>Подать заявку</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="navbar" id="menubar-placeholder" style="display:none">
+			</div>
+			<div class="row">
+				<div class="span12">
+					<h3>
+						Истоиря
+					</h3>
+					<p class="awt-section" itemprop="description">
+						Как-то я захожу на сайт поликлиники записаться на прием к врачу.
+						А там не работает форма, ошибка какая-то. Ну, думаю, ладно, увидят - исправят.
+						Через 2 недели захожу на сайт снова записаться на повторный прием. А там та-же ошибка.
+						Контакты администратора были не далеко, я не поленился и сообщил об ошибке электронной почтой.
+						И мне тут-же ответил человек - проблема была устранена.
+						А сколько еще организаций, у которых на сайте сломан функционал и они об этом не знают?
+						Даже встречаются рекрутинговые компании, у которых не работает форма отправки резюме, а ведь это их бизнес!
+					</p>
+					<img src="story1.png" class="awt-image-centered" itemprop="image">
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section" itemprop="description">
+						Информационные системы в наше время довольно сложны и интегрированы,
+						постоянно где-то что-то ломается и мы об этом узнаем слишком поздно.
+						Зачастую владелец бизнеса просто не знает, что у него на сайте сломался важный функционал.
+						Какой смысл вкладывать ресурсы в рекламу если вследствие ошибки на сайте покупатель не может отправить заказ?
+					</p>
+					<img src="story2.png" class="awt-image-centered">
+				</div>
+			</div>
+			<div class="row" id="service">
+				<div class="span12">
+					<p class="awt-section" itemprop="description">
+						Если система дорабатывается, в ней постоянно что-то ломается и это нормально, важно лишь вовремя заметить сбой и устранить.
+						Но изменения - это не единственная причина сбоев.
+						Может закончиться место на диске сервера, например, если вы запустили рекламную кампанию,
+						что привело к наплыву клиентов и увеличению суточного объема логов.
+						Может остановиться БД вследствие переполнения индекса,
+						хоть это ошибка в программе но обнаруживается она только со временем.
+					</p>
+					<p class="awt-section" itemprop="description">
+						Выход единственный: <span itemprop="keywords">периодическое тестирование</span> - <span itemprop="keywords">мониторинг</span>.
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<h3 id="connect">
+						Суть сервиса
+					</h3>
+					<p class="awt-section" itemprop="description">
+						Составляется функциональный тест для вашего сайта.
+						Тест может включать клики по ссылкам, кнопкам и другим элементам управления на вашем сайте,
+						ввод данных и отправка форм, проверка наличия элементов на странице и их содержимого.
+					</p>
+					<img src="descr1.png" class="awt-image-centered">
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p class="awt-section" itemprop="description">
+						Данный тест ставится в наш планировщик и выполняется регулярно, например раз в 15 минут.
+						Максимальная частота исполнения теста - раз в 1 минуту. Если тест дал сбой - вы получаете уведомление.
+					</p>
+					<h3 id="pricing">
+						Порядок подключения
+					</h3>
+					<ol>
+						<li>
+							Наш аналитик изучает ваш сайт и составляет план функционального тестирования (тест-план)
+						</li>
+						<li>
+							Мы с вами согласовываем тест-план, оговариваем частоту тестирования (от этого зависит стоимость услуги)
+						</li>
+						<li>
+							Заключается договор, включается мониторинг
+						</li>
+						<li>
+							Если при очередном выполнении тест-плана обнаруживается отклонение - вы получаете уведомление
+						</li>
+					</ol>
+					<h3 id="signup">
+						Стоимость
+					</h3>
+					<p class="awt-section" itemprop="description">
+						1 руб. за фактическую операцию (выполненный пункт тест-плана).
+					</p>
+					<p class="awt-section" itemprop="description">
+						Например, если вы пожелаете проверять на вашем сайте 10 элементов каждые 15 минут - счет за месяц (30 дн.) будет 28800 руб.
+						Если же вы предпочтете проверять только доступность вашего сайта 4 раза в сутки - счет составит 120 руб. в месяц.
+					</p>
+					<p class="awt-section" itemprop="description">
+						По вашему желанию мы можем изменить тест-план в любое время,
+						ежемесячная стоимость услуги зависит от количества фактически выполненных пунктов тест-плана.
+					</p>
+					<h3>
+						Подать заявку
+					</h3>
+					<div id="signup-form">
+						<form method="post" action="signup.php">
+							<label>
+								Сайт:
+								<input type="text" name="site"/>
+							</label>
+							<label>
+								E-Mail:
+								<input type="text" name="email"/>
+							</label>
+							<label>
+								Телефон:
+								<input type="text" name="phone"/>
+							</label>
+							<label>
+								Кого позвать:
+								<input type="text" name="name"/>
+							</label>
+							<button type="submit" class="btn btn-success">Подать заявку</a>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="awt-page-push"></div>
+	</div>
+	<div id="awt-footer">
+		<div class="container">
+			<p class="muted awt-footer-line-1">
+				© <span itemprop="copyrightYear">2016</span>
+				<span itemprop="copyrightHolder">Мониторинг веб-сайтов</span>
+			</p>
+			<p class="muted awt-footer-line-2">
+				<a href="terms.txt">
+					Оферта
+				</a>
+				<a href="mailto:info@webmonit.ru?subject=LP%20Call:%20">
+					Контакты
+				</a>
+			</p>
+		</div>
+	</div>
+	<script src="jquery.min.js" type="text/javascript"></script>
+	<script src="bootstrap.min.js" type="text/javascript"></script>
+	<script src="awt.js" type="text/javascript"></script>
+</body>
+</html>

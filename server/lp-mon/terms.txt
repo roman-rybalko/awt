@@ -1,0 +1,97 @@
+Terms of Service ("Terms")
+Last updated: December 8, 2015
+
+Please read these Terms of Service ("Terms", "Terms of Service") carefully 
+before using the advancedwebtesting.com website (the "Service") operated by 
+Sole Proprietor Rybalko R.V. tax/org# 502480148682/312502433100033 
+located at the Russian Federation ("us", "we", "our", the "Operator"). These 
+Terms of Service are covered by the article 437/2 of the Civil Code of the 
+Russian Federation. Your access to and use of the Service is conditioned on 
+your acceptance of and compliance with these Terms. These Terms apply to all 
+visitors, users and others who access or use the Service. By accessing or using 
+the Service you agree to be bound by these Terms. If you disagree with any part 
+of the terms then you may not access the Service.
+
+Terminology
+Action - a test operation that may be executed.
+To execute an Action - to start a web browser on a server
+ and perform the operation in it coded by the Action.
+Test - a group of Actions, a template for a Task.
+Task - a group of Actions that are actually being executed.
+Schedule Job - a Schedule entry, periodically starts a Task at a specified time.
+Available Actions, Account Balance - number of Actions that is permitted for execution.
+Top Up - to refill the account, add Actions.
+Transaction - an operation that changes the Account Balance.
+Pending Transaction - a Transaction in progress, may be canceled.
+Subscription - user's permission for Service to refill the account automatically.
+Refund - a return of a payment.
+
+Accounts
+You are responsible for safeguarding the password that you use to access the 
+Service and for any activities or actions under your password, whether your 
+password is with our Service or a third-party service. You agree not to 
+disclose your password to any third party.
+You may close your account ("Delete Account") at any time.
+
+Billing
+Payment is charged for the number of Actions that are executed by the Task. 
+Starting the Task is considered to be a single Action and must be paid 
+separately. The cost of the Action is described in the Billing section and may 
+be changed over time. You can execute Actions within your Account Balance 
+("Available Actions"). To automatically recharge your account you may set up a 
+Subscription. You may make a Refund of any payment within past 42 days. If the 
+number of Actions credited by the payment exceeds the Account Balance the Refund
+will be partial.
+
+Governing Law
+These Terms shall be governed and construed in accordance with the laws of 
+Russian Federation, without regard to its conflict of law provisions. Our 
+failure to enforce any right or provision of these Terms will not be considered 
+a waiver of those rights. If any provision of these Terms is held to be invalid 
+or unenforceable by a court, the remaining provisions of these Terms will 
+remain in effect. These Terms constitute the entire agreement between us 
+regarding our Service, and supersede and replace any prior agreements we might 
+have between us regarding the Service.
+
+Changes
+We reserve the right, at our sole discretion, to modify or replace these Terms 
+at any time. If a revision is material we will try to provide at least 30 days 
+notice prior to any new terms taking effect. What constitutes a material change 
+will be determined at our sole discretion. By continuing to access or use our 
+Service after those revisions become effective, you agree to be bound by the 
+revised terms. If you do not agree to the new terms, please stop using the 
+Service and close your account.
+
+No Warranties; Exclusion of Liability; Indemnification
+OUR WEBSITE IS OPERATED BY the Operator ON AN "AS IS," "AS AVAILABLE" BASIS, 
+WITHOUT REPRESENTATIONS OR WARRANTIES OF ANY KIND. TO THE FULLEST EXTENT 
+PERMITTED BY LAW, the Operator SPECIFICALLY DISCLAIMS ALL WARRANTIES AND 
+CONDITIONS OF ANY KIND, INCLUDING ALL IMPLIED WARRANTIES AND CONDITIONS OF 
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT 
+FOR OUR WEBSITE AND ANY SERVICES YOU PURCHASE THROUGH IT. The Operator SHALL NOT 
+HAVE ANY LIABILITY OR RESPONSIBILITY FOR ANY ERRORS OR OMISSIONS IN THE CONTENT 
+OF OUR WEBSITE, FOR SERVICES SOLD THROUGH OUR WEBSITE, FOR YOUR ACTION OR 
+INACTION IN CONNECTION WITH OUR WEBSITE OR FOR ANY DAMAGE TO YOUR COMPUTER OR 
+DATA OR ANY OTHER DAMAGE YOU MAY INCUR IN CONNECTION WITH OUR WEBSITE. YOUR USE 
+OF OUR WEBSITE AND ANY SERVICES ARE AT YOUR OWN RISK. IN NO EVENT SHALL EITHER 
+the Operator OR THEIR AGENTS BE LIABLE FOR ANY DIRECT, INDIRECT, PUNITIVE, 
+INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY 
+CONNECTED WITH THE USE OF OUR WEBSITE AND SERVICES PURCHASED THROUGH OUR 
+WEBSITE, THE DELAY OR INABILITY TO USE OUR WEBSITE OR OTHERWISE ARISING IN 
+CONNECTION WITH OUR WEBSITE OR RELATED SERVICES, WHETHER BASED ON CONTRACT, 
+TORT, STRICT LIABILITY OR OTHERWISE, EVEN IF ADVISED OF THE POSSIBILITY OF ANY 
+SUCH DAMAGES. IN NO EVENT SHALL the Operator LIABILITY FOR ANY DAMAGE CLAIM 
+EXCEED THE AMOUNT PAID BY YOU TO the Operator FOR THE TRANSACTION GIVING RISE TO 
+SUCH DAMAGE CLAIM. WITHOUT LIMITING THE FOREGOING, the Operator DO NOT REPRESENT 
+OR WARRANT THAT THE INFORMATION ON THE WEBSITE IS ACCURATE, COMPLETE, RELIABLE, 
+USEFUL, TIMELY OR CURRENT OR THAT OUR WEBSITE WILL OPERATE WITHOUT INTERRUPTION 
+OR ERROR. YOU AGREE THAT AT ALL TIMES, YOU WILL LOOK TO ATTORNEYS FROM WHOM YOU 
+PURCHASE SERVICES FOR ANY CLAIMS OF ANY NATURE, INCLUDING LOSS, DAMAGE, OR 
+WARRANTY, the Operator AND THEIR RESPECTIVE AFFILIATES MAKE NO REPRESENTATION OR 
+GUARANTEES ABOUT ANY SERVICES OFFERED THROUGH OUR WEBSITE. The Operator MAKES NO 
+REPRESENTATION THAT CONTENT PROVIDED ON OUR WEBSITE OR RELATED SERVICES ARE 
+APPLICABLE OR APPROPRIATE FOR USE IN ALL JURISDICTIONS.
+
+Contact Us
+If you have any questions about these Terms,
+please contact us at support@advancedwebtesting.com.
