@@ -22,4 +22,3 @@ server/web_construction_set/ - framework
 [Установка](install.md)  
 [Обслуживание](maintanance.md)  
 [Сервера](servers.md)  
-[Мониторинг](monitoring.md)  

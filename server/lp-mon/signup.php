@@ -1,6 +1,6 @@
 <?php
 $data = ['site: ' . $_POST['site'], 'email: ' . $_POST['email'], 'phone: ' . $_POST['phone'], 'name: ' . $_POST['name']];
-if (!mail('customer@webmonit.ru', 'New customer: ' . $_POST['site'], implode("\r\n", $data)))
+if (!mail('customer@webmonit.ru', 'New customer: ' . $_POST['site'], implode("\r\n", $data), 'Content-Type: text/plain; charset=utf8'))
 	throw new ErrorException(implode(', ', $data));
 ?>
 <html>
