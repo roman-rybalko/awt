@@ -20,3 +20,5 @@ computer
 performance
 vulnerability
 load
+equipment
+manufacture
