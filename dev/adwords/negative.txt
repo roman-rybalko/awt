@@ -1,24 +1,12 @@
-classes
-courses
 download
 penetration
-how to
-training
 install
-what is
-blog
-speed
-pdf
+speed test
 security
-plugin
-documentation
-tutorial
-learning
-ask
 harm
 computer
 performance
 vulnerability
-load
+load test
 equipment
 manufacture
