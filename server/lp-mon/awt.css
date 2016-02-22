@@ -29,6 +29,7 @@
 
 #signup-form {
 	width: 300px;
+	max-width: 100%;
 }
 
 #signup-form input {
