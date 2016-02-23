@@ -15,6 +15,7 @@ $domains = [
 	['token' => 'C7ASDUGL6GNFTYP4C2HSMWRUT4776ASTFWGFT3WGEKUPCMS64POA', 'domain' => 'webmonit.ru'],
 	['token' => 'PSSLQQY2PSIYFOFGRIQCH7BMSFLXJ4PJAIHGPW2C352ACMZWTG7A', 'domain' => 'webmonit.biz'],
 	['token' => 'I2CWLIPKQCBMXWFW5OXLPUSA2BB3A6DPYPNBW3AOG2FZ7AICNIQQ', 'domain' => 'продвебтест.рф'],
+	['token' => 'D6H5OA77SHAOD3G54NGHKQJJ7SH5JFPAOERF4FQGVMYWJOKDU55A', 'domain' => 'профвебтест.рф'],
 	// ['token' => 'XXX', 'domain' => 'XXX', 'subdomain' => '@'],
 ];
 foreach ($domains as $domain) {
