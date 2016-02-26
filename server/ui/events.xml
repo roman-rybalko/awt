@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="ui-en/index.xsl"?>
+<user login="">
+  <history>
+    <event name="login" time="1452952529"/>
+    <event name="logout" time="1452952529"/>
+    <event name="password_change" time="1452952529"/>
+    <event name="email_change" time="1452952529"/>
+    <event name="settings_change" time="1452952529"/>
+    <event name="test_add" time="1452952529"/>
+    <event name="test_delete" time="1452952529"/>
+    <event name="test_restore" time="1452952529"/>
+    <event name="test_rename" time="1452952529"/>
+    <event name="test_copy" time="1452952529"/>
+    <event name="test_action_add" time="1452952529"/>
+    <event name="test_action_delete" time="1452952529"/>
+    <event name="test_action_modify" time="1452952529"/>
+    <event name="test_action_insert" time="1452952529"/>
+    <event name="test_import" time="1452952529"/>
+    <event name="test_clear" time="1452952529"/>
+    <event name="task_start" time="1452952529"/>
+    <event name="task_cancel" time="1452952529"/>
+    <event name="sched_add" time="1452952529"/>
+    <event name="sched_delete" time="1452952529"/>
+    <event name="sched_modify" time="1452952529"/>
+    <event name="task_sched" time="1452952529"/>
+    <event name="sched_fail" time="1452952529"/>
+    <event name="mail_verification" time="1452952529"/>
+    <event name="mail_password_reset" time="1452952529"/>
+    <event name="mail_delete_account" time="1452952529"/>
+    <event name="mail_task" time="1452952529"/>
+    <event name="mail_sched_fail" time="1452952529"/>
+    <event name="test_group_add" time="1452952529"/>
+    <event name="test_group_delete" time="1452952529"/>
+    <event name="test_group_restore" time="1452952529"/>
+    <event name="test_group_rename" time="1452952529"/>
+    <event name="test_group_copy" time="1452952529"/>
+    <event name="tg_test_add" time="1452952529"/>
+    <event name="tg_test_delete" time="1452952529"/>
+    <event name="test_group_import" time="1452952529"/>
+    <event name="test_group_clear" time="1452952529"/>
+  </history>
+</user>
