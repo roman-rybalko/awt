@@ -22,8 +22,8 @@ class Cron {
 
 	private function stats() {
 		// Purge
-		$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, null);
-		$statMgr->clear(time() - \Config::PURGE_PERIOD * 86400);
+		$statsMgr = new \AdvancedWebTesting\Stats\Manager($this->db, null);
+		$statsMgr->clear(time() - \Config::PURGE_PERIOD * 86400);
 	}
 
 	private function tests() {

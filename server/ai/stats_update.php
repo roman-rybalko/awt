@@ -5,8 +5,8 @@ $userDb = new \WebConstructionSet\Database\Relational\User($db);
 $users = $userDb->get();
 foreach ($users as $user) {
 	$userId = $user['id'];
-	$statMgr = new \AdvancedWebTesting\Stats\Manager($db, $userId);
-	$statMgr->clear(time());
+	$statsMgr = new \AdvancedWebTesting\Stats\Manager($db, $userId);
+	$statsMgr->clear(time());
 	$taskMgr = new \AdvancedWebTesting\Task\Manager($db, $userId);
 	$tasks = $taskMgr->get();
 	$progress = 0;
@@ -18,7 +18,7 @@ foreach ($users as $user) {
 		foreach ($actions as $action)
 			if ($action['failed'] || $action['succeeded'])
 				++$actExecCnt;
-		$statMgr->add(1, $task['status'] == \AdvancedWebTesting\Task\Status::FAILED ? 1 : $task['status'] == \AdvancedWebTesting\Task\Status::SUCCEEDED ? 1 : 0,
+		$statsMgr->add(1, $task['status'] == \AdvancedWebTesting\Task\Status::FAILED ? 1 : $task['status'] == \AdvancedWebTesting\Task\Status::SUCCEEDED ? 1 : 0,
 			$task['status'] == \AdvancedWebTesting\Task\Status::FAILED ? 1 : 0,
 			$actExecCnt,
 			$task['time']);
