@@ -19,7 +19,7 @@ login_busy
 	This Login is not available.
 
 passwords_dont_match
-	Password do not match Confirm Password.
+	Passwords do not match.
 
 bad_captcha
 	CAPTCHA mismatch.
@@ -37,19 +37,19 @@ bad_code
 	Invalid code.
 
 password_change_fail
-	Change Password failed.
+	Password Change failed.
 
 bad_current_password
 	Invalid Current Password.
 
 settings_change_ok
-	Settings has been changed.
+	Settings have been changed.
 
 settings_change_fail
-	Change settings failed.
+	Settings Change failed.
 
 email_change_fail
-	Change E-Mail failed.
+	E-Mail Change failed.
 
 email_change_ok
 	E-Mail has been changed.
@@ -216,28 +216,28 @@ task_cancel_fail
 	Cancel Task failed.
 
 sched_add_ok
-	Schedule Job has been created.
+	Scheduled Job has been created.
 
 sched_add_fail
-	Add Schedule Job failed.
+	Add Scheduled Job failed.
 
 sched_delete_ok
-	Schedule Job has been deleted.
+	Scheduled Job has been deleted.
 
 sched_delete_fail
-	Delete Schedule Job failed.
+	Delete Scheduled Job failed.
 
 bad_sched_id
-	Invalid Schedule Job ID.
+	Invalid Scheduled Job ID.
 
 sched_modify_ok
-	Schedule Job has been modified.
+	Scheduled Job has been modified.
 
 sched_modify_fail
-	Modify Schedule Job failed.
+	Modify Scheduled Job failed.
 
 payment_pending
-	The payment has been staged, please proceed to the payment system.
+	The payment has been staged. Please proceed to the payment system.
 
 top_up_fail
 	Top Up failed.

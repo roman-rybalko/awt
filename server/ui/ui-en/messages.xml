@@ -27,7 +27,7 @@
 </message>
 
 <message value="passwords_dont_match">
-	Password do not match Confirm Password.
+	Passwords do not match.
 </message>
 
 <message value="bad_captcha">
@@ -51,7 +51,7 @@
 </message>
 
 <message value="password_change_fail">
-	Change Password failed.
+	Password Change failed.
 </message>
 
 <message value="bad_current_password">
@@ -59,15 +59,15 @@
 </message>
 
 <message value="settings_change_ok">
-	Settings has been changed.
+	Settings have been changed.
 </message>
 
 <message value="settings_change_fail">
-	Change settings failed.
+	Settings Change failed.
 </message>
 
 <message value="email_change_fail">
-	Change E-Mail failed.
+	E-Mail Change failed.
 </message>
 
 <message value="email_change_ok">
@@ -289,35 +289,35 @@
 </message>
 
 <message value="sched_add_ok">
-	Schedule Job has been created.
+	Scheduled Job has been created.
 </message>
 
 <message value="sched_add_fail">
-	Add Schedule Job failed.
+	Add Scheduled Job failed.
 </message>
 
 <message value="sched_delete_ok">
-	Schedule Job has been deleted.
+	Scheduled Job has been deleted.
 </message>
 
 <message value="sched_delete_fail">
-	Delete Schedule Job failed.
+	Delete Scheduled Job failed.
 </message>
 
 <message value="bad_sched_id">
-	Invalid Schedule Job ID.
+	Invalid Scheduled Job ID.
 </message>
 
 <message value="sched_modify_ok">
-	Schedule Job has been modified.
+	Scheduled Job has been modified.
 </message>
 
 <message value="sched_modify_fail">
-	Modify Schedule Job failed.
+	Modify Scheduled Job failed.
 </message>
 
 <message value="payment_pending">
-	The payment has been staged, please proceed to the payment system.
+	The payment has been staged. Please proceed to the payment system.
 </message>
 
 <message value="top_up_fail">
