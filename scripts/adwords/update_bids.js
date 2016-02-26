@@ -15,6 +15,21 @@ function update(keyword) {
 	return 0;
 }
 
+// stats: top of page
+//function update(keyword) {
+//	return keyword.getTopOfPageCpc();
+//}
+
+// stats: current
+//function update(keyword) {
+//	return keyword.bidding().getCpc();
+//}
+
+// stats: 1st page
+//function update(keyword) {
+//	return keyword.getFirstPageCpc();
+//}
+
 var logMail = 'root@advancedwebtesting.com';
 var logBuf = [];
 function log(str) {

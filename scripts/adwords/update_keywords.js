@@ -1,8 +1,4 @@
 var adGroupLabelUrlMap = {
-	UPD_S_TESTING: 'http://deploy.hosts.advancedwebtesting.net/adwords/s_testing.txt',
-	UPD_S_AUTOMATION: 'http://deploy.hosts.advancedwebtesting.net/adwords/s_automation.txt',
-	UPD_S_MONITORING: 'http://deploy.hosts.advancedwebtesting.net/adwords/s_monitoring.txt',
-	UPD_S_CRAWLING: 'http://deploy.hosts.advancedwebtesting.net/adwords/s_crawling.txt',
 	UPD_D_GENERAL: 'http://deploy.hosts.advancedwebtesting.net/adwords/d_general.txt',
 	UPD_D_TESTING: 'http://deploy.hosts.advancedwebtesting.net/adwords/d_testing.txt',
 	UPD_D_AUTOMATION: 'http://deploy.hosts.advancedwebtesting.net/adwords/d_automation.txt',
