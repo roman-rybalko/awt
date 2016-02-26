@@ -52,7 +52,7 @@ $(error_handler(function($) {
 	// before others to start the ajax early
 	if ($('.task-type').length) {
 		++dataTablesDefer;
-		$.get('./?task_types=1').done(error_handler(function(data) {
+		$.get('./?task_types=1&xml=1').done(error_handler(function(data) {
 			var task_types = [];
 			$(data).find('task_types type').each(function() {
 				task_types.push({name: $(this).attr('name'), id: $(this).attr('id'), parent_id: $(this).attr('parent_id')});
@@ -124,7 +124,7 @@ $(error_handler(function($) {
 	// before others to start the ajax early
 	if ($('.test-id2name').length) {
 		++dataTablesDefer;
-		$.get('./?tests=1').done(error_handler(function(data) {
+		$.get('./?tests=1&xml=1').done(error_handler(function(data) {
 			var tests = {};
 			$(data).find('tests test').each(function() {
 				if ($(this).attr('deleted'))

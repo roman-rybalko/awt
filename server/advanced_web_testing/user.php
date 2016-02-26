@@ -14,10 +14,16 @@ class User {
 	}
 
 	public function run() {
-		if (preg_match('/Mobile|Phone|Android|PhantomJS/', $_SERVER['HTTP_USER_AGENT'])) {
-			\WebConstructionSet\OutputBuffer\XsltHtml::init();
+		$xml = false;
+		if (isset($_GET['xml'])) {
+			$xml = $_GET['xml'];
 		} else {
+			$xml = ! preg_match('/Mobile|Phone|Android|PhantomJS/', $_SERVER['HTTP_USER_AGENT']);
+		}
+		if ($xml) {
 			header('Content-Type: text/xml');
+		} else {
+			\WebConstructionSet\OutputBuffer\XsltHtml::init();
 		}
 		//\WebConstructionSet\OutputBuffer\XmlFormatter::init();
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
