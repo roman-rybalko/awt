@@ -16,11 +16,11 @@ class Manager {
 		$this->table = new \WebConstructionSet\Database\Relational\TableWrapper($db, 'stats', $fields);
 	}
 
-	public function add($tasks_added = 0, $tasks_finished = 0,  $tasks_failed = 0, $actions_executed = 0, $time = null) {
+	public function add($tasks_started = 0, $tasks_finished = 0,  $tasks_failed = 0, $actions_executed = 0, $time = null) {
 		if ($time === null)
 			$time = time();
 		$time -= $time % 3600;
-		foreach (['tasks_added' => $tasks_added, 'tasks_finished' => $tasks_finished, 'tasks_failed' => $tasks_failed,
+		foreach (['tasks_started' => $tasks_started, 'tasks_finished' => $tasks_finished, 'tasks_failed' => $tasks_failed,
 			'actions_executed' => $actions_executed] as $field => $count)
 		{
 			while ($count)

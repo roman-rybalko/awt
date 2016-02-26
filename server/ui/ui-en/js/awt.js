@@ -336,7 +336,7 @@ $(error_handler(function($) {
 			bars: {
 				fillColor: '#679dc6'
 			},
-			data: aggregate_day(tasks_added),
+			data: aggregate_day(tasks_started),
 		};
 		var data2 = {
 			label: 'Finished',

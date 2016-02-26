@@ -1527,7 +1527,7 @@ class User {
 		$minTime = 0;
 		$statMgr = new \AdvancedWebTesting\Stats\Manager($this->db, $this->userId);
 		foreach ($statMgr->get() as $stat) {
-			echo '<stat time="', $stat['time'], '" tasks_added="', $stat['tasks_added'], '" tasks_finished="', $stat['tasks_finished'], '"',
+			echo '<stat time="', $stat['time'], '" tasks_started="', $stat['tasks_started'], '" tasks_finished="', $stat['tasks_finished'], '"',
 				' tasks_failed="', $stat['tasks_failed'], '" actions_executed="', $stat['actions_executed'], '"/>';
 			if ($stat['time'] < $maxTime)
 				$maxTime = $stat['time'];

@@ -14,10 +14,10 @@
 	<script src="ui-en/js/jquery.flot.time.min.js" type="text/javascript"></script>
 	<script src="ui-en/js/jquery.flot.tooltip.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		tasks_added = [  // global
+		tasks_started = [  // global
 			<xsl:for-each select="stat">
 				<xsl:sort select="@time" data-type="number" order="ascending"/>
-				[<xsl:value-of select="@time"/>000, <xsl:value-of select="@tasks_added"/>],
+				[<xsl:value-of select="@time"/>000, <xsl:value-of select="@tasks_started"/>],
 			</xsl:for-each>
 		];
 		tasks_finished = [  // global
