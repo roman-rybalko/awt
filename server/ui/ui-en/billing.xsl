@@ -631,7 +631,7 @@
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="billing-transactions-display-period">&#215;</button>
 						<b>Tip:</b>
-						Transactions here are displayed for 42 days max. Please, use <a href="./file.php?billing=1">Export transactions (CSV)</a> for a full list.
+						Transactions displayed here are for 42 days max. Please, use <a href="./file.php?billing=1">Export transactions (CSV)</a> for a full list.
 					</div>
 				</xsl:if>
 			</div>

@@ -84,7 +84,7 @@
 								<div class="huge">
 									<xsl:value-of select="@scheds"/>
 								</div>
-								<div>Schedule Jobs</div>
+								<div>Scheduled Jobs</div>
 							</div>
 						</div>
 					</div>
