@@ -281,7 +281,7 @@
 </message>
 
 <message value="task_cancel_ok">
-	The Task has been canceled.
+	The Task has been cancelled.
 </message>
 
 <message value="task_cancel_fail">
@@ -346,7 +346,7 @@
 </message>
 
 <message value="cancel_pending_transaction_ok">
-	Pending Transaction has been canceled.
+	Pending Transaction has been cancelled.
 </message>
 
 <message value="cancel_pending_transaction_fail">
@@ -354,7 +354,7 @@
 </message>
 
 <message value="cancel_subscription_ok">
-	Subscription has been canceled.
+	Subscription has been cancelled.
 </message>
 
 <message value="cancel_subscription_fail">

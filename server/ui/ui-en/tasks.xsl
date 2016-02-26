@@ -191,7 +191,7 @@
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="tasks-cancel">&#215;</button>
 						<b>Tip:</b>
-						Running Task may be canceled after timeout (by default 10 seconds per action).
+						Running Task may be cancelled after timeout (by default 10 seconds per action).
 					</div>
 				</div>
 			</div>
@@ -275,17 +275,17 @@
 				</div>
 			</div>
 		</xsl:if>
-		<xsl:if test="task[@status = 'canceled']">
+		<xsl:if test="task[@status = 'cancelled']">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-danger">
 						<div class="panel-heading">
 							<i class="fa fa-trash-o"></i>
-							Canceled
+							Cancelled
 						</div>
 						<div class="panel-body">
 							<table class="table table-striped table-hover table-dataTable" data-order='[[0, "desc"]]'>
-								<xsl:if test="count(task[@status = 'canceled']) &lt;= 10">
+								<xsl:if test="count(task[@status = 'cancelled']) &lt;= 10">
 									<xsl:attribute name="data-paging">false</xsl:attribute>
 								</xsl:if>
 								<thead>
@@ -299,7 +299,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<xsl:for-each select="task[@status = 'canceled']">
+									<xsl:for-each select="task[@status = 'cancelled']">
 										<tr>
 											<td class="time-unix2human">
 												<xsl:value-of select="@time"/>

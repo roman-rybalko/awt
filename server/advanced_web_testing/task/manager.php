@@ -53,7 +53,7 @@ class Manager {
 	 * @return boolean
 	 */
 	public function cancel($taskId) {
-		if ($this->tasks->update(['status' => Status::CANCELED, 'time' => time()], ['task_id' => $taskId, 'status' => Status::INITIAL]))
+		if ($this->tasks->update(['status' => Status::CANCELLED, 'time' => time()], ['task_id' => $taskId, 'status' => Status::INITIAL]))
 			return true;
 		$data = $this->tasks->select(['time'], ['task_id' => $taskId]);
 		if (!$data)
@@ -61,8 +61,8 @@ class Manager {
 		$task = $data[0];
 		$taskActMgr = new \AdvancedWebTesting\Task\Action\Manager($this->db, $taskId);
 		if ($task['time'] <= time() - \Config::TASK_ACTION_TIMEOUT * count($taskActMgr->get())) {
-			$cnt = $this->tasks->update(['status' => Status::CANCELED, 'time' => time()], ['task_id' => $taskId, 'status' => Status::RUNNING]);
-			$cnt += $this->tasks->update(['status' => Status::CANCELED, 'time' => time()], ['task_id' => $taskId, 'status' => Status::STARTING]);
+			$cnt = $this->tasks->update(['status' => Status::CANCELLED, 'time' => time()], ['task_id' => $taskId, 'status' => Status::RUNNING]);
+			$cnt += $this->tasks->update(['status' => Status::CANCELLED, 'time' => time()], ['task_id' => $taskId, 'status' => Status::STARTING]);
 			return $cnt;
 		}
 		return false;

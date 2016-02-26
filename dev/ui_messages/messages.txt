@@ -210,7 +210,7 @@ test_is_deleted
 	Please, restore it first.
 
 task_cancel_ok
-	The Task has been canceled.
+	The Task has been cancelled.
 
 task_cancel_fail
 	Cancel Task failed.
@@ -259,13 +259,13 @@ process_pending_transaction_fail
 	Pending Transaction processing failed.
 
 cancel_pending_transaction_ok
-	Pending Transaction has been canceled.
+	Pending Transaction has been cancelled.
 
 cancel_pending_transaction_fail
 	Cancel Pending Transaction failed.
 
 cancel_subscription_ok
-	Subscription has been canceled.
+	Subscription has been cancelled.
 
 cancel_subscription_fail
 	Cancel Subscription failed.

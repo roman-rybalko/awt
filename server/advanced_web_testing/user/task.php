@@ -21,7 +21,7 @@ class Task {
 			$task = $tasks[0];
 			$taskActMgr = new \AdvancedWebTesting\Task\Action\Manager($this->db, $taskId);
 			$xml .= '<task id="' . $taskId . '" test_id="' . $task['test_id'] . '" test_name="' . htmlspecialchars($task['test_name']) . '"'
-				. ' ' . ($task['debug'] ? ' debug="1"' : '') . ' type="' . $task['type'] . '" time="' . $task['time'] . '"'
+				. ($task['debug'] ? ' debug="1"' : '') . ' type="' . $task['type'] . '" time="' . $task['time'] . '"'
 				. ' status="' . \AdvancedWebTesting\Task\Status::toString($task['status']) . '">';
 			foreach ($taskActMgr->get() as $action) {
 				$xml .= '<action id="' . $action['id'] . '" type="' . htmlspecialchars($action['type']) . '"';

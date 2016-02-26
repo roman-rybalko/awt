@@ -1124,7 +1124,7 @@ class User {
 			echo '<task id="', $task['id'], '" test_id="', $task['test_id'], '"',
 				' test_name="', htmlspecialchars($task['test_name']), '"',
 				' type="', htmlspecialchars($task['type']), '"',
-				' ', $task['debug'] ? ' debug="1"' : '',
+				$task['debug'] ? ' debug="1"' : '',
 				' status="', \AdvancedWebTesting\Task\Status::toString($task['status']), '"',
 				' time="', $task['time'], '"/>';
 		echo '</tasks>';

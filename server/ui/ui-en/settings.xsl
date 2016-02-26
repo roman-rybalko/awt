@@ -179,13 +179,13 @@
 							all your <a href="./?test_groups=1">Test Groups</a> will be deleted,
 						</li>
 						<li>
-							all your <a href="./?tasks=1">Pending Tasks</a> will be canceled,
+							all your <a href="./?tasks=1">Pending Tasks</a> will be cancelled,
 						</li>
 						<li>
-							all your <a href="./?schedule=1">Schedule Jobs</a> will be canceled,
+							all your <a href="./?schedule=1">Schedule Jobs</a> will be cancelled,
 						</li>
 						<li>
-							all your <a href="./?billing=1">Payment Subscriptions</a> will be canceled,
+							all your <a href="./?billing=1">Payment Subscriptions</a> will be cancelled,
 						</li>
 						<li>
 							your <a href="./?billing=1">Available Actions (Account Balance)</a> will be refunded.
