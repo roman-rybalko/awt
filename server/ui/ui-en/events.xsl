@@ -483,14 +483,14 @@
 </xsl:template>
 
 <xsl:template match="event[@name='sched_add']" mode="title">
-	New Schedule Job
+	New Scheduled Job
 </xsl:template>
 
 <xsl:template match="event[@name='sched_add']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">
-				<b class="space-x">Schedule Job:</b>
+				<b class="space-x">Scheduled Job:</b>
 				<a href="./?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-3">
@@ -526,14 +526,14 @@
 </xsl:template>
 
 <xsl:template match="event[@name='sched_delete']" mode="title">
-	Delete Schedule Job
+	Delete Scheduled Job
 </xsl:template>
 
 <xsl:template match="event[@name='sched_delete']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">
-				<b class="space-x">Schedule Job:</b>
+				<b class="space-x">Scheduled Job:</b>
 				<a href="./?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-3">
@@ -569,14 +569,14 @@
 </xsl:template>
 
 <xsl:template match="event[@name='sched_modify']" mode="title">
-	Modify Schedule Job
+	Modify Scheduled Job
 </xsl:template>
 
 <xsl:template match="event[@name='sched_modify']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">
-				<b class="space-x">Schedule Job:</b>
+				<b class="space-x">Scheduled Job:</b>
 				<xsl:if test="@old_sched_name">
 					<a href="./?schedule=1#{@sched_id}">
 						<xsl:value-of select="@old_sched_name"/>
@@ -653,7 +653,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">
-				<b class="space-x">Schedule Job:</b>
+				<b class="space-x">Scheduled Job:</b>
 				<a href="./?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-3">
@@ -686,7 +686,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3">
-				<b class="space-x">Schedule Job:</b>
+				<b class="space-x">Scheduled Job:</b>
 				<a href="./?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-3">
@@ -786,14 +786,14 @@
 </xsl:template>
 
 <xsl:template match="event[@name='mail_sched_fail']" mode="title">
-	Send Schedule Job Fail Report
+	Send Scheduled Job Fail Report
 </xsl:template>
 
 <xsl:template match="event[@name='mail_sched_fail']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-6">
-				<b class="space-x">Schedule Job:</b>
+				<b class="space-x">Scheduled Job:</b>
 				<a href="./?schedule=1#{@sched_id}"><xsl:value-of select="@sched_name"/></a>
 			</div>
 			<div class="col-lg-6">

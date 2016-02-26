@@ -27,7 +27,7 @@
 						all your <a href="{../@root_url}?tasks=1">Pending Tasks</a> will be cancelled,
 					</li>
 					<li>
-						all your <a href="{../@root_url}?schedule=1">Schedule Jobs</a> will be cancelled,
+						all your <a href="{../@root_url}?schedule=1">Scheduled Jobs</a> will be cancelled,
 					</li>
 					<li>
 						all your <a href="{../@root_url}?billing=1">Payment Subscriptions</a> will be cancelled,

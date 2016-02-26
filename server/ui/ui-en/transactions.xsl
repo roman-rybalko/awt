@@ -84,7 +84,7 @@
 		</a>
 	</xsl:if>
 	<xsl:if test="@sched_id and @sched_name">
-		<b class="space-x">Schedule Job:</b>
+		<b class="space-x">Scheduled Job:</b>
 		<a href="./?schedule=1#{@sched_id}" class="space-x">
 			<xsl:value-of select="@sched_name"/>
 		</a>

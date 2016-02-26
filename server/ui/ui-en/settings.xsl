@@ -182,7 +182,7 @@
 							all your <a href="./?tasks=1">Pending Tasks</a> will be cancelled,
 						</li>
 						<li>
-							all your <a href="./?schedule=1">Schedule Jobs</a> will be cancelled,
+							all your <a href="./?schedule=1">Scheduled Jobs</a> will be cancelled,
 						</li>
 						<li>
 							all your <a href="./?billing=1">Payment Subscriptions</a> will be cancelled,

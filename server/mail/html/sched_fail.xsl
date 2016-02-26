@@ -4,7 +4,7 @@
 <xsl:template match="sched_fail">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">Schedule Job start Failed</h1>
+			<h1 class="page-header">Scheduled Job start Failed</h1>
 		</div>
 	</div>
 	<div class="row">
@@ -13,7 +13,7 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-6">
-							<b>Schedule Job</b>:
+							<b>Scheduled Job</b>:
 							<a href="{../@root_url}?schedule=1#{@sched_id}">
 								<xsl:value-of select="@sched_name"/>
 							</a>

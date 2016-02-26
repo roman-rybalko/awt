@@ -66,7 +66,7 @@ params: billing [time]
 		header('Content-Type: text/csv');
 		header('Content-Disposition: attachment; filename="billing.csv"');
 		echo 'Transaction ID;Date & Time;Unix Timestamp;Balance Before;Balance After;Charge/Credit;Transaction Type;Transaction Data;Task URL;Task ID;Test URL;Test ID;Test Name;',
-			'Schedule Job URL;Schedule Job ID;Schedule Job Name;Payment Type;Payment Amount;Payment Data;Refundable;Refund-related Transaction ID;',
+			'Scheduled Job URL;Scheduled Job ID;Scheduled Job Name;Payment Type;Payment Amount;Payment Data;Refundable;Refund-related Transaction ID;',
 			"\n";
 		$billMgr->getTransactions(null, $time, function($transaction) {
 			foreach (['id', 'time', 'actions_before', 'actions_after', 'actions_cnt', 'type', 'data', 'task_id', 'test_id', 'test_name',
