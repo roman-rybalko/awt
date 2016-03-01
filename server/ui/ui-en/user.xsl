@@ -73,6 +73,14 @@
 		<link href="ui-en/css/awt.css" rel="stylesheet" type="text/css"/>
 		<script src="ui-en/js/awt.js" type="text/javascript"></script>
 
+		<!-- Yandex.Metrika counter -->
+		<script type="text/javascript">
+			error_handler(function() {
+				(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter35773240 = new Ya.Metrika({ id:35773240, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");
+			})();
+		</script>
+		<!-- /Yandex.Metrika counter -->
+
 		<script type="text/javascript">
 			error_handler(function() {
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -93,6 +101,7 @@
 			}));
 			/* ]]> */
 		</script>
+
 	</body>
 </html>
 </xsl:template>
