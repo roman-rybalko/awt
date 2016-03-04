@@ -23,3 +23,4 @@ server/web_construction_set/ - framework
 [Обслуживание](maintanance.md)  
 [Сервера](servers.md)  
 [Маркетинг](marketing.md)  
+[Тестирование](testing.md)  
