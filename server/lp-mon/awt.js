@@ -13,18 +13,18 @@ function reformat() {
 			$(this).addClass("awt-image-floated");
 		}
 	});
-	$('#menubar').width($('.container').width());
-	$('#menubar-placeholder').height($('#menubar').height());
-	menuBarPoss = [$('#story').offset().top, $('#service').offset().top, $('#connect').offset().top,
-	               $('#pricing').offset().top, $('#signup').offset().top, $(document).height()];
+	if ($('#menubar').length) {
+		$('#menubar').width($('.container').width());
+		$('#menubar-placeholder').height($('#menubar').height());
+	}
 }
 $(window).resize(reformat);
 
 var menuBarActive = false;
 var menuBarPinUp = false;
-var menuItemActive = 0;
-var menuItems = ['#menubar-item-story', '#menubar-item-service', '#menubar-item-connect', '#menubar-item-pricing', '#menubar-item-signup'];
 function updateMenuBar() {
+	if (!$('#menubar').length)
+		return;
 	if ($(window).width() < 964 && menuBarActive === true) {
 		$('#menubar').hide();
 		$('#menubar-placeholder').hide();
@@ -56,16 +56,6 @@ function updateMenuBar() {
 			$('#menubar-placeholder').show();
 			menuBarPinUp = true;
 		}
-	}
-	var active = 0;
-	for (active = 0; active < menuItems.length; ++active)
-		if ($(window).scrollTop() + $(window).height() * 2 / 3 < menuBarPoss[active + 1])
-			break;
-	if (active != menuItemActive) {
-		for (var i in menuItems)
-			$(menuItems[i]).removeClass('active');
-		$(menuItems[active]).addClass('active');
-		menuItemActive = active;
 	}
 }
 $(window).on('scroll', updateMenuBar);
