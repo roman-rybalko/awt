@@ -13,9 +13,8 @@ s1 - firstvds
 n6 - host1plus (Frankfurt)  
 p1 - berihoster (Tomsk)  
 p2 - host1plus (Chicago)  
-p4 - mne.ru  
 c1 - simplecloud  
-c2 - mne.ru  
+c2 - simplecloud  
 
 После первой оплаты
 -------------------
@@ -28,5 +27,4 @@ x - количество клиентов
 y - количество блокировок  
 
 c1 - c1 c2 c3 c4 c8 c9 / 1  
-c2 - c1 c3 c5 c6 c7 c12 / 1  
-p4 - c10 c11 / 2  
+c2 - c1 c3 c5 c6 c7 c12 / 1, c10 c11 / 2  
