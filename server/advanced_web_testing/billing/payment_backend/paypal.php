@@ -11,7 +11,7 @@ class Paypal implements \AdvancedWebTesting\Billing\PaymentBackend {
 	 * @param double $actionPrice
 	 * @param string $currencyCode
 	 */
-	public function __construct(\WebConstructionSet\Database\Relational $db, $userId, $actionPrice = 0.001, $currencyCode = 'USD') {
+	public function __construct(\WebConstructionSet\Database\Relational $db, $userId, $actionPrice = 0.01, $currencyCode = 'USD') {
 		$this->paypal = new \WebConstructionSet\Billing\Paypal($db, \Config::PAYPAL_USER, \Config::PAYPAL_PASSWORD, \Config::PAYPAL_SIGNATURE, \Config::PAYPAL_SANDBOX, $userId);
 		$this->actionPrice = $actionPrice;
 		$this->currencyCode = $currencyCode;

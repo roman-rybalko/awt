@@ -68,7 +68,7 @@
 						Pricing
 					</div>
 					<div class="panel-body">
-						1000 Browser Actions = $1 USD
+						100 Browser Actions = $1 USD
 					</div>
 				</div>
 			</div>
@@ -111,8 +111,8 @@
 					<div class="panel-body">
 						<div class="alert alert-warning">
 							<b>Limits:</b><br/>
-							<b>PayPal:</b> MIN = $2 USD (2000 Actions), MAX = $5 USD (5000 Actions)<br/>
-							<b>WebMoney:</b> MIN = $0.01 USD (10 Actions), MAX = $2 USD (2000 Actions)
+							<b>PayPal:</b> MIN = $2 USD (200 Actions), MAX = $5 USD (500 Actions)<br/>
+							<b>WebMoney:</b> MIN = $0.01 USD (1 Action), MAX = $2 USD (200 Actions)
 						</div>
 						<form role="form" method="post">
 							<div class="form-group">
@@ -141,7 +141,7 @@
 							</div>
 							<div class="form-group">
 								<label for="modal-top_up-actions_cnt">Actions Count:</label>
-								<input type="number" id="modal-top_up-actions_cnt" class="form-control" name="actions_cnt" placeholder="Actions Cnt" value="2000"/>
+								<input type="number" id="modal-top_up-actions_cnt" class="form-control" name="actions_cnt" placeholder="Actions Cnt" value="200"/>
 							</div>
 							<div class="checkbox">
 								<label>
