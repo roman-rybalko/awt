@@ -32,7 +32,7 @@ function cb(err, val) {
 }
 
 function new_task() {
-	wait.launchFiber(function(){
+	wait.launchFiber(function() {
 		if (config.batch_start_cb)
 			config.batch_start_cb();
 		task(cb);

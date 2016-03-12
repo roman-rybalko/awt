@@ -15,7 +15,7 @@ child.on('error', function(err){
 	if (err.stack)
 		console.log(err.stack);
 });
-child.on('exit', function(){
+child.on('exit', function() {
 	console.log('Server exited');
 });
 

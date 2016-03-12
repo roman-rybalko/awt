@@ -6,7 +6,7 @@ var wait_timeout = 30000; // msec
 
 function promise2nodecb(promise, cb) {
 	var time = new Date().getTime();  // milliseconds
-	var t = setTimeout(function(){
+	var t = setTimeout(function() {
 		var duration = new Date().getTime() - time;  // milliseconds
 		promise.cancel('Timeout (' + (duration / 1000) + 's)');
 	}, wait_timeout);

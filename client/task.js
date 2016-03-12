@@ -11,7 +11,7 @@ if (config.x_auth)
 	process.env['XAUTHORITY'] = config.x_auth;
 console.log('HOME=' + process.env['HOME']);
 
-wait.launchFiber(function(){
+wait.launchFiber(function() {
 	task(function(err, val) {
 		console.log('err:', err, 'val:', val);
 		if (err && err.stack)
