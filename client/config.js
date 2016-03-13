@@ -23,6 +23,7 @@ module.exports = {
 	//selenium_capabilities: {'username': 'romanr', 'access_key': '0be3d7b1-7462-4e7e-a325-7aeb7c0869e3', 'browserName': 'internet explorer', 'version': '11.0'},  /// {name: value} | null
 	//selenium_capabilities: {'username': 'romanr', 'access_key': '0be3d7b1-7462-4e7e-a325-7aeb7c0869e3', 'browserName': 'opera', 'version': '11.64'},  /// {name: value} | null
 	//selenium_capabilities: {'username': 'romanr', 'access_key': '0be3d7b1-7462-4e7e-a325-7aeb7c0869e3', 'browserName': 'opera', 'version': '12.12'},  /// {name: value} | null
+	//selenium_capabilities: {'firefox_profile': new (require('selenium-webdriver/firefox')).Profile('../profile')},  /// {name: value} | null
 	//selenium_browser: 'chrome',  /// string | null
 	//selenium_browser: 'firefox',  /// string | null
 	selenium_browser: 'phantomjs',  /// string | null
