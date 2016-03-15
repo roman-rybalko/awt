@@ -39,7 +39,7 @@
 			</div>
 		</div>
 	</div>
-	<xsl:if test="//message[@value='register_ok-disabled']">
+	<xsl:if test="//message[@value='register_ok']">
 		<script type="text/javascript">
 		/* <![CDATA[ */
 		var google_conversion_id = 935534777;
@@ -58,7 +58,7 @@
 		</div>
 		</noscript>
 	</xsl:if>
-	<xsl:if test="//message[@value='paypal_ok-disabled' or @value='webmoney_ok-disabled']">
+	<xsl:if test="//message[@value='paypal_ok' or @value='webmoney_ok']">
 		<script type="text/javascript">
 		/* <![CDATA[ */
 		var google_conversion_id = 935534777;
