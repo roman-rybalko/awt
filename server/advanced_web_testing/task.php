@@ -116,6 +116,20 @@ class Task {
 								$mailMgr->taskReport($settings['email'], $taskId);
 							if ($status == 'succeeded' && $settings['task_success_email_report'])
 								$mailMgr->taskReport($settings['email'], $taskId);
+							if ($status == 'failed' && $settings['task_fail_emails']) {
+								foreach (preg_split('/\s+/', $settings['task_fail_emails']) as $email) {
+									if ($email) {
+										$mailMgr->taskReport($email, $taskId);
+									}
+								}
+							}
+							if ($status == 'succeeded' && $settings['task_success_emails']) {
+								foreach (preg_split('/\s+/', $settings['task_success_emails']) as $email) {
+									if ($email) {
+										$mailMgr->taskReport($email, $taskId);
+									}
+								}
+							}
 						}
 						$actExecCnt = 0;
 						foreach ($taskActMgr->get() as $action)
