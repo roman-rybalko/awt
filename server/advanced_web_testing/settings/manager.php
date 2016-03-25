@@ -32,7 +32,7 @@ class Manager {
 	 */
 	public function get() {
 		$settings = ['email' => '', 'task_fail_email_report' => false, 'task_success_email_report' => false,
-			'task_fail_emails' => '', 'task_success_emails' => '',
+			'task_fail_emails' => '', 'task_success_emails' => '', 'language' => '',
 			'undeletable' => false];
 		if ($data = $this->table->select(array_keys($settings))) {
 			$data1 = $data[0];

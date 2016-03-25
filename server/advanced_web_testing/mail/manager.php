@@ -71,10 +71,12 @@ class Manager {
 		$jobs = $this->anacron->get($jobs);
 		if ($jobs) {
 			$sender = new \AdvancedWebTesting\Mail\Sender(\Config::MAIL_HOST, \Config::MAIL_PORT, \Config::MAIL_USER, \Config::MAIL_PASSWORD);
-			$composer = new \AdvancedWebTesting\Mail\Composer(\Config::$rootPath . \Config::MAIL_TEMPLATE_PATH . 'index.xsl');
 			foreach ($jobs as $job) {
 				$data = $job['data'];
 				$userId = $job['key'];
+				$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);
+				$settings = $settMgr->get();
+				$composer = new \AdvancedWebTesting\Mail\Composer(\Config::$rootPath . \Config::MAIL_TEMPLATE_PATH . $settings['language'] . '/index.xsl');
 				if (!$data['email']) {
 					$this->anacron->delete($job['id']);
 					error_log('Mail Manager: empty rcpt, job:' . json_encode($job));
