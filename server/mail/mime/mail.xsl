@@ -3,7 +3,7 @@
 
 <xsl:template match="mail">
 <xsl:text/>MIME-Version: 1.0
-From: <xsl:value-of select="php:function('composer_mime_encode', string(@from))"/>
+From: Advanced Web Testing &lt;<xsl:value-of select="@from"/>&gt;
 To: <xsl:value-of select="php:function('composer_mime_encode', string(@to))"/>
 Message-Id: <xsl:value-of select="concat('&lt;', @message_id, '&gt;')"/>
 Date: <xsl:value-of select="@date"/><xsl:text>

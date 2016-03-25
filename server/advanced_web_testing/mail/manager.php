@@ -82,7 +82,7 @@ class Manager {
 				}
 				$mailData = '<mail message_id="' . htmlspecialchars($data['message_id']) . '"'
 					. ' date="' . htmlspecialchars(date('r', $data['time'])) . '"'
-					. ' from="' . htmlspecialchars(\Config::MAIL_SENDER_NAME . ' <' . \Config::MAIL_SENDER_EMAIL . '>') . '"'
+					. ' from="' . htmlspecialchars(\Config::MAIL_SENDER_EMAIL) . '"'
 					. ' to="' . htmlspecialchars($data['email']) . '"'
 					. ' root_url="' . htmlspecialchars($data['root_url']) . '">';
 				switch ($data['type']) {
