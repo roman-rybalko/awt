@@ -14,7 +14,7 @@
 	<div id="wrapper">
 		<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="{@root_url}">Advanced Web Testing</a>
+				<a class="navbar-brand" href="http://профвебтест.рф/">ПрофВебТест</a>
 			</div>
 		</nav>
 		<div id="mail-page-wrapper">
@@ -26,11 +26,11 @@
 	<div id="footer">
 		<div class="container-fluid">
 			<p class="footer-line-1">
-				© 2015 Advanced Web Testing
+				© 2016 ПрофВебТест
 			</p>
 			<p class="footer-line-2">
-				<a href="mailto:support@advancedwebtesting.com?subject=Mail%20Support%20Request:%20&amp;body=Login:%20{*/@login}%0a">
-					Support
+				<a href="mailto:support@webmonit.ru?subject=Mail%20Support%20Request:%20&amp;body=Login:%20{*/@login}%0a">
+					Техподдержка
 				</a>
 			</p>
 		</div>

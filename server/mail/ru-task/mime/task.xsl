@@ -2,12 +2,12 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 
 <xsl:template match="task" mode="headers">
-<xsl:text/>Subject: =?UTF-8?B?W9Cc0L7QvdC40YLQvtGA0LjQvdCzXSA=?= =?UTF-8?B?0JfQsNC00LDRh9Cw?= "<xsl:value-of select="@test_name"/><xsl:text>"</xsl:text>
+<xsl:text/>Subject: =?UTF-8?B?W9Cc0L7QvdC40YLQvtGA0LjQvdCzXSA=?= =?UTF-8?B?0KLQtdGB0YI=?= "<xsl:value-of select="@test_name"/><xsl:text>"</xsl:text>
 <xsl:if test="@status = 'failed'">
-<xsl:text> =?UTF-8?B?0L7QsdC90LDRgNGD0LbQuNC70LAg0J7QqNCY0JHQmtCj?=</xsl:text>
+<xsl:text> =?UTF-8?B?0J/QoNCe0JLQkNCb0JjQm9Ch0K8=?=</xsl:text>
 </xsl:if>
 <xsl:if test="@status = 'succeeded'">
-<xsl:text> =?UTF-8?B?0LfQsNCy0LXRgNGI0LjQu9Cw0YHRjCDRg9GB0L/QtdGI0L3Qvg==?=</xsl:text>
+<xsl:text> =?UTF-8?B?0LLRi9C/0L7Qu9C90LXQvSDRg9GB0L/QtdGI0L3Qvg==?=</xsl:text>
 </xsl:if>
 <xsl:text>
 </xsl:text>
@@ -17,31 +17,27 @@
 <xsl:text/>Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-Task: <xsl:value-of select="../@root_url"/>?task=<xsl:value-of select="@id"/>
-Test: "<xsl:value-of select="@test_name"/>" (<xsl:value-of select="../@root_url"/>?test=<xsl:value-of select="@test_id"/>)
-Type: <xsl:value-of select="@type"/>
-Status: <xsl:value-of select="@status"/>
-Debug: <xsl:choose>
-	<xsl:when test="@debug">on
-</xsl:when>
-	<xsl:otherwise>off
-</xsl:otherwise>
+Тест: "<xsl:value-of select="@test_name"/>"
+Статус: <xsl:choose>
+<xsl:when test="@status = 'succeeded'">успешно</xsl:when>
+<xsl:when test="@status = 'failed'">ОШИБКА</xsl:when>
 </xsl:choose>
 
 <xsl:text>
+
 </xsl:text>
 
 <xsl:for-each select="action">
 	<xsl:sort select="@id" data-type="number" order="ascending"/>
 	<xsl:choose>
 		<xsl:when test="@succeeded">
-			<xsl:text>[succeeded] </xsl:text>
+			<xsl:text>[успешно] </xsl:text>
 		</xsl:when>
 		<xsl:when test="@failed">
-			<xsl:text>[FAILED] </xsl:text>
+			<xsl:text>[ОШИБКА] </xsl:text>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:text>[skipped] </xsl:text>
+			<xsl:text>[пропущено] </xsl:text>
 		</xsl:otherwise>
 	</xsl:choose>
 	<xsl:apply-templates select="." mode="text"/>
@@ -54,7 +50,7 @@ Debug: <xsl:choose>
 </xsl:text>
 </xsl:for-each>
 --
-Advanced Web Testing
+ПрофВебТест
 </xsl:template>
 
 <xsl:template match="task" mode="html">

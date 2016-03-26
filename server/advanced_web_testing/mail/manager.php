@@ -76,7 +76,7 @@ class Manager {
 				$userId = $job['key'];
 				$settMgr = new \AdvancedWebTesting\Settings\Manager($this->db, $userId);
 				$settings = $settMgr->get();
-				$composer = new \AdvancedWebTesting\Mail\Composer(\Config::$rootPath . \Config::MAIL_TEMPLATE_PATH . $settings['language'] . '/index.xsl');
+				$composer = new \AdvancedWebTesting\Mail\Composer(\Config::$rootPath . \Config::MAIL_TEMPLATE_PATH . $settings['ui'] . '/index.xsl');
 				if (!$data['email']) {
 					$this->anacron->delete($job['id']);
 					error_log('Mail Manager: empty rcpt, job:' . json_encode($job));

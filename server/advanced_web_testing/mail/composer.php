@@ -17,6 +17,7 @@ class Composer {
 		$this->xslt->registerPHPFunctions([
 			'composer_file2b64',
 			'composer_mime_encode',
+			'composer_url_encode',
 			'composer_random',
 			'composer_basename',
 			'composer_transform',

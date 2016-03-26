@@ -22,6 +22,10 @@ function composer_mime_encode($value) {
 	return mb_encode_mimeheader($value, 'UTF-8');
 }
 
+function composer_url_encode($value) {
+	return urlencode($value);
+}
+
 // xsl generate-id() генерит коллизии
 function composer_random() {
 	return time() . rand();

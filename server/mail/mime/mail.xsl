@@ -5,9 +5,9 @@
 <xsl:text/>MIME-Version: 1.0
 From: Advanced Web Testing &lt;<xsl:value-of select="@from"/>&gt;
 To: <xsl:value-of select="php:function('composer_mime_encode', string(@to))"/>
-Message-Id: <xsl:value-of select="concat('&lt;', @message_id, '&gt;')"/>
-Date: <xsl:value-of select="@date"/><xsl:text>
-</xsl:text>
+Message-Id: &lt;<xsl:value-of select="@message_id"/>&gt;
+Date: <xsl:value-of select="@date"/>
+List-Unsubscribe: &lt;mailto:support@advancedwebtesting.com?subject=Mail%20Unsubscribe%20Request:%20&amp;body=Login:%20<xsl:value-of select="*/@login"/>%0aEmail:%20<xsl:value-of select="php:function('composer_url_encode', string(@to))"/>%0a&gt;
 <xsl:apply-templates select="*" mode="headers"/>
 <xsl:call-template name="related"/>
 </xsl:template>
