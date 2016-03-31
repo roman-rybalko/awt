@@ -18,9 +18,10 @@
 Content-Transfer-Encoding: 8bit
 
 Тест: "<xsl:value-of select="@test_name"/>"
-Статус: <xsl:choose>
+Результат: <xsl:choose>
 <xsl:when test="@status = 'succeeded'">успешно</xsl:when>
 <xsl:when test="@status = 'failed'">ОШИБКА</xsl:when>
+<xsl:otherwise><xsl:value-of select="@status"/></xsl:otherwise>
 </xsl:choose>
 
 <xsl:text>

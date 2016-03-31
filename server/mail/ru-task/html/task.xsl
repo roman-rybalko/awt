@@ -4,7 +4,7 @@
 <xsl:template match="task">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">Task Report</h1>
+			<h1 class="page-header">Уведомление о выполнении теста</h1>
 		</div>
 	</div>
 	<div class="row">
@@ -13,25 +13,11 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-2">
-							<b>Task</b>:
-							<a href="{../@root_url}?task={@id}">
-								<xsl:value-of select="@test_name"/>
-							</a>
+							<b>Тест</b>:
+							<xsl:value-of select="@test_name"/>
 						</div>
 						<div class="col-lg-2">
-							<b>Test</b>:
-							<a href="{../@root_url}?test={@test_id}">
-								<xsl:value-of select="@test_name"/>
-							</a>
-						</div>
-						<div class="col-lg-2">
-							<b>Type</b>:
-							<span class="task-type">
-								<xsl:value-of select="@type"/>
-							</span>
-						</div>
-						<div class="col-lg-2">
-							<b>Status</b>:
+							<b>Результат</b>:
 							<span>
 								<xsl:if test="@status = 'succeeded'">
 									<xsl:attribute name="class">
@@ -43,25 +29,10 @@
 										text-failure
 									</xsl:attribute>
 								</xsl:if>
-								<xsl:value-of select="@status"/>
-							</span>
-						</div>
-						<div class="col-lg-2">
-							<b>Debug</b>:
-							<span>
 								<xsl:choose>
-									<xsl:when test="@debug">
-										<xsl:attribute name="class">
-											text-success
-										</xsl:attribute>
-										on
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:attribute name="class">
-											text-failure
-										</xsl:attribute>
-										off
-									</xsl:otherwise>
+									<xsl:when test="@status = 'succeeded'">успешно</xsl:when>
+									<xsl:when test="@status = 'failed'">ОШИБКА</xsl:when>
+									<xsl:otherwise><xsl:value-of select="@status"/></xsl:otherwise>
 								</xsl:choose>
 							</span>
 						</div>
@@ -100,7 +71,7 @@
 						</div>
 						<div class="col-lg-2">
 							<xsl:if test="@failed">
-								<b class="text-failure">Failure</b>:
+								<b class="text-failure">Ошибка</b>:
 								<span class="text-failure">
 									<xsl:value-of select="@failed"/>
 								</span>
@@ -112,10 +83,10 @@
 									<img src="cid:{@scrn}" class="img-thumbnail img-responsive">
 										<xsl:attribute name="alt">
 											<xsl:if test="@succeeded">
-												succeeded:
+												успешно:
 											</xsl:if>
 											<xsl:if test="@failed">
-												failed:
+												ошибка:
 											</xsl:if>
 											<xsl:apply-templates select="." mode="text"/>
 											<xsl:if test="@failed">
