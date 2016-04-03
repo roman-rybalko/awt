@@ -6,201 +6,203 @@ login_ok
 	Welcome!
 
 set_up_email
-	Please, set up your E-Mail (you will receive a Signup bonus).
+	Please, set up your email (you will receive a signup bonus).
 
 bad_login
 	Invalid credentials.
 
 register_ok
-	Registration is successful.
+	Registration successful.
 	Welcome!
 
 login_busy
 	This Login is not available.
 
 passwords_dont_match
-	Passwords do not match.
+	The passwords do not match.
 
 bad_captcha
-	CAPTCHA mismatch.
+	You seem to have mistyped the CAPTCHA.
 
 email_confirmation_pending
-	E-Mail confirmation message has been sent. Please check your mailbox and proceed according to the instructions.
+	A confirmation message has been sent to your email.
+	Please check your mailbox and proceed according to the instructions.
+	If you cannot find the message, please check your junk/spam folder.
 
 password_reset_fail
-	Password reset failed.
+	Your password could not be reset.
 
 password_change_ok
-	Password has been changed.
+	Your password has been successfully changed.
 
 bad_code
 	Invalid code.
 
 password_change_fail
-	Password Change failed.
+	Your password could not be changed.
 
 bad_current_password
-	Invalid Current Password.
+	Invalid current password.
 
 settings_change_ok
-	Settings have been changed.
+	The settings have been successfully changed.
 
 settings_change_fail
-	Settings Change failed.
+	The settings could not be changed.
 
 email_change_fail
-	E-Mail Change failed.
+	Your email could not be changed.
 
 email_change_ok
-	E-Mail has been changed.
+	Your email has been successfully changed.
 
 delete_account_fail
-	Delete Account failed.
+	Your account could not be deleted.
 
 delete_account_ok
-	Account has been deleted.
+	Your account has been successfully deleted.
 
 test_add_ok
-	New Test has been created.
+	The new test created successfully.
 
 test_add_fail
-	Create Test failed.
+	The test could not be created.
 
 test_delete_ok
-	The Test has been deleted.
+	The test has been successfully deleted.
 
 test_delete_fail
-	Delete Test failed.
+	The test could not be deleted.
 
 bad_test_id
-	Invalid Test ID.
+	Invalid test ID.
 
 test_restore_ok
-	The Test has been restored.
+	The test has been successfully restored.
 
 test_restore_fail
-	Restore Test failed.
+	The test could not be restored.
 
 test_rename_ok
-	The Test has been renamed.
+	The Test has been successfully renamed.
 
 test_rename_fail
-	Rename Test failed.
+	The test could not be renamed.
 
 test_copy_ok
-	The Test has been copied.
+	The test has been successfully copied.
 
 test_copy_fail
-	Copy Test failed.
+	The test could not be copied.
 
 test_action_add_ok
-	New Action has been added.
+	The new action has been successfully added.
 
 test_action_add_fail
-	Add Action failed.
+	The action could not be added.
 
 test_action_delete_ok
-	Action has been deleted.
+	The action has been successfully deleted.
 
 test_action_delete_fail
-	Delete Action failed.
+	The action could not be deleted.
 
 bad_action_id
-	Invalid Action ID.
+	Invalid action ID.
 
 test_action_modify_ok
-	Action has been modified.
+	The action has been successfully modified.
 
 test_action_modify_fail
-	Modify Action failed.
+	The action could not be modified.
 
 test_action_insert_ok
-	Action has been inserted.
+	The action has been successfully inserted.
 
 test_action_insert_fail
-	Insert Action failed.
+	The action could not be inserted.
 
 test_import_ok
-	Test has been imported.
+	The test has been successfully imported.
 
 test_import_fail
-	Import Test failed.
+	The test could not be imported.
 
 test_clear_ok
-	Test has been cleared.
+	The test has been successfully cleared.
 
 test_clear_fail
-	Clear Test failed.
+	The test could not be cleared.
 
 test_group_add_ok
-	Test Group has been created.
+	The test group has been successfully created.
 
 test_group_add_fail
-	Create Test Group failed.
+	The test group could not be created.
 
 test_group_delete_ok
-	Test Group has been deleted.
+	The test group has been successfully deleted.
 
 test_group_delete_fail
-	Delete Test Group failed.
+	The test group could not be deleted.
 
 bad_test_group_id
-	Invalid Test Group ID.
+	Invalid test group ID.
 
 test_group_restore_ok
-	Test Group has been restored.
+	The test group has been successfully restored.
 
 test_group_restore_fail
-	Restore Test Group failed.
+	The test group could not be restored.
 
 test_group_rename_ok
-	Test Group has been renamed.
+	The test group has been successfully renamed.
 
 test_group_rename_fail
-	Rename Test Group failed.
+	The test group could not be renamed.
 
 test_group_copy_ok
-	Test Group has been copied.
+	The test group has been successfully copied.
 
 test_group_copy_fail
-	Copy Test Group failed.
+	The test group could not be copied.
 
 tg_test_add_ok
-	Test has been added.
+	The test has been successfully added.
 
 tg_test_add_fail
-	Add Test failed.
+	The test could not be added
 
 tg_test_delete_ok
-	Test has been removed.
+	The test has been successfully removed.
 
 tg_test_delete_fail
-	Remove Test failed.
+	The test could not be removed.
 
 bad_tg_test_id
-	Invalid Test ID.
+	Invalid test ID.
 
 test_group_import_ok
-	Test Group has been imported.
+	The test group has been successfully imported.
 
 test_group_import_fail
-	Import Test Group failed.
+	The test group could not be imported.
 
 test_group_clear_ok
-	Test Group has been cleared.
+	The test group has been successfully cleared.
 
 test_group_clear_fail
-	Clear Test Group failed.
+	The test group could not be cleared.
 
 test_group_is_deleted
-	Test Group is deleted.
+	The test group is deleted.
 	Please, restore it first.
 
 task_start_ok
-	New Task has been queued.
+	The new task has been successfully queued.
 
 task_start_fail
-	Task queue failed.
+	The task could not be queued.
 
 no_funds
 	Available Actions (Account Balance) depleted, please Top Up.
@@ -210,31 +212,31 @@ test_is_deleted
 	Please, restore it first.
 
 task_cancel_ok
-	The Task has been cancelled.
+	The task has been successfully cancelled.
 
 task_cancel_fail
-	Cancel Task failed.
+	The task could not be cancelled.
 
 sched_add_ok
-	Scheduled Job has been created.
+	The scheduled job has been successfully added.
 
 sched_add_fail
-	Add Scheduled Job failed.
+	The scheduled job could not be added.
 
 sched_delete_ok
-	Scheduled Job has been deleted.
+	The scheduled job has been successfully deleted.
 
 sched_delete_fail
-	Delete Scheduled Job failed.
+	The scheduled job could not be deleted.
 
 bad_sched_id
-	Invalid Scheduled Job ID.
+	Invalid scheduled job ID.
 
 sched_modify_ok
-	Scheduled Job has been modified.
+	The scheduled job has been successfully modified.
 
 sched_modify_fail
-	Modify Scheduled Job failed.
+	The scheduled job could not be modified.
 
 payment_pending
 	The payment has been staged. Please proceed to the payment system.
@@ -250,25 +252,25 @@ refund_ok
 	Come again!
 
 refund_fail
-	Refund failed.
+	The refund failed.
 
 process_pending_transaction_ok
-	Pending Transaction has been processed successfully.
+	The pending transaction has been processed successfully.
 
 process_pending_transaction_fail
-	Pending Transaction processing failed.
+	The pending transaction could not be processed.
 
 cancel_pending_transaction_ok
-	Pending Transaction has been cancelled.
+	The pending transaction has been successfully cancelled.
 
 cancel_pending_transaction_fail
-	Cancel Pending Transaction failed.
+	The pending transaction could not be cancelled.
 
 cancel_subscription_ok
-	Subscription has been cancelled.
+	Your subscription has been successfully cancelled.
 
 cancel_subscription_fail
-	Cancel Subscription failed.
+	Your subscription could not be cancelled.
 
 top_up_subscription_ok
 	Top Up by Subscription complete.
@@ -278,25 +280,25 @@ top_up_subscription_fail
 	Top Up by Subscription failed.
 
 modify_subscription_ok
-	Subscription has been modified.
+	Your subscription has been successfully modified.
 
 modify_subscription_fail
-	Modification of Subscription failed.
+	Your subscription could not be modified.
 
 paypal_ok
-	PayPal has been processed successfully.
+	Your PayPal transaction has been successfully processed.
 
 paypal_fail
-	PayPal processing failed.
+	Your PayPal transaction could not be processed.
 
 bad_paypal_token
 	Invalid PayPal Token.
 
 webmoney_ok
-	WebMoney has been processed successfully.
+	Your WebMoney transaction has been successfully processed.
 
 webmoney_fail
-	WebMoney processing failed.
+	Your WebMoney transaction could not be processed.
 
 bad_webmoney_payment_number
 	Invalid WebMoney payment number.
