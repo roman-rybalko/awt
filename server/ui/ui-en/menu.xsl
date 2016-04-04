@@ -28,7 +28,7 @@
 						<div class="navbar-button-wrap">
 							<form action="./" method="get">
 								<input type="hidden" name="register" value="1"/>
-								<button class="btn btn-success">Register</button>
+								<button class="btn btn-success">Create Account</button>
 							</form>
 						</div>
 					</li>

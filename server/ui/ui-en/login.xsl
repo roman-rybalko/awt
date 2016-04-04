@@ -31,12 +31,13 @@
 											<label for="login-password">Password</label>
 											<input id="login-password" class="form-control" placeholder="Password" name="password" type="password" value=""/>
 										</div>
-										<input type="submit" name="login" value="Login"
-											class="btn btn-lg btn-success btn-block"/>
+										<input type="submit" name="login" value="Login" class="btn btn-success btn-block"/>
 										<div class="form-group">
-											<a href="./?register=1" class="space-x">Register</a>
-											<a href="./?password_reset=1" class="space-x">Password Reset</a>
-											<a href="./demo.php" class="space-x">Demo</a>
+											<a href="./?register=1">Create Account</a>
+											|
+											<a href="./?password_reset=1">Forgot Password</a>
+											|
+											<a href="./demo.php">Demo</a>
 										</div>
 									</fieldset>
 								</form>
