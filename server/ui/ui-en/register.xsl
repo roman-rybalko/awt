@@ -47,7 +47,7 @@
 											<input id="register-captcha" class="form-control" placeholder="Captcha" name="captcha" type="text" value=""/>
 										</div>
 										<input type="submit" name="register" value="Register" class="btn btn-success btn-block"/>
-										<div class="form-group">
+										<div>
 											<a href="./">Login</a>
 										</div>
 									</fieldset>

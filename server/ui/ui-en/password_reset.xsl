@@ -59,7 +59,7 @@
 											<input id="pwreset-captcha" class="form-control" placeholder="Captcha" name="captcha" type="text" value=""/>
 										</div>
 										<input type="submit" name="reset" value="Reset" class="btn btn-success btn-block"/>
-										<div class="form-group">
+										<div>
 											<a href="./">Login</a>
 										</div>
 									</fieldset>

@@ -32,7 +32,7 @@
 											<input id="login-password" class="form-control" placeholder="Password" name="password" type="password" value=""/>
 										</div>
 										<input type="submit" name="login" value="Login" class="btn btn-success btn-block"/>
-										<div class="form-group">
+										<div>
 											<a href="./?register=1">Create Account</a>
 											|
 											<a href="./?password_reset=1">Forgot Password</a>
