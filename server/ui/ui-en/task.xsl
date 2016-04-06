@@ -118,7 +118,7 @@
 							<div class="col-lg-2">
 								<xsl:if test="@failed">
 									<b class="text-failure">Failure</b>:
-									<span class="text-failure">
+									<span class="text-failure" title="{@failed}">
 										<xsl:value-of select="@failed"/>
 									</span>
 								</xsl:if>
