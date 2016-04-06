@@ -30,7 +30,7 @@
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="set-email">&#215;</button>
 						<b>Tip:</b>
-						Set E-Mail in <a href="./?settings=1">Settings</a> to receive regular Task Reports.
+						Set email in &quot;<a href="./?settings=1">Settings</a>&quot; to receive regular task reports.
 					</div>
 				</xsl:if>
 			</div>

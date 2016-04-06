@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 
 <xsl:template match="verification" mode="headers">
-<xsl:text>Subject: E-Mail Verification
+<xsl:text>Subject: Email Verification
 </xsl:text>
 </xsl:template>
 
@@ -12,9 +12,9 @@ Content-Transfer-Encoding: 8bit
 
 Hi <xsl:value-of select="@login"/>,
 Thank you for subscribing to Advanced Web Testing service.
-This is an E-Mail verification message.
+This is an email verification message.
 
-Please, confirm your E-Mail by visiting the link below.
+Please, confirm your email by visiting the link below.
 <xsl:value-of select="@url"/>
 If you cannot click the URL above, please copy and paste it into your web browser.
 

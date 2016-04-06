@@ -114,7 +114,7 @@
 					<div class="alert alert-info alert-dismissable">
 						<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="tasks-pending">&#215;</button>
 						<b>Tip:</b>
-						Pending Tasks are processed every 5 seconds (when the processing queue is empty).
+						Pending Tasks are processed every 5 seconds.
 					</div>
 				</div>
 			</div>

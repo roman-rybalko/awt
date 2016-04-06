@@ -4,7 +4,7 @@
 <xsl:template match="verification">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">E-Mail Verification</h1>
+			<h1 class="page-header">Email Verification</h1>
 		</div>
 	</div>
 	<div class="row">
@@ -12,10 +12,10 @@
 			<h4>
 				<p>Hi <b><xsl:value-of select="@login"/></b>,</p>
 				<p>Thank you for subscribing to Advanced Web Testing service.</p>
-				<p>This is an E-Mail verification message.</p>
+				<p>This is an email verification message.</p>
 			</h4>
 			<p>
-				<a href="{@url}" class="btn btn-success">Please, confirm your E-Mail.</a>
+				<a href="{@url}" class="btn btn-success">Please, confirm your email.</a>
 			</p>
 			<div class="alert alert-info">
 				If you cannot click the link/button above, please copy the URL

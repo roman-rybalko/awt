@@ -44,14 +44,14 @@
 </xsl:template>
 
 <xsl:template match="event[@name='email_change']" mode="title">
-	Change E-Mail
+	Change Email
 </xsl:template>
 
 <xsl:template match="event[@name='email_change']" mode="data">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
-				<b class="space-x">E-Mail Address:</b>
+				<b class="space-x">Email Address:</b>
 				<xsl:value-of select="@old_email"/>
 				-&gt;
 				<xsl:value-of select="@email"/>
@@ -79,7 +79,7 @@
 		<div class="row">
 			<xsl:if test="@task_fail_email_report">
 				<div class="col-lg-6">
-					<b class="space-x">Task Fail E-Mail Report:</b>
+					<b class="space-x">Task Fail Email Report:</b>
 					<xsl:if test="@old_task_fail_email_report">
 						<xsl:value-of select="@old_task_fail_email_report"/>
 						-&gt;
@@ -89,7 +89,7 @@
 			</xsl:if>
 			<xsl:if test="@task_success_email_report">
 				<div class="col-lg-6">
-					<b class="space-x">Task Success E-Mail Report:</b>
+					<b class="space-x">Task Success Email Report:</b>
 					<xsl:if test="@old_task_success_email_report">
 						<xsl:value-of select="@old_task_success_email_report"/>
 						-&gt;
@@ -714,7 +714,7 @@
 </xsl:template>
 
 <xsl:template match="event[@name='mail_verification']" mode="title">
-	Send E-Mail Verification
+	Send Email Verification
 </xsl:template>
 
 <xsl:template match="event[@name='mail_password_reset']" mode="title">

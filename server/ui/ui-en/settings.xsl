@@ -54,17 +54,17 @@
 			<div class="col-lg-6">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						E-Mail
+						Email
 					</div>
 					<div class="panel-body">
 						<form role="form" method="post">
 							<div class="form-group">
-								<label>E-Mail</label>
-								<input class="form-control" placeholder="New E-Mail" name="email" type="email" value="{@email}"/>
+								<label>Email</label>
+								<input class="form-control" placeholder="New email" name="email" type="email" value="{@email}"/>
 							</div>
 							<button type="submit" class="btn btn-block btn-success">
 								<i class="fa fa-pencil"></i>
-								Set E-Mail
+								Set Email
 							</button>
 						</form>
 					</div>
@@ -92,7 +92,7 @@
 			<div class="col-lg-6">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						Task Fail E-Mail Report
+						Task Fail Email Report
 					</div>
 					<div class="panel-body">
 						<form role="form" method="post">
@@ -106,12 +106,12 @@
 											<xsl:attribute name="checked"></xsl:attribute>
 										</xsl:if>
 									</input>
-									Send e-mail report when a Task is FAILED.
+									Send email report when a task is failed.
 								</label>
 							</div>
 							<button type="submit" name="task_fail_email_report" value="" class="btn btn-block btn-success">
 								<i class="fa fa-pencil"></i>
-								Change E-Mail Report Setting
+								Change Email Report Setting
 							</button>
 						</form>
 					</div>
@@ -120,7 +120,7 @@
 			<div class="col-lg-6">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						Task Success E-Mail Report
+						Task Success Email Report
 					</div>
 					<div class="panel-body">
 						<form role="form" method="post">
@@ -134,12 +134,12 @@
 											<xsl:attribute name="checked"></xsl:attribute>
 										</xsl:if>
 									</input>
-									Send e-mail report when a Task is succeeded.
+									Send email report when a task is succeeded.
 								</label>
 							</div>
 							<button type="submit" name="task_success_email_report" value="" class="btn btn-block btn-success">
 								<i class="fa fa-pencil"></i>
-								Change E-Mail Report Setting
+								Change Email Report Setting
 							</button>
 						</form>
 					</div>

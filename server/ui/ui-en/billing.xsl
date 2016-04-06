@@ -35,7 +35,7 @@
 				<div class="alert alert-info alert-dismissable">
 					<button type="button" class="close tip-state" data-dismiss="alert" aria-hidden="true" data-tip-state="set-email">&#215;</button>
 					<b>Tip:</b>
-					Please, check your E-Mail in <a href="./?settings=1">Settings</a>.
+					Please, check your email in &quot;<a href="./?settings=1">Settings</a>&quot;.
 				</div>
 			</div>
 		</div>
@@ -146,7 +146,7 @@
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" name="subscription" value="1"/>
-									Subscription / Recurring payments / Auto Top Up when the account balance gets low
+									Subscription/Recurring payments/Auto top up when the account balance gets low
 								</label>
 							</div>
 							<div class="form-group">

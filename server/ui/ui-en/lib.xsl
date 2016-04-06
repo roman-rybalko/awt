@@ -17,7 +17,7 @@
 					<div class="well well-sm">
 						<b>Usage:</b>
 						<br/>
-						<code>gc_xxx</code> - Google Chrome / Chromium
+						<code>gc_xxx</code> - Google Chrome/Chromium
 						<br/>
 						<code>ff_xxx</code> - Firefox
 						<br/>
