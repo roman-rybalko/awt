@@ -2,7 +2,6 @@
 $data = [
 	'site: ' . $_POST['site'],
 	'email: ' . $_POST['email'],
-	'phone: ' . $_POST['phone'],
 	'name: ' . $_POST['name'],
 	'ip: ' . $_SERVER['REMOTE_ADDR'] . ':' . $_SERVER['REMOTE_PORT'],
 	'ua: ' . $_SERVER['HTTP_USER_AGENT']
