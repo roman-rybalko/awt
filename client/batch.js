@@ -47,12 +47,15 @@ function new_task() {
 function try_exit() {
 	if (count)
 		return;
+	// some dangling events prevent exiting sometimes - forcibly exiting
 	process.exit();
 }
 
 function start() {
-	if (stop)
+	if (stop) {
 		try_exit();
+		return;
+	}
 	if (count < config.batch_count)
 		new_task();
 	if (count < config.batch_count)
