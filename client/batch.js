@@ -24,8 +24,12 @@ function cb(err, val) {
 	if (stop)
 		return;
 	if (val || err) {
-		if (!timer)
-			timer = setTimeout(start, config.batch_timeout);
+		if (!timer) {
+			timer = setTimeout(function() {
+				timer = null;
+				start();
+			}, config.batch_timeout);
+		}
 	} else {
 		start();
 	}
@@ -40,17 +44,15 @@ function new_task() {
 	++count;
 }
 
-function stop_timer() {
-	if (timer) {
-		clearTimeout(timer);
-		timer = null;
-	}
+function try_exit() {
+	if (count)
+		return;
+	process.exit();
 }
 
 function start() {
-	stop_timer();
 	if (stop)
-		return;
+		try_exit();
 	if (count < config.batch_count)
 		new_task();
 	if (count < config.batch_count)
@@ -60,13 +62,13 @@ function start() {
 process.on('SIGINT', function() {
 	console.info('SIGINT received, exiting ...');
 	stop = true;
-	stop_timer();
+	try_exit();
 });
 
 process.on('SIGTERM', function() {
 	console.info('SIGTERM received, exiting ...');
 	stop = true;
-	stop_timer();
+	try_exit();
 });
 
 process.on('SIGUSR1', function() {
