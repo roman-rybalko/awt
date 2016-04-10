@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 
 <xsl:template match="task" mode="headers">
-<xsl:text/>Subject: =?UTF-8?B?W9Cc0L7QvdC40YLQvtGA0LjQvdCzXSA=?= =?UTF-8?B?0KLQtdGB0YI=?= "<xsl:value-of select="@test_name"/><xsl:text>"</xsl:text>
+<xsl:text/>Subject: =?UTF-8?B?W9Ce0YLRh9C10YJdIA==?= =?UTF-8?B?0KLQtdGB0YI=?= "<xsl:value-of select="@test_name"/><xsl:text>"</xsl:text>
 <xsl:if test="@status = 'failed'">
 <xsl:text> =?UTF-8?B?0J/QoNCe0JLQkNCb0JjQm9Ch0K8=?=</xsl:text>
 </xsl:if>
