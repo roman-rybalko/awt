@@ -1,12 +1,12 @@
 $(error_handler(function($) {
 	var input_value = null;
 	$('body *').on('mousedown', error_handler(function(ev) {
+		if (ev.eventPhase != Event.AT_TARGET)
+			return;
 		if (input_value) {
 			messaging.send({type: 'xpath-composer-input', value: input_value});
 			input_value = null;
 		}
-		if (ev.eventPhase != Event.AT_TARGET)
-			return;
 		var els = [];
 		var el = ev.target;
 		while (el) {
