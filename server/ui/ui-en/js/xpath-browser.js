@@ -83,9 +83,9 @@ $(error_handler(function($) {
 	$(document).on('xpath-composer-state', error_handler(function() {
 		state.url = $('#xpath-browser-url-' + id).val();  // re-read new url
 	}));
-	$(document).on('xpath-composer-done', error_handler(function(ev, xpath, value, tags) {
+	$(document).on('xpath-composer-done', error_handler(function(ev, xpath, data, tags) {
 		state.tags = tags;
-		$(document).triggerHandler('xpath-browser-done', [id, xpath, value, JSON.stringify(state)]);
+		$(document).triggerHandler('xpath-browser-done', [id, xpath, data, JSON.stringify(state)]);
 	}));
 
 	$(document).on('xpath-browser', error_handler(function(ev, new_id, state_data) {

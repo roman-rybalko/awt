@@ -468,6 +468,8 @@ $(error_handler(function($) {
 		if (op.value) {
 			params.type = 'enter';
 			params.data = op.value;
+		} else if (op.selection) {
+			params.type = 'exists';
 		} else {
 			params.type = 'click';
 		}
@@ -477,6 +479,9 @@ $(error_handler(function($) {
 				$('#action-autoadd-template-enter .action-autoadd-enter-xpath').html(op.xpath);
 				$('#action-autoadd-template-enter .action-autoadd-enter-value').html(op.value);
 				$('#action-autoadd-container').append($('#action-autoadd-template-enter').html());
+			} else if (op.selection) {
+				$('#action-autoadd-template-exists .action-autoadd-exists-xpath').html(op.xpath);
+				$('#action-autoadd-container').append($('#action-autoadd-template-exists').html());
 			} else {
 				$('#action-autoadd-template-click .action-autoadd-click-xpath').html(op.xpath);
 				$('#action-autoadd-container').append($('#action-autoadd-template-click').html());
@@ -487,6 +492,9 @@ $(error_handler(function($) {
 				$('#action-autoadd-template-enter .action-autoadd-enter-xpath').html('FAILED: ' + op.xpath);
 				$('#action-autoadd-template-enter .action-autoadd-enter-value').html('FAILED: ' + op.value);
 				$('#action-autoadd-container').append($('#action-autoadd-template-enter').html());
+			} else if (op.selection) {
+				$('#action-autoadd-template-exists .action-autoadd-exists-xpath').html('FAILED: ' + op.xpath);
+				$('#action-autoadd-container').append($('#action-autoadd-template-exists').html());
 			} else {
 				$('#action-autoadd-template-click .action-autoadd-click-xpath').html('FAILED: ' + op.xpath);
 				$('#action-autoadd-container').append($('#action-autoadd-template-click').html());
@@ -499,10 +507,10 @@ $(error_handler(function($) {
 		}));
 	}
 
-	$(document).on('xpath-browser-done', error_handler(function(ev, id, xpath, value, state_data) {
+	$(document).on('xpath-browser-done', error_handler(function(ev, id, xpath, data, state_data) {
 		if (xpath_composer_autoadd) {
 			var start = ! queue.length;
-			queue.push({xpath: xpath, value: value, user_data: state_data});
+			queue.push({xpath: xpath, value: data.value, selection: data.selection, user_data: state_data});
 			if (start)
 				queue_process();
 		} else {

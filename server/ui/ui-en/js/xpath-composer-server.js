@@ -1,6 +1,6 @@
 $(error_handler(function($) {
 	var input_value = null;
-	$('body *').on('mousedown', error_handler(function(ev) {
+	$('body *').on('mouseup', error_handler(function(ev) {
 		if (ev.eventPhase != Event.AT_TARGET)
 			return;
 		if (input_value) {
@@ -9,6 +9,7 @@ $(error_handler(function($) {
 		}
 		var els = [];
 		var el = ev.target;
+		var selection = document.getSelection().toString();
 		while (el) {
 			var descr = {
 				name: el.nodeName,
@@ -16,6 +17,10 @@ $(error_handler(function($) {
 				text: $(el).text().replace(/^\s+/, '').replace(/\s+$/, '').substr(0, 128),
 				'nth-of-type': $(el.parentElement).children(el.nodeName).index(el) + 1
 			};
+			if (selection) {
+				descr.selection = selection;
+				selection = null;
+			}
 			for (var a = 0; a < el.attributes.length; ++a)
 				descr.attrs[el.attributes[a].name] = el.attributes[a].value;
 			els.push(descr);

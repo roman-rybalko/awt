@@ -113,7 +113,12 @@ $(error_handler(function($) {
 					if (preds[p]['nth-of-type'])
 						css += ':nth-of-type(' + preds[p]['nth-of-type'] + ')';
 				}
-				$('#xpath-composer-pred-template .xpath-composer-pred-text').html(preds[p].expr);
+				if (preds[p].text && preds[p].selected) {
+					css += ' (selected)';
+					$('#xpath-composer-pred-template .xpath-composer-pred-text').html('<b>' + preds[p].expr + '</b>');
+				} else {
+					$('#xpath-composer-pred-template .xpath-composer-pred-text').html(preds[p].expr);
+				}
 				$('#xpath-composer-pred-template .xpath-composer-pred-text').attr('title', css);
 				$('#xpath-composer-pred-template .xpath-composer-pred-control').attr('data-tag-id', t);
 				$('#xpath-composer-pred-template .xpath-composer-pred-control').attr('data-pred-id', p);
@@ -184,6 +189,12 @@ $(error_handler(function($) {
 				tags[tags.length-1].preds[p].enabled = true;
 				break;
 			}
+		// enable selected text for the last tag
+		for (var p in tags[tags.length-1].preds)
+			if (tags[tags.length-1].preds[p].text && tags[tags.length-1].preds[p].selected) {
+				tags[tags.length-1].preds[p].enabled = true;
+				break;
+			}
 	}
 	$('#xpath-composer-guess').change(error_handler(function() {
 		if (!$('#xpath-composer-guess').prop('checked'))
@@ -225,6 +236,8 @@ $(error_handler(function($) {
 			}
 			if (elements[e].text)
 				preds.push({expr: 'contains(text(), "' + elements[e].text + '")', text: elements[e].text, enabled: false});
+			if (elements[e].selection)
+				preds.push({expr: 'contains(text(), "' + elements[e].selection + '")', text: elements[e].selection, selected: true, enabled: false});
 			tags[e] = {name: elements[e].name, preds: preds, enabled: false};
 		}
 		ui_create();
@@ -237,10 +250,16 @@ $(error_handler(function($) {
 		highlight('[XPATH Composer]');
 		if (xpath_composer_autoadd) {
 			var call = true;
+			var selection = false;
 			while (true) {
 				if (!tags.length)
 					break;
 				var tag = tags[tags.length-1];
+				for (var p in tag.preds)
+					if (tag.preds[p].text && tag.preds[p].selected) {
+						selection = true;
+						break;
+					}
 				if (tag.name.toLowerCase() != 'input')
 					break;
 				for (var p in tag.preds)
@@ -256,7 +275,7 @@ $(error_handler(function($) {
 				$('#modal-xpath-composer').modal('hide');
 				$('#xpath-composer-optimization').prop('checked', false);
 				$('#xpath-composer-optimization').parent('label').removeClass('active');
-				$(document).triggerHandler('xpath-composer-done', [xpath, null, tags]);
+				$(document).triggerHandler('xpath-composer-done', [xpath, {selection: selection}, tags]);
 			}
 		}
 	}
@@ -265,7 +284,7 @@ $(error_handler(function($) {
 			var xpath = $('#xpath-composer-result').val();
 			highlight_stop();
 			$('#modal-xpath-composer').modal('hide');
-			$(document).triggerHandler('xpath-composer-done', [xpath, value, tags]);
+			$(document).triggerHandler('xpath-composer-done', [xpath, {value: value}, tags]);
 		}
 	}
 	$('#xpath-composer-result').on('keyup', error_handler(function() {
@@ -579,7 +598,7 @@ $(error_handler(function($) {
 
 	$('#xpath-composer-ok').click(error_handler(function() {
 		var xpath = $('#xpath-composer-result').val();
-		$(document).triggerHandler('xpath-composer-done', [xpath, null, tags]);
+		$(document).triggerHandler('xpath-composer-done', [xpath, {}, tags]);
 	}));
 
 	messaging.recv(error_handler(function(data) {

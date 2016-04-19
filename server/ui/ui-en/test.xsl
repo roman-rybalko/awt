@@ -402,6 +402,34 @@
 				</div>
 			</div>
 		</div>
+		<div id="action-autoadd-template-exists">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-warning">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-9">
+									<div class="row">
+										<div class="col-lg-2">
+											<b>Element exists</b>
+										</div>
+										<div class="col-lg-10">
+											<b>Element XPath</b>: <span class="action-autoadd-exists-xpath"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<a href="#" class="btn btn-xs btn-primary location-href">
+										<i class="fa fa-pencil"></i>
+										Edit
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </xsl:template>
 
@@ -505,6 +533,12 @@
 											<input type="checkbox" class="control-state action-autoadd-control" data-control-state="xpath-composer-autoadd" data-id="{$id}"/>
 											Auto-add actions (XPath Composer will not be used)
 										</label>
+									</div>
+									<div class="well well-sm">
+										<b>Auto-add usage:</b><br/>
+										Click on an element to add <code>Click</code> action.<br/>
+										Select (highlight) a text to add <code>Element exists</code> action.<br/>
+										<code>Enter data</code> action is triggered for input element on focus loss after keyboard interaction.
 									</div>
 								</xsl:if>
 								<div class="alert alert-info alert-dismissable">
