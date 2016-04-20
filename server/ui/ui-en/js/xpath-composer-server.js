@@ -9,7 +9,7 @@ $(error_handler(function($) {
 		}
 		var els = [];
 		var el = ev.target;
-		var selection = document.getSelection().toString();
+		var selection = document.getSelection();
 		while (el) {
 			var descr = {
 				name: el.nodeName,
@@ -18,7 +18,8 @@ $(error_handler(function($) {
 				'nth-of-type': $(el.parentElement).children(el.nodeName).index(el) + 1
 			};
 			if (selection) {
-				descr.selection = selection;
+				descr.selection = selection.toString();
+				selection.removeAllRanges();
 				selection = null;
 			}
 			for (var a = 0; a < el.attributes.length; ++a)
