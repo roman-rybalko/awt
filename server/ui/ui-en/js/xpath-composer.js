@@ -251,23 +251,19 @@ $(error_handler(function($) {
 		if (xpath_composer_autoadd) {
 			var call = true;
 			var selection = false;
-			while (true) {
-				if (!tags.length)
-					break;
+			if (tags.length) {
 				var tag = tags[tags.length-1];
+				if (tag.name.toLowerCase() == 'input')
+					for (var p in tag.preds)
+						if (tag.preds[p].name && tag.preds[p].name.toLowerCase() == 'type' && tag.preds[p].value.toLowerCase() == 'text') {
+							call = false;
+							break;
+						}
 				for (var p in tag.preds)
 					if (tag.preds[p].text && tag.preds[p].selected) {
 						selection = true;
 						break;
 					}
-				if (tag.name.toLowerCase() != 'input')
-					break;
-				for (var p in tag.preds)
-					if (tag.preds[p].name && tag.preds[p].name.toLowerCase() == 'type' && tag.preds[p].value.toLowerCase() == 'text') {
-						call = false;
-						break;
-					}
-				break;
 			}
 			if (call) {
 				var xpath = $('#xpath-composer-result').val();
