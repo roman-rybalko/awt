@@ -169,7 +169,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-12" style="overflow: visible /* for date-time picker */;">
 				<div class="panel panel-success">
 					<div class="panel-body">
 						<form role="form" method="post" class="form-schedule-job">
@@ -217,7 +217,7 @@
 				<select class="form-control task-type" name="type" data-selected="{$type}"/>
 			</div>
 		</div>
-		<div class="col-lg-4">
+		<div class="col-lg-4" style="overflow: visible /* for date-time picker */;">
 			<div class="form-group">
 				<label>Start time</label>
 				<div class="input-group date">
