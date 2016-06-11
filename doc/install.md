@@ -21,8 +21,15 @@
 * chromium-brwser
 * flashplugin-installer
 
-Регламент
----------
+Установка новой ноды
+--------------------
+1. server_sys.sh: cert nginx munin php rsync
+2. apt-get install mysql, задать пароль root из hosts/*/passwords
+3. server_mysql.sh: mysql (настроить), awt_db_backup (настроить ротацию)
+4. server_slave.sh: www_repl (настроить), awt_cron_del, mysql_slave_1 (скопировать и загрузить образ бд), mysql_slave_2 (запустить репликацию)
+
+Установка нового сервиса
+------------------------
 1. task_types.sql
 2. Зарегистрировать пустой логин и ввести сложный пароль.
 3. Добавить demo_subscription(.sql) для демо-логина.
