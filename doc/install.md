@@ -30,6 +30,13 @@
 5. исправить munin_node, везде переставить munin_node
 6. hosts
 7. munin_backup.sh, munin_restore.sh
+8. перенести .mysql_history, .bash_history
+
+Master -> Slave
+---------------
+1. reboot.sh
+2. apt-get --purge remove mysql-server
+3. goto Установка новой ноды п.3
 
 Установка нового сервиса
 ------------------------
