@@ -27,6 +27,9 @@
 2. apt-get install mysql, задать пароль root из hosts/*/passwords
 3. server_mysql.sh: mysql (настроить), awt_db_backup (настроить ротацию)
 4. server_slave.sh: www_repl (настроить), awt_cron_del, mysql_slave_1 (скопировать и загрузить образ бд), mysql_slave_2 (запустить репликацию)
+5. исправить munin_node, везде переставить munin_node
+6. hosts
+7. munin_backup.sh, munin_restore.sh
 
 Установка нового сервиса
 ------------------------
