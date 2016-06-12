@@ -35,7 +35,7 @@
 Master -> Slave
 ---------------
 1. reboot.sh
-2. apt-get --purge remove mysql-server
+2. apt-get --purge remove mysql-server-core-x.x
 3. goto Установка новой ноды п.3
 
 Установка нового сервиса
