@@ -20,3 +20,14 @@ Failover
 3. Включить cron.php (* * * * * cd /var/www/awt && php cron.php)
 4. service rsync start
 5. Переустановить основную ноду в slave
+
+Миграция БД
+-----------
+1. src: mysql_backup.sh
+1. dst: mysql_slave (MYSQL_MASTER=xxx mysql mysql_slave_1 mysql_slave_2)
+1. src: server_maint_mode_on.sh (awt_cron_del nginx_maint_mode_on)
+2. src: mysql_stop.sh
+2. dst: mysql_slave2master.sh
+3. dst: mysql_proxy_master.sh (mysql_proxy_del mysql_proxy mysql_proxy_master iptables)
+4. src: mysql_proxy_slave.sh (mysql_proxy_del mysql_proxy mysql_proxy_master iptables)
+5. src: server_maint_mode_off.sh (awt_cron nginx_maint_mode_off)\
