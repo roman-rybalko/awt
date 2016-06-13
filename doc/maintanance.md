@@ -23,8 +23,8 @@ Failover
 
 Миграция БД
 -----------
-1. src: mysql_backup.sh
-1. dst: mysql_slave (MYSQL_MASTER=xxx mysql mysql_slave_1 mysql_slave_2)
+1. src: mysql_backup.sh (можно пропустить если уже есть)
+1. dst: mysql_slave (MYSQL_MASTER=xxx RSUNC_MASTER=xxx - только если dst имеет имя не s1/s2, mysql mysql_slave_1 mysql_slave_2)
 1. src: server_maint_mode_on.sh (awt_cron_del nginx_maint_mode_on)
 2. src: mysql_stop.sh
 2. dst: mysql_slave2master.sh
