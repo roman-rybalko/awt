@@ -4,4 +4,4 @@ This is the source code for [advancedwebtesting.com](http://advancedwebtesting.c
 
 AWT is a service for website testing & automation based on selenium.
 
-[YouTube](https://www.youtube.com/channel/UC33tWoI7TKblTiCQf8VJigw)
+[YouTube](https://www.youtube.com/@advancedwebtesting)
